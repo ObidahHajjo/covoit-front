@@ -1,0 +1,63 @@
+/* login.css — only what Tailwind cannot do */
+
+/* 1. Custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap');
+
+/* 2. Keyframe animations (not covered by Tailwind defaults) */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.35; }
+}
+
+/* 3. Animation utility classes used in JSX */
+.animate-fade-up   { animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-pulse-dot { animation: pulse-dot 2s infinite; }
+
+/* 4. Ambient blob pseudo-elements — impossible with Tailwind alone */
+.login-blobs::before,
+.login-blobs::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+.login-blobs::before {
+    top: -20%; right: -10%;
+    width: 55vmax; height: 55vmax;
+    background: radial-gradient(circle, var(--blob1) 0%, transparent 70%);
+}
+.login-blobs::after {
+    bottom: -15%; left: -10%;
+    width: 45vmax; height: 45vmax;
+    background: radial-gradient(circle, var(--blob2) 0%, transparent 70%);
+}
+
+/* 5. CSS custom properties for blob colors (light/dark aware) */
+:root {
+    --blob1: rgba(251, 146, 60, 0.12);
+    --blob2: rgba(99, 102, 241, 0.10);
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --blob1: rgba(251, 146, 60, 0.18);
+        --blob2: rgba(99, 102, 241, 0.08);
+    }
+}
+
+/* 6. Font family utilities */
+.font-syne    { font-family: 'Syne', sans-serif; }
+.font-dm-sans { font-family: 'DM Sans', sans-serif; }
+
+/* 7. ::placeholder color — Tailwind's placeholder: variant doesn't support CSS variables */
+.input-field::placeholder {
+    color: rgba(0, 0, 0, 0.22);
+}
+.dark .input-field::placeholder {
+    color: rgba(255, 255, 255, 0.18);
+}
