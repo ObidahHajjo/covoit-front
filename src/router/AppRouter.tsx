@@ -24,7 +24,6 @@ export default function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Navigate to="/home" replace />} />
 
                 <Route element={<GuestRoute />}>
                     <Route path="/login" element={<LoginPage />} />
@@ -36,6 +35,7 @@ export default function AppRouter() {
                 <Route path="/complete-profile" element={<CompleteProfilePage />} />
 
                 <Route element={<ProtectedRoute />}>
+                    <Route path="/" element={<Navigate to="/home" replace />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/find-trip" element={<FindTripPage />} />
                     <Route path="/find-trip/results" element={<TripResultsPage />} />
