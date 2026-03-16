@@ -1,42 +1,35 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 
-export type GlobalError = {
-    id: string;
+type GlobalError = {
     message: string;
 };
 
 type ErrorContextType = {
-    errors: GlobalError[];
+    error: GlobalError | null;
     showError: (message: string) => void;
-    removeError: (id: string) => void;
-    clearErrors: () => void;
+    clearError: () => void;
 };
 
 const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
 
 export function ErrorProvider({ children }: { children: ReactNode }) {
-    const [errors, setErrors] = useState<GlobalError[]>([]);
+    const [error, setError] = useState<GlobalError | null>(null);
 
     const showError = useCallback((message: string) => {
-        setErrors((prev) => [...prev, { id: crypto.randomUUID(), message }]);
+        setError({ message });
     }, []);
 
-    const removeError = useCallback((id: string) => {
-        setErrors((prev) => prev.filter((error) => error.id !== id));
-    }, []);
-
-    const clearErrors = useCallback(() => {
-        setErrors([]);
+    const clearError = useCallback(() => {
+        setError(null);
     }, []);
 
     const value = useMemo(
         () => ({
-            errors,
+            error,
             showError,
-            removeError,
-            clearErrors,
+            clearError,
         }),
-        [errors, showError, removeError, clearErrors]
+        [error, showError, clearError]
     );
 
     return (
