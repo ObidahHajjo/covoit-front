@@ -121,15 +121,16 @@ export default function HomePage() {
                 setPerson(me);
                 setDriverTrips(myDriverTrips);
                 setBookings(myBookings);
-            } catch (err) {
-                setError(err instanceof Error ? err.message : "Failed to load home page");
+            } catch {
+                logoutLocal();
+                navigate("/login", { replace: true });
             } finally {
                 setLoading(false);
             }
         }
 
         void load();
-    }, []);
+    }, [logoutLocal, navigate]);
 
     async function handleLogout() {
         try {

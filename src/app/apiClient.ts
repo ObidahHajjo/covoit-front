@@ -51,14 +51,11 @@ apiClient.interceptors.response.use(
                 await axios.post(
                     `${API_BASE_URL}/auth/refresh`,
                     {},
-                    { withCredentials: true, showGlobalLoader:false }
+                    { withCredentials: true }
                 );
 
                 return apiClient(originalRequest);
             } catch (refreshError) {
-                if (window.location.pathname !== "/login") {
-                    window.location.href = "/login";
-                }
                 return Promise.reject(refreshError);
             }
         }
