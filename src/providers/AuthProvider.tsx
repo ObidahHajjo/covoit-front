@@ -8,7 +8,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [status, setStatus] = useState<AuthStatus>("loading");
     const [user, setUser] = useState<AuthUser | null>(null);
 
-    const refreshMe = useCallback(async () => {
+    const refreshMe = useCallback(async (): Promise<void> => {
         try {
             const me = await getMe();
             setUser(me);
@@ -28,13 +28,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     }, []);
 
-    const logoutLocal = useCallback(() => {
+    const logoutLocal = useCallback((): void => {
         setUser(null);
         setStatus("guest");
     }, []);
 
     useEffect(() => {
-        void refreshMe();
+        const bootstrap = async (): Promise<void> => {
+            setStatus("loading");
+            await refreshMe();
+        };
+
+        void bootstrap();
     }, [refreshMe]);
 
     const value = useMemo(

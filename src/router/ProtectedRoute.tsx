@@ -1,13 +1,17 @@
-import { Navigate } from "react-router-dom";
-import AppLayout from "../components/layout/AppLayout";
-import {useAuth} from "../context/useAuth.ts";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 
 export default function ProtectedRoute() {
     const { status } = useAuth();
+    const location = useLocation();
 
-    if (status === "guest") {
-        return <Navigate to="/login" replace />;
+    if (status === "loading") {
+        return null; // or a splash screen / loader
     }
 
-    return <AppLayout />;
+    if (status === "guest") {
+        return <Navigate to="/login" replace state={{ from: location }} />;
+    }
+
+    return <Outlet />;
 }
