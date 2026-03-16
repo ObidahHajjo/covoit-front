@@ -51,7 +51,7 @@ apiClient.interceptors.response.use(
                 await axios.post(
                     `${API_BASE_URL}/auth/refresh`,
                     {},
-                    { withCredentials: true }
+                    { withCredentials: true, showGlobalLoader:false }
                 );
 
                 return apiClient(originalRequest);

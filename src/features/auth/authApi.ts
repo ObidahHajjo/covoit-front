@@ -20,7 +20,9 @@ export async function login(payload: AuthRequest): Promise<AuthResponse> {
 
 export async function getMe(): Promise<AuthUser> {
     try {
-        const { data } = await apiClient.get<ApiResponse<AuthUser>>('/auth/me');
+        const { data } = await apiClient.get<ApiResponse<AuthUser>>('/auth/me',  {
+            showGlobalLoader: false
+        });
         return data.data;
     } catch (error) {
         throw new Error(extractApiErrorMessage(error));

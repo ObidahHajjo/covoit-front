@@ -16,6 +16,6 @@ export default function ProtectedRoute() {
     if (status === "guest") {
         return <Navigate to="/login" replace state={{ from: location }} />;
     }
-
+    console.log("ProtectedRoute status:", status);
     return <Outlet />;
 }
