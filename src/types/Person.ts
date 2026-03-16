@@ -14,9 +14,9 @@ export interface Person  {
 }
 
 export interface UpdateMePayload  {
-    pseudo?: string;
-    first_name?: string;
-    last_name?: string;
-    phone?: string;
+    pseudo?: string|null;
+    first_name?: string|null;
+    last_name?: string|null;
+    phone?: string|null;
     car_id?: number | null;
 }
