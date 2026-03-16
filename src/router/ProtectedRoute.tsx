@@ -6,7 +6,11 @@ export default function ProtectedRoute() {
     const location = useLocation();
 
     if (status === "loading") {
-        return null; // or a splash screen / loader
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <p>Loading...</p>
+            </div>
+        );
     }
 
     if (status === "guest") {
