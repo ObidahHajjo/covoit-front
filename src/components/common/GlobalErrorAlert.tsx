@@ -1,4 +1,4 @@
-import { useError } from "../../app/ErrorContext";
+import { useError } from "../../app/useError";
 
 export default function GlobalErrorAlert() {
     const { error, clearError } = useError();

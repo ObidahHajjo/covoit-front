@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CityAutocomplete from "../../components/common/geo/CityAutocomplete";
+import { FindTripForm } from "../../components/ui/FindTripForm";
 import type { CityPostalOption } from "../../types/Commune";
 
 export default function FindTripPage() {
@@ -35,52 +35,22 @@ export default function FindTripPage() {
     }
 
     return (
-        <section>
-            <h1 className="mb-4 text-2xl font-bold">Find a Trip</h1>
+        <div className="mx-auto max-w-lg space-y-6 px-4 py-6 sm:px-6">
+            <div>
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900">Find a Trip</h1>
+                <p className="mt-1 text-sm text-slate-400">Search by city and date</p>
+            </div>
 
-            <form
+            <FindTripForm
+                startingCity={startingCity}
+                arrivalCity={arrivalCity}
+                tripDate={tripDate}
+                onStartingCityChange={setStartingCity}
+                onArrivalCityChange={setArrivalCity}
+                onTripDateChange={setTripDate}
                 onSubmit={handleSubmit}
-                className="space-y-4 rounded-2xl bg-white p-4 shadow-sm"
-            >
-                <CityAutocomplete
-                    label="Departure city"
-                    placeholder="Search departure city"
-                    selectedOption={startingCity}
-                    onSelect={setStartingCity}
-                />
-
-                <CityAutocomplete
-                    label="Arrival city"
-                    placeholder="Search arrival city"
-                    selectedOption={arrivalCity}
-                    onSelect={setArrivalCity}
-                />
-
-                <input
-                    type="date"
-                    value={tripDate}
-                    onChange={(e) => setTripDate(e.target.value)}
-                    className="w-full rounded-xl border px-4 py-3"
-                />
-
-                <div className="grid grid-cols-2 gap-3">
-                    <button
-                        type="submit"
-                        disabled={!startingCity || !arrivalCity}
-                        className="rounded-xl bg-slate-900 px-4 py-3 text-white disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        Search Trips
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={() => navigate("/find-trip/results")}
-                        className="rounded-xl border px-4 py-3"
-                    >
-                        All Trips
-                    </button>
-                </div>
-            </form>
-        </section>
+                onShowAll={() => navigate("/find-trip/results")}
+            />
+        </div>
     );
 }

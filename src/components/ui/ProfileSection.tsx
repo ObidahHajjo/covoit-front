@@ -1,6 +1,6 @@
 import type { FormEvent } from "react";
 import type { Person } from "../../types/Person";
-import type { ProfileFormState, FieldErrors } from "../../context/Account/UseMyAccount";
+import type { ProfileFormState } from "../../context/Account/UseMyAccount";
 
 type Props = {
     person: Person | null;

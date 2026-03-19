@@ -1,42 +1,44 @@
-import {type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { apiClient } from "../../app/apiClient";
+import type { AxiosError } from "axios";
 
 export default function ResetPasswordPage() {
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-    const token = useMemo(() => searchParams.get("token") ?? "", [searchParams]);
-    const email = useMemo(() => searchParams.get("email") ?? "", [searchParams]);
+  const token = useMemo(() => searchParams.get("token") ?? "", [searchParams]);
+  const email = useMemo(() => searchParams.get("email") ?? "", [searchParams]);
 
-    const [password, setPassword] = useState("");
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    const [message, setMessage] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-    async function handleSubmit(e: FormEvent) {
-        e.preventDefault();
-        setLoading(true);
-        setMessage(null);
-        setError(null);
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
+    setError(null);
 
-        try {
-            const { data } = await apiClient.post("/auth/reset-password", {
-                token,
-                email,
-                password,
-                password_confirmation: passwordConfirmation,
-            });
+    try {
+      const { data } = await apiClient.post("/auth/reset-password", {
+        token,
+        email,
+        password,
+        password_confirmation: passwordConfirmation,
+      });
 
-            setMessage(data.message ?? "Password reset successfully.");
-            setTimeout(() => navigate("/login"), 1200);
-        } catch (err: any) {
-            setError(err?.response?.data?.message ?? "Unable to reset password.");
-        } finally {
-            setLoading(false);
-        }
+      setMessage(data.message ?? "Password reset successfully.");
+      setTimeout(() => navigate("/login"), 1200);
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
+      setError(axiosError.response?.data?.message ?? "Unable to reset password.");
+    } finally {
+      setLoading(false);
     }
+  }
 
     return (
         <div className="mx-auto max-w-md p-6">

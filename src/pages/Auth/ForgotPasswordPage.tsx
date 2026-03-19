@@ -1,27 +1,29 @@
-import {type FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { apiClient } from "../../app/apiClient";
+import type { AxiosError } from "axios";
 
 export default function ForgotPasswordPage() {
-    const [email, setEmail] = useState("");
-    const [message, setMessage] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-    async function handleSubmit(e: FormEvent) {
-        e.preventDefault();
-        setLoading(true);
-        setMessage(null);
-        setError(null);
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
+    setError(null);
 
-        try {
-            const { data } = await apiClient.post("/auth/forgot-password", { email });
-            setMessage(data.message ?? "If an account exists for this email, a reset link has been sent.");
-        } catch (err: any) {
-            setError(err?.response?.data?.message ?? "Unable to send reset link.");
-        } finally {
-            setLoading(false);
-        }
+    try {
+      const { data } = await apiClient.post("/auth/forgot-password", { email });
+      setMessage(data.message ?? "If an account exists for this email, a reset link has been sent.");
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
+      setError(axiosError.response?.data?.message ?? "Unable to send reset link.");
+    } finally {
+      setLoading(false);
     }
+  }
 
     return (
         <div className="mx-auto max-w-md p-6">

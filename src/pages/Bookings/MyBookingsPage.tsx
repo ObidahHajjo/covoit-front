@@ -1,43 +1,33 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getMyPassengerTrips } from "../../features/person/personApi";
-import type { Trip } from "../../types/Trip";
+import { useMyBookings } from "../../context/Booking/useMyBookings";
+import { MyBookingsSection } from "../../components/ui/MyBookingsSection";
 
 export default function MyBookingsPage() {
-    const [bookings, setBookings] = useState<Trip[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        async function load() {
-            try {
-                setLoading(true);
-                const data = await getMyPassengerTrips();
-                setBookings(data);
-            } catch (err) {
-                setError(err instanceof Error ? err.message : "Failed to load bookings");
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        void load();
-    }, []);
+    const { bookings, loading, error } = useMyBookings();
 
     return (
-        <section className="space-y-4">
-            <h1 className="text-2xl font-bold">My Bookings</h1>
-            {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
-            {!loading && !error && bookings.map((trip) => (
-                <Link key={trip.id} to={`/bookings/${trip.id}`} className="block rounded-xl bg-white p-4 shadow-sm">
-                    <p className="font-semibold">
-                        {trip.departure_address?.city?.name} → {trip.arrival_address?.city?.name}
-                    </p>
-                    <p className="text-sm text-slate-500">{trip.departure_time}</p>
-                </Link>
-            ))}
-            {!loading && !error && bookings.length === 0 && <p>No bookings found.</p>}
-        </section>
+        <div className="mx-auto max-w-lg space-y-6 px-4 py-6 sm:px-6">
+            <div>
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900">My Bookings</h1>
+                <p className="mt-1 text-sm text-slate-400">Your upcoming and past trips</p>
+            </div>
+
+            {error && (
+                <div className="flex items-center gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3.5">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white text-xs">!</span>
+                    <p className="text-sm font-medium text-rose-700">{error}</p>
+                </div>
+            )}
+
+            {loading ? (
+                <div className="flex min-h-[30vh] items-center justify-center">
+                    <div className="space-y-3 text-center">
+                        <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-violet-500" />
+                        <p className="text-sm text-slate-400">Loading your bookings…</p>
+                    </div>
+                </div>
+            ) : (
+                <MyBookingsSection bookings={bookings} />
+            )}
+        </div>
     );
 }
