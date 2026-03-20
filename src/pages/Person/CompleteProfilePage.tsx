@@ -24,8 +24,8 @@ export default function CompleteProfilePage() {
 
   if (status === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[linear-gradient(180deg,#fff8ee_0%,#fff3db_54%,#ffe8bf_100%)] px-6 text-[#5f6f61]">
-        <div className="rounded-full border border-[#17301f]/10 bg-white/70 px-5 py-3 text-sm shadow-[0_12px_30px_rgba(112,72,32,0.08)]">
+      <div className="flex min-h-screen items-center justify-center bg-[#fafafa] px-6 text-[#888]">
+        <div className="rounded-lg border border-[#eee] bg-white px-5 py-3 text-sm">
           Loading profile setup...
         </div>
       </div>

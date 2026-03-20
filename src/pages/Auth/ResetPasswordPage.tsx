@@ -41,23 +41,17 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="relative min-h-dvh overflow-hidden bg-[linear-gradient(180deg,#fff8ee_0%,#fff3db_54%,#ffe8bf_100%)] px-4 py-8 text-[#17301f] sm:px-6 lg:px-8">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-10 top-20 h-64 w-64 rounded-full bg-[#91d7ff]/35 blur-3xl" />
-        <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-[#d5f06b]/45 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#ff7a59]/20 blur-3xl" />
-      </div>
-
-      <div className="relative mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[0.94fr_1.06fr]">
-        <section className="rounded-[36px] border border-[#17301f]/10 bg-[rgba(255,251,243,0.84)] p-6 shadow-[0_24px_70px_rgba(112,72,32,0.16)] backdrop-blur sm:p-8 lg:p-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#17301f]/10 bg-white/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#eb5a36]">
-            <span className="h-2 w-2 rounded-full bg-[#ff7a59]" />
+    <div className="min-h-dvh bg-[#fafafa] px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto grid w-full max-w-5xl gap-6 lg:grid-cols-[1fr_1fr]">
+        <section className="bg-white p-6 sm:p-8 lg:p-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase tracking-wider text-[#666]">
+            <span className="h-2 w-2 rounded-full bg-[#4ade80]" />
             Password refresh
           </div>
-          <h1 className="mt-6 max-w-[11ch] text-[clamp(2.8rem,7vw,5.4rem)] font-black leading-[0.95] tracking-[-0.04em] text-[#17301f]" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-            Set a new key for your next trip.
+          <h1 className="mt-6 max-w-[11ch] text-[clamp(2rem,5vw,3.5rem)] font-medium leading-tight tracking-tight text-[#222]">
+            Set a new password.
           </h1>
-          <p className="mt-5 max-w-lg text-sm leading-7 text-[#5f6f61] sm:text-base">
+          <p className="mt-5 max-w-lg text-sm leading-7 text-[#888] sm:text-base">
             Choose a new password, confirm it once, and we will guide you back to login after the update succeeds.
           </p>
 
@@ -69,7 +63,7 @@ export default function ResetPasswordPage() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-[24px] border border-[#17301f]/10 bg-white/70 px-4 py-4 text-sm text-[#17301f] shadow-[0_16px_40px_rgba(112,72,32,0.08)]"
+                className="border-b border-[#eee] px-4 py-4 text-sm text-[#666]"
               >
                 {item}
               </div>
@@ -77,19 +71,19 @@ export default function ResetPasswordPage() {
           </div>
         </section>
 
-        <section className="rounded-[36px] border border-[#17301f]/10 bg-[rgba(255,251,243,0.84)] p-5 shadow-[0_24px_70px_rgba(112,72,32,0.16)] backdrop-blur sm:p-7 lg:p-10">
-          <div className="rounded-[30px] border border-[#17301f]/10 bg-white/70 p-5 shadow-[0_16px_40px_rgba(112,72,32,0.08)] sm:p-6 lg:p-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#eb5a36]">Reset password</p>
-            <h2 className="mt-2 text-3xl font-bold tracking-[-0.04em] text-[#17301f]" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
+        <section className="bg-white p-5 sm:p-7 lg:p-10">
+          <div className="border-b border-[#eee] pb-6">
+            <p className="text-xs font-medium uppercase tracking-wider text-[#999]">Reset password</p>
+            <h2 className="mt-2 text-2xl font-medium tracking-tight text-[#222]">
               Confirm your new password.
             </h2>
-            <p className="mt-3 text-sm leading-6 text-[#5f6f61]">
-              This page keeps the recovery flow on-brand instead of dropping into a plain placeholder.
+            <p className="mt-3 text-sm leading-6 text-[#888]">
+              Enter your new password below to complete the recovery process.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
               <div className="space-y-2">
-                <label htmlFor="reset-email" className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-[#5f6f61]">
+                <label htmlFor="reset-email" className="block text-xs font-medium uppercase tracking-wider text-[#999]">
                   Email
                 </label>
                 <input
@@ -98,13 +92,13 @@ export default function ResetPasswordPage() {
                   value={email}
                   readOnly
                   autoComplete="email"
-                  className="w-full rounded-[22px] border border-[#17301f]/12 bg-[#f6efdc] px-4 py-3.5 text-sm text-[#17301f] outline-none"
+                  className="w-full border-b border-[#eee] bg-[#fafafa] px-4 py-3 text-sm text-[#666] outline-none"
                 />
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <label htmlFor="reset-password" className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-[#5f6f61]">
+                  <label htmlFor="reset-password" className="block text-xs font-medium uppercase tracking-wider text-[#999]">
                     New password
                   </label>
                   <input
@@ -114,13 +108,13 @@ export default function ResetPasswordPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Create password"
                     autoComplete="new-password"
-                    className="w-full rounded-[22px] border border-[#17301f]/12 bg-[#fffaf1] px-4 py-3.5 text-sm text-[#17301f] outline-none transition placeholder:text-[#5f6f61]/65 focus:border-[#ff7a59] focus:bg-white focus:ring-4 focus:ring-[#ff7a59]/15"
+                    className="w-full border-b border-[#eee] bg-white px-4 py-3 text-sm text-[#222] outline-none transition placeholder:text-[#bbb] focus:border-[#222]"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="reset-password-confirmation" className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-[#5f6f61]">
+                  <label htmlFor="reset-password-confirmation" className="block text-xs font-medium uppercase tracking-wider text-[#999]">
                     Confirm password
                   </label>
                   <input
@@ -130,26 +124,26 @@ export default function ResetPasswordPage() {
                     onChange={(e) => setPasswordConfirmation(e.target.value)}
                     placeholder="Repeat password"
                     autoComplete="new-password"
-                    className="w-full rounded-[22px] border border-[#17301f]/12 bg-[#fffaf1] px-4 py-3.5 text-sm text-[#17301f] outline-none transition placeholder:text-[#5f6f61]/65 focus:border-[#ff7a59] focus:bg-white focus:ring-4 focus:ring-[#ff7a59]/15"
+                    className="w-full border-b border-[#eee] bg-white px-4 py-3 text-sm text-[#222] outline-none transition placeholder:text-[#bbb] focus:border-[#222]"
                     required
                   />
                 </div>
               </div>
 
               {!token || !email ? (
-                <div className="rounded-[22px] border border-[#eb5a36]/20 bg-[#ff7a59]/10 px-4 py-3 text-sm text-[#9c3113]">
+                <div className="border-l-2 border-[#f472b6] bg-[#fdf2f8] px-4 py-3 text-sm text-[#222]">
                   The reset link is incomplete. Request a new recovery email and try again.
                 </div>
               ) : null}
 
               {message && (
-                <div className="rounded-[22px] border border-[#17301f]/12 bg-[#d5f06b]/35 px-4 py-3 text-sm text-[#17301f]">
+                <div className="border-l-2 border-[#4ade80] bg-[#f0fdf4] px-4 py-3 text-sm text-[#222]">
                   {message}
                 </div>
               )}
 
               {error && (
-                <div className="rounded-[22px] border border-[#eb5a36]/20 bg-[#ff7a59]/10 px-4 py-3 text-sm text-[#9c3113]">
+                <div className="border-l-2 border-[#f472b6] bg-[#fdf2f8] px-4 py-3 text-sm text-[#222]">
                   {error}
                 </div>
               )}
@@ -157,7 +151,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading || !token || !email}
-                className="w-full rounded-full bg-[#17301f] px-4 py-3.5 text-sm font-semibold text-[#fff8ee] shadow-[0_14px_28px_rgba(23,48,31,0.18)] transition hover:-translate-y-0.5 hover:bg-[#214129] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
+                className="w-full rounded-full bg-[#222] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {loading ? "Resetting password..." : "Reset password"}
               </button>
