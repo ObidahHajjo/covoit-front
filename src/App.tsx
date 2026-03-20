@@ -1,20 +1,20 @@
-import './App.css'
+import "./App.css";
+import GlobalErrorAlert from "./components/common/GlobalErrorAlert";
+import GlobalSpinner from "./components/common/GlobalSpinner";
+import { LoadingProvider } from "./providers/LoadingProvider";
+import { AuthProvider } from "./providers/AuthProvider";
 import AppRouter from "./router/AppRouter";
-import {LoadingProvider} from "./providers/LoadingProvider.tsx";
-// import {AxiosInterceptorProvider} from "./bootstrap.ts";
-import GlobalSpinner from "./components/common/GlobalSpinner.tsx";
-import GlobalErrorAlert from "./components/common/GlobalErrorAlert.tsx";
-import {AuthProvider} from "./providers/AuthProvider.tsx";
+import { AxiosInterceptorProvider } from "./bootstrap";
 
 export default function App() {
-    return (
-        <AuthProvider>
-            <LoadingProvider>
-                {/*<AxiosInterceptorProvider/>*/}
-                <GlobalSpinner/>
-                <GlobalErrorAlert />
-                <AppRouter />
-            </LoadingProvider>
-        </AuthProvider>
-    );
+  return (
+    <LoadingProvider>
+      <AxiosInterceptorProvider />
+      <AuthProvider>
+        <GlobalSpinner />
+        <GlobalErrorAlert />
+        <AppRouter />
+      </AuthProvider>
+    </LoadingProvider>
+  );
 }

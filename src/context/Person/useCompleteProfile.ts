@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import type React from "react";
+import { useAuth } from "../useAuth";
 import { updateMe } from "../../features/person/personApi";
 
 type LocationState = {
@@ -10,17 +11,19 @@ type LocationState = {
 export function useCompleteProfile() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, refreshMe } = useAuth();
   const state = (location.state ?? {}) as LocationState;
 
   const email =
+    user?.email ??
     state.email ??
     sessionStorage.getItem("pending_profile_email") ??
     "";
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [pseudo, setPseudo] = useState("");
-  const [phone, setPhone] = useState("");
+  const [firstName, setFirstName] = useState(user?.person?.first_name ?? "");
+  const [lastName, setLastName] = useState(user?.person?.last_name ?? "");
+  const [pseudo, setPseudo] = useState(user?.person?.pseudo ?? "");
+  const [phone, setPhone] = useState(user?.person?.phone ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,8 +47,9 @@ export function useCompleteProfile() {
         pseudo: pseudo.trim(),
         phone: phone.trim().length ? phone.trim() : null,
       });
+      await refreshMe();
       sessionStorage.removeItem("pending_profile_email");
-      navigate("/login");
+      navigate("/home", { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Profile update failed");
     } finally {

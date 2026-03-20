@@ -1,3 +1,4 @@
+import type { FormEvent } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../features/auth/authApi";
@@ -14,14 +15,23 @@ export function useLogin() {
 
   const canSubmit = email.trim().length > 7 && password.length > 7 && !isSubmitting;
 
-  async function onSubmit() {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!canSubmit) {
+      return;
+    }
+
     setError(null);
     try {
       setIsSubmitting(true);
       const data = await login({ email: email.trim(), password, password_confirmation: null });
       if (data.refresh_token) localStorage.setItem("refresh_token", data.refresh_token);
       if (data.person_id) sessionStorage.setItem("personId", String(data.person_id));
-      await refreshMe();
+      const authenticated = await refreshMe();
+      if (!authenticated) {
+        throw new Error("Login succeeded but the session could not be restored. Check API cookie settings.");
+      }
       navigate("/");
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Login failed";

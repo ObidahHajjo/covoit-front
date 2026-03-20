@@ -1,6 +1,23 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
+const API_BASE_URL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL as string);
+
+function resolveApiBaseUrl(rawBaseUrl: string): string {
+    try {
+        const url = new URL(rawBaseUrl);
+        const currentHostname = window.location.hostname;
+        const isLocalApiHost = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+        const isLocalFrontendHost = currentHostname === "localhost" || currentHostname === "127.0.0.1";
+
+        if (isLocalApiHost && isLocalFrontendHost) {
+            url.hostname = currentHostname;
+        }
+
+        return url.toString().replace(/\/$/, "");
+    } catch {
+        return rawBaseUrl;
+    }
+}
 
 export const apiClient = axios.create({
     baseURL: API_BASE_URL,

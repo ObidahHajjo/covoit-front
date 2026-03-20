@@ -6,7 +6,7 @@ export type AuthStatus = "loading" | "authenticated" | "guest";
 export interface AuthContextValue {
     status: AuthStatus;
     user: AuthUser | null;
-    refreshMe: () => Promise<void>;
+    refreshMe: () => Promise<boolean>;
     logoutLocal: () => void;
 }
 

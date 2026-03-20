@@ -1,3 +1,4 @@
+import type { FormEvent } from "react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../features/auth/authApi";
@@ -21,7 +22,13 @@ export function useRegister() {
     return true;
   }, [email, password, passwordConfirm, isSubmitting]);
 
-  async function onSubmit() {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!canSubmit) {
+      return;
+    }
+
     setError(null);
 
     try {

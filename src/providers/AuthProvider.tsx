@@ -8,20 +8,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("loading");
   const [user, setUser] = useState<AuthUser | null>(null);
 
-  const refreshMe = useCallback(async (): Promise<void> => {
+  const refreshMe = useCallback(async (): Promise<boolean> => {
     try {
       const me = await getMe();
       setUser(me);
       setStatus("authenticated");
+      return true;
     } catch {
       try {
         await apiClient.post("/auth/refresh", undefined, { showGlobalLoader: false });
         const me = await getMe();
         setUser(me);
         setStatus("authenticated");
+        return true;
       } catch {
         setUser(null);
         setStatus("guest");
+        return false;
       }
     }
   }, []);
