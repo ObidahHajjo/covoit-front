@@ -4,25 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream: "#fff7ea",
-        moss: "#17301f",
-        coral: {
-          DEFAULT: "#ff7a59",
-          deep: "#eb5a36",
-        },
-        sky: "#91d7ff",
-        lime: "#d5f06b",
+        ink: "#222222",
+        muted: "#888888",
+        subtle: "#999999",
+        faint: "#aaaaaa",
+        line: "#eeeeee",
+        surface: "#ffffff",
       },
       fontFamily: {
         body: ["var(--font-body)"],
         heading: ["var(--font-heading)"],
       },
-      boxShadow: {
-        soft: "0 16px 36px rgba(112, 72, 32, 0.1)",
-        warm: "0 24px 70px rgba(112, 72, 32, 0.16)",
-      },
     },
   },
   plugins: [],
-  darkMode: 'media',
+  darkMode: "media",
 };
