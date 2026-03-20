@@ -5,29 +5,27 @@ export default function MyBookingsPage() {
     const { bookings, loading, error } = useMyBookings();
 
     return (
-        <div className="mx-auto max-w-lg space-y-6 px-4 py-6 sm:px-6">
-            <div>
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900">My Bookings</h1>
-                <p className="mt-1 text-sm text-slate-400">Your upcoming and past trips</p>
-            </div>
-
-            {error && (
-                <div className="flex items-center gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3.5">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white text-xs">!</span>
-                    <p className="text-sm font-medium text-rose-700">{error}</p>
+        <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
+            <div className="overflow-hidden rounded-[40px] border border-[#efe2d4] bg-[linear-gradient(180deg,rgba(255,247,238,0.96),rgba(247,237,226,0.88))] px-5 py-6 shadow-[0_36px_90px_-50px_rgba(24,53,45,0.45)] sm:px-7 sm:py-8">
+                <div className="mb-8 max-w-3xl">
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#b06f60]">My bookings</p>
+                    <h1 className="mt-3 font-serif text-4xl font-semibold leading-[1.02] text-[#18352d] sm:text-5xl">Every reserved seat, gathered into one clear ride journal.</h1>
+                    <p className="mt-4 text-sm leading-6 text-[#4c655b] sm:text-base">Review your current plans and past trips without losing the data behind each booking.</p>
                 </div>
-            )}
 
-            {loading ? (
-                <div className="flex min-h-[30vh] items-center justify-center">
-                    <div className="space-y-3 text-center">
-                        <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-violet-500" />
-                        <p className="text-sm text-slate-400">Loading your bookings…</p>
+                {error ? <div className="mb-6 rounded-[24px] border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm font-medium text-rose-700">{error}</div> : null}
+
+                {loading ? (
+                    <div className="flex min-h-[30vh] items-center justify-center rounded-[32px] border border-white/70 bg-white/55 backdrop-blur-xl">
+                        <div className="space-y-3 text-center">
+                            <div className="mx-auto h-11 w-11 animate-spin rounded-full border-4 border-[#eadfd2] border-t-[#f26f5a]" />
+                            <p className="text-sm text-[#5d746b]">Loading your bookings...</p>
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <MyBookingsSection bookings={bookings} />
-            )}
+                ) : (
+                    <MyBookingsSection bookings={bookings} />
+                )}
+            </div>
         </div>
     );
 }

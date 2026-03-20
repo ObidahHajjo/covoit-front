@@ -35,22 +35,25 @@ export default function FindTripPage() {
     }
 
     return (
-        <div className="mx-auto max-w-lg space-y-6 px-4 py-6 sm:px-6">
-            <div>
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900">Find a Trip</h1>
-                <p className="mt-1 text-sm text-slate-400">Search by city and date</p>
-            </div>
+        <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
+            <div className="overflow-hidden rounded-[40px] border border-[#efe2d4] bg-[linear-gradient(180deg,rgba(255,247,238,0.96),rgba(247,237,226,0.88))] px-5 py-6 shadow-[0_36px_90px_-50px_rgba(24,53,45,0.45)] sm:px-7 sm:py-8">
+                <div className="mb-8 max-w-3xl">
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#b06f60]">Find a trip</p>
+                    <h1 className="mt-3 font-serif text-4xl font-semibold leading-[1.02] text-[#18352d] sm:text-5xl">Search the network with the same warm, community-first tone.</h1>
+                    <p className="mt-4 text-sm leading-6 text-[#4c655b] sm:text-base">Pick a departure, an arrival, and an optional date to find the ride that fits best.</p>
+                </div>
 
-            <FindTripForm
-                startingCity={startingCity}
-                arrivalCity={arrivalCity}
-                tripDate={tripDate}
-                onStartingCityChange={setStartingCity}
-                onArrivalCityChange={setArrivalCity}
-                onTripDateChange={setTripDate}
-                onSubmit={handleSubmit}
-                onShowAll={() => navigate("/find-trip/results")}
-            />
+                <FindTripForm
+                    startingCity={startingCity}
+                    arrivalCity={arrivalCity}
+                    tripDate={tripDate}
+                    onStartingCityChange={setStartingCity}
+                    onArrivalCityChange={setArrivalCity}
+                    onTripDateChange={setTripDate}
+                    onSubmit={handleSubmit}
+                    onShowAll={() => navigate("/find-trip/results")}
+                />
+            </div>
         </div>
     );
 }

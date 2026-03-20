@@ -7,43 +7,41 @@ export default function MyAccountPage() {
 
     if (account.loading) {
         return (
-            <div className="flex min-h-[60vh] items-center justify-center">
+            <div className="flex min-h-[60vh] items-center justify-center rounded-[40px] bg-[linear-gradient(180deg,rgba(255,247,238,0.96),rgba(247,237,226,0.88))] px-4">
                 <div className="space-y-3 text-center">
-                    <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-violet-500" />
-                    <p className="text-sm text-slate-400">Loading your account…</p>
+                    <div className="mx-auto h-11 w-11 animate-spin rounded-full border-4 border-[#eadfd2] border-t-[#f26f5a]" />
+                    <p className="text-sm text-[#5d746b]">Loading your account...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="mx-auto max-w-lg space-y-6 px-4 py-6 sm:px-6">
-            {/* Header */}
-            <div>
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900">My Account</h1>
-                <p className="mt-1 text-sm text-slate-400">Manage your profile and vehicle</p>
-            </div>
+        <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
+            <div className="overflow-hidden rounded-[40px] border border-[#efe2d4] bg-[linear-gradient(180deg,rgba(255,247,238,0.96),rgba(247,237,226,0.88))] px-5 py-6 shadow-[0_36px_90px_-50px_rgba(24,53,45,0.45)] sm:px-7 sm:py-8">
+                <div className="mb-8 max-w-3xl">
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#b06f60]">My account</p>
+                    <h1 className="mt-3 font-serif text-4xl font-semibold leading-[1.02] text-[#18352d] sm:text-5xl">Personal details and vehicle info, tuned to the same editorial rhythm.</h1>
+                    <p className="mt-4 text-sm leading-6 text-[#4c655b] sm:text-base">Update your profile, keep your car recognizable, and manage settings from a warmer dashboard surface.</p>
+                </div>
 
-            {/* Tab switcher */}
-            <div className="flex rounded-2xl border border-slate-200 bg-slate-100 p-1">
-                {(["profile", "car"] as const).map((section) => (
-                    <button
-                        key={section}
-                        type="button"
-                        onClick={() => account.setActiveSection(section)}
-                        className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold capitalize transition-all ${
-                            account.activeSection === section
-                                ? "bg-white text-slate-900 shadow-sm"
-                                : "text-slate-500 hover:text-slate-700"
-                        }`}
-                    >
-                        {section === "car" ? "🚗 Car" : "👤 Profile"}
-                    </button>
-                ))}
-            </div>
+                <div className="mb-6 flex rounded-full border border-white/70 bg-white/60 p-1 backdrop-blur-xl">
+                    {(["profile", "car"] as const).map((section) => (
+                        <button
+                            key={section}
+                            type="button"
+                            onClick={() => account.setActiveSection(section)}
+                            className={`flex-1 rounded-full px-4 py-3 text-sm font-semibold capitalize transition-all ${
+                                account.activeSection === section
+                                    ? "bg-[#f26f5a] text-white shadow-[0_16px_34px_-18px_rgba(242,111,90,0.75)]"
+                                    : "text-[#335246] hover:text-[#8c4d3f]"
+                            }`}
+                        >
+                            {section === "car" ? "Car" : "Profile"}
+                        </button>
+                    ))}
+                </div>
 
-            {/* Content card */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
                 {account.activeSection === "profile" ? (
                     <ProfileSection
                         person={account.person}

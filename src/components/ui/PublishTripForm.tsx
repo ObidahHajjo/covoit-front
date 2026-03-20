@@ -1,57 +1,47 @@
-import type { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import type { GeoPfFeature } from "../../types/GeoPfSearchResponse";
 import type { AddressFieldState, SelectedAddress } from "../../context/Driver/usePublishTrip";
 
-// ── Shared input class ────────────────────────────────────────────────────────
-
 const inputClass =
-    "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-violet-400 focus:bg-white focus:ring-4 focus:ring-violet-100 disabled:cursor-not-allowed disabled:opacity-50";
+    "w-full rounded-[20px] border border-[#e5d8c8] bg-white px-4 py-3.5 text-sm text-[#18352d] outline-none transition placeholder:text-[#8ea198] focus:border-[#f3b8ab] focus:ring-4 focus:ring-[#f7d7cf] disabled:cursor-not-allowed disabled:opacity-50";
 
-// ── Field wrapper ─────────────────────────────────────────────────────────────
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, children }: { label: string; children: ReactNode }) {
     return (
-        <div className="space-y-1.5">
-            <label className="block text-xs font-semibold uppercase tracking-widest text-slate-400">
-                {label}
-            </label>
+        <div className="space-y-2">
+            <label className="block text-xs font-semibold uppercase tracking-[0.24em] text-[#b06f60]">{label}</label>
             {children}
         </div>
     );
 }
 
-// ── AddressPreview ────────────────────────────────────────────────────────────
-
 function AddressPreview({ selected }: { selected: SelectedAddress | null }) {
     if (!selected) return null;
 
     return (
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
             {[
-                { label: "N°", value: selected.streetNumber || "—" },
-                { label: "Street", value: selected.streetName || "—" },
-                { label: "Postal", value: selected.postalCode || "—" },
-                { label: "City", value: selected.cityName || "—" },
+                { label: "No.", value: selected.streetNumber || "-" },
+                { label: "Street", value: selected.streetName || "-" },
+                { label: "Postal", value: selected.postalCode || "-" },
+                { label: "City", value: selected.cityName || "-" },
             ].map(({ label, value }) => (
-                <div key={label} className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5">
-                    <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">{label}</p>
-                    <p className="mt-0.5 text-sm font-medium text-slate-700 truncate">{value}</p>
+                <div key={label} className="rounded-[20px] bg-white px-3 py-3 shadow-[0_16px_30px_-24px_rgba(24,53,45,0.28)]">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#b06f60]">{label}</p>
+                    <p className="mt-1 truncate text-sm font-medium text-[#335246]">{value}</p>
                 </div>
             ))}
         </div>
     );
 }
 
-// ── AddressSearch ─────────────────────────────────────────────────────────────
-
 function AddressSearch({
-                           placeholder,
-                           field,
-                           onChange,
-                           onFocus,
-                           onBlur,
-                           onSelect,
-                       }: {
+    placeholder,
+    field,
+    onChange,
+    onFocus,
+    onBlur,
+    onSelect,
+}: {
     placeholder: string;
     field: AddressFieldState;
     onChange: (value: string) => void;
@@ -73,31 +63,31 @@ function AddressSearch({
                     className={inputClass}
                 />
 
-                {field.selected && (
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white text-xs">
+                {field.selected ? (
+                    <span className="absolute right-4 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-emerald-500 text-xs text-white">
                         ✓
                     </span>
-                )}
+                ) : null}
 
-                {field.open && field.results.length > 0 && (
-                    <ul className="absolute z-20 mt-1 max-h-60 w-full overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-xl">
+                {field.open && field.results.length > 0 ? (
+                    <ul className="absolute z-20 mt-2 max-h-60 w-full overflow-y-auto rounded-[24px] border border-white/80 bg-white/95 shadow-[0_30px_70px_-36px_rgba(24,53,45,0.36)] backdrop-blur-xl">
                         {field.results.map((feature) => {
                             const key = feature.properties.banId ?? feature.properties.id;
                             return (
                                 <li key={key}>
                                     <button
                                         type="button"
-                                        className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-violet-50"
+                                        className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-[#335246] transition hover:bg-[#fff3ec]"
                                         onMouseDown={() => onSelect(feature)}
                                     >
-                                        <span className="text-slate-400 shrink-0">📍</span>
-                                        <span className="text-sm text-slate-700">{feature.properties.label}</span>
+                                        <span className="shrink-0 text-[#b06f60]">📍</span>
+                                        <span>{feature.properties.label}</span>
                                     </button>
                                 </li>
                             );
                         })}
                     </ul>
-                )}
+                ) : null}
             </div>
 
             <AddressPreview selected={field.selected} />
@@ -105,21 +95,20 @@ function AddressSearch({
     );
 }
 
-// ── Section wrapper ───────────────────────────────────────────────────────────
-
-function FormSection({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) {
+function FormSection({ icon, title, children }: { icon: string; title: string; children: ReactNode }) {
     return (
-        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 space-y-4 sm:p-6">
-            <div className="flex items-center gap-2">
-                <span>{icon}</span>
-                <h2 className="font-semibold text-slate-800">{title}</h2>
+        <section className="rounded-[30px] border border-white/70 bg-white/60 p-5 text-[#18352d] shadow-[0_24px_64px_-40px_rgba(24,53,45,0.35)] backdrop-blur-xl sm:p-6">
+            <div className="flex items-center gap-3">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f7ede2] text-lg">{icon}</span>
+                <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#b06f60]">Trip composer</p>
+                    <h2 className="font-serif text-2xl text-[#18352d]">{title}</h2>
+                </div>
             </div>
-            {children}
-        </div>
+            <div className="mt-5 space-y-4">{children}</div>
+        </section>
     );
 }
-
-// ── PublishTripForm ───────────────────────────────────────────────────────────
 
 type Props = {
     tripDateTime: string;
@@ -145,39 +134,37 @@ type Props = {
 };
 
 export function PublishTripForm({
-                                    tripDateTime,
-                                    availableSeats,
-                                    smokingAllowed,
-                                    error,
-                                    submitting,
-                                    isSubmitDisabled,
-                                    starting,
-                                    arrival,
-                                    onTripDateTimeChange,
-                                    onAvailableSeatsChange,
-                                    onSmokingAllowedChange,
-                                    onStartingChange,
-                                    onArrivalChange,
-                                    onStartingFocus,
-                                    onStartingBlur,
-                                    onArrivalFocus,
-                                    onArrivalBlur,
-                                    onSelectStarting,
-                                    onSelectArrival,
-                                    onSubmit,
-                                }: Props) {
+    tripDateTime,
+    availableSeats,
+    smokingAllowed,
+    error,
+    submitting,
+    isSubmitDisabled,
+    starting,
+    arrival,
+    onTripDateTimeChange,
+    onAvailableSeatsChange,
+    onSmokingAllowedChange,
+    onStartingChange,
+    onArrivalChange,
+    onStartingFocus,
+    onStartingBlur,
+    onArrivalFocus,
+    onArrivalBlur,
+    onSelectStarting,
+    onSelectArrival,
+    onSubmit,
+}: Props) {
     return (
-        <form onSubmit={onSubmit} className="space-y-4">
-            {error && (
-                <div className="flex items-center gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3.5">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white text-xs">!</span>
-                    <p className="text-sm font-medium text-rose-700">{error}</p>
+        <form onSubmit={onSubmit} className="space-y-4 xl:grid xl:grid-cols-2 xl:gap-6 xl:space-y-0">
+            {error ? (
+                <div className="rounded-[24px] border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm font-medium text-rose-700 xl:col-span-2">
+                    {error}
                 </div>
-            )}
+            ) : null}
 
-            {/* Trip info */}
             <FormSection icon="🕐" title="Trip information">
-                <Field label="Date & time">
+                <Field label="Date and time">
                     <input
                         type="datetime-local"
                         value={tripDateTime}
@@ -198,7 +185,7 @@ export function PublishTripForm({
                     />
                 </Field>
 
-                <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:bg-slate-50">
+                <label className="flex cursor-pointer items-center gap-3 rounded-[24px] border border-[#ecd8cf] bg-[#fffaf6] p-4 transition hover:bg-white">
                     <div className="relative">
                         <input
                             type="checkbox"
@@ -206,20 +193,19 @@ export function PublishTripForm({
                             onChange={(e) => onSmokingAllowedChange(e.target.checked)}
                             className="peer sr-only"
                         />
-                        <div className="h-5 w-9 rounded-full bg-slate-200 transition peer-checked:bg-violet-500" />
-                        <div className="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4" />
+                        <div className="h-6 w-11 rounded-full bg-[#e6ddd2] transition peer-checked:bg-[#f26f5a]" />
+                        <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition peer-checked:translate-x-5" />
                     </div>
                     <div>
-                        <p className="text-sm font-semibold text-slate-700">Smoking allowed</p>
-                        <p className="text-xs text-slate-400">Passengers may smoke during the trip</p>
+                        <p className="text-sm font-semibold text-[#18352d]">Smoking allowed</p>
+                        <p className="text-xs text-[#5d746b]">Turn this on only if passengers may smoke during the ride.</p>
                     </div>
                 </label>
             </FormSection>
 
-            {/* Starting address */}
             <FormSection icon="📍" title="Starting address">
                 <AddressSearch
-                    placeholder="Search starting address…"
+                    placeholder="Search starting address..."
                     field={starting}
                     onChange={onStartingChange}
                     onFocus={onStartingFocus}
@@ -228,10 +214,9 @@ export function PublishTripForm({
                 />
             </FormSection>
 
-            {/* Arrival address */}
             <FormSection icon="🏁" title="Arrival address">
                 <AddressSearch
-                    placeholder="Search arrival address…"
+                    placeholder="Search arrival address..."
                     field={arrival}
                     onChange={onArrivalChange}
                     onFocus={onArrivalFocus}
@@ -243,9 +228,9 @@ export function PublishTripForm({
             <button
                 type="submit"
                 disabled={isSubmitDisabled}
-                className="w-full rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-3.5 text-sm font-semibold text-white shadow-md shadow-violet-200 transition hover:from-violet-700 hover:to-indigo-700 disabled:cursor-not-allowed disabled:opacity-40"
+                className="w-full rounded-full bg-[#f26f5a] px-4 py-3.5 text-sm font-semibold text-white shadow-[0_18px_38px_-20px_rgba(242,111,90,0.75)] transition hover:bg-[#e4604b] disabled:cursor-not-allowed disabled:opacity-40 xl:col-span-2"
             >
-                {submitting ? "Publishing…" : "Publish Trip"}
+                {submitting ? "Publishing..." : "Publish trip"}
             </button>
         </form>
     );
