@@ -4,4 +4,110 @@
 
 :root {
   color-scheme: light;
+  --theme-bg: #fff7ea;
+  --theme-cream-strong: #fffaf4;
+  --theme-surface: rgba(255, 251, 243, 0.74);
+  --theme-surface-strong: rgba(255, 242, 207, 0.92);
+  --theme-ink: #17301f;
+  --theme-muted: #5f6f61;
+  --theme-coral: #ff7a59;
+  --theme-coral-deep: #eb5a36;
+  --theme-lime: #d5f06b;
+  --theme-sky: #91d7ff;
+  --theme-line: rgba(23, 48, 31, 0.12);
+  --theme-line-strong: rgba(23, 48, 31, 0.2);
+  --theme-shadow-soft: 0 16px 36px rgba(112, 72, 32, 0.1);
+  --theme-shadow-warm: 0 24px 70px rgba(112, 72, 32, 0.16);
+  --font-body: "Trebuchet MS", "Gill Sans", sans-serif;
+  --font-heading: Georgia, "Times New Roman", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(145, 215, 255, 0.72), transparent 24%),
+    radial-gradient(circle at 85% 10%, rgba(213, 240, 107, 0.84), transparent 20%),
+    linear-gradient(180deg, #fff8ee 0%, var(--theme-bg) 52%, #ffeec8 100%);
+  color: var(--theme-ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(255, 122, 89, 0.22);
+  color: var(--theme-ink);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  button {
+    border-radius: 999px;
+  }
+}
+
+@layer components {
+  .glass-card {
+    border: 1px solid var(--theme-line);
+    background: var(--theme-surface);
+    box-shadow: var(--theme-shadow-soft);
+    backdrop-filter: blur(18px);
+  }
+
+  .pill-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0 1.2rem;
+    border-radius: 999px;
+    font-weight: 700;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .pill-button:hover,
+  .pill-button:focus-visible {
+    transform: translateY(-1px);
+  }
 }

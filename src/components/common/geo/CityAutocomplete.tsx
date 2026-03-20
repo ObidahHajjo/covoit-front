@@ -69,7 +69,7 @@ export default function CityAutocomplete({
 
     return (
         <div className="relative">
-            <label className="mb-1 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-semibold tracking-[0.04em] text-[var(--theme-ink)]">
                 {label}
             </label>
 
@@ -88,16 +88,16 @@ export default function CityAutocomplete({
                     }, 150);
                 }}
                 placeholder={placeholder}
-                className="w-full rounded-xl border px-4 py-3"
+                className="w-full rounded-[1.25rem] border border-[var(--theme-line)] bg-[rgba(255,255,255,0.78)] px-4 py-3 text-[var(--theme-ink)] shadow-soft outline-none transition placeholder:text-[var(--theme-muted)]/80 focus:border-[rgba(255,122,89,0.38)] focus:bg-white focus:ring-4 focus:ring-[rgba(255,122,89,0.12)]"
                 autoComplete="off"
             />
 
             {isLoading && (
-                <p className="mt-1 text-sm text-slate-500">Searching...</p>
+                <p className="mt-2 text-sm text-[var(--theme-muted)]">Searching...</p>
             )}
 
             {!isLoading && isOpen && results.length > 0 && (
-                <ul className="absolute z-20 mt-1 max-h-64 w-full overflow-y-auto rounded-xl border bg-white shadow-lg">
+                <ul className="absolute z-20 mt-2 max-h-64 w-full overflow-y-auto rounded-[1.5rem] border border-[var(--theme-line)] bg-[rgba(255,248,238,0.96)] p-2 shadow-warm backdrop-blur-xl">
                     {results.map((option) => {
                         const key = `${option.cityCode}-${option.postalCode}`;
 
@@ -105,11 +105,11 @@ export default function CityAutocomplete({
                             <li key={key}>
                                 <button
                                     type="button"
-                                    className="w-full px-4 py-3 text-left hover:bg-slate-100"
+                                    className="w-full rounded-[1rem] px-4 py-3 text-left transition hover:bg-white/80"
                                     onMouseDown={() => handleSelect(option)}
                                 >
-                                    <span className="font-medium">{option.cityName}</span>
-                                    <span className="ml-2 text-sm text-slate-500">
+                                    <span className="font-semibold text-[var(--theme-ink)]">{option.cityName}</span>
+                                    <span className="ml-2 text-sm text-[var(--theme-muted)]">
                                         {option.postalCode}
                                     </span>
                                 </button>
