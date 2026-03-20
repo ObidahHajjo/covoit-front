@@ -1,6 +1,5 @@
 import { useLogin } from "../../context/Auth/useLogin";
 import { LoginSection } from "../../components/ui/LoginSection";
-import "../../assets/css/login.css";
 
 export default function LoginPage() {
   const {
