@@ -11,24 +11,24 @@ function TripPreviewCard({ trip, detailsPath }: { trip: Trip; detailsPath: strin
   return (
     <Link
       to={detailsPath}
-      className="group flex items-center gap-4 rounded-xl border border-[#eee] bg-white p-4 transition hover:border-[#ccc] sm:p-5"
+      className="group flex flex-col gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 transition hover:border-[var(--theme-line-strong)] sm:flex-row sm:items-center sm:p-5"
     >
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#fafafa] text-lg">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-lg">
         🚗
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate font-medium leading-none text-[#222]">
+        <p className="truncate font-medium leading-none text-[var(--theme-ink)]">
           {from} - {to}
         </p>
-        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-[#888]">
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-[var(--theme-muted)]">
           <span>{formatDateTimeRaw(trip.departure_time)}</span>
           <span>{trip.available_seats} seats open</span>
           <span>{trip.distance_km} km</span>
         </div>
       </div>
 
-      <span className="shrink-0 rounded-full border border-[#eee] bg-[#fafafa] px-3 py-1 text-xs font-medium text-[#666]">
+      <span className="inline-flex w-fit shrink-0 rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1 text-xs font-medium text-[var(--theme-muted-strong)] sm:self-center">
         Open
       </span>
     </Link>
@@ -51,26 +51,26 @@ function TripSection({
   detailsBasePath: string;
 }) {
   return (
-    <section className="rounded-xl border border-[#eee] bg-white p-5 sm:p-6">
-      <div className="flex items-start justify-between gap-4">
+    <section className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-[#999]">At a glance</p>
-          <h2 className="mt-2 font-medium text-xl text-[#222]">{title}</h2>
-          <p className="mt-1 text-sm text-[#888]">{countLabel}</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">At a glance</p>
+          <h2 className="mt-2 font-medium text-xl text-[var(--theme-ink)]">{title}</h2>
+          <p className="mt-1 text-sm text-[var(--theme-muted)]">{countLabel}</p>
         </div>
         <Link
           to={allPath}
-          className="shrink-0 rounded-full border border-[#eee] bg-white px-4 py-2 text-xs font-medium text-[#666] transition hover:border-[#ccc] hover:text-[#222]"
+          className="w-fit shrink-0 rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-2 text-xs font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]"
         >
           See all
         </Link>
       </div>
 
       {trips.length === 0 ? (
-        <div className="mt-5 rounded-xl border border-dashed border-[#eee] bg-[#fafafa] px-6 py-10 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white text-2xl">🗓</div>
-          <p className="mt-4 font-medium text-lg text-[#222]">Nothing on the road yet.</p>
-          <p className="mt-1 text-sm text-[#888]">{emptyMessage}</p>
+        <div className="mt-5 rounded-xl border border-dashed border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-6 py-10 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--theme-surface)] text-2xl">🗓</div>
+          <p className="mt-4 font-medium text-lg text-[var(--theme-ink)]">Nothing on the road yet.</p>
+          <p className="mt-1 text-sm text-[var(--theme-muted)]">{emptyMessage}</p>
         </div>
       ) : (
         <div className="mt-5 space-y-3">
@@ -110,33 +110,33 @@ export function HomeSection({
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
-      <div className="rounded-xl border border-[#eee] bg-[#fafafa] px-5 py-6 sm:px-7 sm:py-8">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(290px,0.8fr)] lg:items-start">
+      <div className="rounded-[1.75rem] border border-[var(--theme-line)] bg-[rgba(242,244,242,0.88)] px-4 py-5 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:px-6 sm:py-6 lg:px-7 lg:py-8">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:items-start">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-[#999]">Shared routes</p>
-            <h1 className="mt-3 max-w-3xl font-medium text-3xl leading-tight text-[#222] sm:text-4xl">
+            <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">Shared routes</p>
+            <h1 className="mt-3 max-w-3xl font-heading text-3xl font-extrabold leading-tight tracking-[-0.04em] text-[var(--theme-ink)] sm:text-4xl lg:text-5xl">
               Welcome back, {displayName}.
             </h1>
-            <p className="mt-4 max-w-2xl text-sm leading-6 text-[#888] sm:text-base">
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted)] sm:text-base">
               Keep an eye on departures, seat availability, and your latest bookings.
             </p>
           </div>
 
-          <div className="rounded-xl border border-[#eee] bg-white p-5">
-            <p className="text-xs font-medium uppercase tracking-wide text-[#999]">Quick pulse</p>
+          <div className="rounded-[1.5rem] border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 shadow-[var(--theme-shadow-warm)]">
+            <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">Quick pulse</p>
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-              <div className="rounded-lg bg-[#fafafa] p-4">
-                <p className="text-xs font-medium uppercase tracking-wide text-[#999]">Driver trips</p>
-                <p className="mt-2 font-medium text-2xl text-[#222]">{upcomingDriverTripsCount}</p>
+              <div className="rounded-lg bg-[var(--theme-bg-soft)] p-4">
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">Driver trips</p>
+                <p className="mt-2 font-medium text-2xl text-[var(--theme-ink)]">{upcomingDriverTripsCount}</p>
               </div>
-              <div className="rounded-lg bg-[#fafafa] p-4">
-                <p className="text-xs font-medium uppercase tracking-wide text-[#999]">Bookings</p>
-                <p className="mt-2 font-medium text-2xl text-[#222]">{upcomingBookingsCount}</p>
+              <div className="rounded-lg bg-[var(--theme-bg-soft)] p-4">
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">Bookings</p>
+                <p className="mt-2 font-medium text-2xl text-[var(--theme-ink)]">{upcomingBookingsCount}</p>
               </div>
             </div>
             <button
               onClick={onLogout}
-              className="mt-4 w-full rounded-full border border-[#222] bg-[#222] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#444]"
+              className="mt-4 w-full rounded-full border border-[var(--theme-primary)] bg-[linear-gradient(145deg,var(--theme-primary)_0%,var(--theme-primary-dim)_100%)] px-4 py-3 text-sm font-medium text-white transition hover:scale-[1.01]"
             >
               Log out
             </button>

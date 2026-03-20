@@ -11,7 +11,7 @@ type Props = {
 };
 
 const inputClass =
-	"w-full rounded-[12px] border border-[#eee] bg-white px-4 py-3.5 text-sm text-[#222] outline-none transition placeholder:text-[#999] focus:border-[#222]";
+	"w-full rounded-[12px] border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[var(--theme-primary)]";
 
 export function ContactDriverSection({
 	subject,
@@ -24,27 +24,27 @@ export function ContactDriverSection({
 }: Props) {
 	return (
 	<div className="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 lg:px-0">
-		<section className="overflow-hidden rounded-[24px] border border-[#eee] bg-[#fafafa] px-5 py-6 text-[#222] sm:px-7 sm:py-8">
-		<p className="text-xs font-medium uppercase tracking-[0.2em] text-[#888]">Driver message</p>
-		<h1 className="mt-3 text-4xl font-medium leading-[1.1] text-[#222] sm:text-5xl">Send a clear, friendly note to the driver.</h1>
-		<p className="mt-4 max-w-2xl text-sm leading-6 text-[#666] sm:text-base">
+		<section className="overflow-hidden rounded-[24px] border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 text-[var(--theme-ink)] sm:px-7 sm:py-8">
+		<p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Driver message</p>
+		<h1 className="mt-3 text-4xl font-medium leading-[1.1] text-[var(--theme-ink)] sm:text-5xl">Send a clear, friendly note to the driver.</h1>
+		<p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">
 		Share pickup context, timing questions, or quick coordination details before the trip starts.
 		</p>
 
-		<form onSubmit={onSubmit} className="mt-8 space-y-4 rounded-[16px] border border-[#eee] bg-white p-5 sm:p-6">
+		<form onSubmit={onSubmit} className="mt-8 space-y-4 rounded-[16px] border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
 		{success ? (
-			<div className="rounded-[12px] border border-[#eee] bg-[#fafafa] px-4 py-3 text-sm font-medium text-[#222]">
+			<div className="rounded-[12px] border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-3 text-sm font-medium text-[var(--theme-ink)]">
 			{success}
 			</div>
 		) : null}
 		{error ? (
-			<div className="rounded-[12px] border border-[#eee] bg-[#fafafa] px-4 py-3 text-sm font-medium text-[#222]">
+			<div className="rounded-[12px] border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-3 text-sm font-medium text-[var(--theme-ink)]">
 			{error}
 			</div>
 		) : null}
 
 		<div className="space-y-2">
-			<label className="block text-xs font-medium uppercase tracking-[0.15em] text-[#888]">Subject line</label>
+			<label className="block text-xs font-medium uppercase tracking-[0.15em] text-[var(--theme-muted)]">Subject line</label>
 			<input
 			value={subject}
 			onChange={(e) => onSubjectChange(e.target.value)}
@@ -54,7 +54,7 @@ export function ContactDriverSection({
 		</div>
 
 		<div className="space-y-2">
-			<label className="block text-xs font-medium uppercase tracking-[0.15em] text-[#888]">Your message</label>
+			<label className="block text-xs font-medium uppercase tracking-[0.15em] text-[var(--theme-muted)]">Your message</label>
 			<textarea
 			value={message}
 			onChange={(e) => onMessageChange(e.target.value)}
@@ -64,7 +64,7 @@ export function ContactDriverSection({
 			/>
 		</div>
 
-		<button type="submit" className="w-full rounded-full bg-[#222] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[#333]">
+		<button type="submit" className="w-full rounded-full bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)]">
 			Send message
 		</button>
 		</form>

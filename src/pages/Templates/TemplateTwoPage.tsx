@@ -22,7 +22,7 @@ export default function TemplateTwoPage() {
 
           <div className="mt-20 grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--theme-surface)]/5 rounded-full border border-white/10 mb-6">
                 <span className="w-2 h-2 bg-[#4ecdc4] rounded-full animate-pulse"></span>
                 <span className="text-sm text-white/80">Live routes available</span>
               </div>
@@ -48,7 +48,7 @@ export default function TemplateTwoPage() {
                 </Link>
                 <Link
                   to="/my-trips/new"
-                  className="px-8 py-4 bg-white/5 border border-white/20 text-white font-bold rounded-xl hover:bg-white/10 transition-colors"
+                  className="px-8 py-4 bg-[var(--theme-surface)]/5 border border-white/20 text-white font-bold rounded-xl hover:bg-[var(--theme-surface)]/10 transition-colors"
                 >
                   Publish a ride
                 </Link>
@@ -57,8 +57,8 @@ export default function TemplateTwoPage() {
 
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b6b]/20 to-[#4ecdc4]/20 rounded-3xl blur-2xl"></div>
-              <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 space-y-4">
-                <div className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-[#ff6b6b]/50 transition-colors cursor-pointer">
+              <div className="relative bg-[var(--theme-surface)]/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 space-y-4">
+                <div className="flex items-center gap-4 p-4 bg-[var(--theme-surface)]/5 rounded-2xl border border-white/10 hover:border-[#ff6b6b]/50 transition-colors cursor-pointer">
                   <div className="w-12 h-12 bg-gradient-to-br from-[#ff6b6b] to-[#feca57] rounded-xl flex items-center justify-center">
                     <span className="text-xl">🚗</span>
                   </div>
@@ -69,7 +69,7 @@ export default function TemplateTwoPage() {
                   <span className="px-3 py-1 text-xs bg-[#4ecdc4]/20 text-[#4ecdc4] rounded-full">Available</span>
                 </div>
 
-                <div className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-[#ff6b6b]/50 transition-colors cursor-pointer">
+                <div className="flex items-center gap-4 p-4 bg-[var(--theme-surface)]/5 rounded-2xl border border-white/10 hover:border-[#ff6b6b]/50 transition-colors cursor-pointer">
                   <div className="w-12 h-12 bg-gradient-to-br from-[#4ecdc4] to-[#44a08d] rounded-xl flex items-center justify-center">
                     <span className="text-xl">🚗</span>
                   </div>
@@ -80,7 +80,7 @@ export default function TemplateTwoPage() {
                   <span className="px-3 py-1 text-xs bg-[#feca57]/20 text-[#feca57] rounded-full">1 left</span>
                 </div>
 
-                <div className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-[#ff6b6b]/50 transition-colors cursor-pointer">
+                <div className="flex items-center gap-4 p-4 bg-[var(--theme-surface)]/5 rounded-2xl border border-white/10 hover:border-[#ff6b6b]/50 transition-colors cursor-pointer">
                   <div className="w-12 h-12 bg-gradient-to-br from-[#a55eea] to-[#8854d0] rounded-xl flex items-center justify-center">
                     <span className="text-xl">🚗</span>
                   </div>

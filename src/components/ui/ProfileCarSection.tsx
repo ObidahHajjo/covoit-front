@@ -29,9 +29,9 @@ type Props = {
 function Field({ label, error, children }: { label: string; error?: string | null; children: ReactNode }) {
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-medium uppercase tracking-wide text-[#888]">{label}</label>
+      <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{label}</label>
       {children}
-      {error ? <p className="text-xs font-medium text-[#999]">{error}</p> : null}
+      {error ? <p className="text-xs font-medium text-[var(--theme-subtle)]">{error}</p> : null}
     </div>
   );
 }
@@ -58,43 +58,43 @@ export function CarSection({
   onReset,
 }: Props) {
   const inputClass =
-    "w-full rounded-lg border border-[#eee] bg-white px-4 py-3.5 text-sm text-[#222] outline-none transition placeholder:text-[#999] focus:border-[#ccc] focus:ring-2 focus:ring-[#eee] disabled:cursor-not-allowed disabled:opacity-50";
+    "w-full rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[#ccc] focus:ring-2 focus:ring-[rgba(82,100,72,0.12)] disabled:cursor-not-allowed disabled:opacity-50";
   const hasCar = !form.delete_car && (form.brand_name || form.model_name);
 
   return (
     <form onSubmit={onSubmit} className="space-y-5 xl:grid xl:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] xl:gap-6 xl:space-y-0">
       <div className="space-y-5">
-        {success ? <div className="rounded-lg border border-[#eee] bg-white px-4 py-3.5 text-sm font-medium text-[#666]">{success}</div> : null}
-        {error ? <div className="rounded-lg border border-[#eee] bg-white px-4 py-3.5 text-sm font-medium text-[#666]">{error}</div> : null}
+        {success ? <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)]">{success}</div> : null}
+        {error ? <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)]">{error}</div> : null}
 
-        <div className={`rounded-xl border p-5 ${form.delete_car ? "border-[#eee] bg-[#fafafa]" : "border-[#eee] bg-white"}`}>
+        <div className={`rounded-xl border p-5 ${form.delete_car ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)]" : "border-[var(--theme-line)] bg-[var(--theme-surface)]"}`}>
           <div className="flex items-center gap-4">
-            <div className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-lg text-2xl ${form.delete_car ? "bg-[#fafafa] text-[#999]" : hasCar ? "bg-[#fafafa] text-[#888]" : "bg-[#fafafa] text-[#888]"}`}>
+            <div className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-lg text-2xl ${form.delete_car ? "bg-[var(--theme-bg-soft)] text-[var(--theme-subtle)]" : hasCar ? "bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]"}`}>
               🚗
             </div>
             <div className="min-w-0 flex-1">
               {form.delete_car ? (
                 <>
-                  <p className="text-xl font-medium text-[#222]">Car will be removed</p>
-                  <p className="mt-1 text-sm text-[#888]">Saving now will unlink this vehicle from your profile.</p>
+                  <p className="text-xl font-medium text-[var(--theme-ink)]">Car will be removed</p>
+                  <p className="mt-1 text-sm text-[var(--theme-muted)]">Saving now will unlink this vehicle from your profile.</p>
                 </>
               ) : hasCar ? (
                 <>
-                  <p className="truncate text-xl font-medium text-[#222]">{form.brand_name} {form.model_name}</p>
-                  <p className="mt-1 text-sm text-[#888]">{form.seats ? `${form.seats} seats` : "Seat count pending"}{form.license_plate ? ` - ${form.license_plate}` : ""}</p>
+                  <p className="truncate text-xl font-medium text-[var(--theme-ink)]">{form.brand_name} {form.model_name}</p>
+                  <p className="mt-1 text-sm text-[var(--theme-muted)]">{form.seats ? `${form.seats} seats` : "Seat count pending"}{form.license_plate ? ` - ${form.license_plate}` : ""}</p>
                 </>
               ) : (
                 <>
-                  <p className="text-xl font-medium text-[#222]">No car registered yet</p>
-                  <p className="mt-1 text-sm text-[#888]">Add your vehicle so passengers can recognize it quickly.</p>
+                  <p className="text-xl font-medium text-[var(--theme-ink)]">No car registered yet</p>
+                  <p className="mt-1 text-sm text-[var(--theme-muted)]">Add your vehicle so passengers can recognize it quickly.</p>
                 </>
               )}
             </div>
-            {hasCar && !form.delete_car ? <div className="h-8 w-8 rounded-full border-2 border-[#eee]" style={{ backgroundColor: form.hex }} /> : null}
+            {hasCar && !form.delete_car ? <div className="h-8 w-8 rounded-full border-2 border-[var(--theme-line)]" style={{ backgroundColor: form.hex }} /> : null}
           </div>
         </div>
 
-        <div className="grid gap-4 rounded-xl border border-[#eee] bg-white p-5 sm:p-6">
+        <div className="grid gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
           <Field label="Brand" error={getFieldError("brand.name", "brand_id")}>
             <select value={form.brand_name} onChange={(e) => onBrandChange(e.target.value)} disabled={form.delete_car} className={inputClass}>
               <option value="">Select a brand</option>
@@ -113,26 +113,26 @@ export function CarSection({
                 disabled={form.delete_car || !form.brand_name}
                 className={inputClass}
               />
-              {carSearchLoading ? <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-[#888]">Searching...</span> : null}
+              {carSearchLoading ? <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-[var(--theme-muted)]">Searching...</span> : null}
               {showCarDropdown ? (
-                <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-lg border border-[#eee] bg-white">
+                <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)]">
                   {carSuggestions.map((car) => {
                     const brandName = car.model?.brand?.name ?? form.brand_name;
                     const modelName = car.model?.name ?? "Unknown model";
                     const seats = car.model?.seats ?? null;
                     return (
-                      <button key={car.id} type="button" onClick={() => onSelectSuggestion(car)} className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[#fafafa]">
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#fafafa] text-sm">🚗</span>
+                      <button key={car.id} type="button" onClick={() => onSelectSuggestion(car)} className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[var(--theme-bg-soft)]">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-sm">🚗</span>
                         <span>
-                          <span className="block text-sm font-medium text-[#222]">{brandName} {modelName}</span>
-                          <span className="text-xs text-[#888]">{seats ? `${seats} seats` : "Seats unknown"}</span>
+                          <span className="block text-sm font-medium text-[var(--theme-ink)]">{brandName} {modelName}</span>
+                          <span className="text-xs text-[var(--theme-muted)]">{seats ? `${seats} seats` : "Seats unknown"}</span>
                         </span>
                       </button>
                     );
                   })}
                 </div>
               ) : null}
-              {carSearchError ? <p className="mt-2 text-xs font-medium text-[#999]">{carSearchError}</p> : null}
+              {carSearchError ? <p className="mt-2 text-xs font-medium text-[var(--theme-subtle)]">{carSearchError}</p> : null}
             </div>
           </Field>
 
@@ -151,7 +151,7 @@ export function CarSection({
           </Field>
 
           <div className="space-y-3">
-            <label className="block text-xs font-medium uppercase tracking-wide text-[#888]">Color</label>
+            <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Color</label>
             <div className="flex flex-wrap gap-2">
               {DEFAULT_CAR_COLORS.map((color) => {
                 const selected = form.hex.toLowerCase() === color.hex.toLowerCase();
@@ -162,7 +162,7 @@ export function CarSection({
                     onClick={() => onSelectColor(color.name, color.hex)}
                     disabled={form.delete_car}
                     title={color.name}
-                    className={`relative flex h-10 w-10 items-center justify-center rounded-lg border-2 transition ${selected ? "scale-110 border-[#222]" : "border-transparent hover:border-[#ddd]"} disabled:opacity-40`}
+                    className={`relative flex h-10 w-10 items-center justify-center rounded-lg border-2 transition ${selected ? "scale-110 border-[var(--theme-primary)]" : "border-transparent hover:border-[var(--theme-line-strong)]"} disabled:opacity-40`}
                     style={{ backgroundColor: color.hex }}
                   >
                     {selected ? <span className="text-xs font-bold" style={{ color: ["#FFFFFF", "#EAB308", "#C0C0C0"].includes(color.hex) ? "#374151" : "#fff" }}>✓</span> : null}
@@ -172,37 +172,37 @@ export function CarSection({
             </div>
 
             <div className="flex items-center gap-3">
-              <input type="color" value={form.hex} onChange={(e) => onCustomColorChange(e.target.value)} disabled={form.delete_car} className="h-11 w-16 cursor-pointer rounded-lg border border-[#eee] bg-white p-1 disabled:opacity-40" />
-              <div className="flex-1 rounded-lg border border-[#eee] bg-white px-4 py-3 text-sm text-[#222]">{form.color_name || "-"}</div>
+              <input type="color" value={form.hex} onChange={(e) => onCustomColorChange(e.target.value)} disabled={form.delete_car} className="h-11 w-16 cursor-pointer rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] p-1 disabled:opacity-40" />
+              <div className="flex-1 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm text-[var(--theme-ink)]">{form.color_name || "-"}</div>
             </div>
 
-            {getFieldError("color.name", "color_name") ? <p className="text-xs font-medium text-[#999]">{getFieldError("color.name", "color_name")}</p> : null}
-            {getFieldError("color.hex_code", "hex", "hex_code") ? <p className="text-xs font-medium text-[#999]">{getFieldError("color.hex_code", "hex", "hex_code")}</p> : null}
+            {getFieldError("color.name", "color_name") ? <p className="text-xs font-medium text-[var(--theme-subtle)]">{getFieldError("color.name", "color_name")}</p> : null}
+            {getFieldError("color.hex_code", "hex", "hex_code") ? <p className="text-xs font-medium text-[var(--theme-subtle)]">{getFieldError("color.hex_code", "hex", "hex_code")}</p> : null}
           </div>
 
-          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#eee] bg-[#fafafa] p-4 transition hover:bg-white">
+          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] p-4 transition hover:bg-[var(--theme-surface)]">
             <div className="relative">
               <input type="checkbox" checked={form.delete_car} onChange={(e) => onFieldChange("delete_car", e.target.checked)} className="peer sr-only" />
-              <div className="h-6 w-11 rounded-full bg-[#eee] transition peer-checked:bg-[#888]" />
-              <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white transition peer-checked:translate-x-5" />
+              <div className="h-6 w-11 rounded-full bg-[var(--theme-line)] transition peer-checked:bg-[var(--theme-muted)]" />
+              <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-[var(--theme-surface)] transition peer-checked:translate-x-5" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[#222]">Remove my car</p>
-              <p className="text-xs text-[#888]">Unlink and delete vehicle information from your account.</p>
+              <p className="text-sm font-medium text-[var(--theme-ink)]">Remove my car</p>
+              <p className="text-xs text-[var(--theme-muted)]">Unlink and delete vehicle information from your account.</p>
             </div>
           </label>
 
           <div className="grid gap-3 pt-1 sm:grid-cols-2">
-            <button type="button" onClick={onReset} disabled={saving} className="rounded-lg border border-[#eee] bg-white px-4 py-3.5 text-sm font-medium text-[#666] transition hover:border-[#ccc] hover:text-[#222] disabled:opacity-40">Reset</button>
-            <button type="submit" disabled={saving} className="rounded-lg bg-[#222] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[#333] disabled:opacity-40">{saving ? "Saving..." : form.delete_car ? "Remove car" : "Save car"}</button>
+            <button type="button" onClick={onReset} disabled={saving} className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)] disabled:opacity-40">Reset</button>
+            <button type="submit" disabled={saving} className="rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40">{saving ? "Saving..." : form.delete_car ? "Remove car" : "Save car"}</button>
           </div>
         </div>
       </div>
 
       <div className="space-y-5 xl:sticky xl:top-8 xl:self-start">
-        <div className="rounded-xl border border-[#eee] bg-white p-5">
-          <p className="text-xs font-medium uppercase tracking-wide text-[#888]">Vehicle notes</p>
-          <div className="mt-3 space-y-2 text-sm leading-6 text-[#666]">
+        <div className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Vehicle notes</p>
+          <div className="mt-3 space-y-2 text-sm leading-6 text-[var(--theme-muted-strong)]">
             <p>Choose the most precise model you can so seats and recognition details stay accurate.</p>
             <p>The saved color and license plate help passengers find you faster at pickup.</p>
           </div>

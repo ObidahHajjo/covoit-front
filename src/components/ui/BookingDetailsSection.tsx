@@ -12,9 +12,9 @@ type Props = {
 
 function DetailCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-[#eee] bg-white p-4">
-      <p className="text-xs font-medium uppercase tracking-wide text-[#888]">{label}</p>
-      <p className="mt-2 text-sm font-medium leading-6 text-[#222]">{value}</p>
+    <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{label}</p>
+      <p className="mt-2 text-sm font-medium leading-6 text-[var(--theme-ink)]">{value}</p>
     </div>
   );
 }
@@ -44,13 +44,13 @@ export function BookingDetailsSection({
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
-      <section className="overflow-hidden rounded-2xl border border-[#eee] bg-[#fafafa] px-5 py-6 text-[#222] sm:px-7 sm:py-8">
-        <p className="text-xs font-medium uppercase tracking-wide text-[#888]">Booking details</p>
-        <h1 className="mt-3 text-2xl font-medium leading-tight text-[#222] sm:text-3xl">{from} - {to}</h1>
-        <p className="mt-4 max-w-2xl text-sm leading-6 text-[#666] sm:text-base">Keep departure notes, passenger count, and cancellation actions together in one calm view.</p>
+      <section className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 text-[var(--theme-ink)] sm:px-7 sm:py-8">
+        <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Booking details</p>
+        <h1 className="mt-3 text-2xl font-medium leading-tight text-[var(--theme-ink)] sm:text-3xl">{from} - {to}</h1>
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">Keep departure notes, passenger count, and cancellation actions together in one calm view.</p>
 
         {error ? (
-          <div className="mt-6 rounded-lg border border-[#eee] bg-white px-4 py-3 text-sm font-medium text-[#666]">
+          <div className="mt-6 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm font-medium text-[var(--theme-muted-strong)]">
             {error}
           </div>
         ) : null}
@@ -64,13 +64,13 @@ export function BookingDetailsSection({
           <DetailCard label="Ride style" value={trip.smoking_allowed ? "Smoking allowed" : "Non-smoking ride"} />
         </div>
 
-        <div className="mt-8 rounded-xl border border-[#eee] bg-white p-5">
+        <div className="mt-8 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-[#888]">Reservation status</p>
-              <h2 className="mt-2 text-xl font-medium text-[#222]">{isTripEnded ? "This ride has already wrapped up." : "Your seat is currently reserved."}</h2>
+              <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Reservation status</p>
+              <h2 className="mt-2 text-xl font-medium text-[var(--theme-ink)]">{isTripEnded ? "This ride has already wrapped up." : "Your seat is currently reserved."}</h2>
             </div>
-            <span className={`rounded-full border px-3 py-1 text-xs font-medium ${isTripEnded ? "border-[#eee] bg-[#fafafa] text-[#888]" : "border-[#ddd] bg-white text-[#666]"}`}>
+            <span className={`rounded-full border px-3 py-1 text-xs font-medium ${isTripEnded ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
               {isTripEnded ? "Ended" : "Active"}
             </span>
           </div>
@@ -79,7 +79,7 @@ export function BookingDetailsSection({
             <button
               onClick={onCancel}
               disabled={cancelling}
-              className="mt-5 w-full rounded-lg bg-[#222] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[#333] disabled:opacity-40"
+              className="mt-5 w-full rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40"
             >
               {cancelling ? "Cancelling..." : "Cancel reservation"}
             </button>

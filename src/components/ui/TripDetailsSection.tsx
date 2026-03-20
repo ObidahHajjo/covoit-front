@@ -1,5 +1,6 @@
 import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
 import type { Trip } from "../../types/Trip";
+import PageLoadingState from "../common/PageLoadingState";
 
 type Props = {
     trip: Trip | null;
@@ -13,9 +14,9 @@ type Props = {
 
 function DetailCard({ label, value }: { label: string; value: string }) {
 	return (
-	<div className="rounded-[12px] bg-[#fafafa] p-4">
-		<p className="text-xs font-medium uppercase tracking-[0.15em] text-[#888]">{label}</p>
-		<p className="mt-2 text-sm font-medium leading-6 text-[#222]">{value}</p>
+	<div className="rounded-[12px] bg-[var(--theme-bg-soft)] p-4">
+		<p className="text-xs font-medium uppercase tracking-[0.15em] text-[var(--theme-muted)]">{label}</p>
+		<p className="mt-2 text-sm font-medium leading-6 text-[var(--theme-ink)]">{value}</p>
 	</div>
 	);
 }
@@ -30,22 +31,15 @@ export function TripDetailsSection({
     onContactDriver,
 }: Props) {
 if (loading) {
-	return (
-	<div className="mx-auto flex min-h-[60vh] w-full max-w-5xl items-center justify-center px-4 py-6 sm:px-6 lg:px-0">
-		<div className="space-y-3 text-center">
-		<div className="mx-auto h-11 w-11 animate-spin rounded-full border-4 border-[#eee] border-t-[#222]" />
-		<p className="text-sm text-[#888]">Loading trip details...</p>
-		</div>
-	</div>
-	);
+	return <PageLoadingState title="Loading your trip details" />;
 }
 
 	if (loadError || !trip) {
 	return (
 		<div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
-		<div className="rounded-[16px] border border-dashed border-[#eee] bg-[#fafafa] px-6 py-14 text-center text-[#222]">
-			<div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white">
-				<span className="h-3 w-3 rounded-full bg-[#888]" />
+		<div className="rounded-[16px] border border-dashed border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-6 py-14 text-center text-[var(--theme-ink)]">
+			<div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--theme-surface)]">
+				<span className="h-3 w-3 rounded-full bg-[var(--theme-muted)]" />
 			</div>
 			<p className="mt-4 text-2xl font-medium">{loadError ?? "Trip not found."}</p>
 		</div>
@@ -65,18 +59,18 @@ if (loading) {
 
 return (
 	<div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
-		<section className="overflow-hidden rounded-[24px] border border-[#eee] bg-[#fafafa] px-5 py-6 text-[#222] sm:px-7 sm:py-8">
-		<p className="text-xs font-medium uppercase tracking-[0.2em] text-[#888]">Trip details</p>
+		<section className="overflow-hidden rounded-[24px] border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 text-[var(--theme-ink)] sm:px-7 sm:py-8">
+		<p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Trip details</p>
 		<div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
 			<div>
-			<h1 className="text-4xl font-medium leading-[1.1] text-[#222] sm:text-5xl">{from} - {to}</h1>
-			<p className="mt-4 text-sm leading-6 text-[#666] sm:text-base">A warm overview of timing, route notes, and booking actions before you commit.</p>
+			<h1 className="text-4xl font-medium leading-[1.1] text-[var(--theme-ink)] sm:text-5xl">{from} - {to}</h1>
+			<p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">A warm overview of timing, route notes, and booking actions before you commit.</p>
 			</div>
-			<span className="inline-flex rounded-full border border-[#eee] bg-white px-4 py-2 text-sm font-medium text-[#222]">Trip #{trip.id}</span>
+			<span className="inline-flex rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-2 text-sm font-medium text-[var(--theme-ink)]">Trip #{trip.id}</span>
 		</div>
 
 		{actionError ? (
-			<div className="mt-6 rounded-[12px] border border-[#eee] bg-white px-4 py-3 text-sm font-medium text-[#222]">
+			<div className="mt-6 rounded-[12px] border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm font-medium text-[var(--theme-ink)]">
 			{actionError}
 			</div>
 		) : null}
@@ -96,14 +90,14 @@ return (
 			<button
 			onClick={onReserve}
 			disabled={submitting}
-			className="rounded-full bg-[#222] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[#333] disabled:opacity-50"
+			className="rounded-full bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-50"
 			>
 			{submitting ? "Booking..." : "Confirm booking"}
 			</button>
 
 			<button
 			onClick={onContactDriver}
-			className="rounded-full border border-[#eee] bg-white px-4 py-3.5 text-sm font-medium text-[#222] transition hover:border-[#ccc]"
+			className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
 			>
 			Contact driver
 			</button>

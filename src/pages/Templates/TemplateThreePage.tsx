@@ -14,7 +14,7 @@ export default function TemplateThreePage() {
         <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <Link to="/home" className="group flex items-center gap-2 text-white/60 hover:text-white transition-colors">
-              <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">←</span>
+              <span className="w-8 h-8 rounded-lg bg-[var(--theme-surface)]/10 flex items-center justify-center group-hover:bg-[var(--theme-surface)]/20 transition-colors">←</span>
               <span className="hidden sm:inline text-sm">Back</span>
             </Link>
             <div className="flex items-center gap-3">
@@ -29,7 +29,7 @@ export default function TemplateThreePage() {
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-7">
-                <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-8 backdrop-blur-sm">
+                <div className="inline-flex items-center gap-3 px-4 py-2 bg-[var(--theme-surface)]/5 border border-white/10 rounded-full mb-8 backdrop-blur-sm">
                   <span className="relative flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ff88] opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00ff88]"></span>
@@ -64,7 +64,7 @@ export default function TemplateThreePage() {
                   </Link>
                   <Link
                     to="/my-trips/new"
-                    className="group relative px-10 py-5 bg-white/5 border-2 border-white/20 text-white font-black text-lg rounded-2xl overflow-hidden backdrop-blur-sm hover:border-[#00ff88] transition-colors"
+                    className="group relative px-10 py-5 bg-[var(--theme-surface)]/5 border-2 border-white/20 text-white font-black text-lg rounded-2xl overflow-hidden backdrop-blur-sm hover:border-[#00ff88] transition-colors"
                   >
                     <span className="absolute inset-0 bg-[#00ff88]/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     <span className="relative">PUBLISH A RIDE</span>
@@ -75,7 +75,7 @@ export default function TemplateThreePage() {
               <div className="lg:col-span-5">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#ff0080]/30 via-[#8b5cf6]/20 to-[#00ff88]/30 rounded-3xl blur-3xl animate-pulse"></div>
-                  <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 space-y-3">
+                  <div className="relative bg-[var(--theme-surface)]/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 space-y-3">
                     <div className="flex items-center gap-2 mb-4">
                       <div className="w-3 h-3 rounded-full bg-[#ff0080] animate-pulse"></div>
                       <div className="w-3 h-3 rounded-full bg-[#8b5cf6]"></div>
@@ -91,7 +91,7 @@ export default function TemplateThreePage() {
                     ].map((ride, i) => (
                       <div
                         key={i}
-                        className="group flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-white/30 transition-all cursor-pointer hover:bg-white/10"
+                        className="group flex items-center gap-4 p-4 bg-[var(--theme-surface)]/5 rounded-2xl border border-white/10 hover:border-white/30 transition-all cursor-pointer hover:bg-[var(--theme-surface)]/10"
                         style={{ animationDelay: `${i * 100}ms` }}
                       >
                         <div
@@ -128,7 +128,7 @@ export default function TemplateThreePage() {
                 { value: "98.7%", label: "Happy", gradient: "from-[#00ff88] to-[#00d4ff]" },
                 { value: "2.4M", label: "XPF Saved", gradient: "from-[#fbbf24] to-[#f59e0b]" },
               ].map((stat, i) => (
-                <div key={i} className="text-center p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
+                <div key={i} className="text-center p-6 bg-[var(--theme-surface)]/5 rounded-2xl border border-white/10 backdrop-blur-sm">
                   <p className={`text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r ${stat.gradient}`}>
                     {stat.value}
                   </p>
@@ -164,7 +164,7 @@ export default function TemplateThreePage() {
               ].map((feature, i) => (
                 <div
                   key={i}
-                  className="group relative p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm overflow-hidden hover:border-white/20 transition-all"
+                  className="group relative p-8 bg-[var(--theme-surface)]/5 rounded-3xl border border-white/10 backdrop-blur-sm overflow-hidden hover:border-white/20 transition-all"
                 >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"

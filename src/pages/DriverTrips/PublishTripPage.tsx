@@ -6,11 +6,11 @@ export default function PublishTripPage() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
-      <div className="overflow-hidden rounded-2xl border border-[#eee] bg-white px-5 py-6 sm:px-7 sm:py-8">
+      <div className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] px-5 py-6 sm:px-7 sm:py-8">
         <div className="mb-8 max-w-3xl">
-          <p className="text-xs font-medium uppercase tracking-wider text-[#888]">Publish a trip</p>
-          <h1 className="mt-3 text-3xl font-medium leading-tight text-[#222] sm:text-4xl">Offer a ride</h1>
-          <p className="mt-4 text-sm leading-6 text-[#666] sm:text-base">Set timing, seats, and route details clearly so passengers understand the trip at a glance.</p>
+          <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">Publish a trip</p>
+          <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">Offer a ride</h1>
+          <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">Set timing, seats, and route details clearly so passengers understand the trip at a glance.</p>
         </div>
 
         <PublishTripForm

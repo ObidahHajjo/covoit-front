@@ -36,11 +36,11 @@ export default function FindTripPage() {
 
     return (
         <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
-<div className="overflow-hidden rounded-[40px] border border-[#eee] bg-[#fafafa] px-5 py-6 sm:px-7 sm:py-8">
+<div className="overflow-hidden rounded-[40px] border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 sm:px-7 sm:py-8">
 		<div className="mb-8 max-w-3xl">
-			<p className="text-xs font-medium uppercase tracking-[0.2em] text-[#888]">Find a trip</p>
-			<h1 className="mt-3 text-4xl font-medium leading-[1.1] text-[#222] sm:text-5xl">Search the network with the same warm, community-first tone.</h1>
-			<p className="mt-4 text-sm leading-6 text-[#666] sm:text-base">Pick a departure, an arrival, and an optional date to find the ride that fits best.</p>
+			<p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Find a trip</p>
+			<h1 className="mt-3 text-4xl font-medium leading-[1.1] text-[var(--theme-ink)] sm:text-5xl">Search the network with the same warm, community-first tone.</h1>
+			<p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">Pick a departure, an arrival, and an optional date to find the ride that fits best.</p>
 		</div>
 
                 <FindTripForm

@@ -1,4 +1,5 @@
 import type React from "react";
+import { Notice, SereneButton, SurfaceCard } from "../common/SerenePrimitives";
 
 type Props = {
   email: string;
@@ -15,6 +16,38 @@ type Props = {
   onNavigateToRegister: () => void;
 };
 
+const trustNotes = [
+  {
+    label: "Verified profiles",
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m9 12 2 2 4-4" />
+        <path d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4Z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Transparent pricing",
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 1v22" />
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+      </svg>
+    ),
+  },
+  {
+    label: "Active community",
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" />
+        <circle cx="9.5" cy="7" r="3" />
+        <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 4.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    ),
+  },
+];
+
 export function LoginSection({
   email,
   onEmailChange,
@@ -30,100 +63,100 @@ export function LoginSection({
   onNavigateToRegister,
 }: Props) {
   return (
-    <div className="min-h-dvh bg-[#fafafa] px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto grid w-full max-w-5xl overflow-hidden bg-white md:grid-cols-[1fr_1fr]">
-        <section className="relative flex min-h-[320px] flex-col justify-between border-b border-[#eee] p-6 sm:p-8 md:min-h-[640px] md:border-b-0 md:border-r lg:p-10">
-          <div className="absolute right-5 top-5 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-[#999]">
-            Community-first
+    <div className="min-h-dvh bg-transparent px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+      <SurfaceCard className="mx-auto grid w-full max-w-6xl overflow-hidden bg-[rgba(255,255,255,0.92)] md:grid-cols-[1.08fr_0.92fr]">
+        <section className="relative hidden min-h-[720px] overflow-hidden border-r border-[var(--theme-line)] md:flex md:flex-col md:justify-between">
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(235,239,236,0.78)_0%,rgba(249,250,248,0.42)_100%)]" />
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center opacity-35" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,233,197,0.75),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(212,229,239,0.4),transparent_28%)]" />
+          <div className="absolute -left-20 bottom-20 h-64 w-64 rounded-full bg-[rgba(212,233,197,0.45)] blur-3xl" />
+          <div className="absolute right-6 top-6 serene-chip bg-[rgba(255,255,255,0.72)] shadow-[var(--theme-shadow-warm)]">
+            Editorial serenity
           </div>
 
-          <div className="relative z-10 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase tracking-wider text-[#666]">
-              <span className="h-2 w-2 rounded-full bg-[#60a5fa]" />
-              Sign in
-            </div>
-            <h1 className="mt-6 max-w-[10ch] text-[clamp(2rem,5vw,3.5rem)] font-medium leading-tight tracking-tight text-[#222]">
-              Welcome back.
-            </h1>
-            <p className="mt-5 max-w-lg text-sm leading-7 text-[#888] sm:text-base">
-              Sign in to continue your journey with trusted riders and shared routes.
-            </p>
+          <div className="relative z-10 flex flex-1 flex-col p-12 lg:p-14">
+            <div className="max-w-xl">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[rgba(255,255,255,0.78)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--theme-muted-strong)] shadow-[var(--theme-shadow-warm)]">
+                <span className="h-2 w-2 rounded-full bg-[var(--theme-primary)]" />
+                The Serene Path
+              </div>
 
-            <div className="mt-8 flex flex-wrap gap-3 text-sm text-[#666]">
-              {["Verified profiles", "Transparent pricing", "Active community"].map((item) => (
-                <span
-                  key={item}
-                  className="border-b border-[#eee] px-3 py-2"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
+              <h1 className="mt-8 max-w-[8ch] font-heading text-[clamp(3.8rem,6vw,6rem)] font-extrabold leading-[0.92] tracking-[-0.06em] text-[var(--theme-ink)]">
+                Welcome back.
+              </h1>
 
-          <div className="relative mt-10 border-t border-[#eee] pt-6">
-            <div className="flex items-center justify-between gap-4 text-lg font-medium text-[#222]">
-              <span>Papeete</span>
-              <span className="h-2 flex-1 border-b border-dotted border-[#ddd]" />
-              <span>Faaa</span>
+              <p className="mt-6 max-w-md text-lg leading-8 text-[var(--theme-muted-strong)]">
+                Re-enter your calm corner of travel. Quiet routes, trusted riders, and smoother journeys are waiting.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                {trustNotes.map((item) => (
+                  <span key={item.label} className="serene-chip gap-2.5 bg-[rgba(255,255,255,0.76)] shadow-[var(--theme-shadow-warm)] normal-case tracking-[0.04em]">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[rgba(82,100,72,0.1)] text-[var(--theme-primary)]">
+                      {item.icon}
+                    </span>
+                    {item.label}
+                  </span>
+                ))}
+              </div>
             </div>
-            <p className="mt-3 text-sm leading-6 text-[#888]">
-              Join trusted riders on familiar routes.
-            </p>
           </div>
         </section>
 
-        <section className="flex flex-col justify-between p-5 sm:p-7 lg:p-10">
-          <div className="flex items-center justify-between gap-4 border-b border-[#eee] pb-5">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-[#999]">Authentication</p>
-              <p className="mt-2 text-xl font-medium tracking-tight text-[#222]">
-                Bon retour
-              </p>
-            </div>
-            <span className="px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-[#666]">
-              Live access
-            </span>
-          </div>
+        <section className="relative flex flex-col justify-center p-5 sm:p-8 lg:p-12">
+          <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(212,233,197,0.28),transparent_72%)] md:hidden" />
 
-          <div className="mt-6 border-b border-[#eee] pb-6">
-            <div className="flex items-start justify-between gap-4">
+          <div className="relative z-10 mx-auto w-full max-w-md">
+            <div className="mb-8 flex items-center justify-between gap-4">
               <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-[#999]">Sign in</p>
-                <h2 className="mt-2 text-2xl font-medium tracking-tight text-[#222]">
-                  Continue your route.
+                <p className="serene-kicker">Authentication</p>
+                <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-[-0.04em] text-[var(--theme-ink)]">
+                  Sign in gently.
                 </h2>
               </div>
+              <span className="serene-chip">Live access</span>
             </div>
 
-            <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
-              <div className="grid gap-4">
+            <div className="rounded-[2rem] border border-[var(--theme-line)] bg-[rgba(249,250,248,0.72)] p-5 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:p-6">
+              <div>
+                <p className="serene-kicker">Continue your route</p>
+                <p className="mt-3 text-sm leading-7 text-[var(--theme-muted)]">
+                  Use your email and password to reopen your dashboard, bookings, and upcoming rides.
+                </p>
+              </div>
+
+              <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
                 <label htmlFor="email" className="grid gap-2">
-                  <span className="text-xs font-medium uppercase tracking-wider text-[#999]">Email</span>
+                  <span className="serene-label">Email address</span>
                   <div className="relative">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#999]">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--theme-subtle)]">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                       </svg>
                     </span>
                     <input
                       id="email"
                       type="email"
                       autoComplete="email"
-                      placeholder="you@example.com"
+                      placeholder="name@example.com"
                       value={email}
                       onChange={(e) => onEmailChange(e.target.value)}
-                      className="w-full border-b border-[#eee] bg-white py-3.5 pl-12 pr-4 text-sm text-[#222] outline-none transition placeholder:text-[#bbb] focus:border-[#222]"
+                      className="serene-input pl-12"
                     />
                   </div>
                 </label>
 
                 <label htmlFor="password" className="grid gap-2">
-                  <span className="text-xs font-medium uppercase tracking-wider text-[#999]">Password</span>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="serene-label">Password</span>
+                    <span className="text-xs font-medium text-[var(--theme-primary)]">Secure field</span>
+                  </div>
                   <div className="relative">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#999]">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--theme-subtle)]">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                       </svg>
                     </span>
                     <input
@@ -133,44 +166,34 @@ export function LoginSection({
                       placeholder="Enter your password"
                       value={password}
                       onChange={(e) => onPasswordChange(e.target.value)}
-                      className="w-full border-b border-[#eee] bg-white py-3.5 pl-12 pr-12 text-sm text-[#222] outline-none transition placeholder:text-[#bbb] focus:border-[#222]"
+                      className="serene-input pl-12 pr-12"
                     />
                     <button
                       type="button"
                       tabIndex={-1}
                       aria-label={showPassword ? "Masquer" : "Afficher"}
                       onClick={onTogglePassword}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-[#999] transition hover:text-[#222]"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-2 text-[var(--theme-subtle)] transition hover:bg-[rgba(82,100,72,0.08)] hover:text-[var(--theme-ink)]"
                     >
                       {showPassword ? (
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" /><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" /><line x1="1" y1="1" x2="23" y2="23" />
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+                          <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+                          <line x1="1" y1="1" x2="23" y2="23" />
                         </svg>
                       ) : (
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
                         </svg>
                       )}
                     </button>
                   </div>
                 </label>
-              </div>
 
-              {error && (
-                <div className="flex items-start gap-3 border-l-2 border-[#f472b6] bg-[#fdf2f8] px-4 py-3 text-sm text-[#222]">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f472b6] text-xs font-medium text-white">
-                    !
-                  </span>
-                  <p>{error}</p>
-                </div>
-              )}
+                {error ? <Notice tone="error">{error}</Notice> : null}
 
-              <div className="grid gap-3">
-                <button
-                  type="submit"
-                  disabled={!canSubmit}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[#222] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-50"
-                >
+                <SereneButton type="submit" disabled={!canSubmit} className="mt-1 w-full">
                   {isSubmitting ? (
                     <>
                       <span className="h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-white/35 border-t-white" />
@@ -180,38 +203,28 @@ export function LoginSection({
                     <>
                       Sign in
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
                       </svg>
                     </>
                   )}
-                </button>
+                </SereneButton>
 
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <button
-                    type="button"
-                    onClick={onNavigateToRegister}
-                    className="rounded-full border border-[#eee] bg-white px-4 py-3 text-sm font-medium text-[#222] transition hover:border-[#ddd]"
-                  >
+                  <SereneButton type="button" variant="secondary" onClick={onNavigateToRegister} className="w-full">
                     Create account
-                  </button>
-                  <button
-                    type="button"
-                    onClick={onClear}
-                    className="rounded-full border border-[#eee] bg-[#fafafa] px-4 py-3 text-sm font-medium text-[#666] transition hover:border-[#ddd]"
-                  >
+                  </SereneButton>
+                  <SereneButton type="button" variant="secondary" onClick={onClear} className="w-full bg-[var(--theme-bg-soft)]">
                     Clear form
-                  </button>
+                  </SereneButton>
                 </div>
-              </div>
-            </form>
-
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#eee] pt-4 text-xs text-[#999]">
-              <span>Minimal and clean design.</span>
-              <span className="truncate">API: {import.meta.env.VITE_API_BASE_URL}</span>
+              </form>
             </div>
+
+            <p className="mt-6 px-1 text-xs text-[var(--theme-subtle)]">Calm, minimal, community-first.</p>
           </div>
         </section>
-      </div>
+      </SurfaceCard>
     </div>
   );
 }

@@ -1,5 +1,6 @@
-import { useHome } from "../context/Home/useHome";
+import PageLoadingState from "../components/common/PageLoadingState";
 import { HomeSection } from "../components/ui/HomeSection";
+import { useHome } from "../context/Home/useHome";
 
 export default function HomePage() {
   const {
@@ -14,14 +15,7 @@ export default function HomePage() {
   } = useHome();
 
   if (loading) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center bg-[#fafafa] px-4">
-        <div className="space-y-3 text-center">
-          <div className="mx-auto h-11 w-11 animate-spin rounded-full border-2 border-[#eee] border-t-[#222]" />
-          <p className="text-sm text-[#888]">Loading your dashboard...</p>
-        </div>
-      </div>
-    );
+    return <PageLoadingState title="Loading your dashboard" />;
   }
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { searchCommunes } from "../../../features/geo/geoApi.ts";
 import type { CityPostalOption } from "../../../types/Commune.ts";
+import { FormField } from "../SerenePrimitives.tsx";
 
 type CityAutocompleteProps = {
   label: string;
@@ -69,35 +70,33 @@ export default function CityAutocomplete({
 
   return (
     <div className="relative">
-      <label className="mb-2 block text-sm font-medium text-[#222]">
-        {label}
-      </label>
-
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => handleChange(e.target.value)}
-        onFocus={() => {
-          if (results.length > 0) {
-            setIsOpen(true);
-          }
-        }}
-        onBlur={() => {
-          window.setTimeout(() => {
-            setIsOpen(false);
-          }, 150);
-        }}
-        placeholder={placeholder}
-        className="w-full rounded-lg border border-[#eee] bg-white px-4 py-3 text-[#222] outline-none transition placeholder:text-[#999] focus:border-[#222]"
-        autoComplete="off"
-      />
+      <FormField label={label}>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => handleChange(e.target.value)}
+          onFocus={() => {
+            if (results.length > 0) {
+              setIsOpen(true);
+            }
+          }}
+          onBlur={() => {
+            window.setTimeout(() => {
+              setIsOpen(false);
+            }, 150);
+          }}
+          placeholder={placeholder}
+          className="serene-input"
+          autoComplete="off"
+        />
+      </FormField>
 
       {isLoading && (
-        <p className="mt-2 text-sm text-[#888]">Searching...</p>
+        <p className="mt-2 text-sm text-[var(--theme-muted)]">Searching...</p>
       )}
 
       {!isLoading && isOpen && results.length > 0 && (
-        <ul className="absolute z-20 mt-2 max-h-64 w-full overflow-y-auto rounded-lg border border-[#eee] bg-white p-2">
+        <ul className="absolute z-20 mt-2 max-h-64 w-full overflow-y-auto rounded-[1.25rem] border border-[var(--theme-line)] bg-[rgba(255,255,255,0.96)] p-2 shadow-[var(--theme-shadow-float)] backdrop-blur-xl">
           {results.map((option) => {
             const key = `${option.cityCode}-${option.postalCode}`;
 
@@ -105,11 +104,11 @@ export default function CityAutocomplete({
               <li key={key}>
                 <button
                   type="button"
-                  className="w-full rounded px-4 py-3 text-left transition hover:bg-[#fafafa]"
+                  className="w-full rounded-[1rem] px-4 py-3 text-left transition hover:bg-[var(--theme-bg-soft)]"
                   onMouseDown={() => handleSelect(option)}
                 >
-                  <span className="font-medium text-[#222]">{option.cityName}</span>
-                  <span className="ml-2 text-sm text-[#888]">
+                  <span className="font-medium text-[var(--theme-ink)]">{option.cityName}</span>
+                  <span className="ml-2 text-sm text-[var(--theme-muted)]">
                     {option.postalCode}
                   </span>
                 </button>
