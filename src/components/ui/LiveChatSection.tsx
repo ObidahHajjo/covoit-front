@@ -72,6 +72,7 @@ export function LiveChatSection({
   const { t } = useI18n();
   const [selectedMessageIds, setSelectedMessageIds] = useState<number[]>([]);
   const [selectionBarTop, setSelectionBarTop] = useState(16);
+  const [selectionBarRect, setSelectionBarRect] = useState({ left: 8, width: 320 });
 
   useEffect(() => {
     if (clearingMessageIds.length === 0) {
@@ -94,8 +95,16 @@ export function LiveChatSection({
       const header = document.getElementById("app-shell-header");
       const messageSection = document.getElementById("live-chat-messages");
       const messageSectionTop = messageSection?.getBoundingClientRect().top ?? 0;
+      const messageSectionRect = messageSection?.getBoundingClientRect();
 
       const chatTopOffset = messageSectionTop > 0 ? messageSectionTop + 12 : 12;
+
+      if (messageSectionRect) {
+        setSelectionBarRect({
+          left: messageSectionRect.left,
+          width: messageSectionRect.width,
+        });
+      }
 
       if (!header) {
         setSelectionBarTop(chatTopOffset);
@@ -157,29 +166,33 @@ export function LiveChatSection({
             <div id="live-chat-messages" className="flex-1 space-y-4 bg-[rgba(246,248,245,0.86)] px-4 py-5 sm:px-6 sm:py-6">
               {selectedMessageIds.length > 0 && onClearMessages ? (
                 <>
-                  <div className="h-[72px] sm:h-[76px]" aria-hidden="true" />
+                  <div className="h-[92px] sm:h-[88px]" aria-hidden="true" />
                   <div
-                    className="fixed left-1/2 z-30 flex w-[calc(100%-2rem)] max-w-[min(56rem,calc(100%-2rem))] -translate-x-1/2 items-center justify-between gap-3 rounded-2xl border border-[var(--theme-line)] bg-[rgba(255,255,255,0.96)] px-4 py-3 shadow-[0_16px_34px_-24px_rgba(15,23,42,0.35)] backdrop-blur-sm"
-                    style={{ top: `${selectionBarTop}px` }}
+                    className="fixed z-30 flex flex-col gap-3 rounded-2xl border border-[var(--theme-line)] bg-[rgba(255,255,255,0.96)] px-3 py-3 shadow-[0_16px_34px_-24px_rgba(15,23,42,0.35)] backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-4"
+                    style={{
+                      top: `${selectionBarTop}px`,
+                      left: `${selectionBarRect.left}px`,
+                      width: `${selectionBarRect.width}px`,
+                    }}
                   >
-                  <p className="text-sm font-medium text-[var(--theme-ink)]">{t("chat.messagesSelected", { count: selectedMessageIds.length })}</p>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedMessageIds([])}
-                      className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-3 py-2 text-xs font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]"
-                    >
-                      {t("common.cancel")}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => onClearMessages(selectedMessageIds)}
-                      disabled={clearingMessageIds.length > 0}
-                      className="rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-700 transition hover:border-red-300 hover:bg-red-100 hover:text-red-800 disabled:opacity-50"
-                    >
-                      {clearingMessageIds.length > 0 ? t("chat.clearing") : t("chat.clearSelectedMessages")}
-                    </button>
-                  </div>
+                    <p className="text-center text-sm font-medium text-[var(--theme-ink)] sm:text-left">{t("chat.messagesSelected", { count: selectedMessageIds.length })}</p>
+                    <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-shrink-0 sm:items-center">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedMessageIds([])}
+                        className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-3 py-2 text-xs font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]"
+                      >
+                        {t("common.cancel")}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onClearMessages(selectedMessageIds)}
+                        disabled={clearingMessageIds.length > 0}
+                        className="rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-700 transition hover:border-red-300 hover:bg-red-100 hover:text-red-800 disabled:opacity-50"
+                      >
+                        {clearingMessageIds.length > 0 ? t("chat.clearing") : t("chat.clearSelectedMessages")}
+                      </button>
+                    </div>
                   </div>
                 </>
               ) : null}
