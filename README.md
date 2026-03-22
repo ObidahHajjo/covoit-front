@@ -1,287 +1,348 @@
-# Covoit Frontend
-
-Production-oriented frontend for a carpooling application. This project provides the authenticated rider/driver experience for account access, profile completion, trip discovery, booking management, driver trip management, and in-app chat.
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Tech Stack](#tech-stack)
-- [Core Features](#core-features)
-- [Application Architecture](#application-architecture)
-- [Routing](#routing)
-- [State and Context Organization](#state-and-context-organization)
-- [API Integration](#api-integration)
-- [Realtime Chat Behavior](#realtime-chat-behavior)
-- [Environment Variables](#environment-variables)
-- [Getting Started](#getting-started)
-- [Development Workflow](#development-workflow)
-- [Available Scripts](#available-scripts)
-- [Project Structure](#project-structure)
-- [Styling Approach](#styling-approach)
-- [Build and Deployment Notes](#build-and-deployment-notes)
-- [Troubleshooting](#troubleshooting)
+<div align="center">
+
+<img src="https://img.shields.io/badge/-%F0%9F%9A%97%20COVOIT%20FRONTEND-0a0a0a?style=for-the-badge&labelColor=0a0a0a" />
+
+### Plateforme de Covoiturage — React 19 + TypeScript + Vite
+
+<p>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/Vite-7-646CFF?style=flat-square&logo=vite&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-PostCSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/Laravel_Echo-Reverb-FF2D20?style=flat-square&logo=laravel&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/Nginx-SPA-009639?style=flat-square&logo=nginx&logoColor=white&labelColor=0a0a0a" />
+</p>
+
+<p>
+  <a href="README.en.md">English</a> &nbsp;|&nbsp; 🌐 <strong>Français</strong> &nbsp;|&nbsp; <a href="README.ar.md">العربية</a>
+</p>
+
+</div>
+
+---
+
+> **SPA orientée production** pour une plateforme de covoiturage. Développée avec React 19, TypeScript 5 et Vite 7 — couvrant l'expérience complète conducteur/passager : découverte de trajets, gestion des réservations, outils conducteur, paramètres de compte et chat temps réel via Laravel Reverb.
+
+---
+
+## 📚 Sommaire
+
+- [✨ Vue d'ensemble](#-vue-densemble)
+- [🧱 Stack Technique](#-stack-technique)
+- [🗺 Fonctionnalités](#-fonctionnalités)
+- [🏗 Architecture](#-architecture)
+- [🔀 Routage](#-routage)
+- [🧠 État & Contexte](#-état--contexte)
+- [🔌 Intégration API](#-intégration-api)
+- [💬 Chat Temps Réel](#-chat-temps-réel)
+- [⚙️ Variables d'environnement](#️-variables-denvironnement)
+- [🚀 Démarrage](#-démarrage)
+- [🛠 Workflow de développement](#-workflow-de-développement)
+- [📜 Scripts disponibles](#-scripts-disponibles)
+- [📁 Structure du projet](#-structure-du-projet)
+- [🎨 Approche stylistique](#-approche-stylistique)
+- [🌍 Build & Déploiement](#-build--déploiement)
+- [🔧 Dépannage](#-dépannage)
+
+---
+
+## ✨ Vue d'ensemble
+
+Le frontend Covoit est une SPA React + TypeScript propulsée par Vite, centrée sur le parcours utilisateur connecté :
+
+| Étape | Description |
+|---|---|
+| 🔐 **Authentification** | Connexion, inscription, mot de passe oublié/réinitialisation |
+| 👤 **Compléter le profil** | Étape obligatoire avant d'accéder à l'application |
+| 🔍 **Découvrir des trajets** | Recherche de trajets disponibles et consultation des détails |
+| 🎟 **Réserver & Gérer** | Réserver des sièges, consulter et annuler ses réservations |
+| 🚗 **Conduire** | Publier des trajets, gérer les passagers, annuler des trajets |
+| 🏠 **Compte** | Mettre à jour son profil personnel et les informations du véhicule |
+| 💬 **Chat** | Échanger des messages avec conducteurs ou passagers en temps réel |
+
+> L'application suppose qu'un backend Laravel compatible est en cours d'exécution. Plusieurs comportements dépendent des cookies de session, des flags de permission, du broadcasting de chat et des contrats d'API.
+
+---
+
+## 🧱 Stack Technique
+
+| Technologie | Version | Rôle |
+|---|---|---|
+| ⚛️ **React** | 19 | Framework UI |
+| 🔷 **TypeScript** | 5 | Typage statique |
+| ⚡ **Vite** | 7 | Serveur de dev & bundler |
+| 🔀 **React Router DOM** | 7 | Routage côté client |
+| 🌐 **Axios** | latest | Client HTTP |
+| 📡 **Laravel Echo** | latest | Wrapper client WebSocket |
+| 🔌 **pusher-js** | latest | Transport navigateur pour Reverb |
+| 🎨 **Tailwind CSS** | via PostCSS | Styles utilitaires |
+| ✅ **ESLint** | 9 | Linting |
+| 🟩 **Nginx** | latest | Serveur statique SPA en déploiement |
+
+> **Notes :**
+> - Tailwind est activé via les directives `@tailwind` dans `src/index.css` et la config PostCSS
+> - Aucun fichier de config Tailwind n'est présent dans le dépôt pour l'instant
+> - Aucun test runner n'est configuré dans `package.json` pour l'instant
+
+---
+
+## 🗺 Fonctionnalités
+
+```
+🔐  Auth ................... connexion · inscription · mot de passe oublié · réinitialisation
+🛡  Guards ................. guest-only · gate profil · basés sur les permissions
+🏠  Tableau de bord ........ trajets conducteur à venir · réservations à venir
+🔍  Découverte ............. recherche · résultats · détail d'un trajet
+🎟  Réservations ........... réserver un siège · annuler une réservation
+🚗  Outils conducteur ...... publier · gérer · annuler · contacter un passager
+👤  Compte ................. gestion du profil · gestion du véhicule
+💬  Chat ................... boîte de réception · fil de conversation · mises à jour temps réel
+⚠️  Feedback global ........ overlay chargement · alerte d'erreur
+```
 
-## Overview
+---
 
-This repository contains the frontend for the Covoit application, built as a Vite-powered React + TypeScript single-page app.
+## 🏗 Architecture
 
-The current codebase is centered around a logged-in user journey:
+L'application utilise une architecture React légère orientée providers. Aucun Redux, Zustand ou React Query — la récupération de données est gérée via des hooks personnalisés et des appels Axios par feature.
 
-- authenticate with a backend session
-- complete a required personal profile
-- search available trips
-- reserve seats and review bookings
-- publish and manage driver trips
-- maintain account and vehicle information
-- exchange messages through an in-app chat system
+### Composition au runtime (`src/App.tsx`)
 
-The application assumes a compatible backend is available. Several behaviors in this frontend depend on backend session cookies, permission flags, chat broadcasting, and API route contracts.
+```
+LoadingProvider
+  └── AxiosInterceptorProvider
+        └── AuthProvider
+              └── ChatInboxProvider
+                    └── GlobalSpinner + GlobalErrorAlert
+                          └── AppRouter
+```
+
+### Responsabilités par couche
 
-## Tech Stack
+| Couche | Chemin | Responsabilité |
+|---|---|---|
+| 🏛 **Infra app** | `src/app/` | Clients Axios, helpers erreurs API, error provider global |
+| 🌐 **Providers** | `src/providers/` | État auth, chargement, inbox chat |
+| 🔀 **Router** | `src/router/` | Arbre de routes et guards d'accès |
+| 📦 **Features** | `src/features/` | Modules API backend et utilitaires chat/temps réel |
+| 🧠 **Context** | `src/context/` | Hooks page/domaine et React contexts |
+| 📄 **Pages** | `src/pages/` | Composants de page au niveau des routes |
+| 🧩 **Components** | `src/components/` | Layout, primitives partagées, sections UI |
+| 🔷 **Types** | `src/types/` | Modèles TypeScript API/domaine |
 
-The repository currently uses:
+---
 
-- React 19
-- TypeScript 5
-- Vite 7
-- React Router DOM 7
-- Axios
-- Laravel Echo
-- `pusher-js` as the browser transport used by Laravel Reverb/Echo
-- Tailwind CSS via PostCSS
-- Autoprefixer
-- ESLint 9
-- Nginx for static SPA serving in deployment images (`nginx.conf`)
+## 🔀 Routage
 
-Notes:
+Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et des guards imbriqués.
 
-- Tailwind is enabled through `@tailwind` directives in `src/index.css` and the PostCSS pipeline in `postcss.config.js`.
-- There is no repository-local Tailwind config file at the moment.
-- There is no test runner configured in `package.json` right now.
+### 🔓 Routes publiques / invitées
+> Enveloppées par `GuestRoute` — redirige les utilisateurs authentifiés hors des écrans d'auth
 
-## Core Features
+```
+/login
+/register
+/forgot-password
+/reset-password
+```
 
-- Authentication flows: login, register, forgot password, reset password
-- Session-aware protected routing with guest-only and permission-based guards
-- Mandatory profile completion gate before entering the main app
-- Home dashboard with upcoming driver trips and bookings
-- Trip search and trip detail flows
-- Trip reservation and reservation cancellation
-- Driver trip publishing and trip cancellation
-- Account management for personal profile and vehicle details
-- Chat inbox and conversation screens
-- Realtime chat updates with a polling fallback strategy
-- Global loading and global error feedback layers
+### 👤 Route de complétion du profil
+> Activée si `first_name`, `last_name` ou `pseudo` sont absents de l'utilisateur authentifié
 
-## Application Architecture
+```
+/complete-profile
+```
 
-The app uses a lightweight React architecture based on providers, route guards, feature APIs, and page-specific hooks.
+### 🔒 Routes protégées
+> Nécessitent une authentification
 
-### Runtime composition
+```
+/home
+/find-trip
+/find-trip/results
+/trips/:tripId
+/trips/:tripId/contact-driver
+/chat
+/chat/:conversationId
+```
 
-Top-level composition in `src/App.tsx` is:
+### 🚗 Routes conducteur
+> Nécessitent la permission `can_manage_own_trips`
 
-1. `LoadingProvider`
-2. `AxiosInterceptorProvider`
-3. `AuthProvider`
-4. `ChatInboxProvider`
-5. global UI overlays (`GlobalSpinner`, `GlobalErrorAlert`)
-6. router (`AppRouter`)
+```
+/my-trips
+/my-trips/new
+/my-trips/:tripId
+/my-trips/:tripId/contact-passenger/:passengerId
+```
 
-### Layering approach
+### 🎟 Routes réservations
+> Nécessitent la permission `can_view_bookings`
 
-- `src/app`: shared infrastructure such as Axios clients, API error helpers, and the global error provider
-- `src/providers`: long-lived app-wide providers for auth, loading, and chat inbox state
-- `src/router`: route tree and access guards
-- `src/features`: backend-facing API modules and chat realtime utilities
-- `src/context`: page/domain hooks and React contexts used by UI screens
-- `src/pages`: route-level page components
-- `src/components`: layout, shared primitives, and UI sections
-- `src/types`: TypeScript API/domain models
+```
+/bookings
+/bookings/:tripId
+```
 
-This codebase does not use Redux, Zustand, React Query, or another centralized data store. Data fetching and mutation are handled with custom hooks and feature-specific Axios calls.
+### ⚙️ Routes compte
+> Nécessitent la permission `can_edit_profile`
 
-## Routing
+```
+/my-account
+```
 
-Routing is defined in `src/router/AppRouter.tsx` with `BrowserRouter` and nested guards.
+> La barre de navigation inférieure est consciente des permissions et n'affiche que les sections disponibles pour l'utilisateur courant.
 
-### Public and guest routes
+---
 
-- `/login`
-- `/register`
-- `/forgot-password`
-- `/reset-password`
+## 🧠 État & Contexte
 
-These are wrapped by `GuestRoute`, which redirects authenticated users away from auth screens.
+### Providers globaux
 
-### Profile completion route
+| Provider | Responsabilité |
+|---|---|
+| `AuthProvider` | Résout `/auth/me`, réessaie avec `/auth/refresh`, expose `status`, `user`, `refreshMe`, `logoutLocal` |
+| `LoadingProvider` | Suit le nombre de requêtes actives, alimente l'overlay de chargement global |
+| `ChatInboxProvider` | Charge les conversations, calcule les compteurs non lus, écoute les mises à jour temps réel, rafraîchit par intervalle |
+| `ErrorProvider` | Maintient l'état d'erreur global pour `GlobalErrorAlert` |
 
-- `/complete-profile`
+### Hooks page/domaine (`src/context/`)
 
-Profile completion is enforced by checking whether the authenticated user has the required `first_name`, `last_name`, and `pseudo` values.
+| Hook | Rôle |
+|---|---|
+| `useHome` | Données du tableau de bord |
+| `useTripResults` / `useTripDetails` | Flux de découverte de trajets |
+| `useMyTrips` / `usePublishTrip` / `useDriverTripDetails` | Workflows conducteur |
+| `useMyBookings` / `useBookingDetails` | Workflows réservation passager |
+| `useMyAccount` | Gestion profil + véhicule |
+| `useChatConversation` | Fils de messages |
+| `useLogin` / `useRegister` | Formulaires d'auth |
 
-### Protected routes
+### Utilisation du stockage
 
-- `/home`
-- `/find-trip`
-- `/find-trip/results`
-- `/trips/:tripId`
-- `/trips/:tripId/contact-driver`
-- `/chat`
-- `/chat/:conversationId`
+| Store | Clé | Usage |
+|---|---|---|
+| `sessionStorage` | `personId` | Stocké après connexion — utilisé par les appels API personne/compte |
+| `localStorage` | refresh token | Stocké par le flux de connexion pour la continuité de session |
+| `localStorage` | état lecture chat | Métadonnées non-lus par scope de session utilisateur |
 
-### Permission-gated routes
+---
 
-Driver capability (`can_manage_own_trips`):
+## 🔌 Intégration API
 
-- `/my-trips`
-- `/my-trips/new`
-- `/my-trips/:tripId`
-- `/my-trips/:tripId/contact-passenger/:passengerId`
+### Client API interne (`src/app/apiClient.ts`)
 
-Booking capability (`can_view_bookings`):
+- URL de base depuis `VITE_API_BASE_URL`
+- `Content-Type: application/json`
+- `withCredentials: true` pour l'auth basée sur les cookies
+- Retry automatique en cas de 401 via `/auth/refresh` pour les endpoints non-auth
 
-- `/bookings`
-- `/bookings/:tripId`
+### Client API externe (`src/app/externalApiClient.ts`)
 
-Account editing capability (`can_edit_profile`):
+Un second client Axios sans credentials, utilisé pour :
 
-- `/my-account`
+| Service | URL |
+|---|---|
+| 🗺 Recherche de commune | `https://geo.api.gouv.fr` |
+| 📍 Géocodage d'adresse | `https://data.geopf.fr/geocodage/search` |
 
-The bottom navigation is also permission-aware and only shows sections available to the current user.
+### Modules feature
 
-## State and Context Organization
+```
+src/features/
+  ├── auth/         authApi.ts · passwordApi.ts
+  ├── trips/        tripApi.ts
+  ├── person/       personApi.ts
+  ├── cars/         carApi.ts
+  ├── brands/       brandApi.ts
+  ├── chat/         chatApi.ts · chatEcho.ts · chatReadState.ts
+  ├── contact/      contactApi.ts
+  └── geo/          geoApi.ts
+```
 
-### Global providers
+### Endpoints backend attendus
 
-- `AuthProvider`: resolves `/auth/me`, attempts `/auth/refresh` when needed, and exposes `status`, `user`, `refreshMe`, and `logoutLocal`
-- `LoadingProvider`: tracks active request count and powers the global loading overlay
-- `ChatInboxProvider`: loads conversations, computes unread counts, listens for realtime inbox updates, and refreshes on an interval
-- `ErrorProvider`: holds app-wide error state for `GlobalErrorAlert`
+```
+POST   /auth/login · /auth/register · /auth/refresh · /auth/logout
+GET    /auth/me
+POST   /auth/forgot-password · /auth/reset-password
 
-### Page/domain hooks
+GET    /persons/:id
+GET    /persons/:id/trips-driver · /persons/:id/trips-passenger
 
-The app organizes most screen logic in `src/context/**` hooks, for example:
+GET    /trips · /trips/:id · /trips/:id/person
+POST   /trips/:id/contact-driver
+POST   /my-trips/:id/contact-passenger/:personId
 
-- `useHome` for dashboard data
-- `useTripResults` and `useTripDetails` for trip discovery flows
-- `useMyTrips`, `usePublishTrip`, and `useDriverTripDetails` for driver workflows
-- `useMyBookings` and `useBookingDetails` for rider booking workflows
-- `useMyAccount` for profile + car management
-- `useChatConversation` for message threads
-- `useLogin` and `useRegister` for auth forms
+GET    /cars · /cars/:id · /cars/search
+GET    /brands
 
-This keeps page components thin while preserving domain logic close to the relevant UI.
+GET    /conversations · /conversations/:id
+POST   /conversations/:id/messages
 
-### Storage usage
+POST   /broadcasting/auth · /broadcasting/auth-proxy
+```
 
-- `sessionStorage`: stores `personId` after login and is used by several person/account API calls
-- `localStorage`: stores the refresh token and chat read/unread state metadata
+---
 
-The refresh token is stored client-side by the login flow, but session continuity still depends on backend cookie/session configuration.
+## 💬 Chat Temps Réel
 
-## API Integration
+Le chat utilise une stratégie **hybride temps réel + polling** pour la résilience.
 
-### Internal API client
+### Stack
 
-`src/app/apiClient.ts` defines the authenticated Axios instance:
+| Composant | Technologie |
+|---|---|
+| Client Echo | `src/features/chat/chatEcho.ts` |
+| Transport | `pusher-js` (compatible Reverb) |
+| Auth | Auth canal privé via le backend |
 
-- base URL from `VITE_API_BASE_URL`
-- JSON request headers
-- `withCredentials: true` for cookie-based auth/session handling
-- automatic 401 retry using `/auth/refresh` for non-auth endpoints
+### Canaux
 
-### External API client
+```
+chat.user.{personId}          ← mises à jour niveau inbox
+chat.conversation.{id}        ← messages niveau conversation
+```
 
-`src/app/externalApiClient.ts` defines a second Axios client for third-party APIs without credentials.
+Écoute les événements `.chat.message.sent`.
 
-It is currently used for:
+### Fallback polling
 
-- commune search via `https://geo.api.gouv.fr`
-- address search via `https://data.geopf.fr/geocodage/search`
+| Périmètre | Intervalle |
+|---|---|
+| Inbox | toutes les **8 secondes** |
+| Conversation active | toutes les **5 secondes** |
 
-### Feature modules
+### État non-lu
 
-Backend calls are grouped by feature:
+- Persisté dans `localStorage` par scope de session utilisateur
+- Compteurs non-lus affichés dans la navigation inférieure
+- Marqué comme lu à l'ouverture de la conversation
+- Cartes d'alerte de message entrant affichées temporairement
 
-- `src/features/auth/authApi.ts`
-- `src/features/auth/passwordApi.ts`
-- `src/features/trips/tripApi.ts`
-- `src/features/person/personApi.ts`
-- `src/features/cars/carApi.ts`
-- `src/features/brands/brandApi.ts`
-- `src/features/chat/chatApi.ts`
-- `src/features/contact/contactApi.ts`
-- `src/features/geo/geoApi.ts`
+> Si le broadcasting n'est pas disponible, le polling maintient le chat fonctionnel — mais les indicateurs temps réel et le statut de connexion peuvent ne pas se comporter comme attendu.
 
-### Expected backend capabilities
+---
 
-Based on the current frontend implementation, the backend is expected to provide endpoints such as:
+## ⚙️ Variables d'environnement
 
-- `/auth/login`, `/auth/register`, `/auth/me`, `/auth/refresh`, `/auth/logout`
-- `/auth/forgot-password`, `/auth/reset-password`
-- `/persons/:id`, `/persons/:id/trips-driver`, `/persons/:id/trips-passenger`
-- `/trips`, `/trips/:tripId`, `/trips/:tripId/person`, `/trips/:tripId/contact-driver`
-- `/my-trips/:tripId/contact-passenger/:personId`
-- `/cars`, `/cars/:id`, `/cars/search`
-- `/brands`
-- `/conversations`, `/conversations/:id`, `/conversations/:id/messages`
-- `/broadcasting/auth` and `/broadcasting/auth-proxy`
+Copier depuis `.env.example` et adapter à votre environnement :
 
-Route names and response payloads are backend contracts; verify them against the Laravel API if you change either side.
+```bash
+cp .env.example .env.local
+```
 
-## Realtime Chat Behavior
+| Variable | Requise | Description |
+|---|---|---|
+| `VITE_API_BASE_URL` | ✅ Oui | URL de base de l'API backend |
+| `VITE_REVERB_APP_KEY` | ⚡ Temps réel | Clé publique Reverb pour Laravel Echo |
+| `VITE_REVERB_HOST` | ⚡ Temps réel | Hostname WebSocket (côté navigateur) |
+| `VITE_REVERB_PORT` | Optionnel | Fallback port HTTP/WS partagé |
+| `VITE_REVERB_WS_PORT` | Optionnel | Port WebSocket non-TLS explicite |
+| `VITE_REVERB_WSS_PORT` | Optionnel | Port WebSocket TLS explicite |
+| `VITE_REVERB_SCHEME` | Optionnel | `http` ou `https` |
 
-Chat is implemented as a hybrid realtime + polling system.
-
-### Realtime stack
-
-- Laravel Echo client in `src/features/chat/chatEcho.ts`
-- `pusher-js` transport
-- Reverb broadcaster configuration driven by Vite env variables
-- private channel subscriptions through backend auth endpoints
-
-### Current channel usage
-
-- inbox-level user channel: `chat.user.{personId}`
-- conversation-level channel: `chat.conversation.{conversationId}`
-
-The frontend listens for `.chat.message.sent` events.
-
-### Fallback / refresh strategy
-
-- inbox refresh every 8 seconds
-- active conversation refresh every 5 seconds
-- realtime events trigger silent reloads
-
-### Unread behavior
-
-Unread state is persisted in `localStorage` per user session scope using `src/features/chat/chatReadState.ts`.
-
-The UI currently supports:
-
-- unread counts in bottom navigation
-- read markers when a conversation is opened
-- transient incoming-message alert cards
-- connection status surfaced to chat screens
-
-If broadcasting is not correctly configured on the backend, chat should still refresh through polling, but live updates and connection indicators may not behave as expected.
-
-## Environment Variables
-
-Example values are documented in `.env.example`.
-
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `VITE_API_BASE_URL` | Yes | Base URL for the backend API used by the authenticated Axios client |
-| `VITE_REVERB_APP_KEY` | Required for realtime | Public Reverb app key used by Laravel Echo |
-| `VITE_REVERB_HOST` | Required for realtime | Hostname used by the browser for websocket connections |
-| `VITE_REVERB_PORT` | Optional | Shared HTTP/websocket port fallback |
-| `VITE_REVERB_WS_PORT` | Optional | Explicit non-TLS websocket port |
-| `VITE_REVERB_WSS_PORT` | Optional | Explicit TLS websocket port |
-| `VITE_REVERB_SCHEME` | Optional | `http` or `https`, used to determine TLS behavior |
-
-Example local configuration:
+**Config locale exemple :**
 
 ```env
 VITE_API_BASE_URL=http://covoit.local
@@ -293,180 +354,203 @@ VITE_REVERB_WSS_PORT=443
 VITE_REVERB_SCHEME=http
 ```
 
-Important:
+> Utilisez `.env.local` ou `.env` pour la config locale — les deux sont gitignorés.
 
-- use `.env.local` or `.env` for local setup; `.env` is gitignored and `*.local` is ignored as well
-- realtime values only matter if the backend actually exposes Laravel Reverb/broadcasting for this frontend
-- if your backend uses a different host, cookie domain, or proxy layout, update these values accordingly
+---
 
-## Getting Started
+## 🚀 Démarrage
 
-### Prerequisites
+### Prérequis
 
-- Node.js 18+ recommended
-- npm (the repository includes `package-lock.json`)
-- a running backend compatible with the API and broadcasting contracts expected by this frontend
+- **Node.js** 18+
+- **npm** (le dépôt inclut `package-lock.json`)
+- Un backend compatible avec les contrats d'API et de broadcasting attendus
 
-### Installation
+### Installer les dépendances
 
 ```bash
 npm install
 ```
 
-### Configure environment
-
-Create a local environment file from the example:
+### Configurer l'environnement
 
 ```bash
 cp .env.example .env.local
+# Éditer .env.local selon votre configuration locale
 ```
 
-Adjust values to match your local backend, websocket host, and scheme.
-
-### Start the development server
+### Démarrer le serveur de développement
 
 ```bash
 npm run dev
 ```
 
-Vite is configured in `vite.config.ts` to run on:
+Config du serveur dev Vite (`vite.config.ts`) :
 
-- host: `127.0.0.1`
-- port: `5173`
-- allowed host: `covoit.local`
+| Paramètre | Valeur |
+|---|---|
+| Host | `127.0.0.1` |
+| Port | `5173` |
+| Host autorisé | `covoit.local` |
 
-If you use the `covoit.local` hostname locally, make sure your hosts file and local proxy setup resolve it correctly.
+> Si vous utilisez le hostname `covoit.local`, configurez votre `/etc/hosts` et votre proxy local en conséquence.
 
-## Development Workflow
+---
 
-Typical local workflow:
-
-1. Start the backend/API and broadcasting services.
-2. Create or update `.env.local`.
-3. Install dependencies with `npm install`.
-4. Run the frontend with `npm run dev`.
-5. Lint before committing with `npm run lint`.
-6. Build a production bundle with `npm run build` to verify release readiness.
-
-Useful commands from the current repository:
+## 🛠 Workflow de développement
 
 ```bash
+# 1. Démarrer le backend/API + services de broadcasting
+# 2. Créer/mettre à jour .env.local
+# 3. Installer les dépendances
 npm install
+
+# 4. Démarrer le serveur de dev
 npm run dev
+
+# 5. Linter avant de committer
 npm run lint
+
+# 6. Vérifier la préparation pour la production
 npm run build
-npm run preview
 ```
 
-Because there is no automated test script configured right now, linting and production builds are the main built-in validation steps.
+> ⚠️ Aucun script de test automatisé n'est configuré pour l'instant. Le linting et les builds de production sont les étapes de validation principales disponibles dans le dépôt.
 
-## Available Scripts
+---
 
-Scripts come directly from `package.json`:
+## 📜 Scripts disponibles
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Starts the Vite development server |
-| `npm run build` | Runs `tsc -b && vite build` |
-| `npm run lint` | Runs `eslint .` |
-| `npm run preview` | Serves the production build locally with Vite |
+| Commande | Description |
+|---|---|
+| `npm run dev` | Démarre le serveur de développement Vite |
+| `npm run build` | Exécute `tsc -b && vite build` — vérification TypeScript + bundle |
+| `npm run lint` | Exécute `eslint .` |
+| `npm run preview` | Sert le build de production localement |
 
-## Project Structure
+---
 
-High-level structure of the current repository:
+## 📁 Structure du projet
 
-```text
+```
 covoit-front/
-├── public/                  # Static public assets
+│
+├── public/                     # Assets statiques publics
+│
 ├── src/
-│   ├── app/                 # Shared app infrastructure and error handling
-│   ├── assets/              # Local images and static frontend assets
-│   ├── auth/                # Auth-related helpers such as profile completion checks
+│   ├── app/                    # Clients Axios, helpers erreurs, error provider global
+│   ├── assets/                 # Images et assets statiques frontend
+│   ├── auth/                   # Helpers de vérification complétion profil
+│   │
 │   ├── components/
-│   │   ├── common/          # Reusable UI primitives and shared feedback components
-│   │   ├── layout/          # App shell and bottom navigation
-│   │   └── ui/              # Feature-oriented presentation sections
-│   ├── context/             # Page/domain hooks and React contexts
-│   ├── features/            # API modules and realtime/chat utilities
-│   ├── pages/               # Route-level page components
-│   ├── providers/           # Long-lived app providers
-│   ├── router/              # Route config and route guards
-│   ├── types/               # API/domain TypeScript types
-│   ├── App.tsx              # Root app composition
-│   ├── bootstrap.ts         # Axios loading interceptors
-│   ├── index.css            # Global theme tokens and Tailwind layers
-│   └── main.tsx             # App entry point
-├── .env.example             # Example Vite environment variables
-├── eslint.config.js         # ESLint flat config
-├── nginx.conf               # SPA static serving config
-├── package.json             # Scripts and dependencies
-├── postcss.config.js        # Tailwind + Autoprefixer PostCSS pipeline
-└── vite.config.ts           # Vite dev server configuration
+│   │   ├── common/             # Primitives UI réutilisables et composants de feedback
+│   │   ├── layout/             # Shell de l'app et navigation inférieure
+│   │   └── ui/                 # Sections de présentation orientées feature
+│   │
+│   ├── context/                # Hooks page/domaine et React contexts
+│   ├── features/               # Modules API et utilitaires réel-time/chat
+│   ├── pages/                  # Composants de page au niveau des routes
+│   ├── providers/              # Providers app-wide long-lived
+│   ├── router/                 # Config des routes et guards d'accès
+│   ├── types/                  # Modèles TypeScript API/domaine
+│   │
+│   ├── App.tsx                 # Composition des providers racine
+│   ├── bootstrap.ts            # Setup des intercepteurs Axios de chargement
+│   ├── index.css               # Tokens de thème global + layers Tailwind
+│   └── main.tsx                # Point d'entrée de l'app
+│
+├── .env.example                # Variables d'env Vite documentées
+├── eslint.config.js            # Config ESLint flat
+├── nginx.conf                  # Serveur statique SPA (fallback try_files)
+├── package.json                # Scripts et dépendances
+├── postcss.config.js           # Pipeline PostCSS Tailwind + Autoprefixer
+└── vite.config.ts              # Configuration serveur dev et build
 ```
 
-## Styling Approach
+---
 
-Styling is a mix of Tailwind utility classes and shared custom design tokens.
+## 🎨 Approche stylistique
 
-### What is in place today
+Le style combine des **classes utilitaires Tailwind** avec un système de tokens de design personnalisé.
 
-- global CSS variables in `src/index.css`
-- Tailwind base/components/utilities layers
-- reusable semantic utility classes such as `serene-page-shell`, `serene-card`, `serene-button-primary`, and `serene-nav-link`
-- shared UI primitives in `src/components/common/SerenePrimitives.tsx`
-- imported Google fonts (`Inter` and `Manrope`)
+### Ce qui est en place
 
-### Practical implication
+| Élément | Description |
+|---|---|
+| 🎨 Variables CSS | Tokens de design globaux dans `src/index.css` |
+| 🧱 Layers Tailwind | `base` / `components` / `utilities` via directives `@tailwind` |
+| 🧩 Classes sémantiques | `serene-page-shell`, `serene-card`, `serene-button-primary`, `serene-nav-link` |
+| 🔤 Primitives partagées | `src/components/common/SerenePrimitives.tsx` |
+| 🔡 Polices | `Inter` + `Manrope` via Google Fonts |
 
-Most pages compose Tailwind utilities directly, while the overall visual system is anchored by CSS custom properties and a small set of shared component classes. This gives the app a consistent design language without introducing a separate component library.
+La plupart des pages composent directement des utilitaires Tailwind. Le système visuel global est ancré par des propriétés CSS personnalisées et un petit ensemble de classes de composants partagées — un langage de design cohérent sans bibliothèque de composants séparée.
 
-## Build and Deployment Notes
+---
 
-- `npm run build` outputs the production bundle to `dist/`
-- `nginx.conf` is configured for SPA fallback routing with `try_files ... /index.html`
-- the frontend is suitable for static hosting as long as API and websocket endpoints are reachable from the browser
-- authenticated behavior depends on backend cookies, CORS policy, and broadcasting configuration
-
-For local environments, the example setup suggests a frontend/backend domain such as `covoit.local`, potentially with a reverse proxy handling API and Reverb traffic.
-
-## Troubleshooting
-
-### Login succeeds but the app returns to guest state
-
-Check backend cookie/session settings first.
-
-- `apiClient` uses `withCredentials: true`
-- `AuthProvider` calls `/auth/me` and may try `/auth/refresh`
-- the login hook expects the session to be restorable after authentication
-
-If cookies, domains, `SameSite`, CORS, or proxy headers are incorrect, the frontend will not stay authenticated.
-
-### Account/profile calls fail with missing person information
-
-Several person/account APIs read `personId` from `sessionStorage`. If that value is absent, profile and account features can fail until the user logs in again.
-
-### Chat does not update in realtime
-
-Verify all of the following:
-
-- `VITE_REVERB_*` values match the backend/websocket setup
-- the backend exposes broadcasting auth endpoints
-- the authenticated browser session is valid for private channel authorization
-- the websocket host and scheme are reachable from the browser
-
-If realtime is unavailable, inbox and conversation polling still provide periodic refreshes.
-
-### Development host issues with `covoit.local`
-
-`vite.config.ts` allows `covoit.local` as a host while binding the dev server to `127.0.0.1:5173`. If you rely on the custom domain locally, make sure your hosts file and reverse proxy setup are aligned.
-
-### Production build issues
-
-Run the repository's built-in checks:
+## 🌍 Build & Déploiement
 
 ```bash
-npm run lint
 npm run build
+# Sortie : dist/
 ```
 
-There is no test command configured in the current project, so build + lint are the primary verification steps available in-repo.
+### Notes de déploiement
+
+| Point | Détail |
+|---|---|
+| 📦 Répertoire de sortie | `dist/` |
+| 🌐 Routage SPA | `nginx.conf` utilise `try_files ... /index.html` pour le fallback |
+| 🔐 Auth | Dépend des cookies backend, de la politique CORS et de la config de session |
+| 📡 Temps réel | Le broadcasting nécessite une config correcte host/port/scheme de Reverb |
+| 🏠 Domaine | L'exemple local utilise `covoit.local` avec un reverse proxy pour API + Reverb |
+
+---
+
+## 🔧 Dépannage
+
+### 🔐 La connexion réussit mais l'app revient en état invité
+
+Le `AuthProvider` appelle `/auth/me` et réessaie via `/auth/refresh`. Si la session ne persiste pas :
+
+- Vérifier les paramètres `SameSite`, `Secure` et le domaine des cookies backend
+- S'assurer que le domaine frontend correspond à la config CORS et cookies backend
+- `apiClient` utilise `withCredentials: true` — les headers proxy doivent transmettre les cookies
+
+### 👤 Les appels profil/compte échouent silencieusement
+
+Plusieurs APIs personne/compte lisent `personId` depuis `sessionStorage`. Si la valeur est absente, les fonctionnalités de profil et de compte échouent. Faire se reconnecter l'utilisateur pour restaurer la valeur.
+
+### 💬 Le chat ne se met pas à jour en temps réel
+
+Vérifier dans l'ordre :
+
+1. Les valeurs `VITE_REVERB_*` correspondent au setup WebSocket backend
+2. Le backend expose `/broadcasting/auth` ou `/broadcasting/auth-proxy`
+3. La session navigateur authentifiée est valide pour l'autorisation des canaux privés
+4. Le host et le scheme WebSocket sont accessibles depuis le navigateur
+
+> L'inbox et le polling des conversations fonctionnent toujours si Reverb n'est pas disponible.
+
+### 🏠 Problèmes de host dev avec `covoit.local`
+
+`vite.config.ts` lie le serveur à `127.0.0.1:5173` et autorise `covoit.local` comme host. S'assurer que :
+
+- `/etc/hosts` (ou équivalent) résout `covoit.local` vers `127.0.0.1`
+- Votre reverse proxy route correctement le trafic API et WebSocket
+
+### 📦 Le build de production échoue
+
+```bash
+npm run lint    # Vérifier les erreurs ESLint
+npm run build   # Vérification TypeScript + bundle Vite
+```
+
+> Aucune commande de test n'est configurée pour l'instant — lint + build sont les étapes de validation disponibles dans le dépôt.
+
+---
+
+<div align="center">
+
+**Développé avec ❤️ par Obidah Hajjo — Développeur Full Stack**
+
+</div>

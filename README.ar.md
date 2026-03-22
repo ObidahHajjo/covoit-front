@@ -1,808 +1,560 @@
-# 🚗 Couvoit API
-### منصة مشاركة الركوب — Laravel 12
+<div align="center">
 
-<p align="left">
-  🌐 <a href="README.md">Français</a> | <a href="README.en.md">English</a> | <strong>العربية</strong>
+<img src="https://img.shields.io/badge/-%F0%9F%9A%97%20COVOIT%20FRONTEND-0a0a0a?style=for-the-badge&labelColor=0a0a0a" />
+
+### منصة مشاركة الركوب — React 19 + TypeScript + Vite
+
+<p>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/Vite-7-646CFF?style=flat-square&logo=vite&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-PostCSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/Laravel_Echo-Reverb-FF2D20?style=flat-square&logo=laravel&logoColor=white&labelColor=0a0a0a" />
+  <img src="https://img.shields.io/badge/Nginx-SPA-009639?style=flat-square&logo=nginx&logoColor=white&labelColor=0a0a0a" />
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Laravel-12-red?style=for-the-badge&logo=laravel" />
-  <img src="https://img.shields.io/badge/PHP-8.2+-blue?style=for-the-badge&logo=php" />
-  <img src="https://img.shields.io/badge/PostgreSQL-DB-blue?style=for-the-badge&logo=postgresql" />
-  <img src="https://img.shields.io/badge/Auth-JWT-black?style=for-the-badge&logo=jsonwebtokens" />
-  <img src="https://img.shields.io/badge/Tests-PHPUnit_11-purple?style=for-the-badge&logo=php" />
-  <img src="https://img.shields.io/badge/Architecture-SOLID-black?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Realtime-Reverb-orange?style=for-the-badge" />
+<p>
+  <a href="README.md">English</a> &nbsp;|&nbsp; <a href="README.fr.md">Français</a> &nbsp;|&nbsp; 🌐 <strong>العربية</strong>
 </p>
 
-واجهة برمجية REST **موجّهة للإنتاج** لمنصة مشاركة الركوب، مبنية بـ **Laravel 12** و**PHP 8.2+** و**PostgreSQL** ونظام **JWT محلي مخصص**.
-
-يطبّق المشروع **معمارية طبقية نظيفة** مع فصل صارم للمسؤوليات، وسياسات تفويض، ومراسلة فورية عبر Reverb، وتخزين مؤقت منظم، وبريد إلكتروني تعاملي عبر Resend، وتغطية اختبارات شاملة.
-
-> ⚠️ **ملاحظة مهمة**: لا يستخدم هذا التطبيق البادئة الافتراضية `/api` في Laravel. تُكشف نقاط النهاية مباشرةً: `/auth/login` و`/trips` و`/cars` إلخ.
+</div>
 
 ---
 
 <div dir="rtl">
 
-# 📚 جدول المحتويات
+> **تطبيق SPA موجّه للإنتاج** لمنصة مشاركة الركوب. مبني بـ React 19 وTypeScript 5 وVite 7 — يغطي تجربة السائق/الراكب الكاملة: اكتشاف الرحلات، إدارة الحجوزات، أدوات السائق، إعدادات الحساب والدردشة الفورية عبر Laravel Reverb.
 
-- [🏗 المعمارية](#-المعمارية)
+---
+
+## 📚 جدول المحتويات
+
+- [✨ نظرة عامة](#-نظرة-عامة)
 - [🧱 التقنيات المستخدمة](#-التقنيات-المستخدمة)
-- [📦 النموذج التجاري](#-النموذج-التجاري)
-- [🔐 المصادقة](#-المصادقة)
-- [💬 المراسلة الفورية](#-المراسلة-الفورية)
-- [📧 البريد الإلكتروني التعاملي](#-البريد-الإلكتروني-التعاملي)
-- [🚀 التثبيت](#-التثبيت)
-- [⚙ الإعداد](#-الإعداد)
-- [📖 توثيق الواجهة البرمجية](#-توثيق-الواجهة-البرمجية)
-- [🧪 الاختبارات والجودة](#-الاختبارات-والجودة)
-- [📌 التخزين المؤقت](#-التخزين-المؤقت)
-- [🛡 التفويض](#-التفويض)
-- [📍 إنشاء رحلة](#-إنشاء-رحلة)
-- [🔄 المهام المجدولة](#-المهام-المجدولة)
-- [🌍 النشر](#-النشر)
+- [🗺 الميزات الأساسية](#-الميزات-الأساسية)
+- [🏗 المعمارية](#-المعمارية)
+- [🔀 التوجيه](#-التوجيه)
+- [🧠 الحالة والسياق](#-الحالة-والسياق)
+- [🔌 تكامل الواجهة البرمجية](#-تكامل-الواجهة-البرمجية)
+- [💬 الدردشة الفورية](#-الدردشة-الفورية)
+- [⚙️ متغيرات البيئة](#️-متغيرات-البيئة)
+- [🚀 البدء](#-البدء)
+- [🛠 سير العمل التطويري](#-سير-العمل-التطويري)
+- [📜 السكريبتات المتاحة](#-السكريبتات-المتاحة)
 - [📁 هيكل المشروع](#-هيكل-المشروع)
-- [📊 نقاط النهاية](#-نقاط-النهاية)
-- [🔄 خارطة الطريق](#-خارطة-الطريق)
+- [🎨 أسلوب التصميم](#-أسلوب-التصميم)
+- [🌍 البناء والنشر](#-البناء-والنشر)
 - [🔧 استكشاف الأخطاء](#-استكشاف-الأخطاء)
-- [👤 المؤلف](#-المؤلف)
 
 ---
 
-# 🏗 المعمارية
+## ✨ نظرة عامة
 
-معمارية طبقية مفصولة بشكل صارم:
+الواجهة الأمامية لـ Covoit هي تطبيق SPA مبني بـ React + TypeScript ومدعوم بـ Vite، ويتمحور حول رحلة المستخدم المسجّل دخوله:
 
-```
-HTTP
-└── Controllers (المتحكمات)
-    └── Requests (التحقق)
-    └── Resources (التحويل)
+| الخطوة | الوصف |
+|---|---|
+| 🔐 **المصادقة** | تسجيل الدخول، التسجيل، نسيت كلمة المرور، إعادة التعيين |
+| 👤 **إكمال الملف الشخصي** | بوابة إلزامية قبل الدخول إلى التطبيق |
+| 🔍 **اكتشاف الرحلات** | البحث عن رحلات متاحة وعرض التفاصيل |
+| 🎟 **الحجز والإدارة** | حجز مقاعد، مراجعة وإلغاء الحجوزات |
+| 🚗 **القيادة** | نشر رحلات، إدارة الركاب، إلغاء الرحلات |
+| 🏠 **الحساب** | تحديث الملف الشخصي ومعلومات المركبة |
+| 💬 **الدردشة** | تبادل الرسائل مع السائقين أو الركاب في الوقت الفعلي |
 
-Application (التطبيق)
-└── Services (تنسيق الأعمال)
-    ├── DTOs (تطبيع المدخلات)
-    └── Resolvers (حل المراجع)
-
-Domain (النطاق)
-└── Models (Eloquent)
-└── Policies (التفويض)
-
-Infrastructure (البنية التحتية)
-├── Repositories (الواجهات + تطبيقات Eloquent)
-├── Support/Cache (RepositoryCacheManager)
-├── Security (مُصدر JWT)
-└── Clients (OpenRouteService)
-```
-
-تُسجَّل روابط Service/Repository في `AppServiceProvider` و`RepositoryProvider`.
-
-### 🔎 المبادئ المطبّقة
-
-- فصل صارم للمسؤوليات (Single Responsibility)
-- نمط Repository (واجهات + تطبيقات Eloquent)
-- DTOs للتحقق من المدخلات وتطبيعها
-- التفويض عبر Policies (مع تجاوز للمسؤول)
-- تخزين مؤقت بعلامات (read-through / write-through)
-- بث فوري عبر Laravel Reverb
-- بريد إلكتروني تعاملي عبر Resend
-- توثيق OpenAPI (Swagger / l5-swagger)
-- اختبارات وحدة وميزة متينة (PHPUnit 11)
-- CI/CD عبر GitHub Actions + SonarQube
+> يفترض التطبيق أن باك-إند Laravel متوافق يعمل. تعتمد عدة سلوكيات على ملفات تعريف الارتباط للجلسة، وعلامات الأذونات، وبث الدردشة، وعقود مسارات الواجهة البرمجية.
 
 ---
 
-# 🧱 التقنيات المستخدمة
+## 🧱 التقنيات المستخدمة
 
-| التقنية | الاستخدام |
-|---------|-----------|
-| Laravel 12 | الإطار الرئيسي |
-| PHP 8.2+ | اللغة (CI/Docker يستهدف PHP 8.5) |
-| PostgreSQL | قاعدة البيانات العلائقية (الإنتاج) |
-| SQLite | قاعدة البيانات للاختبارات/CI |
-| firebase/php-jwt | إصدار JWT والتحقق منه محلياً |
-| laravel/reverb | بث WebSocket الفوري |
-| pusher/pusher-php-server | متوافق مع Reverb |
-| PHPUnit 11 | اختبارات الوحدة والميزة |
-| darkaonline/l5-swagger | توثيق OpenAPI |
-| resend/resend-laravel | البريد الإلكتروني التعاملي |
-| predis/predis | عميل Redis |
-| OpenRouteService | الترميز الجغرافي وحساب المسافة/المدة |
-| Laravel Pint | أسلوب الكود |
-| SonarQube | جودة الكود (CI) |
+| التقنية | الإصدار | الدور |
+|---|---|---|
+| ⚛️ **React** | 19 | إطار عمل الواجهة |
+| 🔷 **TypeScript** | 5 | الكتابة الستاتيكية |
+| ⚡ **Vite** | 7 | خادم التطوير والحزم |
+| 🔀 **React Router DOM** | 7 | التوجيه من جانب العميل |
+| 🌐 **Axios** | latest | عميل HTTP |
+| 📡 **Laravel Echo** | latest | غلاف عميل WebSocket |
+| 🔌 **pusher-js** | latest | نقل المتصفح لـ Reverb |
+| 🎨 **Tailwind CSS** | عبر PostCSS | أنماط المرافق |
+| ✅ **ESLint** | 9 | فحص الكود |
+| 🟩 **Nginx** | latest | خدمة SPA الستاتيكية في النشر |
 
----
-
-# 📦 النموذج التجاري
-
-## الكيانات الرئيسية
-
-- **User** — هوية المصادقة
-- **Person** — ملف التعريف المرتبط عبر `users.person_id`
-- **Car** — المركبة المملوكة لشخص
-- **Trip** — رحلة ينشرها سائق
-- **Reservation** — حجز راكب لرحلة
-- **Conversation / ConversationMessage** — مراسلة خاصة مرتبطة بالرحلات
-- **Brand / CarModel / Type / Color** — بيانات كتالوج المركبة
-- **Address / City** — البيانات الجغرافية
-- **Role** — دور المستخدم (`admin` / `user`)
-
-## قواعد العمل الرئيسية
-
-### 👤 Person / User
-- يُنشئ التسجيل `Person` و`User` في آنٍ واحد
-- يملك مركبة واحدة (اختياري) عبر `persons.car_id`
-- يملك دوراً (`admin` أو `user`)
-- يمكن تعطيله (`is_active = false`) — يحجب الوصول عبر الوسيط
-- يمكن استعادة الحسابات المحذوفة (soft delete) عند تسجيل الدخول خلال **90 يوماً**
-- بعد 90 يوماً: إخفاء الهوية تلقائياً بواسطة أمر `accounts:purge-deleted`
-
-### 🚗 Trip
-- `available_seats > 0`
-- `distance_km > 0`
-- لا يمكن إلغاؤها بعد أن تبدأ
-- تدفق الإنشاء: ترميز جغرافي ORS ← حساب المسافة/المدة ← الحفظ + `arrival_time` المشتق
-
-### 📌 Reservation
-- مفتاح أساسي مركّب (`person_id + trip_id`)
-- لا يستطيع السائق حجز رحلته الخاصة
-- لا حجوزات مكررة
-- لا حجز زائد (يتم التحقق من المقاعد المتاحة)
-- مستحيل على رحلة بدأت بالفعل
-
-### 💬 Conversation
-- خيوط نقاش ثنائية حول رحلة
-- يمكن للسائق التواصل مع راكب في رحلته
-- يمكن للراكب التواصل مع سائق الرحلة
+> **ملاحظات:**
+> - Tailwind مُفعَّل عبر توجيهات `@tailwind` في `src/index.css` وتكوين PostCSS
+> - لا يوجد ملف تكوين Tailwind في المستودع حالياً
+> - لم يُكوَّن أي test runner في `package.json` بعد
 
 ---
 
-# 🔐 المصادقة (JWT المحلي)
+## 🗺 الميزات الأساسية
 
-تستخدم الواجهة البرمجية نظام مصادقة محلياً مبنياً على JWT (HS256). لا تعتمد على أي خدمة خارجية: توليد الرموز والتحقق منها وتدويرها تتم بالكامل من جانب الخادم.
-
-## 🧩 معمارية المصادقة
-
-| الرمز | المدة | الاستخدام |
-|-------|-------|-----------|
-| `access_token` | قصير الأمد (مثلاً: ساعة) | الوصول إلى المسارات المحمية |
-| `refresh_token` | طويل الأمد (مثلاً: 30 يوماً) | تجديد JWT |
-
-## 🔄 تدفق المصادقة
-
-### 1️⃣ يُسجّل المستخدم أو يُسجّل دخوله عبر:
 ```
-POST /auth/register
-POST /auth/login
+🔐  المصادقة .............. تسجيل دخول · تسجيل · نسيت المرور · إعادة التعيين
+🛡  الحمايات .............. للضيوف فقط · بوابة الملف الشخصي · مبنية على الأذونات
+🏠  لوحة التحكم ........... رحلات السائق القادمة · الحجوزات القادمة
+🔍  الاكتشاف .............. بحث · نتائج · تفاصيل الرحلة
+🎟  الحجوزات .............. حجز مقعد · إلغاء حجز
+🚗  أدوات السائق .......... نشر · إدارة · إلغاء · التواصل مع الراكب
+👤  الحساب ................ إدارة الملف الشخصي · إدارة المركبة
+💬  الدردشة ............... البريد الوارد · محادثة · تحديثات فورية
+⚠️  ملاحظات عامة .......... طبقة تحميل · تنبيه خطأ
 ```
-
-### 2️⃣ الخادم:
-- يتحقق من بيانات الاعتماد وحالة `is_active`
-- يُشفّر كلمة المرور (bcrypt)
-- يُولّد `access_token` JWT موقّع بـ HS256
-- يُولّد `refresh_token` عشوائياً (`random_bytes(32)`)
-- يُخزّن الرمز المُجزّأ في قاعدة البيانات (`refresh_tokens`)
-- يُعيد الرموز بتنسيق JSON **ويضعها** في ملفات تعريف ارتباط HTTP-only آمنة
-
-### 3️⃣ يُرسل العميل JWT عبر:
-```
-Authorization: Bearer <access_token>
-```
-أو عبر ملف تعريف الارتباط `access_token` (HTTP-only).
-
-### 4️⃣ الوسيط `jwt` (`LocalJwtAuth`):
-- يتحقق من التوقيع (HS256)
-- يتحقق من المطالبات `iss` و`aud` و`exp`
-- يحلّ `sub` → `User`
-- يُخزّن مؤقتاً تعيين الرمز إلى المستخدم (TTL مُوافق لانتهاء صلاحية الرمز)
-- يُحمّل `auth()->user()`
 
 ---
 
-# 🧾 هيكل JWT
+## 🏗 المعمارية
 
-```json
-{
-  "iss": "couvoit-api",
-  "aud": "couvoit-client",
-  "iat": 1700000000,
-  "exp": 1700000900,
-  "sub": "12",
-  "role_id": 1,
-  "user_id": 1,
-  "jti": "a1b2c3d4e5f6..."
-}
+يستخدم التطبيق معمارية React خفيفة قائمة على المزودين. لا Redux ولا Zustand ولا React Query — يُعالَج جلب البيانات عبر hooks مخصصة واستدعاءات Axios لكل ميزة.
+
+### التركيب في وقت التشغيل (`src/App.tsx`)
+
+```
+LoadingProvider
+  └── AxiosInterceptorProvider
+        └── AuthProvider
+              └── ChatInboxProvider
+                    └── GlobalSpinner + GlobalErrorAlert
+                          └── AppRouter
 ```
 
-## 🔎 المطالبات المستخدمة
+### مسؤوليات كل طبقة
 
-| المطالبة | الوصف |
-|----------|-------|
-| `iss` | المُصدِر |
-| `aud` | الجمهور المستهدف |
-| `sub` | معرّف المستخدم الداخلي |
-| `exp` | تاريخ الانتهاء |
-| `role_id` | دور المستخدم |
-| `jti` | معرّف الرمز الفريد |
+| الطبقة | المسار | المسؤولية |
+|---|---|---|
+| 🏛 **بنية التطبيق** | `src/app/` | عملاء Axios، مساعدات أخطاء الواجهة البرمجية، مزود الخطأ العام |
+| 🌐 **المزودون** | `src/providers/` | حالة المصادقة، التحميل، inbox الدردشة |
+| 🔀 **الموجّه** | `src/router/` | شجرة المسارات وحمايات الوصول |
+| 📦 **الميزات** | `src/features/` | وحدات الواجهة البرمجية وأدوات الدردشة الفورية |
+| 🧠 **السياق** | `src/context/` | Hooks الصفحة/النطاق وـ React contexts |
+| 📄 **الصفحات** | `src/pages/` | مكونات الصفحة على مستوى المسار |
+| 🧩 **المكونات** | `src/components/` | التخطيط، الأوليات المشتركة، أقسام الواجهة |
+| 🔷 **الأنواع** | `src/types/` | نماذج TypeScript للواجهة البرمجية/النطاق |
 
 ---
 
-# 🔁 رمز التحديث (التدوير الآمن)
+## 🔀 التوجيه
 
-## رمز التحديث:
-- يُولَّد عبر `random_bytes(32)`
-- تُعاد القيمة الخام فقط إلى العميل
-- يُخزَّن **مُجزَّأً** في قاعدة البيانات (`refresh_tokens`) مع تاريخ انتهاء
-- يُلغى عند كل تدوير
+يُعرَّف التوجيه في `src/router/AppRouter.tsx` باستخدام `BrowserRouter` مع حمايات متداخلة.
 
-## 🔄 نقطة النهاية
-```
-POST /auth/refresh
-```
-
-## العملية:
-1. التحقق من رمز التحديث المقدَّم
-2. إلغاء الرمز المُستخدَم
-3. توليد زوج جديد من `access_token` + `refresh_token`
-
-### تحمي هذه الاستراتيجية من:
-- سرقة الرمز
-- هجمات إعادة التشغيل
-- إعادة الاستخدام بعد الاختراق
-
-## 🔒 تسجيل الخروج
+### 🔓 المسارات العامة / للضيوف
+> ملفوفة بـ `GuestRoute` — تُعيد توجيه المستخدمين المصادَق عليهم بعيداً عن شاشات المصادقة
 
 ```
-POST /auth/logout
+/login
+/register
+/forgot-password
+/reset-password
 ```
-يحذف **جميع** رموز التحديث للمستخدم المصادَق عليه.
+
+### 👤 مسار إكمال الملف الشخصي
+> يُفعَّل عند غياب `first_name` أو `last_name` أو `pseudo` على المستخدم المصادَق عليه
+
+```
+/complete-profile
+```
+
+### 🔒 المسارات المحمية
+> تتطلب مصادقة
+
+```
+/home
+/find-trip
+/find-trip/results
+/trips/:tripId
+/trips/:tripId/contact-driver
+/chat
+/chat/:conversationId
+```
+
+### 🚗 مسارات السائق
+> تتطلب إذن `can_manage_own_trips`
+
+```
+/my-trips
+/my-trips/new
+/my-trips/:tripId
+/my-trips/:tripId/contact-passenger/:passengerId
+```
+
+### 🎟 مسارات الحجوزات
+> تتطلب إذن `can_view_bookings`
+
+```
+/bookings
+/bookings/:tripId
+```
+
+### ⚙️ مسارات الحساب
+> تتطلب إذن `can_edit_profile`
+
+```
+/my-account
+```
+
+> شريط التنقل السفلي واعٍ بالأذونات ولا يعرض سوى الأقسام المتاحة للمستخدم الحالي.
 
 ---
 
-# 🔒 الأمان
+## 🧠 الحالة والسياق
 
-- تشفير كلمة المرور عبر **bcrypt**
-- JWT موقَّع بـ **HS256** بسرّ طويل (≥ 32 بايت)
-- تدوير رمز التحديث عند كل تجديد
-- دعم الإلغاء الكامل (تسجيل الخروج)
-- المستخدمون غير النشطين (`is_active = false`) محجوبون بواسطة الوسيط
-- وسيط JWT مركزي (`LocalJwtAuth`)
-- ملف تعريف ارتباط HTTP-only مع إعدادات `Secure` و`SameSite` قابلة للتكوين
+### المزودون العامون
+
+| المزود | المسؤولية |
+|---|---|
+| `AuthProvider` | يحلّ `/auth/me`، يُعيد المحاولة مع `/auth/refresh`، يكشف `status` و`user` و`refreshMe` و`logoutLocal` |
+| `LoadingProvider` | يتتبع عدد الطلبات النشطة، يشغّل طبقة التحميل العامة |
+| `ChatInboxProvider` | يحمّل المحادثات، يحسب عداد غير المقروء، يستمع للتحديثات الفورية، يُحدِّث بفاصل زمني |
+| `ErrorProvider` | يحتفظ بحالة الخطأ العامة لـ `GlobalErrorAlert` |
+
+### Hooks الصفحة/النطاق (`src/context/`)
+
+| الـ Hook | الغرض |
+|---|---|
+| `useHome` | بيانات لوحة التحكم |
+| `useTripResults` / `useTripDetails` | تدفقات اكتشاف الرحلات |
+| `useMyTrips` / `usePublishTrip` / `useDriverTripDetails` | سير عمل السائق |
+| `useMyBookings` / `useBookingDetails` | سير عمل حجز الراكب |
+| `useMyAccount` | إدارة الملف الشخصي + المركبة |
+| `useChatConversation` | خيوط الرسائل |
+| `useLogin` / `useRegister` | نماذج المصادقة |
+
+### استخدام التخزين
+
+| المخزن | المفتاح | الاستخدام |
+|---|---|---|
+| `sessionStorage` | `personId` | يُخزَّن بعد تسجيل الدخول — تستخدمه استدعاءات الواجهة البرمجية للشخص/الحساب |
+| `localStorage` | refresh token | مُخزَّن بواسطة تدفق تسجيل الدخول لاستمرارية الجلسة |
+| `localStorage` | حالة قراءة الدردشة | بيانات وصفية للرسائل غير المقروءة بنطاق جلسة المستخدم |
 
 ---
 
-# ⚙ الإعداد `.env`
+## 🔌 تكامل الواجهة البرمجية
+
+### عميل الواجهة البرمجية الداخلي (`src/app/apiClient.ts`)
+
+- رابط الأساس من `VITE_API_BASE_URL`
+- `Content-Type: application/json`
+- `withCredentials: true` للمصادقة المبنية على الكوكيز
+- إعادة المحاولة تلقائياً عند 401 عبر `/auth/refresh` للنقاط غير المتعلقة بالمصادقة
+
+### عميل الواجهة البرمجية الخارجي (`src/app/externalApiClient.ts`)
+
+عميل Axios ثانٍ بدون بيانات اعتماد، يُستخدَم لـ:
+
+| الخدمة | الرابط |
+|---|---|
+| 🗺 البحث عن بلدية | `https://geo.api.gouv.fr` |
+| 📍 الترميز الجغرافي للعنوان | `https://data.geopf.fr/geocodage/search` |
+
+### وحدات الميزة
+
+```
+src/features/
+  ├── auth/         authApi.ts · passwordApi.ts
+  ├── trips/        tripApi.ts
+  ├── person/       personApi.ts
+  ├── cars/         carApi.ts
+  ├── brands/       brandApi.ts
+  ├── chat/         chatApi.ts · chatEcho.ts · chatReadState.ts
+  ├── contact/      contactApi.ts
+  └── geo/          geoApi.ts
+```
+
+### نقاط النهاية المتوقعة من الباك-إند
+
+```
+POST   /auth/login · /auth/register · /auth/refresh · /auth/logout
+GET    /auth/me
+POST   /auth/forgot-password · /auth/reset-password
+
+GET    /persons/:id
+GET    /persons/:id/trips-driver · /persons/:id/trips-passenger
+
+GET    /trips · /trips/:id · /trips/:id/person
+POST   /trips/:id/contact-driver
+POST   /my-trips/:id/contact-passenger/:personId
+
+GET    /cars · /cars/:id · /cars/search
+GET    /brands
+
+GET    /conversations · /conversations/:id
+POST   /conversations/:id/messages
+
+POST   /broadcasting/auth · /broadcasting/auth-proxy
+```
+
+---
+
+## 💬 الدردشة الفورية
+
+تستخدم الدردشة استراتيجية **هجينة من الوقت الفعلي + الاستطلاع الدوري** للمرونة.
+
+### المكدس التقني
+
+| المكوّن | التقنية |
+|---|---|
+| عميل Echo | `src/features/chat/chatEcho.ts` |
+| النقل | `pusher-js` (متوافق مع Reverb) |
+| المصادقة | مصادقة القناة الخاصة عبر الباك-إند |
+
+### القنوات
+
+```
+chat.user.{personId}          ← تحديثات مستوى البريد الوارد
+chat.conversation.{id}        ← رسائل مستوى المحادثة
+```
+
+تستمع لأحداث `.chat.message.sent`.
+
+### الاستطلاع الاحتياطي
+
+| النطاق | الفاصل الزمني |
+|---|---|
+| البريد الوارد | كل **8 ثوانٍ** |
+| المحادثة النشطة | كل **5 ثوانٍ** |
+
+### حالة الرسائل غير المقروءة
+
+- محفوظة في `localStorage` بنطاق جلسة المستخدم
+- عدادات غير المقروء تظهر في شريط التنقل السفلي
+- تُعلَّم كمقروءة عند فتح المحادثة
+- بطاقات تنبيه الرسائل الواردة تظهر مؤقتاً
+
+> إذا كان البث غير متاح، يحافظ الاستطلاع على وظيفة الدردشة — لكن المؤشرات الفورية وحالة الاتصال قد لا تعمل كما هو متوقع.
+
+---
+
+## ⚙️ متغيرات البيئة
+
+انسخ من `.env.example` وعدّل حسب بيئتك:
+
+```bash
+cp .env.example .env.local
+```
+
+| المتغير | مطلوب | الوصف |
+|---|---|---|
+| `VITE_API_BASE_URL` | ✅ نعم | رابط أساس الواجهة البرمجية للباك-إند |
+| `VITE_REVERB_APP_KEY` | ⚡ الوقت الفعلي | مفتاح Reverb العام لـ Laravel Echo |
+| `VITE_REVERB_HOST` | ⚡ الوقت الفعلي | اسم مضيف WebSocket (من جانب المتصفح) |
+| `VITE_REVERB_PORT` | اختياري | منفذ HTTP/WS المشترك الاحتياطي |
+| `VITE_REVERB_WS_PORT` | اختياري | منفذ WebSocket غير TLS الصريح |
+| `VITE_REVERB_WSS_PORT` | اختياري | منفذ WebSocket TLS الصريح |
+| `VITE_REVERB_SCHEME` | اختياري | `http` أو `https` |
+
+**مثال إعداد محلي:**
 
 ```env
-# JWT
-JWT_SECRET=base64:...
-JWT_ACCESS_TTL=3600
-JWT_REFRESH_TTL=2592000
-JWT_ISSUER=couvoit-api
-JWT_AUDIENCE=couvoit-client
+VITE_API_BASE_URL=http://covoit.local
+VITE_REVERB_APP_KEY=local-key
+VITE_REVERB_HOST=covoit.local
+VITE_REVERB_PORT=80
+VITE_REVERB_WS_PORT=80
+VITE_REVERB_WSS_PORT=443
+VITE_REVERB_SCHEME=http
+```
 
-# ملفات تعريف ارتباط المصادقة
-AUTH_COOKIE_PATH=/
-AUTH_COOKIE_DOMAIN=null
-AUTH_COOKIE_SECURE=false
-AUTH_COOKIE_SAMESITE=lax
+> استخدم `.env.local` أو `.env` للإعداد المحلي — كلاهما مُدرَج في gitignore.
+
+---
+
+## 🚀 البدء
+
+### المتطلبات المسبقة
+
+- **Node.js** 18+
+- **npm** (المستودع يتضمن `package-lock.json`)
+- باك-إند متوافق مع عقود الواجهة البرمجية والبث المتوقعة
+
+### تثبيت الاعتمادات
+
+```bash
+npm install
+```
+
+### تكوين البيئة
+
+```bash
+cp .env.example .env.local
+# عدّل .env.local ليتناسب مع إعدادك المحلي
+```
+
+### تشغيل خادم التطوير
+
+```bash
+npm run dev
+```
+
+تكوين خادم Vite (`vite.config.ts`):
+
+| الإعداد | القيمة |
+|---|---|
+| المضيف | `127.0.0.1` |
+| المنفذ | `5173` |
+| المضيف المسموح به | `covoit.local` |
+
+> إذا كنت تستخدم اسم المضيف `covoit.local`، قم بتكوين `/etc/hosts` والبروكسي المحلي وفقاً لذلك.
+
+---
+
+## 🛠 سير العمل التطويري
+
+```bash
+# 1. شغّل الباك-إند/الواجهة البرمجية + خدمات البث
+# 2. أنشئ/حدّث .env.local
+# 3. ثبّت الاعتمادات
+npm install
+
+# 4. شغّل خادم التطوير
+npm run dev
+
+# 5. افحص الكود قبل الرفع
+npm run lint
+
+# 6. تحقق من الجاهزية للإنتاج
+npm run build
+```
+
+> ⚠️ لم يُكوَّن أي سكريبت اختبار تلقائي بعد. الـ linting وبناءات الإنتاج هي خطوات التحقق الرئيسية المتاحة في المستودع.
+
+---
+
+## 📜 السكريبتات المتاحة
+
+| الأمر | الوصف |
+|---|---|
+| `npm run dev` | تشغيل خادم التطوير Vite |
+| `npm run build` | تنفيذ `tsc -b && vite build` — فحص TypeScript + الحزمة |
+| `npm run lint` | تنفيذ `eslint .` |
+| `npm run preview` | خدمة بناء الإنتاج محلياً |
+
+---
+
+## 📁 هيكل المشروع
+
+```
+covoit-front/
+│
+├── public/                     # الأصول الستاتيكية العامة
+│
+├── src/
+│   ├── app/                    # عملاء Axios، مساعدات الأخطاء، مزود الخطأ العام
+│   ├── assets/                 # الصور والأصول الستاتيكية للواجهة
+│   ├── auth/                   # مساعدات التحقق من إكمال الملف الشخصي
+│   │
+│   ├── components/
+│   │   ├── common/             # أوليات UI قابلة لإعادة الاستخدام ومكونات الملاحظات
+│   │   ├── layout/             # هيكل التطبيق وشريط التنقل السفلي
+│   │   └── ui/                 # أقسام العرض الموجّهة للميزة
+│   │
+│   ├── context/                # Hooks الصفحة/النطاق وـ React contexts
+│   ├── features/               # وحدات الواجهة البرمجية وأدوات الوقت الفعلي/الدردشة
+│   ├── pages/                  # مكونات الصفحة على مستوى المسار
+│   ├── providers/              # المزودون طويلو الأمد على مستوى التطبيق
+│   ├── router/                 # تكوين المسارات وحمايات الوصول
+│   ├── types/                  # نماذج TypeScript للواجهة البرمجية/النطاق
+│   │
+│   ├── App.tsx                 # تركيب مزودات الجذر
+│   ├── bootstrap.ts            # إعداد معترضات Axios للتحميل
+│   ├── index.css               # رموز الثيم العام + طبقات Tailwind
+│   └── main.tsx                # نقطة دخول التطبيق
+│
+├── .env.example                # متغيرات Vite البيئية الموثقة
+├── eslint.config.js            # تكوين ESLint المسطّح
+├── nginx.conf                  # خدمة SPA الستاتيكية (احتياطي try_files)
+├── package.json                # السكريبتات والاعتمادات
+├── postcss.config.js           # خط أنابيب PostCSS لـ Tailwind + Autoprefixer
+└── vite.config.ts              # تكوين خادم التطوير والبناء
 ```
 
 ---
 
-# 💬 المراسلة الفورية
+## 🎨 أسلوب التصميم
 
-تُعالَج المراسلة الفورية عبر **Laravel Reverb** (متوافق مع Pusher).
+يجمع التصميم بين **فئات مرافق Tailwind** ونظام رموز تصميم مخصص.
 
-## المعمارية
+### ما هو موجود حالياً
 
-- البث مُكوَّن في `bootstrap/app.php`
-- تفويض القنوات الخاصة في `routes/channels.php`
-- الحدث: `App\Events\ChatMessageSent` (يُنفّذ `ShouldBroadcastNow`)
-- مصادقة البث مكشوفة عبر `POST /broadcasting/auth-proxy`
+| العنصر | الوصف |
+|---|---|
+| 🎨 متغيرات CSS | رموز التصميم العامة في `src/index.css` |
+| 🧱 طبقات Tailwind | `base` / `components` / `utilities` عبر توجيهات `@tailwind` |
+| 🧩 فئات دلالية | `serene-page-shell`، `serene-card`، `serene-button-primary`، `serene-nav-link` |
+| 🔤 أوليات مشتركة | `src/components/common/SerenePrimitives.tsx` |
+| 🔡 الخطوط | `Inter` + `Manrope` عبر Google Fonts |
 
-## القنوات الخاصة
-
-```
-chat.user.{personId}
-chat.conversation.{conversationId}
-```
-
-## نقاط نهاية المراسلة
-
-| الطريقة | نقطة النهاية | الوصف |
-|---------|-------------|-------|
-| GET | `/conversations` | قائمة المحادثات |
-| GET | `/conversations/{conversation}` | تفاصيل محادثة |
-| POST | `/conversations/{conversation}/messages` | إرسال رسالة |
-| POST | `/trips/{trip}/contact-driver` | التواصل مع السائق |
-| POST | `/my-trips/{trip}/contact-passenger/{person}` | التواصل مع راكب |
-
-> أسماء مستعارة `/chat/conversations...` متاحة أيضاً.
-
-## تشغيل Reverb محلياً
-
-```bash
-php artisan reverb:start
-```
+تركّب معظم الصفحات مرافق Tailwind مباشرةً. النظام البصري الشامل مرتكز على خصائص CSS المخصصة ومجموعة صغيرة من فئات المكونات المشتركة — لغة تصميم متسقة بدون مكتبة مكونات منفصلة.
 
 ---
 
-# 📧 البريد الإلكتروني التعاملي
+## 🌍 البناء والنشر
 
-تُرسَل الرسائل الإلكترونية عبر **Resend** مع قوالب قابلة للتكوين.
+```bash
+npm run build
+# المخرج: dist/
+```
 
-## الأحداث المغطاة
+### ملاحظات النشر
 
-- إعادة تعيين كلمة المرور
-- إنشاء حجز (للراكب والسائق)
-- إلغاء حجز (للراكب والسائق)
-- إلغاء رحلة (للركاب)
-
-> توثيق متغيرات القوالب متاح في `docs/resend-trip-templates.md`.
-
-> ⚠️ يتم إرسال البريد الإلكتروني **بشكل متزامن** (بدون job في الطابور) بعد الحفظ في قاعدة البيانات.
+| النقطة | التفاصيل |
+|---|---|
+| 📦 مجلد المخرج | `dist/` |
+| 🌐 توجيه SPA | `nginx.conf` يستخدم `try_files ... /index.html` للاحتياط |
+| 🔐 المصادقة | تعتمد على كوكيز الباك-إند، وسياسة CORS، وتكوين الجلسة |
+| 📡 الوقت الفعلي | يتطلب البث تكويناً صحيحاً لـ host/port/scheme الخاص بـ Reverb |
+| 🏠 النطاق | المثال المحلي يستخدم `covoit.local` مع reverse proxy للواجهة البرمجية + Reverb |
 
 ---
 
-# 🚀 التثبيت
+## 🔧 استكشاف الأخطاء
 
-## 1️⃣ استنساخ المشروع
+### 🔐 تسجيل الدخول ينجح لكن التطبيق يعود لحالة الضيف
 
-```bash
-git clone https://github.com/your-account/couvoit-api.git
-cd couvoit-api
-```
+يستدعي `AuthProvider` المسار `/auth/me` ويُعيد المحاولة عبر `/auth/refresh`. إذا لم تستمر الجلسة:
 
-## 2️⃣ تثبيت الاعتمادات
+- تحقق من إعدادات `SameSite` و`Secure` ونطاق الكوكيز في الباك-إند
+- تأكد من أن نطاق الواجهة الأمامية يتطابق مع تكوين CORS والكوكيز في الباك-إند
+- `apiClient` يستخدم `withCredentials: true` — يجب أن تمرر headers البروكسي الكوكيز
 
-```bash
-composer install
-```
+### 👤 استدعاءات الملف الشخصي/الحساب تفشل بصمت
 
-## 3️⃣ إعداد البيئة
+تقرأ عدة واجهات برمجية للشخص/الحساب `personId` من `sessionStorage`. إذا كانت القيمة غائبة، تفشل ميزات الملف الشخصي والحساب. أعِد تسجيل دخول المستخدم لاستعادة القيمة.
 
-```bash
-cp .env.example .env
-php artisan key:generate
-```
+### 💬 الدردشة لا تتحدث في الوقت الفعلي
 
-## 4️⃣ تكوين `.env`
+تحقق بالترتيب التالي:
 
-```env
-APP_ENV=local
-APP_DEBUG=true
-APP_URL=http://localhost:8000
-FRONTEND_URL=http://localhost:3000
+1. قيم `VITE_REVERB_*` تتطابق مع إعداد WebSocket للباك-إند
+2. الباك-إند يكشف `/broadcasting/auth` أو `/broadcasting/auth-proxy`
+3. جلسة المتصفح المصادَق عليها صالحة لتفويض القنوات الخاصة
+4. مضيف وبروتوكول WebSocket قابلان للوصول من المتصفح
 
-DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=covoiturage
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
+> يستمر inbox والاستطلاع الدوري للمحادثات في العمل إذا كان Reverb غير متاح.
 
-CACHE_STORE=redis
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379
+### 🏠 مشاكل مضيف التطوير مع `covoit.local`
 
-OPENROUTESERVICE_API_KEY=your_ors_key
+يربط `vite.config.ts` الخادم بـ `127.0.0.1:5173` ويسمح بـ `covoit.local` كمضيف. تأكد من:
 
-MAIL_MAILER=resend
-RESEND_API_KEY=your_resend_key
-```
+- `/etc/hosts` (أو ما يعادله) يحلّ `covoit.local` إلى `127.0.0.1`
+- الـ reverse proxy يوجّه حركة الواجهة البرمجية و WebSocket بشكل صحيح
 
-## 5️⃣ ترحيل قاعدة البيانات
+### 📦 بناء الإنتاج يفشل
 
 ```bash
-php artisan migrate
-# اختياري:
-php artisan db:seed
+npm run lint    # التحقق من أخطاء ESLint
+npm run build   # فحص TypeScript + حزمة Vite
 ```
 
-## 6️⃣ تشغيل الخادم
-
-```bash
-php artisan serve
-```
-
-### الواجهة البرمجية متاحة على:
-```
-http://localhost:8000
-```
-
-### (اختياري) البث الفوري:
-```bash
-php artisan reverb:start
-```
-
-### (اختياري) عامل الطابور:
-```bash
-php artisan queue:listen --tries=1 --timeout=0
-```
+> لم يُكوَّن أي أمر اختبار بعد — lint + build هما خطوات التحقق المتاحة في المستودع.
 
 ---
 
-# 📖 توثيق الواجهة البرمجية
+<div align="center">
 
-## توليد التوثيق:
+**صُنع بـ ❤️ بواسطة عبيدة حجو — مطوّر Full Stack**
 
-```bash
-php artisan l5-swagger:generate
-```
-
-### واجهة Swagger UI متاحة على:
-```
-/api/documentation
-```
-
-### المواصفة المُولَّدة على:
-```
-/docs
-```
-
-تُفحَص التعليقات التوضيحية من `app/Http/Controllers` و`app/Http/Requests` و`app/Swagger`.
-
----
-
-# 🧪 الاختبارات والجودة
-
-## تشغيل جميع الاختبارات:
-
-```bash
-php artisan test
-# أو
-composer test
-```
-
-## تشغيل اختبار محدد:
-
-```bash
-php artisan test --filter=TripServiceTest
-php artisan test --filter=ChatControllerTest
-```
-
-## توليد تقرير التغطية (Clover):
-
-```bash
-php artisan test --coverage-clover=coverage.xml
-```
-
-## أسلوب الكود (Laravel Pint):
-
-```bash
-./vendor/bin/pint
-```
-
-## اتفاقيات الاختبار:
-
-- كل طريقة تتضمن `@throws Throwable`
-- استخدام `Model::query()->create()`
-- تغطية كاملة: Services وPolicies وRepositories وDTOs وResources وMiddleware وControllers
-
-## المجالات المغطاة:
-- تدفقات المصادقة (التسجيل، تسجيل الدخول، التحديث، تسجيل الخروج، إعادة تعيين كلمة المرور)
-- وسيط JWT
-- نقاط نهاية الدردشة/المحادثات
-- الخدمات والمستودعات
-- DTOs والموارد
-- سياسات التفويض
-- سلوك نماذج Eloquent
-
-## CI/CD (GitHub Actions)
-
-يقوم سير العمل `.github/workflows/tests.yml` بـ:
-1. تثبيت اعتمادات Composer
-2. إعداد `.env` (SQLite)
-3. تشغيل الترحيلات
-4. تشغيل الاختبارات
-5. توليد تغطية الكود
-6. تشغيل مسح SonarQube (إذا كانت الأسرار مُكوَّنة)
-
----
-
-# 📌 التخزين المؤقت
-
-التخزين المؤقت جزء حقيقي من المعمارية، وليس مجرد إعداد افتراضي للإطار.
-
-## المعمارية
-
-- تنسيق مركزي في `app/Support/Cache/RepositoryCacheManager.php`
-- علامات مُعرَّفة لـ: persons وcars وbrands وmodels وcities وcolors وtrips وreservations وtypes
-- روابط نموذج المسار مُخزَّنة مؤقتاً لـ: `person` و`trip` و`brand` و`car`
-- وسيط JWT يُخزّن مؤقتاً تعيين الرمز إلى المستخدم (TTL مُوافق لانتهاء صلاحية الرمز)
-- إنشاء الرحلة: استجابات الترميز الجغرافي/التوجيه ORS مُخزَّنة مؤقتاً لـ **24 ساعة**
-
-## أمثلة على المفاتيح:
-
-```
-persons:all
-person:{id}
-cities:{name}:{postal}
-trips:all
-trip:{id}
-```
-
-- TTL الافتراضي: **3600 ثانية**
-- إلغاء صلاحية تلقائي عند عمليات الإنشاء/التحديث/الحذف
-- Redis مُوصى به في الإنتاج (مطلوب لعلامات التخزين المؤقت)
-
-> ⚠️ يعتمد التطبيق بشكل كبير على علامات التخزين المؤقت — **Redis إلزامي في الإنتاج**.
-
----
-
-# 🛡 التفويض
-
-## السياسات الرئيسية:
-
-| السياسة | النموذج المُغطَّى |
-|---------|-----------------|
-| `PersonPolicy` | إدارة الملفات الشخصية والأدوار |
-| `CarPolicy` | إدارة المركبات |
-| `TripPolicy` | نشر الرحلات وتعديلها وإلغاؤها |
-
-## السلوك الرئيسي:
-
-- **المسؤولون**: تجاوز عبر `before()` على جميع السياسات
-- **المستخدمون**: يمكنهم فقط إدارة ملفهم الشخصي ومركبتهم
-- **السائقون**: نشر الرحلات مقتصر على السائقين (`canPublishTrip()`)
-- **أصحاب الرحلات**: هم فقط من يستطيعون تحديث/إلغاء رحلاتهم
-- **مساعدات على `User`**: `isAdmin()` و`isDriver()` و`canPublishTrip()` و`canBookTrip()`
-
-## تجاوز المسؤول:
-
-```php
-public function before(Person $user): ?bool
-{
-    return $user->isAdmin() ? true : null;
-}
-```
-
----
-
-# 📍 إنشاء رحلة
-
-1. التحقق عبر DTO
-2. التحقق من أن السائق يملك مركبة
-3. حل المراجع (Brand وType وModel وColor وAddresses)
-4. الترميز الجغرافي لكلا النقطتين عبر ORS (مع تخزين مؤقت 24 ساعة)
-5. حساب المسافة والمدة عبر ORS (مع تخزين مؤقت 24 ساعة)
-6. حساب `arrival_time` المشتق
-7. حفظ الرحلة
-8. إعادة النموذج المُحدَّث مع العلاقات
-
----
-
-# 🔄 المهام المجدولة
-
-مُعلَن عنها في `routes/console.php`:
-
-| الأمر | التكرار | الوصف |
-|-------|---------|-------|
-| `auth:clear-resets` | كل 15 دقيقة | تنظيف رموز إعادة التعيين المنتهية |
-| `accounts:purge-deleted` | يومياً | إخفاء هوية الحسابات المحذوفة منذ أكثر من 90 يوماً |
-
-### التنفيذ اليدوي:
-
-```bash
-php artisan accounts:purge-deleted
-```
-
-> يجب تشغيل مُجدول Laravel كل دقيقة على خادمك.
-
----
-
-# 🌍 النشر
-
-## البنية الموصى بها:
-
-- VPS (مثل Hetzner)
-- Ubuntu 22.04+
-- Apache أو Nginx (يشير إلى `public/`)
-- UFW Firewall
-- Cloudflare DNS
-- SSL Let's Encrypt
-- **Redis في الإنتاج** (إلزامي لعلامات التخزين المؤقت)
-- Reverb كعملية منفصلة (إذا كان الدردشة الفورية مُفعَّلة)
-- مُجدول Laravel (`* * * * * php artisan schedule:run`)
-
-## قائمة تحقق الإنتاج:
-
-- تكوين `APP_URL` و`FRONTEND_URL` بشكل صحيح (روابط مُولَّدة، ملفات تعريف الارتباط)
-- `AUTH_COOKIE_SECURE=true` عبر HTTPS
-- مراجعة `AUTH_COOKIE_SAMESITE` حسب السياق
-- توفير `JWT_SECRET` و`OPENROUTESERVICE_API_KEY` و`RESEND_API_KEY` ومعرّفات قوالب Resend
-- توليد ونشر وثائق Swagger حسب الحاجة
-
-## Dockerfile
-
-يُوفَّر `Dockerfile` مبني على `php:8.5-apache` مع تمكين امتدادات PostgreSQL وRedis، وApache مُكوَّن للخدمة من `public/`.
-
----
-
-# 📁 هيكل المشروع
-
-```
-app/
-  Console/Commands/         أوامر التشغيل (purge, clear-resets)
-  DTOS/                     كائنات بيانات المدخلات (cars, trips...)
-  Events/                   أحداث البث (ChatMessageSent)
-  Exceptions/               تعيين الاستثناءات → استجابات الواجهة البرمجية
-  Http/
-    Controllers/            نقاط نهاية الواجهة البرمجية
-    Middleware/             وسيط JWT مخصص (LocalJwtAuth)
-    Requests/               كائنات التحقق من الطلبات
-    Resources/              محوّلات استجابات JSON
-  Models/                   نماذج Eloquent
-  Policies/                 سياسات التفويض
-  Providers/                ServiceProvider, RepositoryProvider, RouteBindings
-  Repositories/             الواجهات + تطبيقات Eloquent
-  Resolvers/                حل المراجع / العناوين
-  Security/                 عقود وتطبيق مُصدر JWT
-  Services/                 خدمات التطبيق
-  Support/Cache/            إدارة مفاتيح/علامات التخزين المؤقت (RepositoryCacheManager)
-  Swagger/                  تعريفات bootstrap لـ OpenAPI
-bootstrap/
-  app.php                   التوجيه، أسماء مستعارة للوسيط، الاستثناءات
-config/                     تكوين الإطار والتكاملات
-database/
-  factories/
-  migrations/
-  seeders/
-docs/                       ملاحظات تكميلية (قوالب Resend...)
-routes/
-  api.php                   مسارات الواجهة البرمجية (بدون بادئة /api)
-  channels.php              تفويض قنوات البث
-  console.php               الأوامر المجدولة
-tests/                      اختبارات الوحدة والميزة (PHPUnit 11)
-```
-
----
-
-# 📊 نقاط النهاية
-
-## 🔐 المصادقة — المسارات العامة
-
-| الطريقة | نقطة النهاية | الوصف |
-|---------|-------------|-------|
-| POST | `/auth/register` | التسجيل |
-| POST | `/auth/login` | تسجيل الدخول |
-| POST | `/auth/refresh` | تجديد رمز JWT |
-| POST | `/auth/logout` | تسجيل الخروج (إلغاء الرموز) |
-| GET | `/auth/me` | ملف المستخدم الحالي |
-| POST | `/auth/forgot-password` | طلب إعادة تعيين كلمة المرور |
-| POST | `/auth/reset-password` | إعادة تعيين كلمة المرور |
-
-## 👤 الأشخاص
-
-| الطريقة | نقطة النهاية | الوصف |
-|---------|-------------|-------|
-| GET | `/persons` | قائمة المستخدمين |
-| GET | `/persons/{person}` | تفاصيل مستخدم |
-| GET | `/persons/{person}/trips-driver` | الرحلات كسائق |
-| GET | `/persons/{person}/trips-passenger` | الرحلات كراكب |
-| POST | `/persons` | إنشاء مستخدم |
-| PATCH | `/persons/role` | تحديث الدور |
-| PATCH | `/persons/{person}` | تحديث مستخدم |
-| DELETE | `/persons/{person}` | حذف مستخدم |
-
-## 🚗 الرحلات
-
-| الطريقة | نقطة النهاية | الوصف |
-|---------|-------------|-------|
-| GET | `/trips` | قائمة الرحلات |
-| GET | `/trips/{trip}` | تفاصيل رحلة |
-| GET | `/trips/{trip}/person` | قائمة الركاب |
-| POST | `/trips` | إنشاء رحلة |
-| PATCH | `/trips/{trip}` | تحديث رحلة |
-| PATCH | `/trips/{trip}/cancel` | إلغاء رحلة |
-| DELETE | `/trips/{trip}` | حذف رحلة |
-| POST | `/trips/{trip}/person` | حجز مقعد |
-| DELETE | `/trips/{trip}/reservations` | إلغاء حجز |
-| POST | `/trips/{trip}/contact-driver` | التواصل مع السائق |
-| POST | `/my-trips/{trip}/contact-passenger/{person}` | التواصل مع راكب |
-
-## 🏷 الماركات والكتالوج
-
-| الطريقة | نقطة النهاية | الوصف |
-|---------|-------------|-------|
-| GET | `/brands` | قائمة الماركات |
-| GET | `/brand/{brand}` | تفاصيل ماركة |
-
-## 🚘 المركبات
-
-| الطريقة | نقطة النهاية | الوصف |
-|---------|-------------|-------|
-| GET | `/cars` | قائمة المركبات |
-| GET | `/cars/{car}` | تفاصيل مركبة |
-| GET | `/cars/search` | بحث في الكتالوج |
-| POST | `/cars` | إنشاء مركبة |
-| PUT | `/cars/{car}` | تحديث كامل |
-| DELETE | `/cars/{car}` | حذف مركبة |
-
-## 💬 المحادثات
-
-| الطريقة | نقطة النهاية | الوصف |
-|---------|-------------|-------|
-| GET | `/conversations` | قائمة المحادثات |
-| GET | `/conversations/{conversation}` | تفاصيل محادثة |
-| POST | `/conversations/{conversation}/messages` | إرسال رسالة |
-| POST | `/broadcasting/auth-proxy` | مصادقة قنوات Reverb الخاصة |
-
-## 🩺 الصحة
-
-| الطريقة | نقطة النهاية | الوصف |
-|---------|-------------|-------|
-| GET | `/up` | فحص الصحة |
-| GET | `/` | Ping (`{"message":"ok"}`) |
-
-## 📌 ملاحظات مهمة
-
-- جميع المسارات المحمية تمر عبر الوسيط `jwt` (`LocalJwtAuth`)
-- يُدار التفويض عبر `CarPolicy` و`TripPolicy` و`PersonPolicy`
-- يستفيد المسؤولون من تجاوز عبر `before()`
-- المستخدمون غير النشطين (`is_active = false`) محجوبون على مستوى الوسيط
-- المسارات لا تستخدم البادئة الافتراضية `/api`
-
----
-
-# 🔧 استكشاف الأخطاء
-
-### `Missing Bearer token`
-- أرسل `Authorization: Bearer <access_token>` أو اعتمد على ملف تعريف الارتباط `access_token`
-- تحقق من أن الطلب يصل إلى مسار محمي وأن ملفات تعريف الارتباط تُرسَل
-
-### `Token expired` أو أخطاء مصادقة غير متوقعة
-- استدعِ `POST /auth/refresh` برمز تحديث صالح
-- إذا تغيّر الإعداد: `php artisan config:clear`
-- إذا كان التخزين المؤقت غير متسق: `php artisan optimize:clear`
-
-### فشل إنشاء الرحلة بأخطاء ORS
-- تحقق من `OPENROUTESERVICE_API_KEY`
-- تأكد من أن عناوين الانطلاق والوصول قابلة للترميز الجغرافي بواسطة ORS
-- راجع السجلات: `php artisan pail --timeout=0`
-
-### الدردشة الفورية لا تستقبل الأحداث
-- تحقق من `BROADCAST_CONNECTION=reverb`
-- تأكد من تشغيل `php artisan reverb:start`
-- تأكد من مصادقة العميل عبر `POST /broadcasting/auth-proxy`
-- تحقق من أن المستخدم المصادَق عليه ينتمي إلى القناة الخاصة المطلوبة
-
-### أخطاء علامات التخزين المؤقت أو القراءات غير المتسقة
-- فضّل Redis في بيئات التشغيل (مطلوب للتخزين المؤقت بالعلامات)
-- بعد تغيير الإعداد أو برنامج التشغيل:
-```bash
-php artisan optimize:clear
-```
-
-### الرسائل الإلكترونية لا تُرسَل
-- تحقق من `MAIL_MAILER=resend` و`RESEND_API_KEY`
-- تحقق من معرّفات قوالب Resend في `.env`
-- إذا كانت معرّفات القوالب فارغة، يُتجاهَل الإرسال بصمت
-
-### `composer setup` أو `composer dev` يفشل على أوامر npm
-- هذا المستودع الخلفي لا يحتوي على `package.json` مُلتزَم به
-- استخدم أوامر PHP/Artisan مباشرةً بدلاً من ذلك
-
----
-
-# 🔄 خارطة الطريق
-
-- Redis في الإنتاج (التكوين الكامل)
-- إرسال البريد الإلكتروني عبر Laravel Queue jobs
-- معمارية قائمة على الأحداث
-- إصدار الواجهة البرمجية (`/v1/...`)
-- تحديد معدل الطلبات حسب الدور
-- دوكرة كاملة (docker-compose)
-- خط CI/CD كامل عبر GitHub Actions
-- WebSockets لتحديثات حالة الرحلات الفورية
-
----
-
-# 👤 المؤلف
-
-### عبيدة حجو
-### مطوّر Full Stack
+</div>
 
 </div>
