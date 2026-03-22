@@ -5,6 +5,7 @@ import BottomNav, { navItems } from "./BottomNav";
 import { useI18n } from "../../i18n/I18nProvider";
 import LanguageSwitcher from "../common/LanguageSwitcher";
 import { NavLink } from "react-router-dom";
+import { useChatInbox } from "../../context/Chat/useChatInbox";
 
 /**
  * Resolve the current route to the header label.
@@ -41,6 +42,7 @@ export default function AppLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { logoutLocal, user } = useAuth();
+  const { unreadCount } = useChatInbox();
   const { t } = useI18n();
   const pageLabel = t(getPageLabel(location.pathname));
   const visibleItems = navItems.filter((item) => item.visible(user));
@@ -98,7 +100,14 @@ export default function AppLayout() {
                     : "border border-[var(--theme-line)] bg-[rgba(255,255,255,0.78)] text-[var(--theme-muted-strong)] hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]",
                 ].join(" ")}
               >
-                {t(item.labelKey)}
+                <span className="relative inline-flex items-center">
+                  {t(item.labelKey)}
+                  {item.to === "/chat" && unreadCount > 0 ? (
+                    <span className="ml-2 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-semibold leading-none text-white shadow-[0_8px_18px_-10px_rgba(239,68,68,0.95)]">
+                      {unreadCount > 9 ? "9+" : unreadCount}
+                    </span>
+                  ) : null}
+                </span>
               </NavLink>
             ))}
           </nav>

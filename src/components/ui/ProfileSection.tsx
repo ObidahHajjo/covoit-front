@@ -144,18 +144,18 @@ export function ProfileSection({
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] p-5">
+        <div className="rounded-xl border border-red-200 bg-[linear-gradient(180deg,rgba(254,242,242,0.96),rgba(255,255,255,0.96))] p-5 shadow-[0_20px_40px_-30px_rgba(220,38,38,0.45)]">
           <div className="flex items-center gap-2">
-            <span className="text-[var(--theme-subtle)]">⚠</span>
-            <h3 className="text-lg font-medium text-[var(--theme-ink)]">{t("profile.dangerZone")}</h3>
+            <span className="text-red-500">⚠</span>
+            <h3 className="text-lg font-medium text-red-900">{t("profile.dangerZone")}</h3>
           </div>
           {deleteAccountError ? <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{deleteAccountError}</p> : null}
-          <p className="mt-3 text-sm leading-6 text-[var(--theme-muted)]">{t("profile.deleteBody")}</p>
+          <p className="mt-3 text-sm leading-6 text-red-800/80">{t("profile.deleteBody")}</p>
           <button
             type="button"
             onClick={onDeleteAccount}
             disabled={accountDeleting}
-            className="mt-4 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)] disabled:opacity-40"
+            className="mt-4 rounded-lg border border-red-200 bg-white px-4 py-3 text-sm font-medium text-red-700 transition hover:border-red-300 hover:bg-red-50 hover:text-red-800 disabled:opacity-40"
           >
             {accountDeleting ? t("profile.deleting") : t("profile.deleteAccount")}
           </button>
