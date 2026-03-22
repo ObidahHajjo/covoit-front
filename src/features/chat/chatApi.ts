@@ -35,6 +35,16 @@ type ClearConversationResponse = {
   data: ChatConversationApi;
 };
 
+type ClearMessageResponse = {
+  message: string;
+  data: ChatConversationApi;
+};
+
+type ClearMessagesResponse = {
+  message: string;
+  data: ChatConversationApi;
+};
+
 type ContactChatResponse = {
   message: ChatMessageApi | null;
   conversation: ChatConversationApi;
@@ -150,6 +160,60 @@ export async function sendConversationMessage(conversationId: number, message: s
 export async function clearConversation(conversationId: number): Promise<{ message: string; conversation: ChatConversation }> {
   try {
     const { data } = await apiClient.post<ClearConversationResponse>(`/conversations/${conversationId}/clear`, {}, { showGlobalLoader: false });
+    return {
+      message: data.message,
+      conversation: mapConversation(data.data),
+    };
+  } catch (error) {
+    throw new Error(extractApiErrorMessage(error));
+  }
+}
+
+/**
+ * Clears a single message for the current user without removing it for other participants.
+ *
+ * @param conversationId Identifier of the conversation containing the message.
+ * @param messageId Identifier of the message to hide for the current user.
+ * @returns The updated normalized conversation and success message.
+ */
+export async function clearConversationMessage(
+  conversationId: number,
+  messageId: number,
+): Promise<{ message: string; conversation: ChatConversation }> {
+  try {
+    const { data } = await apiClient.post<ClearMessageResponse>(
+      `/conversations/${conversationId}/messages/${messageId}/clear`,
+      {},
+      { showGlobalLoader: false },
+    );
+
+    return {
+      message: data.message,
+      conversation: mapConversation(data.data),
+    };
+  } catch (error) {
+    throw new Error(extractApiErrorMessage(error));
+  }
+}
+
+/**
+ * Clears multiple selected messages for the current user without affecting the other participant.
+ *
+ * @param conversationId Identifier of the conversation containing the messages.
+ * @param messageIds Identifiers of the selected messages to hide for the current user.
+ * @returns The updated normalized conversation and success message.
+ */
+export async function clearConversationMessages(
+  conversationId: number,
+  messageIds: number[],
+): Promise<{ message: string; conversation: ChatConversation }> {
+  try {
+    const { data } = await apiClient.post<ClearMessagesResponse>(
+      `/conversations/${conversationId}/messages/clear`,
+      { message_ids: messageIds },
+      { showGlobalLoader: false },
+    );
+
     return {
       message: data.message,
       conversation: mapConversation(data.data),

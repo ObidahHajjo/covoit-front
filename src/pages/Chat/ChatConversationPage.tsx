@@ -17,10 +17,12 @@ export default function ChatConversationPage() {
     setDraft,
     sending,
     clearing,
+    clearingMessageIds,
     success,
     error,
     handleSubmit,
     handleClearConversation,
+    handleClearMessages,
     isRealtimeConnected,
   } = useChatConversation();
 
@@ -49,12 +51,14 @@ export default function ChatConversationPage() {
       draft={draft}
       sending={sending}
       clearing={clearing}
+      clearingMessageIds={clearingMessageIds}
       wasCleared={Boolean(conversation.clearedAt && conversation.messages.length === 0)}
       success={success}
       error={error}
       onDraftChange={setDraft}
       onSubmit={handleSubmit}
       onClearConversation={handleClearConversation}
+      onClearMessages={handleClearMessages}
     />
   );
 }

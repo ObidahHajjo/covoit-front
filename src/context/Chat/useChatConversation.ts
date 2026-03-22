@@ -1,6 +1,6 @@
 import { type FormEvent, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { clearConversation, getConversation, sendConversationMessage } from "../../features/chat/chatApi";
+import { clearConversation, clearConversationMessages, getConversation, sendConversationMessage } from "../../features/chat/chatApi";
 import { markConversationRead, syncConversationUnread } from "../../features/chat/chatReadState";
 import { useChatRealtime } from "../../features/chat/useChatRealtime";
 import type { ChatConversation } from "../../types/Chat";
@@ -20,6 +20,7 @@ export function useChatConversation() {
   const [draft, setDraft] = useState("");
   const [sending, setSending] = useState(false);
   const [clearing, setClearing] = useState(false);
+  const [clearingMessageIds, setClearingMessageIds] = useState<number[]>([]);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -149,6 +150,42 @@ export function useChatConversation() {
     }
   }
 
+  /**
+   * Clears a single message only for the authenticated user.
+   *
+   * @param messageId - Identifier of the message to hide in the current conversation.
+   * @returns A promise that resolves after the message is cleared locally.
+   */
+  async function handleClearMessages(messageIds: number[]) {
+    if (!conversationId || !conversation) return;
+    if (messageIds.length === 0) return;
+
+    if (!window.confirm(t("chat.clearMessageConfirm", { count: messageIds.length }))) {
+      return;
+    }
+
+    try {
+      setError(null);
+      setSuccess(null);
+      setClearingMessageIds(messageIds);
+
+      const result = await clearConversationMessages(Number(conversationId), messageIds);
+      setConversation(result.conversation);
+      syncConversationUnread(
+        result.conversation.id,
+        result.conversation.updatedAt,
+        result.conversation.latestMessage?.id,
+        result.conversation.latestMessage?.sender,
+      );
+      markConversationRead(result.conversation.id, result.conversation.updatedAt, result.conversation.latestMessage?.id);
+      setSuccess(result.message || t("chat.clearMessageSuccess"));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t("chat.clearMessageFailed"));
+    } finally {
+      setClearingMessageIds([]);
+    }
+  }
+
   return {
     conversation,
     loading,
@@ -156,10 +193,12 @@ export function useChatConversation() {
     setDraft,
     sending,
     clearing,
+    clearingMessageIds,
     success,
     error,
     handleSubmit,
     handleClearConversation,
+    handleClearMessages,
     isRealtimeConnected,
   };
 }

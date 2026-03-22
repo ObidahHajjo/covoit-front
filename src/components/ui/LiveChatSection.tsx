@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import FloatingToast from "../common/FloatingToast";
 import type { ChatMessage } from "../../types/Chat";
 import { useI18n } from "../../i18n/I18nProvider";
@@ -13,12 +13,14 @@ type Props = {
   draft: string;
   sending: boolean;
   clearing?: boolean;
+  clearingMessageIds?: number[];
   wasCleared?: boolean;
   success: string | null;
   error: string | null;
   onDraftChange: (value: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   onClearConversation?: () => void;
+  onClearMessages?: (messageIds: number[]) => void;
 };
 
 /**
@@ -39,12 +41,14 @@ type Props = {
  * @param props.draft - Current draft message text.
  * @param props.sending - Whether a send action is in progress.
  * @param props.clearing - Whether the clear action is in progress.
+ * @param props.clearingMessageIds - Identifiers of the messages currently being cleared.
  * @param props.wasCleared - Whether the visible history was previously cleared for this user.
  * @param props.success - Optional success message shown in a toast.
  * @param props.error - Optional error message shown in a toast.
  * @param props.onDraftChange - Callback fired when the draft changes.
  * @param props.onSubmit - Form submit handler for sending a message.
  * @param props.onClearConversation - Optional callback used to clear the conversation locally.
+ * @param props.onClearMessages - Optional callback used to clear selected messages locally.
  * @returns The rendered live chat screen.
  */
 export function LiveChatSection({
@@ -56,14 +60,33 @@ export function LiveChatSection({
   draft,
   sending,
   clearing = false,
+  clearingMessageIds = [],
   wasCleared = false,
   success,
   error,
   onDraftChange,
   onSubmit,
   onClearConversation,
+  onClearMessages,
 }: Props) {
   const { t } = useI18n();
+  const [selectedMessageIds, setSelectedMessageIds] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (clearingMessageIds.length === 0) {
+      return;
+    }
+
+    setSelectedMessageIds(clearingMessageIds);
+  }, [clearingMessageIds]);
+
+  useEffect(() => {
+    if (selectedMessageIds.length === 0) {
+      return;
+    }
+
+    setSelectedMessageIds((current) => current.filter((messageId) => messages.some((message) => message.id === messageId)));
+  }, [messages, selectedMessageIds.length]);
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
@@ -102,6 +125,29 @@ export function LiveChatSection({
 
         <div className="flex min-h-[58vh] flex-col">
             <div className="flex-1 space-y-4 bg-[rgba(246,248,245,0.86)] px-4 py-5 sm:px-6 sm:py-6">
+              {selectedMessageIds.length > 0 && onClearMessages ? (
+                <div className="sticky top-3 z-10 flex items-center justify-between gap-3 rounded-2xl border border-[var(--theme-line)] bg-[rgba(255,255,255,0.94)] px-4 py-3 shadow-[0_16px_34px_-24px_rgba(15,23,42,0.35)] backdrop-blur-sm">
+                  <p className="text-sm font-medium text-[var(--theme-ink)]">{t("chat.messagesSelected", { count: selectedMessageIds.length })}</p>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedMessageIds([])}
+                      className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-3 py-2 text-xs font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]"
+                    >
+                      {t("common.cancel")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onClearMessages(selectedMessageIds)}
+                      disabled={clearingMessageIds.length > 0}
+                      className="rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-700 transition hover:border-red-300 hover:bg-red-100 hover:text-red-800 disabled:opacity-50"
+                    >
+                      {clearingMessageIds.length > 0 ? t("chat.clearing") : t("chat.clearSelectedMessages")}
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+
               {messages.length === 0 ? (
                 <div className="flex h-full min-h-[240px] items-center justify-center">
                   <div className="rounded-2xl border border-dashed border-[var(--theme-line)] bg-[var(--theme-surface)] px-6 py-5 text-center">
@@ -124,18 +170,31 @@ export function LiveChatSection({
 
                 return (
                   <div key={message.id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
-                    <div
-                      className={`max-w-[85%] rounded-[20px] px-4 py-3 shadow-sm sm:max-w-[70%] ${
-                        isMine
-                          ? "rounded-br-md bg-[var(--theme-primary)] text-white"
-                          : "rounded-bl-md border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)]"
-                      }`}
+                    <button
+                      type="button"
+                      onClick={() => setSelectedMessageIds((current) => current.includes(message.id) ? current.filter((id) => id !== message.id) : [...current, message.id])}
+                      className={`relative max-w-[85%] text-left sm:max-w-[70%] ${onClearMessages ? "cursor-pointer" : "cursor-default"}`}
                     >
-                      <p className="text-sm leading-6">{message.body}</p>
-                      <p className={`mt-2 text-[11px] font-medium ${isMine ? "text-white/70" : "text-[var(--theme-muted)]"}`}>
-                        {formatLocaleTime(message.createdAt, undefined, t("common.now"))}
-                      </p>
-                    </div>
+                      <div
+                        className={`rounded-[20px] px-4 py-3 shadow-sm transition ${selectedMessageIds.includes(message.id) ? "ring-2 ring-[rgba(82,100,72,0.22)] ring-offset-2 ring-offset-[rgba(246,248,245,0.86)]" : ""} ${
+                          isMine
+                            ? "rounded-br-md bg-[var(--theme-primary)] text-white"
+                            : "rounded-bl-md border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)]"
+                        }`}
+                      >
+                        <p className="text-sm leading-6">{message.body}</p>
+                        <div className="mt-2 flex items-center justify-between gap-3">
+                          <p className={`text-[11px] font-medium ${isMine ? "text-white/70" : "text-[var(--theme-muted)]"}`}>
+                            {formatLocaleTime(message.createdAt, undefined, t("common.now"))}
+                          </p>
+                          {onClearMessages ? (
+                            <span className={`text-[11px] font-medium ${selectedMessageIds.includes(message.id) ? (isMine ? "text-white/85" : "text-[var(--theme-ink)]") : (isMine ? "text-white/60" : "text-[var(--theme-subtle)]")}`}>
+                              {selectedMessageIds.includes(message.id) ? t("chat.selected") : t("chat.tapToSelect")}
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
+                    </button>
                   </div>
                 );
               })}
