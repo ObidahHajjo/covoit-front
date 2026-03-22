@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
+import FloatingToast from "../common/FloatingToast";
 
 function InfoCard({ icon, title, rows }: {
   icon: string;
@@ -26,7 +26,7 @@ function InfoCard({ icon, title, rows }: {
   );
 }
 
-function PassengerRow({ passenger, contactPath }: { passenger: Person; contactPath: string }) {
+function PassengerRow({ passenger, onContact }: { passenger: Person; onContact: (passenger: Person) => void }) {
   const name = [passenger.first_name, passenger.last_name].filter(Boolean).join(" ") || "Passenger";
 
   return (
@@ -38,12 +38,13 @@ function PassengerRow({ passenger, contactPath }: { passenger: Person; contactPa
         <p className="truncate font-medium text-[var(--theme-ink)]">{name}</p>
         <p className="text-xs text-[var(--theme-muted)]">{passenger.pseudo ? `@${passenger.pseudo}` : `#${passenger.id}`}</p>
       </div>
-      <Link
-        to={contactPath}
+      <button
+        type="button"
+        onClick={() => onContact(passenger)}
         className="inline-flex shrink-0 items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-2 text-xs font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] hover:bg-[var(--theme-surface)]"
       >
         Contact passenger
-      </Link>
+      </button>
     </div>
   );
 }
@@ -54,7 +55,7 @@ type Props = {
   error: string | null;
   cancelling: boolean;
   onCancelTrip: () => void;
-  getContactPassengerPath: (passengerId: number) => string;
+  onContactPassenger: (passenger: Person) => void;
 };
 
 export function DriverTripDetailsSection({
@@ -63,13 +64,14 @@ export function DriverTripDetailsSection({
   error,
   cancelling,
   onCancelTrip,
-  getContactPassengerPath,
+  onContactPassenger,
 }: Props) {
   const from = trip.departure_address?.city?.name ?? "-";
   const to = trip.arrival_address?.city?.name ?? "-";
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
+      <FloatingToast tone="error" message={error} durationMs={6500} />
       <section className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] px-5 py-6 sm:px-7 sm:py-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -79,13 +81,6 @@ export function DriverTripDetailsSection({
           </div>
           <span className="inline-flex rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-2 text-sm font-medium text-[var(--theme-muted-strong)]">Trip #{trip.id}</span>
         </div>
-
-        {error ? (
-          <div className="mt-6 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-3 text-sm font-medium text-[var(--theme-ink)]">
-            {error}
-          </div>
-        ) : null}
-
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <InfoCard
             icon="🕐"
@@ -152,7 +147,7 @@ export function DriverTripDetailsSection({
                 <PassengerRow
                   key={passenger.id}
                   passenger={passenger}
-                  contactPath={getContactPassengerPath(passenger.id)}
+                  onContact={onContactPassenger}
                 />
               ))}
             </div>

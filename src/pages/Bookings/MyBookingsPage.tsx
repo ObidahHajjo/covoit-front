@@ -1,12 +1,29 @@
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMyBookings } from "../../context/Booking/useMyBookings";
 import { MyBookingsSection } from "../../components/ui/MyBookingsSection";
+import FloatingToast from "../../components/common/FloatingToast";
 import PageLoadingState from "../../components/common/PageLoadingState";
 
 export default function MyBookingsPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { bookings, loading, error } = useMyBookings();
+  const toast = (location.state as { toast?: { tone: "success" | "error"; message: string } } | null)?.toast;
+
+  useEffect(() => {
+    if (!toast) return;
+
+    const timer = window.setTimeout(() => {
+      navigate(location.pathname, { replace: true, state: null });
+    }, 7000);
+
+    return () => window.clearTimeout(timer);
+  }, [toast, navigate, location.pathname]);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
+      {toast ? <FloatingToast tone={toast.tone} message={toast.message} durationMs={6500} /> : null}
       <div className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 sm:px-7 sm:py-8">
         <div className="mb-8 max-w-3xl">
           <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">My bookings</p>

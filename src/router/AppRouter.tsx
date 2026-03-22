@@ -19,6 +19,8 @@ import ContactPassengerPage from "../pages/DriverTrips/ContactPassengerPage";
 import MyBookingsPage from "../pages/Bookings/MyBookingsPage";
 import BookingDetailsPage from "../pages/Bookings/BookingDetailsPage";
 import MyAccountPage from "../pages/Account/MyAccountPage";
+import ChatInboxPage from "../pages/Chat/ChatInboxPage";
+import ChatConversationPage from "../pages/Chat/ChatConversationPage";
 
 export default function AppRouter() {
   return (
@@ -38,6 +40,8 @@ export default function AppRouter() {
         <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/find-trip" element={<FindTripPage />} />
+          <Route path="/chat" element={<ChatInboxPage />} />
+          <Route path="/chat/:conversationId" element={<ChatConversationPage />} />
           <Route path="/find-trip/results" element={<TripResultsPage />} />
           <Route path="/trips/:tripId" element={<TripDetailsPage />} />
           <Route path="/trips/:tripId/contact-driver" element={<ContactDriverPage />} />

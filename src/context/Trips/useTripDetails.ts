@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { contactDriver } from "../../features/chat/chatApi";
 import { getTripById, reserveTrip } from "../../features/trips/tripApi";
 import type { Trip } from "../../types/Trip";
 
@@ -42,7 +43,14 @@ export function useTripDetails() {
       setActionError(null);
 
       await reserveTrip(Number(tripId));
-      navigate("/bookings");
+      navigate("/bookings", {
+        state: {
+          toast: {
+            tone: "success",
+            message: "Reservation confirmed successfully.",
+          },
+        },
+      });
     } catch (err) {
       setActionError(err instanceof Error ? err.message : "Booking failed");
     } finally {
@@ -50,9 +58,23 @@ export function useTripDetails() {
     }
   }
 
-  function navigateToContactDriver() {
-    if (trip) {
-      navigate(`/trips/${trip.id}/contact-driver`);
+  async function navigateToContactDriver() {
+    if (!trip) return;
+
+    try {
+      setActionError(null);
+      setSubmitting(true);
+
+      const conversation = await contactDriver(trip.id, {
+        subject: "Chat opened",
+        message: "",
+      });
+
+      navigate(`/chat/${conversation.id}`);
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "Failed to open driver chat");
+    } finally {
+      setSubmitting(false);
     }
   }
 

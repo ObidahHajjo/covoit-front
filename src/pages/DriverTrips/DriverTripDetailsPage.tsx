@@ -10,7 +10,7 @@ export default function DriverTripDetailsPage() {
     error,
     cancelling,
     handleCancelTrip,
-    getContactPassengerPath,
+    openPassengerChat,
   } = useDriverTripDetails();
 
   if (loading) {
@@ -37,7 +37,7 @@ export default function DriverTripDetailsPage() {
       error={error}
       cancelling={cancelling}
       onCancelTrip={handleCancelTrip}
-      getContactPassengerPath={getContactPassengerPath}
+      onContactPassenger={openPassengerChat}
     />
   );
 }

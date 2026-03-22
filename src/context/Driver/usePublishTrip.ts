@@ -140,7 +140,14 @@ export function usePublishTrip() {
                 },
             });
 
-            navigate("/my-trips");
+            navigate("/my-trips", {
+                state: {
+                    toast: {
+                        tone: "success",
+                        message: "Trip published successfully.",
+                    },
+                },
+            });
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to publish trip");
         } finally {

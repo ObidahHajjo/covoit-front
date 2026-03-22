@@ -3,7 +3,7 @@ import { BookingDetailsSection } from "../../components/ui/BookingDetailsSection
 import PageLoadingState from "../../components/common/PageLoadingState";
 
 export default function BookingDetailsPage() {
-  const { trip, passengers, loading, error, cancelling, isTripEnded, handleCancel } =
+  const { trip, passengers, loading, error, cancelling, isTripEnded, handleCancel, navigateToContactDriver } =
     useBookingDetails();
 
   if (loading) {
@@ -31,6 +31,7 @@ export default function BookingDetailsPage() {
       cancelling={cancelling}
       error={error}
       onCancel={handleCancel}
+      onContactDriver={navigateToContactDriver}
     />
   );
 }

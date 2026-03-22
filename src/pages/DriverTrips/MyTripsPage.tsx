@@ -1,9 +1,25 @@
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import FloatingToast from "../../components/common/FloatingToast";
 import { useMyTrips } from "../../context/Driver/useMyTrips";
 import { MyTripsSection } from "../../components/ui/MyTripsSection";
 import PageLoadingState from "../../components/common/PageLoadingState";
 
 export default function MyTripsPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { loading, error, currentTrips, incomingTrips, pastTrips } = useMyTrips();
+  const toast = (location.state as { toast?: { tone: "success" | "error"; message: string } } | null)?.toast;
+
+  useEffect(() => {
+    if (!toast) return;
+
+    const timer = window.setTimeout(() => {
+      navigate(location.pathname, { replace: true, state: null });
+    }, 7000);
+
+    return () => window.clearTimeout(timer);
+  }, [toast, navigate, location.pathname]);
 
   if (loading) {
     return <PageLoadingState title="Loading your trips" />;
@@ -21,10 +37,13 @@ export default function MyTripsPage() {
   }
 
   return (
-    <MyTripsSection
-      currentTrips={currentTrips}
-      incomingTrips={incomingTrips}
-      pastTrips={pastTrips}
-    />
+    <>
+      {toast ? <FloatingToast tone={toast.tone} message={toast.message} durationMs={6500} /> : null}
+      <MyTripsSection
+        currentTrips={currentTrips}
+        incomingTrips={incomingTrips}
+        pastTrips={pastTrips}
+      />
+    </>
   );
 }

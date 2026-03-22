@@ -1,25 +1,28 @@
 import { useContactDriver } from "../../context/Contact/useContactDriver";
-import { ContactDriverSection } from "../../components/ui/ContactDriverSection";
+import { LiveChatSection } from "../../components/ui/LiveChatSection";
 
 export default function ContactDriverPage() {
   const {
-    subject,
-    setSubject,
-    message,
-    setMessage,
+    draft,
+    setDraft,
+    messages,
+    sending,
     success,
     error,
     handleSubmit,
   } = useContactDriver();
 
   return (
-    <ContactDriverSection
-      subject={subject}
-      onSubjectChange={setSubject}
-      message={message}
-      onMessageChange={setMessage}
+    <LiveChatSection
+      title="Chat with driver"
+      subtitle="Coordinate pickup details and timing directly inside the app instead of sending an email-style form."
+      counterpartLabel="Driver"
+      messages={messages}
+      draft={draft}
+      sending={sending}
       success={success}
       error={error}
+      onDraftChange={setDraft}
       onSubmit={handleSubmit}
     />
   );

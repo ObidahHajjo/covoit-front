@@ -1,6 +1,6 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 
-const API_BASE_URL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL as string);
+export const API_BASE_URL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL as string);
 
 function resolveApiBaseUrl(rawBaseUrl: string): string {
     try {

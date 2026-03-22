@@ -1,34 +1,43 @@
 import { type FormEvent, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { contactDriver } from "../../features/contact/contactApi";
+import type { ChatMessage } from "../../types/Chat";
 
 export function useContactDriver() {
   const { tripId } = useParams();
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const [draft, setDraft] = useState("");
+  const [messages] = useState<ChatMessage[]>([]);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    const content = draft.trim();
+    if (!content) return;
+
     try {
       setError(null);
       setSuccess(null);
-      await contactDriver(Number(tripId), { subject, message });
-      setSuccess("Message sent successfully.");
-      setSubject("");
-      setMessage("");
+      setSending(true);
+      const conversation = await contactDriver(Number(tripId), { subject: "Chat message", message: content });
+      setSuccess("Opening chat...");
+      setDraft("");
+      navigate(`/chat/${conversation.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to send message");
+    } finally {
+      setSending(false);
     }
   }
 
   return {
-    subject,
-    setSubject,
-    message,
-    setMessage,
+    draft,
+    setDraft,
+    messages,
+    sending,
     success,
     error,
     handleSubmit,

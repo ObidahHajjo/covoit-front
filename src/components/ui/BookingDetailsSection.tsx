@@ -1,5 +1,6 @@
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
+import FloatingToast from "../common/FloatingToast";
 
 type Props = {
   trip: Trip;
@@ -8,6 +9,7 @@ type Props = {
   cancelling: boolean;
   error: string | null;
   onCancel: () => void;
+  onContactDriver: () => void;
 };
 
 function DetailCard({ label, value }: { label: string; value: string }) {
@@ -26,6 +28,7 @@ export function BookingDetailsSection({
   cancelling,
   error,
   onCancel,
+  onContactDriver,
 }: Props) {
   const from = trip.departure_address?.city?.name ?? "-";
   const to = trip.arrival_address?.city?.name ?? "-";
@@ -44,17 +47,11 @@ export function BookingDetailsSection({
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
+      <FloatingToast tone="error" message={error} durationMs={6500} />
       <section className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 text-[var(--theme-ink)] sm:px-7 sm:py-8">
         <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Booking details</p>
         <h1 className="mt-3 text-2xl font-medium leading-tight text-[var(--theme-ink)] sm:text-3xl">{from} - {to}</h1>
         <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">Keep departure notes, passenger count, and cancellation actions together in one calm view.</p>
-
-        {error ? (
-          <div className="mt-6 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm font-medium text-[var(--theme-muted-strong)]">
-            {error}
-          </div>
-        ) : null}
-
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <DetailCard label="Departure" value={departureDate} />
           <DetailCard label="Passengers" value={`${passengers.length} ${passengers.length === 1 ? "person" : "people"}`} />
@@ -75,15 +72,24 @@ export function BookingDetailsSection({
             </span>
           </div>
 
-          {!isTripEnded ? (
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <button
-              onClick={onCancel}
-              disabled={cancelling}
-              className="mt-5 w-full rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40"
+              onClick={onContactDriver}
+              className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-3.5 text-sm font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] hover:bg-[var(--theme-surface)]"
             >
-              {cancelling ? "Cancelling..." : "Cancel reservation"}
+              Contact driver
             </button>
-          ) : null}
+
+            {!isTripEnded ? (
+              <button
+                onClick={onCancel}
+                disabled={cancelling}
+                className="rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40"
+              >
+                {cancelling ? "Cancelling..." : "Cancel reservation"}
+              </button>
+            ) : null}
+          </div>
         </div>
       </section>
     </div>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { contactDriver } from "../../features/chat/chatApi";
 import { cancelReservation, getTripById, getTripPassengers } from "../../features/trips/tripApi";
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
@@ -46,11 +47,33 @@ export function useBookingDetails() {
             setCancelling(true);
             setError(null);
             await cancelReservation(Number(tripId));
-            navigate("/bookings");
+            navigate("/bookings", {
+                state: {
+                    toast: {
+                        tone: "success",
+                        message: "Reservation cancelled successfully.",
+                    },
+                },
+            });
         } catch (err) {
             setError(err instanceof Error ? err.message : "Cancel failed");
         } finally {
             setCancelling(false);
+        }
+    }
+
+    async function navigateToContactDriver() {
+        if (!trip) return;
+
+        try {
+            setError(null);
+            const conversation = await contactDriver(trip.id, {
+                subject: "Chat opened",
+                message: "",
+            });
+            navigate(`/chat/${conversation.id}`);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to open driver chat");
         }
     }
 
@@ -62,5 +85,6 @@ export function useBookingDetails() {
         cancelling,
         isTripEnded,
         handleCancel,
+        navigateToContactDriver,
     };
 }

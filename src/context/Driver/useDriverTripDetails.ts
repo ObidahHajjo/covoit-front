@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { contactPassenger } from "../../features/chat/chatApi";
 import { cancelTripAsDriver, getTripById, getTripPassengers } from "../../features/trips/tripApi";
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
@@ -41,7 +42,14 @@ export function useDriverTripDetails() {
             setCancelling(true);
             setError(null);
             await cancelTripAsDriver(Number(tripId));
-            navigate("/my-trips");
+            navigate("/my-trips", {
+                state: {
+                    toast: {
+                        tone: "success",
+                        message: "Trip cancelled successfully.",
+                    },
+                },
+            });
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to cancel trip");
         } finally {
@@ -49,8 +57,19 @@ export function useDriverTripDetails() {
         }
     }
 
-    function getContactPassengerPath(passengerId: number) {
-        return `/my-trips/${tripId}/contact-passenger/${passengerId}`;
+    async function openPassengerChat(passenger: Person) {
+        if (!trip) return;
+
+        try {
+            setError(null);
+            const conversation = await contactPassenger(trip.id, passenger.id, {
+                subject: "Chat opened",
+                message: "",
+            });
+            navigate(`/chat/${conversation.id}`);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to open passenger chat");
+        }
     }
 
     return {
@@ -60,6 +79,6 @@ export function useDriverTripDetails() {
         error,
         cancelling,
         handleCancelTrip,
-        getContactPassengerPath,
+        openPassengerChat,
     };
 }
