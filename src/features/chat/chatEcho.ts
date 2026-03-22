@@ -1,6 +1,6 @@
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
-import { API_BASE_URL } from "../../app/apiClient";
+import { API_BASE_URL, apiClient } from "../../app/apiClient";
 
 let echoInstance: Echo<"reverb"> | null = null;
 
@@ -43,6 +43,17 @@ export function getChatEcho() {
     enabledTransports: ["ws", "wss"],
     authEndpoint: `${API_BASE_URL}/broadcasting/auth`,
     withCredentials: true,
+    authorizer: (channel) => ({
+      authorize: (socketId, callback) => {
+        apiClient  // withCredentials: true → sends httpOnly cookie automatically
+            .post("/broadcasting/auth-proxy", {
+              socket_id: socketId,
+              channel_name: channel.name,
+            })
+            .then((res) => callback(null, res.data))
+            .catch((err) => callback(err, null));
+      },
+    }),
   });
 
   return echoInstance;
