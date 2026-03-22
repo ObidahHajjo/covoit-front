@@ -20,7 +20,9 @@ type Props = {
  */
 function ChatRow({ conversation }: { conversation: ChatConversation }) {
   const { t } = useI18n();
-  const preview = conversation.latestMessage?.body || conversation.tripLabel || t("chat.openConversation");
+  const preview = conversation.latestMessage?.body
+    || (conversation.clearedAt ? t("chat.cleared") : conversation.tripLabel)
+    || t("chat.openConversation");
   const hasUnread = getConversationUnread(
     conversation.id,
     conversation.updatedAt,

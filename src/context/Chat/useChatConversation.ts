@@ -1,10 +1,11 @@
 import { type FormEvent, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getConversation, sendConversationMessage } from "../../features/chat/chatApi";
+import { clearConversation, getConversation, sendConversationMessage } from "../../features/chat/chatApi";
 import { markConversationRead, syncConversationUnread } from "../../features/chat/chatReadState";
 import { useChatRealtime } from "../../features/chat/useChatRealtime";
 import type { ChatConversation } from "../../types/Chat";
 import { translate } from "../../i18n/config";
+import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Manages a single chat conversation, including polling, realtime refresh, and sending.
@@ -12,11 +13,13 @@ import { translate } from "../../i18n/config";
  * @returns Conversation state and handlers for the active chat thread.
  */
 export function useChatConversation() {
+  const { t } = useI18n();
   const { conversationId } = useParams();
   const [conversation, setConversation] = useState<ChatConversation | null>(null);
   const [loading, setLoading] = useState(true);
   const [draft, setDraft] = useState("");
   const [sending, setSending] = useState(false);
+  const [clearing, setClearing] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -97,6 +100,7 @@ export function useChatConversation() {
         return {
           ...prev,
           updatedAt: created.createdAt,
+          clearedAt: prev.clearedAt,
           latestMessage: created,
           messages: [...prev.messages, created],
         };
@@ -111,15 +115,51 @@ export function useChatConversation() {
     }
   }
 
+  /**
+   * Clears the current conversation only for the authenticated user.
+   *
+   * @returns A promise that resolves when the conversation has been cleared locally.
+   */
+  async function handleClearConversation() {
+    if (!conversationId || !conversation) return;
+
+    if (!window.confirm(t("chat.clearConfirm"))) {
+      return;
+    }
+
+    try {
+      setError(null);
+      setSuccess(null);
+      setClearing(true);
+
+      const result = await clearConversation(Number(conversationId));
+      setConversation(result.conversation);
+      syncConversationUnread(
+        result.conversation.id,
+        result.conversation.updatedAt,
+        result.conversation.latestMessage?.id,
+        result.conversation.latestMessage?.sender,
+      );
+      markConversationRead(result.conversation.id, result.conversation.updatedAt, result.conversation.latestMessage?.id);
+      setSuccess(result.message || t("chat.clearSuccess"));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t("chat.clearFailed"));
+    } finally {
+      setClearing(false);
+    }
+  }
+
   return {
     conversation,
     loading,
     draft,
     setDraft,
     sending,
+    clearing,
     success,
     error,
     handleSubmit,
+    handleClearConversation,
     isRealtimeConnected,
   };
 }

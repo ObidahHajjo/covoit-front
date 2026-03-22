@@ -12,10 +12,13 @@ type Props = {
   isRealtimeConnected?: boolean;
   draft: string;
   sending: boolean;
+  clearing?: boolean;
+  wasCleared?: boolean;
   success: string | null;
   error: string | null;
   onDraftChange: (value: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  onClearConversation?: () => void;
 };
 
 /**
@@ -35,10 +38,13 @@ type Props = {
  * @param props.isRealtimeConnected - Whether realtime updates are connected.
  * @param props.draft - Current draft message text.
  * @param props.sending - Whether a send action is in progress.
+ * @param props.clearing - Whether the clear action is in progress.
+ * @param props.wasCleared - Whether the visible history was previously cleared for this user.
  * @param props.success - Optional success message shown in a toast.
  * @param props.error - Optional error message shown in a toast.
  * @param props.onDraftChange - Callback fired when the draft changes.
  * @param props.onSubmit - Form submit handler for sending a message.
+ * @param props.onClearConversation - Optional callback used to clear the conversation locally.
  * @returns The rendered live chat screen.
  */
 export function LiveChatSection({
@@ -49,10 +55,13 @@ export function LiveChatSection({
   isRealtimeConnected = false,
   draft,
   sending,
+  clearing = false,
+  wasCleared = false,
   success,
   error,
   onDraftChange,
   onSubmit,
+  onClearConversation,
 }: Props) {
   const { t } = useI18n();
 
@@ -73,10 +82,22 @@ export function LiveChatSection({
                 {isRealtimeConnected ? t("common.connected") : t("common.updating")}
               </div>
             </div>
-            <div className="rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.85)] px-4 py-2 text-sm font-medium text-[var(--theme-ink)]">
-              {counterpartLabel}
+              <div className="flex flex-wrap items-center justify-end gap-3">
+                {onClearConversation ? (
+                  <button
+                    type="button"
+                    onClick={onClearConversation}
+                    disabled={clearing}
+                    className="rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.85)] px-4 py-2 text-sm font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)] disabled:opacity-50"
+                  >
+                    {clearing ? t("chat.clearing") : t("chat.clearConversation")}
+                  </button>
+                ) : null}
+                <div className="rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.85)] px-4 py-2 text-sm font-medium text-[var(--theme-ink)]">
+                  {counterpartLabel}
+                </div>
+              </div>
             </div>
-          </div>
         </div>
 
         <div className="flex min-h-[58vh] flex-col">
@@ -84,8 +105,8 @@ export function LiveChatSection({
               {messages.length === 0 ? (
                 <div className="flex h-full min-h-[240px] items-center justify-center">
                   <div className="rounded-2xl border border-dashed border-[var(--theme-line)] bg-[var(--theme-surface)] px-6 py-5 text-center">
-                    <p className="text-sm font-medium text-[var(--theme-ink)]">{t("chat.noneYet")}</p>
-                    <p className="mt-2 text-sm text-[var(--theme-muted)]">{t("chat.noneYetBody")}</p>
+                    <p className="text-sm font-medium text-[var(--theme-ink)]">{wasCleared ? t("chat.cleared") : t("chat.noneYet")}</p>
+                    <p className="mt-2 text-sm text-[var(--theme-muted)]">{wasCleared ? t("chat.clearedBody") : t("chat.noneYetBody")}</p>
                   </div>
                 </div>
               ) : messages.map((message) => {

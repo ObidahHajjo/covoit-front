@@ -10,7 +10,19 @@ import { useI18n } from "../../i18n/I18nProvider";
  */
 export default function ChatConversationPage() {
   const { t } = useI18n();
-  const { conversation, loading, draft, setDraft, sending, success, error, handleSubmit, isRealtimeConnected } = useChatConversation();
+  const {
+    conversation,
+    loading,
+    draft,
+    setDraft,
+    sending,
+    clearing,
+    success,
+    error,
+    handleSubmit,
+    handleClearConversation,
+    isRealtimeConnected,
+  } = useChatConversation();
 
   if (loading) {
     return <PageLoadingState title={t("loading.conversation")} />;
@@ -36,10 +48,13 @@ export default function ChatConversationPage() {
       isRealtimeConnected={isRealtimeConnected}
       draft={draft}
       sending={sending}
+      clearing={clearing}
+      wasCleared={Boolean(conversation.clearedAt && conversation.messages.length === 0)}
       success={success}
       error={error}
       onDraftChange={setDraft}
       onSubmit={handleSubmit}
+      onClearConversation={handleClearConversation}
     />
   );
 }

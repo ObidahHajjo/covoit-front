@@ -25,8 +25,14 @@ type ChatConversationApi = {
     to?: string | null;
   } | null;
   last_message_at?: string | null;
+  cleared_at?: string | null;
   latest_message?: ChatMessageApi | null;
   messages?: ChatMessageApi[];
+};
+
+type ClearConversationResponse = {
+  message: string;
+  data: ChatConversationApi;
 };
 
 type ContactChatResponse = {
@@ -82,6 +88,7 @@ function mapConversation(conversation: ChatConversationApi): ChatConversation {
     tripId: conversation.trip?.id ?? 0,
     tripLabel: mapTripLabel(conversation.trip),
     updatedAt: conversation.last_message_at ?? conversation.latest_message?.created_at ?? new Date().toISOString(),
+    clearedAt: conversation.cleared_at ?? null,
     latestMessage: conversation.latest_message ? mapMessage(conversation.latest_message) : null,
     messages: messages.map(mapMessage),
   };
@@ -129,6 +136,24 @@ export async function sendConversationMessage(conversationId: number, message: s
       message,
     }, {showGlobalLoader: false});
     return mapMessage(data.data);
+  } catch (error) {
+    throw new Error(extractApiErrorMessage(error));
+  }
+}
+
+/**
+ * Clears a conversation for the current user without deleting it for the other participant.
+ *
+ * @param conversationId Identifier of the conversation to clear locally.
+ * @returns The updated normalized conversation and success message.
+ */
+export async function clearConversation(conversationId: number): Promise<{ message: string; conversation: ChatConversation }> {
+  try {
+    const { data } = await apiClient.post<ClearConversationResponse>(`/conversations/${conversationId}/clear`, {}, { showGlobalLoader: false });
+    return {
+      message: data.message,
+      conversation: mapConversation(data.data),
+    };
   } catch (error) {
     throw new Error(extractApiErrorMessage(error));
   }

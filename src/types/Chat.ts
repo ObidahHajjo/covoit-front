@@ -20,6 +20,7 @@ export type ChatConversation = {
   tripId: number;
   tripLabel: string;
   updatedAt: string;
+   clearedAt: string | null;
   latestMessage?: ChatMessage | null;
   messages: ChatMessage[];
 };
