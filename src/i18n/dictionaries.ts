@@ -224,8 +224,8 @@ export const dictionaries = {
     "car.custom": "Custom",
 
     "account.myAccount": "My account",
-    "account.heading": "Personal details and vehicle info, tuned to the same editorial rhythm.",
-    "account.body": "Update your profile, keep your car recognizable, and manage settings from a warmer dashboard surface.",
+    "account.heading": "Manage your personal details and vehicle information in one place.",
+    "account.body": "Update your profile, keep your car easy to recognize, and manage your account settings.",
 
     "home.sharedRoutes": "Shared routes",
     "home.welcomeBack": "Welcome back, {name}.",
@@ -244,7 +244,7 @@ export const dictionaries = {
     "home.seatsOpen": "{count} seats open",
 
     "search.title": "Find a trip",
-    "search.heading": "Search the network with the same warm, community-first tone.",
+    "search.heading": "Search available trips across the network.",
     "search.body": "Pick a departure, an arrival, and an optional date to find the ride that fits best.",
     "search.from": "From",
     "search.to": "To",
@@ -257,7 +257,7 @@ export const dictionaries = {
     "search.browseEverything": "Browse everything",
     "search.tripSearch": "Trip search",
     "search.chooseRide": "Choose the ride that feels right.",
-    "search.compare": "Compare timing, seat count, and route details in one warm, easy-to-scan list.",
+    "search.compare": "Compare departure times, available seats, and route details to choose the right trip.",
     "search.routePreview": "Route preview",
     "search.seatCount": "{count} seat{suffix}",
     "search.tripNumber": "Trip #{id}",
@@ -267,7 +267,7 @@ export const dictionaries = {
     "search.tryDifferent": "Try a different city pair or broaden the day to see more options.",
 
     "trip.tripDetails": "Trip details",
-    "trip.detailsBody": "A warm overview of timing, route notes, and booking actions before you commit.",
+    "trip.detailsBody": "Review the trip schedule, route information, and booking options before you confirm.",
     "trip.departure": "Departure",
     "trip.arrival": "Arrival",
     "trip.arrivalPending": "Arrival time pending",
@@ -356,8 +356,8 @@ export const dictionaries = {
     "driverTrips.passengerFallback": "Passenger",
 
     "bookings.title": "My bookings",
-    "bookings.heading": "Every reserved seat, gathered into one clear ride journal.",
-    "bookings.body": "Review your current plans and past trips without losing the data behind each booking.",
+    "bookings.heading": "All your bookings in one place.",
+    "bookings.body": "Review your upcoming rides and past trips with all the details for each booking.",
     "bookings.bookedRoutes": "Booked routes",
     "bookings.ridePlans": "Your ride plans",
     "bookings.savedCount": "{count} booking{suffix} saved",
@@ -635,8 +635,8 @@ export const dictionaries = {
     "car.custom": "Personnalisee",
 
     "account.myAccount": "Mon compte",
-    "account.heading": "Informations personnelles et vehicule, avec le meme rythme editorial.",
-    "account.body": "Mettez a jour votre profil, gardez votre voiture reconnaissable et gerez vos reglages depuis un tableau de bord plus chaleureux.",
+    "account.heading": "Gerez vos informations personnelles et celles de votre vehicule au meme endroit.",
+    "account.body": "Mettez a jour votre profil, gardez votre voiture facile a reconnaitre et gerez les reglages de votre compte.",
 
     "home.sharedRoutes": "Trajets partages",
     "home.welcomeBack": "Bon retour, {name}.",
@@ -655,7 +655,7 @@ export const dictionaries = {
     "home.seatsOpen": "{count} places disponibles",
 
     "search.title": "Trouver un trajet",
-    "search.heading": "Explorez le reseau avec le meme ton chaleureux et communautaire.",
+    "search.heading": "Recherchez les trajets disponibles sur le reseau.",
     "search.body": "Choisissez un depart, une arrivee et une date optionnelle pour trouver le trajet ideal.",
     "search.from": "Depart",
     "search.to": "Arrivee",
@@ -678,7 +678,7 @@ export const dictionaries = {
     "search.tryDifferent": "Essayez une autre paire de villes ou elargissez la date pour voir plus d'options.",
 
     "trip.tripDetails": "Details du trajet",
-    "trip.detailsBody": "Un apercu clair des horaires, du trajet et des actions de reservation avant de confirmer.",
+    "trip.detailsBody": "Consultez l'horaire du trajet, les informations de parcours et les options de reservation avant de confirmer.",
     "trip.departure": "Depart",
     "trip.arrival": "Arrivee",
     "trip.arrivalPending": "Heure d'arrivee en attente",
@@ -767,8 +767,8 @@ export const dictionaries = {
     "driverTrips.passengerFallback": "Passager",
 
     "bookings.title": "Mes reservations",
-    "bookings.heading": "Chaque place reservee, reunie dans un journal de trajet clair.",
-    "bookings.body": "Consultez vos plans actuels et vos trajets passes sans perdre les details de chaque reservation.",
+    "bookings.heading": "Toutes vos reservations au meme endroit.",
+    "bookings.body": "Consultez vos trajets a venir et vos trajets passes avec tous les details de chaque reservation.",
     "bookings.bookedRoutes": "Trajets reserves",
     "bookings.ridePlans": "Vos trajets prevus",
     "bookings.savedCount": "{count} reservation{suffix} enregistree{suffix}",
@@ -1046,8 +1046,8 @@ export const dictionaries = {
     "car.custom": "مخصص",
 
     "account.myAccount": "حسابي",
-    "account.heading": "بياناتك الشخصية ومعلومات السيارة بإيقاع تحريري متناسق.",
-    "account.body": "حدّث ملفك الشخصي، وحافظ على تمييز سيارتك، وأدر الإعدادات من لوحة أكثر دفئًا.",
+    "account.heading": "أدر بياناتك الشخصية ومعلومات سيارتك من مكان واحد.",
+    "account.body": "حدّث ملفك الشخصي، واجعل سيارتك سهلة التعرّف، وأدر إعدادات حسابك.",
 
     "home.sharedRoutes": "الرحلات المشتركة",
     "home.welcomeBack": "مرحبًا بعودتك، {name}.",
@@ -1066,7 +1066,7 @@ export const dictionaries = {
     "home.seatsOpen": "{count} مقاعد متاحة",
 
     "search.title": "ابحث عن رحلة",
-    "search.heading": "ابحث في الشبكة بنفس النبرة الدافئة والمرتكزة على المجتمع.",
+    "search.heading": "ابحث عن الرحلات المتاحة عبر الشبكة.",
     "search.body": "اختر مدينة الانطلاق والوصول وتاريخًا اختياريًا للعثور على الرحلة الأنسب.",
     "search.from": "من",
     "search.to": "إلى",
@@ -1079,7 +1079,7 @@ export const dictionaries = {
     "search.browseEverything": "تصفح الكل",
     "search.tripSearch": "البحث عن رحلة",
     "search.chooseRide": "اختر الرحلة التي تناسبك.",
-    "search.compare": "قارن بين التوقيت، وعدد المقاعد، وتفاصيل المسار في قائمة سهلة المسح.",
+    "search.compare": "قارن بين أوقات الانطلاق، وعدد المقاعد المتاحة، وتفاصيل المسار لاختيار الرحلة المناسبة.",
     "search.routePreview": "معاينة المسار",
     "search.seatCount": "{count} مقعد{suffix}",
     "search.tripNumber": "الرحلة رقم {id}",
@@ -1089,7 +1089,7 @@ export const dictionaries = {
     "search.tryDifferent": "جرّب مدينتين مختلفتين أو وسّع نطاق اليوم لرؤية المزيد من الخيارات.",
 
     "trip.tripDetails": "تفاصيل الرحلة",
-    "trip.detailsBody": "نظرة دافئة على التوقيت وملاحظات المسار وخيارات الحجز قبل التأكيد.",
+    "trip.detailsBody": "راجع جدول الرحلة، ومعلومات المسار، وخيارات الحجز قبل التأكيد.",
     "trip.departure": "الانطلاق",
     "trip.arrival": "الوصول",
     "trip.arrivalPending": "وقت الوصول غير محدد بعد",
@@ -1178,8 +1178,8 @@ export const dictionaries = {
     "driverTrips.passengerFallback": "راكب",
 
     "bookings.title": "حجوزاتي",
-    "bookings.heading": "كل مقعد محجوز، مجمّع في سجل رحلات واضح.",
-    "bookings.body": "راجع خططك الحالية ورحلاتك السابقة دون فقدان بيانات كل حجز.",
+    "bookings.heading": "جميع حجوزاتك في مكان واحد.",
+    "bookings.body": "راجع رحلاتك القادمة ورحلاتك السابقة مع كل تفاصيل كل حجز.",
     "bookings.bookedRoutes": "الرحلات المحجوزة",
     "bookings.ridePlans": "خطط رحلاتك",
     "bookings.savedCount": "{count} حجز{suffix} محفوظ",
