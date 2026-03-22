@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import type { AuthUser } from "../../types/MeResponse.ts";
 import { useAuth } from "../../context/useAuth.ts";
 import { useChatInbox } from "../../context/Chat/useChatInbox.ts";
-import { getConversationUnread } from "../../features/chat/chatReadState.ts";
+import { getConversationUnread, getConversationUnreadCount } from "../../features/chat/chatReadState.ts";
 
 type NavItem = {
   to: string;
@@ -121,14 +121,22 @@ export default function BottomNav() {
     for (const conversation of conversations) {
       const currentUpdatedAt = conversation.updatedAt;
       const previousUpdatedAt = seenMapRef.current[conversation.id];
-      const isUnread = getConversationUnread(conversation.id, conversation.updatedAt, conversation.latestMessage?.sender);
+      const isUnread = getConversationUnread(
+        conversation.id,
+        conversation.updatedAt,
+        conversation.latestMessage?.id,
+        conversation.latestMessage?.sender,
+      );
+      const unreadCountForConversation = getConversationUnreadCount(conversation.id);
 
       if (previousUpdatedAt && currentUpdatedAt !== previousUpdatedAt && isUnread) {
         if (!newestIncoming || new Date(currentUpdatedAt).getTime() > new Date(newestIncoming.updatedAt).getTime()) {
           newestIncoming = {
             id: conversation.id,
             name: conversation.participantName,
-            body: conversation.latestMessage?.body ?? "New message",
+            body: unreadCountForConversation > 1
+              ? `${unreadCountForConversation} unread messages`
+              : (conversation.latestMessage?.body ?? "New message"),
             updatedAt: currentUpdatedAt,
           };
         }

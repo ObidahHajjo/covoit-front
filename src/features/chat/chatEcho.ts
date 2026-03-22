@@ -49,7 +49,7 @@ export function getChatEcho() {
             .post("/broadcasting/auth-proxy", {
               socket_id: socketId,
               channel_name: channel.name,
-            })
+            }, {showGlobalLoader: false})
             .then((res) => callback(null, res.data))
             .catch((err) => callback(err, null));
       },

@@ -11,7 +11,12 @@ type Props = {
 
 function ChatRow({ conversation }: { conversation: ChatConversation }) {
   const preview = conversation.latestMessage?.body || conversation.tripLabel || "Open conversation";
-  const hasUnread = getConversationUnread(conversation.id, conversation.updatedAt, conversation.latestMessage?.sender);
+  const hasUnread = getConversationUnread(
+    conversation.id,
+    conversation.updatedAt,
+    conversation.latestMessage?.id,
+    conversation.latestMessage?.sender,
+  );
 
   return (
     <Link

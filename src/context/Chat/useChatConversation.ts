@@ -1,28 +1,47 @@
 import { type FormEvent, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getConversation, sendConversationMessage } from "../../features/chat/chatApi";
-import { markConversationRead } from "../../features/chat/chatReadState";
+import { markConversationRead, syncConversationUnread } from "../../features/chat/chatReadState";
 import { useChatRealtime } from "../../features/chat/useChatRealtime";
 import type { ChatConversation } from "../../types/Chat";
 
 export function useChatConversation() {
   const { conversationId } = useParams();
   const [conversation, setConversation] = useState<ChatConversation | null>(null);
+  const [loading, setLoading] = useState(true);
   const [draft, setDraft] = useState("");
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    if (!conversationId) return;
+  const load = useCallback(async (isSilent = false) => {
+    if (!conversationId) {
+      setLoading(false);
+      setError("Conversation not found");
+      return;
+    }
 
     try {
+      if (!isSilent) {
+        setLoading(true);
+      }
       setError(null);
       const nextConversation = await getConversation(Number(conversationId));
       setConversation(nextConversation);
-      markConversationRead(nextConversation.id, nextConversation.updatedAt);
+      syncConversationUnread(
+        nextConversation.id,
+        nextConversation.updatedAt,
+        nextConversation.latestMessage?.id,
+        nextConversation.latestMessage?.sender,
+      );
+      markConversationRead(nextConversation.id, nextConversation.updatedAt, nextConversation.latestMessage?.id);
     } catch (err) {
+      setConversation(null);
       setError(err instanceof Error ? err.message : "Failed to load conversation");
+    } finally {
+      if (!isSilent) {
+        setLoading(false);
+      }
     }
   }, [conversationId]);
 
@@ -30,7 +49,7 @@ export function useChatConversation() {
     void load();
 
     const interval = window.setInterval(() => {
-      void load();
+      void load(true);
     }, 5000);
 
     return () => window.clearInterval(interval);
@@ -39,7 +58,7 @@ export function useChatConversation() {
   const { isRealtimeConnected } = useChatRealtime(
     conversationId ? `chat.conversation.${conversationId}` : null,
     () => {
-      void load();
+      void load(true);
     },
   );
 
@@ -61,7 +80,7 @@ export function useChatConversation() {
       setConversation((prev) => {
         if (!prev) return prev;
 
-        markConversationRead(prev.id, created.createdAt);
+        markConversationRead(prev.id, created.createdAt, created.id);
 
         return {
           ...prev,
@@ -82,6 +101,7 @@ export function useChatConversation() {
 
   return {
     conversation,
+    loading,
     draft,
     setDraft,
     sending,

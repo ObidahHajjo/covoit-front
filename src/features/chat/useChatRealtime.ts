@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Pusher from "pusher-js";
 import { getChatEcho } from "./chatEcho";
 
-export function useChatRealtime(channelName: string | null, onSignal: () => void) {
+export function useChatRealtime(channelName: string | null, onSignal: (payload?: unknown) => void) {
   const [isRealtimeConnected, setIsRealtimeConnected] = useState(false);
+  const onSignalRef = useRef(onSignal);
+
+  useEffect(() => {
+    onSignalRef.current = onSignal;
+  }, [onSignal]);
 
   useEffect(() => {
     if (!channelName) return;
@@ -21,7 +26,9 @@ export function useChatRealtime(channelName: string | null, onSignal: () => void
     connector?.connection.bind("connected", handleConnected);
     connector?.connection.bind("disconnected", handleDisconnected);
 
-    const channel = echo.private(channelName).listen(".chat.message.sent", onSignal);
+    const channel = echo.private(channelName).listen(".chat.message.sent", (payload: unknown) => {
+      onSignalRef.current(payload);
+    });
 
     if (connector?.connection.state === "connected") {
       setIsRealtimeConnected(true);
@@ -33,7 +40,7 @@ export function useChatRealtime(channelName: string | null, onSignal: () => void
       connector?.connection.unbind("connected", handleConnected);
       connector?.connection.unbind("disconnected", handleDisconnected);
     };
-  }, [channelName, onSignal]);
+  }, [channelName]);
 
   return { isRealtimeConnected };
 }

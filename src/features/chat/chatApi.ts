@@ -71,7 +71,7 @@ function mapConversation(conversation: ChatConversationApi): ChatConversation {
 
 export async function listConversations(): Promise<ChatConversation[]> {
   try {
-    const { data } = await apiClient.get<ApiResponse<ChatConversationApi[]>>("/conversations");
+    const { data } = await apiClient.get<ApiResponse<ChatConversationApi[]>>("/conversations", {showGlobalLoader: false});
     return data.data.map(mapConversation);
   } catch (error) {
     throw new Error(extractApiErrorMessage(error));
@@ -80,7 +80,7 @@ export async function listConversations(): Promise<ChatConversation[]> {
 
 export async function getConversation(conversationId: number): Promise<ChatConversation> {
   try {
-    const { data } = await apiClient.get<ApiResponse<ChatConversationApi>>(`/conversations/${conversationId}`);
+    const { data } = await apiClient.get<ApiResponse<ChatConversationApi>>(`/conversations/${conversationId}`, {showGlobalLoader: false});
     return mapConversation(data.data);
   } catch (error) {
     throw new Error(extractApiErrorMessage(error));
@@ -91,7 +91,7 @@ export async function sendConversationMessage(conversationId: number, message: s
   try {
     const { data } = await apiClient.post<ApiResponse<ChatMessageApi>>(`/conversations/${conversationId}/messages`, {
       message,
-    });
+    }, {showGlobalLoader: false});
     return mapMessage(data.data);
   } catch (error) {
     throw new Error(extractApiErrorMessage(error));
@@ -100,7 +100,7 @@ export async function sendConversationMessage(conversationId: number, message: s
 
 export async function contactDriver(tripId: number, payload: ContactPayload): Promise<ChatConversation> {
   try {
-    const { data } = await apiClient.post<ApiResponse<ContactChatResponse>>(`/trips/${tripId}/contact-driver`, payload);
+    const { data } = await apiClient.post<ApiResponse<ContactChatResponse>>(`/trips/${tripId}/contact-driver`, payload,{showGlobalLoader: false});
     return mapConversation({
       ...data.data.conversation,
       latest_message: data.data.message ?? data.data.conversation.latest_message ?? null,
@@ -112,7 +112,7 @@ export async function contactDriver(tripId: number, payload: ContactPayload): Pr
 
 export async function contactPassenger(tripId: number, personId: number, payload: ContactPayload): Promise<ChatConversation> {
   try {
-    const { data } = await apiClient.post<ApiResponse<ContactChatResponse>>(`/my-trips/${tripId}/contact-passenger/${personId}`, payload);
+    const { data } = await apiClient.post<ApiResponse<ContactChatResponse>>(`/my-trips/${tripId}/contact-passenger/${personId}`, payload, {showGlobalLoader: false});
     return mapConversation({
       ...data.data.conversation,
       latest_message: data.data.message ?? data.data.conversation.latest_message ?? null,
