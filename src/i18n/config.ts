@@ -1,7 +1,7 @@
 import { dictionaries } from "./dictionaries";
 
 export const LANGUAGE_STORAGE_KEY = "covoit.language";
-export const SUPPORTED_LOCALES = ["en", "fr"] as const;
+export const SUPPORTED_LOCALES = ["en", "fr", "ar"] as const;
 
 export type AppLocale = (typeof SUPPORTED_LOCALES)[number];
 
@@ -9,6 +9,19 @@ type TranslationValues = Record<string, string | number>;
 
 function isSupportedLocale(value: string): value is AppLocale {
   return SUPPORTED_LOCALES.includes(value as AppLocale);
+}
+
+export function getLocaleDirection(locale: AppLocale): "ltr" | "rtl" {
+  return locale === "ar" ? "rtl" : "ltr";
+}
+
+function applyLocaleToDocument(locale: AppLocale) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  document.documentElement.lang = locale;
+  document.documentElement.dir = getLocaleDirection(locale);
 }
 
 export function normalizeLocale(value?: string | null): AppLocale {
@@ -50,6 +63,10 @@ export function resolveInitialLocale(): AppLocale {
 
 let currentLocale: AppLocale = resolveInitialLocale();
 
+if (typeof window !== "undefined") {
+  applyLocaleToDocument(currentLocale);
+}
+
 export function getCurrentLocale(): AppLocale {
   return currentLocale;
 }
@@ -59,7 +76,7 @@ export function setCurrentLocale(locale: AppLocale): AppLocale {
 
   if (typeof window !== "undefined") {
     window.localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLocale);
-    document.documentElement.lang = currentLocale;
+    applyLocaleToDocument(currentLocale);
   }
 
   return currentLocale;
@@ -84,7 +101,15 @@ export function translate(key: string, values?: TranslationValues, locale: AppLo
 }
 
 export function getIntlLocale(locale: AppLocale = getCurrentLocale()): string {
-  return locale === "fr" ? "fr-FR" : "en-US";
+  if (locale === "fr") {
+    return "fr-FR";
+  }
+
+  if (locale === "ar") {
+    return "ar";
+  }
+
+  return "en-US";
 }
 
 function toDate(value?: string | Date | null): Date | null {
