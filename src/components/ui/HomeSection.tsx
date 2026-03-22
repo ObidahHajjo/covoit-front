@@ -142,37 +142,41 @@ export function HomeSection({
 }: Props) {
   const { t } = useI18n();
   const displayName = person?.pseudo ?? person?.first_name ?? "User";
+  const visibleSections = [
+    user?.permissions.can_manage_own_trips,
+    user?.permissions.can_view_bookings,
+  ].filter(Boolean).length;
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
-      <div className="rounded-[1.75rem] border border-[var(--theme-line)] bg-[rgba(242,244,242,0.88)] px-4 py-5 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:px-6 sm:py-6 lg:px-7 lg:py-8">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:items-start">
+    <div className="mx-auto w-full max-w-6xl px-0 py-2 sm:py-3">
+      <div className="rounded-[1.75rem] border border-[var(--theme-line)] bg-[rgba(242,244,242,0.88)] px-4 py-5 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.9fr)] lg:items-start lg:gap-6">
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.sharedRoutes")}</p>
-            <h1 className="mt-3 max-w-3xl font-heading text-3xl font-extrabold leading-tight tracking-[-0.04em] text-[var(--theme-ink)] sm:text-4xl lg:text-5xl">
+            <h1 className="mt-3 max-w-3xl font-heading text-3xl font-extrabold leading-tight tracking-[-0.04em] text-[var(--theme-ink)] sm:text-4xl lg:text-[3.5rem] lg:leading-[0.95]">
               {t("home.welcomeBack", { name: displayName })}
             </h1>
-            <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted)] sm:text-base">
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted)] sm:text-base lg:max-w-xl">
               {t("home.body")}
             </p>
           </div>
 
-          <div className="rounded-[1.5rem] border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 shadow-[var(--theme-shadow-warm)]">
+          <div className="rounded-[1.5rem] border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 shadow-[var(--theme-shadow-warm)] lg:sticky lg:top-28">
             <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.quickPulse")}</p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-              <div className="rounded-lg bg-[var(--theme-bg-soft)] p-4">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1">
+              <div className="rounded-xl bg-[var(--theme-bg-soft)] p-4">
                 <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.driverTrips")}</p>
-                <p className="mt-2 font-medium text-2xl text-[var(--theme-ink)]">{upcomingDriverTripsCount}</p>
+                <p className="mt-3 font-medium text-3xl leading-none text-[var(--theme-ink)]">{upcomingDriverTripsCount}</p>
               </div>
-              <div className="rounded-lg bg-[var(--theme-bg-soft)] p-4">
+              <div className="rounded-xl bg-[var(--theme-bg-soft)] p-4">
                 <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.bookings")}</p>
-                <p className="mt-2 font-medium text-2xl text-[var(--theme-ink)]">{upcomingBookingsCount}</p>
+                <p className="mt-3 font-medium text-3xl leading-none text-[var(--theme-ink)]">{upcomingBookingsCount}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 grid gap-6 xl:grid-cols-2">
+        <div className={`mt-6 grid gap-6 ${visibleSections > 1 ? "xl:grid-cols-2" : "xl:grid-cols-1"}`}>
           {user?.permissions.can_manage_own_trips && (
             <TripSection
                title={t("home.myUpcomingDriverTrips")}

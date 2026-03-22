@@ -3,14 +3,15 @@ import { useI18n } from "../../i18n/I18nProvider";
 
 type LanguageSwitcherProps = {
   compact?: boolean;
+  hideLabelOnMobile?: boolean;
 };
 
-export default function LanguageSwitcher({ compact = false }: LanguageSwitcherProps) {
+export default function LanguageSwitcher({ compact = false, hideLabelOnMobile = false }: LanguageSwitcherProps) {
   const { locale, setLocale, t } = useI18n();
 
   return (
     <label className={`flex items-center gap-2 ${compact ? "text-xs" : "text-sm"}`}>
-      <span className="text-[var(--theme-muted)]">{t("language.label")}</span>
+      <span className={`text-[var(--theme-muted)] ${hideLabelOnMobile ? "hidden sm:inline" : ""}`}>{t("language.label")}</span>
       <select
         value={locale}
         onChange={(event) => setLocale(event.target.value as AppLocale)}

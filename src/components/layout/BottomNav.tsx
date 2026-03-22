@@ -6,14 +6,14 @@ import { useChatInbox } from "../../context/Chat/useChatInbox.ts";
 import { getConversationUnread, getConversationUnreadCount } from "../../features/chat/chatReadState.ts";
 import { useI18n } from "../../i18n/I18nProvider.tsx";
 
-type NavItem = {
+export type NavItem = {
   to: string;
   labelKey: string;
   icon: string;
   visible: (user: AuthUser | null) => boolean;
 };
 
-const items: NavItem[] = [
+export const navItems: NavItem[] = [
   {
     to: "/home",
     labelKey: "nav.home",
@@ -173,7 +173,7 @@ export default function BottomNav() {
     }
   }, [conversations]);
 
-  const visibleItems = items.filter((item) => item.visible(user));
+  const visibleItems = navItems.filter((item) => item.visible(user));
 
   return (
     <>
@@ -189,7 +189,7 @@ export default function BottomNav() {
         </button>
       ) : null}
 
-      <nav className="serene-nav fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--theme-line)] shadow-[0_-10px_30px_-24px_rgba(46,52,50,0.45)]">
+      <nav className="serene-nav fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--theme-line)] shadow-[0_-10px_30px_-24px_rgba(46,52,50,0.45)] lg:hidden">
         <div
           className="mx-auto grid max-w-6xl gap-2 px-3 pb-6 pt-3 text-center"
           style={{ gridTemplateColumns: `repeat(${visibleItems.length}, minmax(0, 1fr))` }}
