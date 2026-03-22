@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import FloatingToast from "../common/FloatingToast";
 import type { ChatMessage } from "../../types/Chat";
 import { useI18n } from "../../i18n/I18nProvider";
@@ -73,6 +73,11 @@ export function LiveChatSection({
   const [selectedMessageIds, setSelectedMessageIds] = useState<number[]>([]);
   const [selectionBarTop, setSelectionBarTop] = useState(16);
   const [selectionBarRect, setSelectionBarRect] = useState({ left: 8, width: 320 });
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
+  const [copyFeedbackTone, setCopyFeedbackTone] = useState<"success" | "error">("success");
+  const [isTouchSelectionMode, setIsTouchSelectionMode] = useState(false);
+  const longPressTimerRef = useRef<number | null>(null);
+  const longPressTriggeredRef = useRef(false);
 
   useEffect(() => {
     if (clearingMessageIds.length === 0) {
@@ -89,6 +94,20 @@ export function LiveChatSection({
 
     setSelectedMessageIds((current) => current.filter((messageId) => messages.some((message) => message.id === messageId)));
   }, [messages, selectedMessageIds.length]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(pointer: coarse)");
+    const updateMode = () => setIsTouchSelectionMode(mediaQuery.matches);
+
+    updateMode();
+    mediaQuery.addEventListener("change", updateMode);
+
+    return () => mediaQuery.removeEventListener("change", updateMode);
+  }, []);
 
   useEffect(() => {
     const updateSelectionBarTop = () => {
@@ -127,10 +146,98 @@ export function LiveChatSection({
     };
   }, []);
 
+  const toggleMessageSelection = (messageId: number) => {
+    setSelectedMessageIds((current) => current.includes(messageId) ? current.filter((id) => id !== messageId) : [...current, messageId]);
+  };
+
+  const startLongPressSelection = (messageId: number) => {
+    if (!isTouchSelectionMode) {
+      return;
+    }
+
+    longPressTriggeredRef.current = false;
+    if (longPressTimerRef.current !== null) {
+      window.clearTimeout(longPressTimerRef.current);
+    }
+
+    longPressTimerRef.current = window.setTimeout(() => {
+      longPressTriggeredRef.current = true;
+      toggleMessageSelection(messageId);
+    }, 450);
+  };
+
+  const clearLongPressSelection = () => {
+    if (longPressTimerRef.current !== null) {
+      window.clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+  };
+
+  const handleMessageClick = (messageId: number) => {
+    if (!onClearMessages) {
+      return;
+    }
+
+    if (isTouchSelectionMode && selectedMessageIds.length === 0) {
+      if (longPressTriggeredRef.current) {
+        longPressTriggeredRef.current = false;
+      }
+      return;
+    }
+
+    if (longPressTriggeredRef.current) {
+      longPressTriggeredRef.current = false;
+      return;
+    }
+
+    toggleMessageSelection(messageId);
+  };
+
+  const handleCopySelectedMessage = async () => {
+    if (selectedMessageIds.length !== 1) {
+      return;
+    }
+
+    const selectedMessage = messages.find((message) => message.id === selectedMessageIds[0]);
+    if (!selectedMessage) {
+      return;
+    }
+
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(selectedMessage.body);
+      } else {
+        const helper = document.createElement("textarea");
+        helper.value = selectedMessage.body;
+        helper.setAttribute("readonly", "true");
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        helper.style.pointerEvents = "none";
+        document.body.appendChild(helper);
+        helper.focus();
+        helper.select();
+
+        const copied = document.execCommand("copy");
+        document.body.removeChild(helper);
+
+        if (!copied) {
+          throw new Error("copy_failed");
+        }
+      }
+
+      setCopyFeedbackTone("success");
+      setCopyFeedback(t("chat.copySuccess"));
+    } catch {
+      setCopyFeedbackTone("error");
+      setCopyFeedback(t("chat.copyFailed"));
+    }
+  };
+
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
       <FloatingToast tone="success" message={success} durationMs={6500} />
       <FloatingToast tone="error" message={error} durationMs={6500} />
+      <FloatingToast tone={copyFeedbackTone} message={copyFeedback} durationMs={5000} />
 
       <section className="overflow-hidden rounded-[24px] border border-[var(--theme-line)] bg-[var(--theme-surface)] shadow-[var(--theme-shadow-warm)]">
         <div className="border-b border-[var(--theme-line)] bg-[linear-gradient(135deg,rgba(212,233,197,0.42),rgba(255,255,255,0.92))] px-5 py-6 sm:px-7 sm:py-7">
@@ -176,7 +283,16 @@ export function LiveChatSection({
                     }}
                   >
                     <p className="text-center text-sm font-medium text-[var(--theme-ink)] sm:text-left">{t("chat.messagesSelected", { count: selectedMessageIds.length })}</p>
-                    <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-shrink-0 sm:items-center">
+                    <div className={`grid w-full gap-2 ${selectedMessageIds.length === 1 ? "grid-cols-3" : "grid-cols-2"} sm:flex sm:w-auto sm:flex-shrink-0 sm:items-center`}>
+                      {selectedMessageIds.length === 1 ? (
+                        <button
+                          type="button"
+                          onClick={() => void handleCopySelectedMessage()}
+                          className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-3 py-2 text-xs font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]"
+                        >
+                          {t("chat.copyMessage")}
+                        </button>
+                      ) : null}
                       <button
                         type="button"
                         onClick={() => setSelectedMessageIds([])}
@@ -224,7 +340,11 @@ export function LiveChatSection({
                   >
                     <button
                       type="button"
-                      onClick={() => setSelectedMessageIds((current) => current.includes(message.id) ? current.filter((id) => id !== message.id) : [...current, message.id])}
+                      onClick={() => handleMessageClick(message.id)}
+                      onTouchStart={() => startLongPressSelection(message.id)}
+                      onTouchEnd={clearLongPressSelection}
+                      onTouchCancel={clearLongPressSelection}
+                      onContextMenu={(event) => event.preventDefault()}
                       className={`relative max-w-[85%] text-left sm:max-w-[70%] ${onClearMessages ? "cursor-pointer" : "cursor-default"}`}
                     >
                       <div
@@ -241,7 +361,7 @@ export function LiveChatSection({
                           </p>
                           {onClearMessages ? (
                             <span className={`text-[11px] font-medium ${selectedMessageIds.includes(message.id) ? (isMine ? "text-white/85" : "text-[var(--theme-ink)]") : (isMine ? "text-white/60" : "text-[var(--theme-subtle)]")}`}>
-                              {selectedMessageIds.includes(message.id) ? t("chat.selected") : t("chat.tapToSelect")}
+                              {selectedMessageIds.includes(message.id) ? t("chat.selected") : (isTouchSelectionMode && selectedMessageIds.length === 0 ? t("chat.longPressToSelect") : t("chat.tapToSelect"))}
                             </span>
                           ) : null}
                         </div>
