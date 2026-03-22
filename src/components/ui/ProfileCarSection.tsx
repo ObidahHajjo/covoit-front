@@ -3,6 +3,7 @@ import type { Brand } from "../../types/Brand";
 import type { Car } from "../../types/Car";
 import type { CarFormState } from "../../context/Account/UseMyAccount";
 import { DEFAULT_CAR_COLORS } from "../../context/Account/UseMyAccount";
+import FloatingToast from "../common/FloatingToast";
 
 type Props = {
   form: CarFormState;
@@ -63,10 +64,9 @@ export function CarSection({
 
   return (
     <form onSubmit={onSubmit} className="space-y-5 xl:grid xl:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] xl:gap-6 xl:space-y-0">
+      <FloatingToast tone="success" message={success} durationMs={6500} />
+      <FloatingToast tone="error" message={error} durationMs={6500} />
       <div className="space-y-5">
-        {success ? <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)]">{success}</div> : null}
-        {error ? <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)]">{error}</div> : null}
-
         <div className={`rounded-xl border p-5 ${form.delete_car ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)]" : "border-[var(--theme-line)] bg-[var(--theme-surface)]"}`}>
           <div className="flex items-center gap-4">
             <div className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-lg text-2xl ${form.delete_car ? "bg-[var(--theme-bg-soft)] text-[var(--theme-subtle)]" : hasCar ? "bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]"}`}>
@@ -119,13 +119,11 @@ export function CarSection({
                   {carSuggestions.map((car) => {
                     const brandName = car.model?.brand?.name ?? form.brand_name;
                     const modelName = car.model?.name ?? "Unknown model";
-                    const seats = car.model?.seats ?? null;
                     return (
                       <button key={car.id} type="button" onClick={() => onSelectSuggestion(car)} className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[var(--theme-bg-soft)]">
                         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-sm">🚗</span>
                         <span>
                           <span className="block text-sm font-medium text-[var(--theme-ink)]">{brandName} {modelName}</span>
-                          <span className="text-xs text-[var(--theme-muted)]">{seats ? `${seats} seats` : "Seats unknown"}</span>
                         </span>
                       </button>
                     );
@@ -141,7 +139,7 @@ export function CarSection({
               <input value={form.model_name} readOnly placeholder="-" className={`${inputClass} cursor-default opacity-70`} />
             </Field>
 
-            <Field label="Seats" error={getFieldError("model.seats", "seats")}>
+            <Field label="Seats" error={getFieldError("seats")}>
               <input type="number" min="1" max="9" value={form.seats} onChange={(e) => onFieldChange("seats", e.target.value)} placeholder="e.g. 5" disabled={form.delete_car} className={inputClass} />
             </Field>
           </div>
@@ -203,7 +201,7 @@ export function CarSection({
         <div className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
           <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Vehicle notes</p>
           <div className="mt-3 space-y-2 text-sm leading-6 text-[var(--theme-muted-strong)]">
-            <p>Choose the most precise model you can so seats and recognition details stay accurate.</p>
+            <p>Choose the most precise model you can, then set the exact seat count for your own car.</p>
             <p>The saved color and license plate help passengers find you faster at pickup.</p>
           </div>
         </div>

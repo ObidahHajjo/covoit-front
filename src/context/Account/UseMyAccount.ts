@@ -1,5 +1,6 @@
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../useAuth";
 import { createCar, deleteCar, searchCar, updateCar } from "../../features/cars/carApi";
 import { getBrands } from "../../features/brands/brandApi";
 import { deleteMyAccount, getPerson, updateMe } from "../../features/person/personApi";
@@ -73,7 +74,7 @@ function mapPersonToCarForm(person: Person | null): CarFormState {
     return {
         brand_name: person.car?.model?.brand?.name ?? "",
         model_name: person.car?.model?.name ?? "",
-        seats: person.car?.model?.seats ? String(person.car.model.seats) : "",
+        seats: person.car?.seats ? String(person.car.seats) : "",
         license_plate: person.car?.license_plate ?? "",
         color_name: person.car?.color?.name ?? "",
         hex: person.car?.color?.hex_code ?? "#000000",
@@ -83,6 +84,7 @@ function mapPersonToCarForm(person: Person | null): CarFormState {
 
 export function useMyAccount() {
     const navigate = useNavigate();
+    const { refreshMe } = useAuth();
 
     const [activeSection, setActiveSection] = useState<AccountSection>("profile");
     const [person, setPerson] = useState<Person | null>(null);
@@ -222,16 +224,14 @@ export function useMyAccount() {
         setCarSearch(value);
         updateCarField("model_name", value);
         setShowSuggestions(true);
-        clearFieldError(["model.name", "model_name", "model.seats", "seats"]);
+        clearFieldError(["model.name", "model_name", "seats"]);
     }
 
     function handleSelectSuggestion(car: Car) {
         const brandName = car.model?.brand?.name ?? carForm.brand_name;
         const modelName = car.model?.name ?? "";
-        const seats = car.model?.seats != null ? String(car.model.seats) : "";
         updateCarField("brand_name", brandName);
         updateCarField("model_name", modelName);
-        updateCarField("seats", seats);
         setCarSearch(modelName);
         setCarSuggestions([]);
         setShowSuggestions(false);
@@ -302,8 +302,8 @@ export function useMyAccount() {
                     type: { name: "Sedan" },
                     model: {
                         name: carForm.model_name.trim(),
-                        seats: carForm.seats ? Number(carForm.seats) : undefined,
                     },
+                    seats: carForm.seats ? Number(carForm.seats) : undefined,
                     color: { name: carForm.color_name, hex_code: carForm.hex },
                     carregistration: carForm.license_plate.trim(),
                 };
@@ -316,8 +316,8 @@ export function useMyAccount() {
                 }
             }
 
-            await updateMe({ car_id: carId });
             await refreshPersonState();
+            await refreshMe();
             setCarSuccess(carForm.delete_car ? "Car deleted successfully." : "Car updated successfully.");
         } catch (err) {
             setCarError(extractApiErrorMessage(err));
