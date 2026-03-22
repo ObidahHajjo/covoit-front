@@ -24,6 +24,12 @@ export function useChatConversation() {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  /**
+   * Loads the active conversation and synchronizes its unread state.
+   *
+   * @param isSilent - Whether to refresh without showing the full loading state.
+   * @returns A promise that resolves once the conversation state has been updated.
+   */
   const load = useCallback(async (isSilent = false) => {
     if (!conversationId) {
       setLoading(false);

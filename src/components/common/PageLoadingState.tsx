@@ -1,8 +1,13 @@
 import { useLoading } from "../../context/LoadingContext";
 import { useI18n } from "../../i18n/I18nProvider";
 
+/**
+ * Props for the page-scoped loading panel.
+ */
 type PageLoadingStateProps = {
+  /** Primary loading title shown to the user. */
   title: string;
+  /** Whether to render a shorter loading panel for compact layouts. */
   compact?: boolean;
 };
 

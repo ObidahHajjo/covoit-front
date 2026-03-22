@@ -25,6 +25,12 @@ export function ChatInboxProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  /**
+   * Loads the current user's conversations and synchronizes local unread metadata.
+   *
+   * @param isSilent - Whether to refresh without toggling the primary loading state.
+   * @returns A promise that resolves once inbox state has been updated.
+   */
   const load = useCallback(async (isSilent = false) => {
     if (!user?.person?.id) {
       setConversations([]);
@@ -68,6 +74,11 @@ export function ChatInboxProvider({ children }: { children: ReactNode }) {
   }, [load, user?.person?.id]);
 
   useEffect(() => {
+    /**
+     * Forces a shallow inbox refresh after persisted read-state changes.
+     *
+     * @returns Nothing.
+     */
     const handleReadChange = () => {
       setConversations((prev) => [...prev]);
     };
@@ -76,7 +87,12 @@ export function ChatInboxProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener(CHAT_READ_EVENT, handleReadChange);
   }, []);
 
-  // The realtime payload shape varies by broadcast source, so the identifiers are narrowed defensively.
+  /**
+   * Handles incoming realtime inbox events and refreshes unread counts defensively.
+   *
+   * @param payload - Broadcast payload emitted by the chat backend.
+   * @returns Nothing.
+   */
   const { isRealtimeConnected } = useChatRealtime(user?.person?.id ? `chat.user.${user.person.id}` : null, (payload) => {
     const messageSenderId = typeof payload === "object" && payload !== null && "message" in payload
       ? (payload as { message?: { sender_person_id?: number }; conversation_id?: number }).message?.sender_person_id

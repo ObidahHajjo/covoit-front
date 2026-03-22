@@ -62,14 +62,29 @@ export function useRegister() {
     }
   }
 
+  /**
+   * Cancels registration and returns the user to the login page.
+   *
+   * @returns Nothing.
+   */
   function onCancel() {
     navigate("/login");
   }
 
+  /**
+   * Navigates back to the previous history entry.
+   *
+   * @returns Nothing.
+   */
   function onGoBack() {
     navigate(-1);
   }
 
+  /**
+   * Navigates directly to the login page.
+   *
+   * @returns Nothing.
+   */
   function onNavigateToLogin() {
     navigate("/login");
   }

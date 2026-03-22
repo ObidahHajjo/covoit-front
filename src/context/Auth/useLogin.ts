@@ -53,16 +53,31 @@ export function useLogin() {
     }
   }
 
+  /**
+   * Clears the login form inputs and any current error message.
+   *
+   * @returns Nothing.
+   */
   function onClear() {
     setEmail("");
     setPassword("");
     setError(null);
   }
 
+  /**
+   * Toggles visibility of the password field.
+   *
+   * @returns Nothing.
+   */
   function onTogglePassword() {
     setShowPassword((v) => !v);
   }
 
+  /**
+   * Navigates from the login flow to the registration page.
+   *
+   * @returns Nothing.
+   */
   function onNavigateToRegister() {
     navigate("/register");
   }

@@ -20,6 +20,11 @@ export function useTripDetails() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
+    /**
+     * Fetches the trip identified by the current route parameter.
+     *
+     * @returns A promise that resolves once trip details have been loaded.
+     */
     async function load() {
       try {
         setLoading(true);

@@ -10,6 +10,9 @@ function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(" ");
 }
 
+/**
+ * Props for the shared page introduction layout.
+ */
 type PageIntroProps = {
   eyebrow?: string;
   title: string;
@@ -54,6 +57,9 @@ export function PageIntro({
   );
 }
 
+/**
+ * Props for the shared serene card wrapper.
+ */
 type SurfaceCardProps = HTMLAttributes<HTMLDivElement> & {
   hoverable?: boolean;
 };
@@ -70,6 +76,9 @@ export function SurfaceCard({ className, hoverable = false, ...props }: SurfaceC
   return <div className={cx("serene-card", hoverable && "serene-card-hover", className)} {...props} />;
 }
 
+/**
+ * Props for the shared form-field wrapper.
+ */
 type FieldProps = {
   label: string;
   error?: string | null;
@@ -100,8 +109,14 @@ export function FormField({ label, error, hint, children, className }: FieldProp
   );
 }
 
+/**
+ * Supported visual variants for shared serene buttons.
+ */
 type ButtonVariant = "primary" | "secondary" | "ghost";
 
+/**
+ * Props for a button rendered with the shared serene variants.
+ */
 type SereneButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
 };
@@ -126,6 +141,9 @@ export function SereneButton({ variant = "primary", className, type = "button", 
   return <button type={type} className={cx(variantClass, className)} {...props} />;
 }
 
+/**
+ * Props for the inline notice component.
+ */
 type NoticeProps = {
   children: ReactNode;
   tone?: "default" | "error" | "success";

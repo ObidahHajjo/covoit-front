@@ -47,6 +47,11 @@ export function useMyTrips() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        /**
+         * Fetches the authenticated driver's trips.
+         *
+         * @returns A promise that resolves once trip data has been loaded.
+         */
         async function load() {
             try {
                 setLoading(true);

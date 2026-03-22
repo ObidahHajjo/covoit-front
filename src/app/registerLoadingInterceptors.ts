@@ -13,6 +13,12 @@ export function registerLoadingInterceptors(
     startLoading: () => void,
     stopLoading: () => void,
 ) {
+    /**
+     * Starts the global loader for tracked requests before they are sent.
+     *
+     * @param config - Outgoing axios request configuration.
+     * @returns The unchanged request config.
+     */
     const requestInterceptorId = client.interceptors.request.use(
         (config) => {
             if (config.showGlobalLoader !== false) {
@@ -20,12 +26,24 @@ export function registerLoadingInterceptors(
             }
             return config;
         },
+        /**
+         * Stops the global loader when a tracked request fails before dispatch.
+         *
+         * @param error - Axios request error.
+         * @returns A rejected promise containing the same error.
+         */
         (error) => {
             stopLoading();
             return Promise.reject(error);
         },
     );
 
+    /**
+     * Stops the global loader after tracked responses settle.
+     *
+     * @param response - Axios response for the completed request.
+     * @returns The unchanged response.
+     */
     const responseInterceptorId = client.interceptors.response.use(
         (response) => {
             if (response.config.showGlobalLoader !== false) {
@@ -33,6 +51,12 @@ export function registerLoadingInterceptors(
             }
             return response;
         },
+        /**
+         * Stops the global loader when a tracked response rejects.
+         *
+         * @param error - Axios response error.
+         * @returns A rejected promise containing the same error.
+         */
         (error) => {
             if (error.config?.showGlobalLoader !== false) {
                 stopLoading();
@@ -42,6 +66,11 @@ export function registerLoadingInterceptors(
     );
 
     return {
+        /**
+         * Unregisters the request and response interceptors created by this helper.
+         *
+         * @returns Nothing.
+         */
         eject() {
             client.interceptors.request.eject(requestInterceptorId);
             client.interceptors.response.eject(responseInterceptorId);

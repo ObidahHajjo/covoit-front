@@ -27,7 +27,19 @@ export function useChatRealtime(channelName: string | null, onSignal: (payload?:
     }
 
     const connector = (echo.connector as { pusher?: Pusher }).pusher;
+
+    /**
+     * Marks the realtime channel as connected.
+     *
+     * @returns Nothing.
+     */
     const handleConnected = () => setIsRealtimeConnected(true);
+
+    /**
+     * Marks the realtime channel as disconnected.
+     *
+     * @returns Nothing.
+     */
     const handleDisconnected = () => setIsRealtimeConnected(false);
 
     connector?.connection.bind("connected", handleConnected);

@@ -1,3 +1,8 @@
+/**
+ * Translation dictionaries keyed by supported locale and message id.
+ *
+ * English acts as the fallback source when a locale-specific key is missing.
+ */
 export const dictionaries = {
   en: {
     "language.label": "Language",

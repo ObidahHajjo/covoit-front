@@ -46,6 +46,11 @@ export function useHome() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        /**
+         * Fetches the dashboard profile snapshot and trip collections.
+         *
+         * @returns A promise that resolves once home data has been loaded.
+         */
         async function load() {
             try {
                 setLoading(true);

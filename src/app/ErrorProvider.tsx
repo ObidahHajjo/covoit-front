@@ -11,10 +11,21 @@ import { ErrorContext, type ErrorContextType } from "./useError";
 export function ErrorProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<ErrorContextType["error"]>(null);
 
+  /**
+   * Replaces the current global error with a new message.
+   *
+   * @param message - Error text to expose through the shared error context.
+   * @returns Nothing.
+   */
   const showError = useCallback((message: string) => {
     setError({ message });
   }, []);
 
+  /**
+   * Clears any active global error message.
+   *
+   * @returns Nothing.
+   */
   const clearError = useCallback(() => {
     setError(null);
   }, []);

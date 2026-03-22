@@ -8,8 +8,14 @@ import {
   type AppLocale,
 } from "./config";
 
+/**
+ * Placeholder values injected into translated message templates.
+ */
 type TranslationValues = Record<string, string | number>;
 
+/**
+ * Shape of the shared internationalization context.
+ */
 type I18nContextValue = {
   locale: AppLocale;
   setLocale: (locale: AppLocale) => void;
@@ -18,8 +24,18 @@ type I18nContextValue = {
   formatTime: (value?: string | Date | null, options?: Intl.DateTimeFormatOptions, fallback?: string) => string;
 };
 
+/**
+ * React context that stores locale state and translation helpers.
+ */
 const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 
+/**
+ * Provide locale-aware translation and formatting helpers to descendants.
+ *
+ * @param props - Provider props.
+ * @param props.children - Descendant nodes that consume i18n state.
+ * @returns The i18n context provider.
+ */
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<AppLocale>(() => getCurrentLocale());
 
@@ -40,6 +56,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
+/**
+ * Read the current i18n context.
+ *
+ * @returns Locale state plus translation and formatting helpers.
+ */
 export function useI18n() {
   const context = useContext(I18nContext);
 

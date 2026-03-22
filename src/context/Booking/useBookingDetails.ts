@@ -22,6 +22,11 @@ export function useBookingDetails() {
     const [cancelling, setCancelling] = useState(false);
 
     useEffect(() => {
+        /**
+         * Fetches the booked trip and passenger manifest for the current route.
+         *
+         * @returns A promise that resolves once booking details have been loaded.
+         */
         async function load() {
             try {
                 setLoading(true);

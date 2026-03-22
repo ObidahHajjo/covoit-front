@@ -109,28 +109,60 @@ export function usePublishTrip() {
     const handleStartingChange = makeAddressChangeHandler(setStarting, startingTimerRef);
     const handleArrivalChange = makeAddressChangeHandler(setArrival, arrivalTimerRef);
 
+    /**
+     * Applies a selected departure address suggestion to the form state.
+     *
+     * @param feature - Address suggestion chosen for the starting point.
+     * @returns Nothing.
+     */
     function selectStarting(feature: GeoPfFeature) {
         const parsed = parseAddressFeature(feature);
         setStarting({ query: parsed.label, results: [], open: false, selected: parsed });
     }
 
+    /**
+     * Applies a selected arrival address suggestion to the form state.
+     *
+     * @param feature - Address suggestion chosen for the destination.
+     * @returns Nothing.
+     */
     function selectArrival(feature: GeoPfFeature) {
         const parsed = parseAddressFeature(feature);
         setArrival({ query: parsed.label, results: [], open: false, selected: parsed });
     }
 
+    /**
+     * Reopens the departure suggestions dropdown when results are available.
+     *
+     * @returns Nothing.
+     */
     function openStartingDropdown() {
         if (starting.results.length > 0) setStarting((p) => ({ ...p, open: true }));
     }
 
+    /**
+     * Closes the departure suggestions dropdown after a short blur delay.
+     *
+     * @returns Nothing.
+     */
     function closeStartingDropdown() {
         window.setTimeout(() => setStarting((p) => ({ ...p, open: false })), 150);
     }
 
+    /**
+     * Reopens the arrival suggestions dropdown when results are available.
+     *
+     * @returns Nothing.
+     */
     function openArrivalDropdown() {
         if (arrival.results.length > 0) setArrival((p) => ({ ...p, open: true }));
     }
 
+    /**
+     * Closes the arrival suggestions dropdown after a short blur delay.
+     *
+     * @returns Nothing.
+     */
     function closeArrivalDropdown() {
         window.setTimeout(() => setArrival((p) => ({ ...p, open: false })), 150);
     }

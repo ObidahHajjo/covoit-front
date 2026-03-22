@@ -1,3 +1,6 @@
+/**
+ * Browser event emitted whenever persisted chat read state changes.
+ */
 export const CHAT_READ_EVENT = "covoit:chat-read-changed";
 
 /**
@@ -18,8 +21,11 @@ function getStorageKey() {
  * Stored read-state metadata for a single conversation.
  */
 type ConversationReadState = {
+  /** Last timestamp the conversation was marked as read. */
   readAt: string | null;
+  /** Latest read message identifier, when known. */
   readMessageId: number | null;
+  /** Persisted unread counter for the conversation. */
   unreadCount: number;
 };
 

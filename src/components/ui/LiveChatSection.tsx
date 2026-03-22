@@ -24,12 +24,6 @@ type Props = {
 };
 
 /**
- * Format chat timestamps for message bubbles.
- *
- * @param value - Raw date-time string for the message.
- * @returns A localized short time string, or `"Now"` when the value is invalid.
- */
-/**
  * Display a conversation thread with a message composer.
  *
  * @param props - Component props for the live chat screen.
@@ -101,6 +95,12 @@ export function LiveChatSection({
     }
 
     const mediaQuery = window.matchMedia("(pointer: coarse)");
+
+    /**
+     * Syncs selection interactions with the current pointer mode.
+     *
+     * @returns Nothing.
+     */
     const updateMode = () => setIsTouchSelectionMode(mediaQuery.matches);
 
     updateMode();
@@ -110,6 +110,11 @@ export function LiveChatSection({
   }, []);
 
   useEffect(() => {
+    /**
+     * Aligns the floating multi-selection action bar with the visible chat area.
+     *
+     * @returns Nothing.
+     */
     const updateSelectionBarTop = () => {
       const header = document.getElementById("app-shell-header");
       const messageSection = document.getElementById("live-chat-messages");
@@ -146,10 +151,22 @@ export function LiveChatSection({
     };
   }, []);
 
+  /**
+   * Add or remove a message from the current multi-selection.
+   *
+   * @param messageId - Message identifier to toggle.
+   * @returns Nothing.
+   */
   const toggleMessageSelection = (messageId: number) => {
     setSelectedMessageIds((current) => current.includes(messageId) ? current.filter((id) => id !== messageId) : [...current, messageId]);
   };
 
+  /**
+   * Start long-press selection on touch devices.
+   *
+   * @param messageId - Message identifier to select after the hold delay.
+   * @returns Nothing.
+   */
   const startLongPressSelection = (messageId: number) => {
     if (!isTouchSelectionMode) {
       return;
@@ -166,6 +183,11 @@ export function LiveChatSection({
     }, 450);
   };
 
+  /**
+   * Cancel any in-flight long-press timer.
+   *
+   * @returns Nothing.
+   */
   const clearLongPressSelection = () => {
     if (longPressTimerRef.current !== null) {
       window.clearTimeout(longPressTimerRef.current);
@@ -173,6 +195,12 @@ export function LiveChatSection({
     }
   };
 
+  /**
+   * Toggle message selection when the message bubble is clicked or tapped.
+   *
+   * @param messageId - Message identifier associated with the clicked bubble.
+   * @returns Nothing.
+   */
   const handleMessageClick = (messageId: number) => {
     if (!onClearMessages) {
       return;
@@ -193,6 +221,11 @@ export function LiveChatSection({
     toggleMessageSelection(messageId);
   };
 
+  /**
+   * Copy the currently selected message body to the clipboard.
+   *
+   * @returns A promise that resolves after the copy attempt completes.
+   */
   const handleCopySelectedMessage = async () => {
     if (selectedMessageIds.length !== 1) {
       return;

@@ -22,6 +22,11 @@ export function useTripResults() {
   }), [searchParams]);
 
   useEffect(() => {
+    /**
+     * Fetches trip search results for the current query-string filters.
+     *
+     * @returns A promise that resolves once search results have been loaded.
+     */
     async function load() {
       try {
         setLoading(true);

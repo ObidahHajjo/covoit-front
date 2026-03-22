@@ -13,6 +13,9 @@ type PermissionKey = keyof AuthPermissions;
  * Describes the props accepted by the permission-based route guard.
  */
 interface PermissionRouteProps {
+    /**
+     * Permission required to access the nested route.
+     */
     permission: PermissionKey;
 }
 

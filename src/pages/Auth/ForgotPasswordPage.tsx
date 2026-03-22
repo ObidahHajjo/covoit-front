@@ -16,6 +16,12 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const { t } = useI18n();
 
+  /**
+   * Requests a password reset email for the submitted address.
+   *
+   * @param e - Form submission event from the forgot-password form.
+   * @returns A promise that resolves once the recovery request finishes.
+   */
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setLoading(true);

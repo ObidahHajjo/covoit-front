@@ -17,6 +17,12 @@ export default function FindTripPage() {
     const [arrivalCity, setArrivalCity] = useState<CityPostalOption | null>(null);
     const [tripDate, setTripDate] = useState("");
 
+    /**
+     * Serializes the selected search filters and navigates to the results page.
+     *
+     * @param event - Form submission event from the trip search form.
+     * @returns Nothing.
+     */
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 

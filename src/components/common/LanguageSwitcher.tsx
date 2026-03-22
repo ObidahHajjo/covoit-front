@@ -1,11 +1,24 @@
 import { SUPPORTED_LOCALES, type AppLocale } from "../../i18n/config";
 import { useI18n } from "../../i18n/I18nProvider";
 
+/**
+ * Props for the language switcher control.
+ */
 type LanguageSwitcherProps = {
+  /** Whether to render the control with smaller typography. */
   compact?: boolean;
+  /** Whether to hide the visible label on small screens. */
   hideLabelOnMobile?: boolean;
 };
 
+/**
+ * Switch the active application language.
+ *
+ * @param props - Component props controlling the compact display.
+ * @param props.compact - Whether to render the control with smaller text sizing.
+ * @param props.hideLabelOnMobile - Whether to hide the text label on small screens.
+ * @returns The rendered locale selector.
+ */
 export default function LanguageSwitcher({ compact = false, hideLabelOnMobile = false }: LanguageSwitcherProps) {
   const { locale, setLocale, t } = useI18n();
 

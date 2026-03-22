@@ -14,6 +14,9 @@ export type NavItem = {
   mobileVisible?: (user: AuthUser | null) => boolean;
 };
 
+/**
+ * Shared navigation definitions used by the app shell and mobile nav.
+ */
 export const navItems: NavItem[] = [
   {
     to: "/home",

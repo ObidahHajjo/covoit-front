@@ -25,6 +25,12 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const { t } = useI18n();
 
+  /**
+   * Submits the new password using the reset token and email from the URL.
+   *
+   * @param e - Form submission event from the reset-password form.
+   * @returns A promise that resolves once the reset request finishes.
+   */
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setLoading(true);

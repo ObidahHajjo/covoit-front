@@ -14,6 +14,11 @@ export function useMyBookings() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        /**
+         * Fetches the authenticated passenger's booked trips.
+         *
+         * @returns A promise that resolves once bookings have been loaded.
+         */
         async function load() {
             try {
                 setLoading(true);

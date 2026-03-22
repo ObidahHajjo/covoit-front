@@ -11,10 +11,20 @@ import { LoadingContext } from "../context/LoadingContext.ts";
 export function LoadingProvider({ children }: { children: ReactNode }) {
     const [pendingRequests, setPendingRequests] = useState(0);
 
+    /**
+     * Increments the number of active tracked requests.
+     *
+     * @returns Nothing.
+     */
     function startLoading(): void {
         setPendingRequests((prev) => prev + 1);
     }
 
+    /**
+     * Decrements the number of active tracked requests without going below zero.
+     *
+     * @returns Nothing.
+     */
     function stopLoading(): void {
         setPendingRequests((prev) => Math.max(0, prev - 1));
     }

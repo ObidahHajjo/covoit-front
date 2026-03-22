@@ -22,6 +22,11 @@ export function useDriverTripDetails() {
     const [cancelling, setCancelling] = useState(false);
 
     useEffect(() => {
+        /**
+         * Fetches the managed trip and its passenger list for the current route.
+         *
+         * @returns A promise that resolves once driver trip details have been loaded.
+         */
         async function load() {
             try {
                 setLoading(true);

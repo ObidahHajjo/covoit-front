@@ -149,6 +149,11 @@ export function useMyAccount() {
 
     // ── Initial load ──────────────────────────────────────────────────────────
     useEffect(() => {
+        /**
+         * Fetches the current person profile and available brands for the account screen.
+         *
+         * @returns A promise that resolves once the initial account state is hydrated.
+         */
         async function load() {
             try {
                 setLoading(true);
@@ -272,6 +277,12 @@ export function useMyAccount() {
     }
 
     // ── Car-specific handlers ─────────────────────────────────────────────────
+    /**
+     * Updates the selected brand and clears any model-specific car search state.
+     *
+     * @param value - Brand name chosen in the form.
+     * @returns Does not return a value.
+     */
     function handleBrandChange(value: string) {
         updateCarField("brand_name", value);
         updateCarField("model_name", "");
@@ -281,6 +292,12 @@ export function useMyAccount() {
         setShowSuggestions(false);
     }
 
+    /**
+     * Updates the free-text car model search and clears related validation feedback.
+     *
+     * @param value - Current text entered in the car model search field.
+     * @returns Does not return a value.
+     */
     function handleCarSearchChange(value: string) {
         setCarSearch(value);
         updateCarField("model_name", value);
@@ -288,6 +305,12 @@ export function useMyAccount() {
         clearFieldError(["model.name", "model_name", "seats"]);
     }
 
+    /**
+     * Applies a suggested car model selection to the car form.
+     *
+     * @param car - Suggested car record chosen by the user.
+     * @returns Does not return a value.
+     */
     function handleSelectSuggestion(car: Car) {
         const brandName = car.model?.brand?.name ?? carForm.brand_name;
         const modelName = car.model?.name ?? "";
@@ -298,11 +321,24 @@ export function useMyAccount() {
         setShowSuggestions(false);
     }
 
+    /**
+     * Applies one of the preset car colors to the form.
+     *
+     * @param name - Display name of the selected color.
+     * @param hex - Hex code associated with the selected color.
+     * @returns Does not return a value.
+     */
     function handleSelectColor(name: string, hex: string) {
         updateCarField("color_name", name);
         updateCarField("hex", hex);
     }
 
+    /**
+     * Updates the custom car color and derives a matching label when possible.
+     *
+     * @param hex - Hex code entered or picked by the user.
+     * @returns Does not return a value.
+     */
     function handleCustomColorChange(hex: string) {
         updateCarField("hex", hex);
         const matched = DEFAULT_CAR_COLORS.find((c) => c.hex.toLowerCase() === hex.toLowerCase());

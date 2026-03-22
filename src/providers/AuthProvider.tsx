@@ -15,6 +15,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("loading");
   const [user, setUser] = useState<AuthUser | null>(null);
 
+  /**
+   * Refreshes the authenticated user, retrying once after a token refresh when needed.
+   *
+   * @returns A promise that resolves to `true` when the session is valid.
+   */
   const refreshMe = useCallback(async (): Promise<boolean> => {
     try {
       const me = await getMe();
@@ -36,22 +41,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  /**
+   * Clears the local authentication state without issuing a logout request.
+   *
+   * @returns Nothing.
+   */
   const logoutLocal = useCallback((): void => {
     setUser(null);
     setStatus("guest");
   }, []);
 
   useEffect(() => {
-    const controller = new AbortController();
-
+    /**
+     * Initializes auth state when the provider mounts.
+     *
+     * @returns A promise that resolves once session bootstrap has completed.
+     */
     const bootstrap = async (): Promise<void> => {
       setStatus("loading");
       await refreshMe();
     };
 
     void bootstrap();
-
-    return () => controller.abort();
   }, [refreshMe]);
 
   const value = useMemo(
