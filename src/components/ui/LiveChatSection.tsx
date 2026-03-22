@@ -69,14 +69,14 @@ export function LiveChatSection({
 
       <section className="overflow-hidden rounded-[24px] border border-[var(--theme-line)] bg-[var(--theme-surface)] shadow-[var(--theme-shadow-warm)]">
         <div className="border-b border-[var(--theme-line)] bg-[linear-gradient(135deg,rgba(212,233,197,0.42),rgba(255,255,255,0.92))] px-5 py-6 sm:px-7 sm:py-7">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Live chat</p>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Conversation</p>
           <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">{title}</h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">{subtitle}</p>
               <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.85)] px-3 py-1.5 text-xs font-medium text-[var(--theme-muted-strong)]">
                 <span className={`h-2 w-2 rounded-full ${isRealtimeConnected ? "bg-green-500" : "bg-amber-400"}`} />
-                {isRealtimeConnected ? "Live updates connected" : "Polling for new messages"}
+                {isRealtimeConnected ? "Connected" : "Updating"}
               </div>
             </div>
             <div className="rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.85)] px-4 py-2 text-sm font-medium text-[var(--theme-ink)]">
@@ -85,8 +85,7 @@ export function LiveChatSection({
           </div>
         </div>
 
-        <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="flex min-h-[58vh] flex-col">
+        <div className="flex min-h-[58vh] flex-col">
             <div className="flex-1 space-y-4 bg-[rgba(246,248,245,0.86)] px-4 py-5 sm:px-6 sm:py-6">
               {messages.length === 0 ? (
                 <div className="flex h-full min-h-[240px] items-center justify-center">
@@ -148,17 +147,6 @@ export function LiveChatSection({
                 </button>
               </div>
             </form>
-          </div>
-
-          <aside className="border-t border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 lg:border-l lg:border-t-0">
-            <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--theme-muted)]">Chat status</p>
-            <div className="mt-4 rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4">
-              <p className="text-sm font-medium text-[var(--theme-ink)]">Direct in-app conversation</p>
-              <p className="mt-2 text-sm leading-6 text-[var(--theme-muted-strong)]">
-                This screen is now shaped like live chat. Frontend sending works from inside the app, and full synced conversation history can plug into the backend next.
-              </p>
-            </div>
-          </aside>
         </div>
       </section>
     </div>

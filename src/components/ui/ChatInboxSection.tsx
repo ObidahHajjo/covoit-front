@@ -79,11 +79,11 @@ export function ChatInboxSection({ conversations, error, isRealtimeConnected }: 
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Messages</p>
           <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">Chats</h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">
-            A real inbox view: people first, latest message second, trip context in the background.
+            Keep up with your conversations and trip updates in one place.
           </p>
           <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.8)] px-3 py-1.5 text-xs font-medium text-[var(--theme-muted-strong)]">
             <span className={`h-2 w-2 rounded-full ${isRealtimeConnected ? "bg-green-500" : "bg-amber-400"}`} />
-            {isRealtimeConnected ? "Live updates connected" : "Polling for new messages"}
+            {isRealtimeConnected ? "Connected" : "Updating"}
           </div>
         </div>
 
