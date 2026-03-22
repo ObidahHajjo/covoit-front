@@ -1,3 +1,8 @@
+/**
+ * Car domain types used by vehicle management screens.
+ */
+
+/** Car entity returned by the API. */
 export interface Car  {
     id: number;
     license_plate?: string;
@@ -16,6 +21,7 @@ export interface Car  {
     }
 }
 
+/** Payload used to create a new car. */
 export interface CreateCarPayload  {
     brand?: {
         name: string;
@@ -34,4 +40,5 @@ export interface CreateCarPayload  {
     };
 }
 
+/** Payload used to update an existing car. */
 export type UpdateCarPayload = CreateCarPayload;

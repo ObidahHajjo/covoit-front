@@ -2,6 +2,11 @@ import PageLoadingState from "../components/common/PageLoadingState";
 import { HomeSection } from "../components/ui/HomeSection";
 import { useHome } from "../context/Home/useHome";
 
+/**
+ * Display the authenticated user's home dashboard with their profile snapshot and upcoming trip activity.
+ *
+ * @returns The home dashboard content or a loading state while dashboard data is being prepared.
+ */
 export default function HomePage() {
   const {
     person,

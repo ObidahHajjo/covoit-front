@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
 
+/**
+ * Render the third marketing template preview with neon visuals, animated ride highlights, and supporting feature blocks.
+ *
+ * @returns The third template showcase page for the high-energy visual concept.
+ */
 export default function TemplateThreePage() {
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-hidden">
@@ -198,6 +203,7 @@ export default function TemplateThreePage() {
         </footer>
       </div>
 
+      {/* Inline keyframes are kept local so this preview page can define its bespoke animation timing without touching shared styles. */}
       <style>{`
         @keyframes gradient {
           0% { background-position: 0% 50%; }

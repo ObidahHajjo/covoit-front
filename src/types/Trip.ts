@@ -1,6 +1,11 @@
+/**
+ * Trip domain types shared across search, booking, and publishing flows.
+ */
+
 import type { Person } from "./Person";
 import type { Address } from "./Address";
 
+/** Trip entity returned by trip endpoints. */
 export interface Trip {
     id: number;
     departure_time: string;
@@ -16,12 +21,14 @@ export interface Trip {
     arrival_address?: Address;
 }
 
+/** Query parameters supported by trip search. */
 export interface TripSearchParams  {
     startingcity?: string;
     arrivalcity?: string;
     tripdate?: string;
 }
 
+/** Payload used to create a new trip. */
 export interface CreateTripPayload {
     trip_datetime: string,
     available_seats: number,

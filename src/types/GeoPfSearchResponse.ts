@@ -1,9 +1,15 @@
+/**
+ * Types describing GeoPF geocoding responses.
+ */
+
+/** GeoPF geocoding search response. */
 export interface GeoPfSearchResponse {
     type: "FeatureCollection";
     features: GeoPfFeature[];
     query: string;
 }
 
+/** Single address feature returned by GeoPF. */
 export interface GeoPfFeature {
     type: "Feature";
     geometry: {

@@ -5,6 +5,14 @@ type PageLoadingStateProps = {
   compact?: boolean;
 };
 
+/**
+ * Show a page-scoped loading panel when local data is pending.
+ *
+ * @param props - Component props controlling the loading panel copy and size.
+ * @param props.title - Primary loading title displayed in the panel.
+ * @param props.compact - Whether to use a shorter minimum height for compact layouts.
+ * @returns The rendered loading panel, or `null` while the global loading overlay is active.
+ */
 export default function PageLoadingState({ title, compact = false }: PageLoadingStateProps) {
   const { isLoading } = useLoading();
 

@@ -1,7 +1,18 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 
+/**
+ * Stores the normalized base URL used by the authenticated backend client.
+ *
+ * @returns The resolved API base URL string.
+ */
 export const API_BASE_URL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL as string);
 
+/**
+ * Normalizes the configured API base URL for the current frontend host.
+ *
+ * @param rawBaseUrl - Raw base URL read from the Vite environment.
+ * @returns A normalized base URL string without a trailing slash.
+ */
 function resolveApiBaseUrl(rawBaseUrl: string): string {
     try {
         const url = new URL(rawBaseUrl);
@@ -19,6 +30,11 @@ function resolveApiBaseUrl(rawBaseUrl: string): string {
     }
 }
 
+/**
+ * Exposes the authenticated axios client used for application API requests.
+ *
+ * @returns The configured axios instance.
+ */
 export const apiClient = axios.create({
     baseURL: API_BASE_URL,
     headers: {
@@ -28,6 +44,9 @@ export const apiClient = axios.create({
     withCredentials: true,
 });
 
+/**
+ * Describes an axios request config that can be retried after token refresh.
+ */
 type RetryableRequest = InternalAxiosRequestConfig & {
     _retry?: boolean;
 };
@@ -41,6 +60,12 @@ const AUTH_EXCLUDED_PATHS = [
     "/auth/reset-password",
 ];
 
+/**
+ * Determines whether a request URL should bypass refresh-token retry handling.
+ *
+ * @param url - Request URL attached to the axios config.
+ * @returns `true` when the URL belongs to an auth endpoint excluded from refresh.
+ */
 function isExcludedAuthPath(url?: string): boolean {
     if (!url) return false;
     return AUTH_EXCLUDED_PATHS.some((path) => url.includes(path));

@@ -3,12 +3,25 @@ import type { AuthPermissions } from "../types/MeResponse";
 import { isProfileComplete } from "../auth/profileCompletion";
 import {useAuth} from "../context/useAuth.ts";
 
+/**
+ * Lists the permission keys available on the authenticated user object.
+ */
 type PermissionKey = keyof AuthPermissions;
 
+/**
+ * Describes the props accepted by the permission-based route guard.
+ */
 interface PermissionRouteProps {
     permission: PermissionKey;
 }
 
+/**
+ * Guards routes that require a specific permission on the authenticated user.
+ *
+ * @param props - Component props.
+ * @param props.permission - Permission key required to render the nested route.
+ * @returns The nested route outlet or a redirect/loading state.
+ */
 export default function PermissionRoute({ permission }: PermissionRouteProps) {
     const { status, user } = useAuth();
 

@@ -1,5 +1,10 @@
+/**
+ * Authentication profile response types returned by `/auth/me`.
+ */
+
 type RoleName = "admin" | "driver" | "passenger";
 
+/** Raw `/auth/me` response shape. */
 export interface MeResponse {
     data: {
         id: number;
@@ -31,6 +36,7 @@ export interface MeResponse {
     };
 }
 
+/** Authenticated person's profile details. */
 export interface AuthPerson {
     id: number | null;
     pseudo: string | null;
@@ -40,6 +46,7 @@ export interface AuthPerson {
     car_id: number | null;
 }
 
+/** Permissions resolved for the authenticated user. */
 export interface AuthPermissions {
     can_view_bookings: boolean;
     can_book_trip: boolean;
@@ -52,6 +59,7 @@ export interface AuthPermissions {
     can_manage_all_bookings: boolean;
 }
 
+/** Authenticated user model used by the app. */
 export interface AuthUser {
     id: number;
     email: string;

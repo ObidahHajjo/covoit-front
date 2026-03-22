@@ -27,6 +27,15 @@ type Props = {
   onReset: () => void;
 };
 
+/**
+ * Pair a vehicle form control with its label and error.
+ *
+ * @param props - Component props for the field wrapper.
+ * @param props.label - Visible field label.
+ * @param props.error - Optional validation message shown below the field.
+ * @param props.children - Form control rendered inside the field.
+ * @returns The rendered field wrapper.
+ */
 function Field({ label, error, children }: { label: string; error?: string | null; children: ReactNode }) {
   return (
     <div className="space-y-2">
@@ -37,6 +46,31 @@ function Field({ label, error, children }: { label: string; error?: string | nul
   );
 }
 
+/**
+ * Manage the driver's saved vehicle details.
+ *
+ * @param props - Component props for the vehicle-management form.
+ * @param props.form - Current editable vehicle form state.
+ * @param props.brands - Available car brands for the brand selector.
+ * @param props.saving - Whether the save request is in progress.
+ * @param props.success - Optional success message shown in a toast.
+ * @param props.error - Optional error message shown in a toast.
+ * @param props.getFieldError - Helper that returns a validation message for one or more field keys.
+ * @param props.carSearch - Current free-text model search query.
+ * @param props.carSuggestions - Suggested car matches returned from search.
+ * @param props.carSearchLoading - Whether model suggestions are being loaded.
+ * @param props.carSearchError - Optional error message for the model search area.
+ * @param props.showCarDropdown - Whether the model suggestion dropdown is visible.
+ * @param props.onFieldChange - Callback fired when a generic form field changes.
+ * @param props.onBrandChange - Callback fired when the selected brand changes.
+ * @param props.onCarSearchChange - Callback fired when the model search query changes.
+ * @param props.onSelectSuggestion - Callback fired when a suggested car is chosen.
+ * @param props.onSelectColor - Callback fired when a preset color is chosen.
+ * @param props.onCustomColorChange - Callback fired when the custom color picker changes.
+ * @param props.onSubmit - Form submit handler for saving or removing the car.
+ * @param props.onReset - Callback fired when the form resets to its initial state.
+ * @returns The rendered vehicle-management form.
+ */
 export function CarSection({
   form,
   brands,

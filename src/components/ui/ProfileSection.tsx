@@ -18,6 +18,15 @@ type Props = {
   onDeleteAccount: () => void;
 };
 
+/**
+ * Pair a profile form control with its label and error.
+ *
+ * @param props - Component props for the field wrapper.
+ * @param props.label - Visible field label.
+ * @param props.error - Optional validation message shown below the field.
+ * @param props.children - Form control rendered inside the field.
+ * @returns The rendered field wrapper.
+ */
 function Field({ label, error, children }: { label: string; error?: string | null; children: ReactNode }) {
   return (
     <div className="space-y-2">
@@ -28,6 +37,24 @@ function Field({ label, error, children }: { label: string; error?: string | nul
   );
 }
 
+/**
+ * Manage editable profile details and account deletion.
+ *
+ * @param props - Component props for the profile-management form.
+ * @param props.person - Current persisted person data used for read-only details.
+ * @param props.form - Current editable profile form state.
+ * @param props.saving - Whether the profile save request is in progress.
+ * @param props.success - Optional success message shown in a toast.
+ * @param props.error - Optional error message shown in a toast.
+ * @param props.deleteAccountError - Optional error shown when account deletion fails.
+ * @param props.accountDeleting - Whether the account deletion request is in progress.
+ * @param props.getFieldError - Helper that returns a validation message for one or more field keys.
+ * @param props.onFieldChange - Callback fired when a form field changes.
+ * @param props.onSubmit - Form submit handler for saving the profile.
+ * @param props.onReset - Callback fired when the form resets to persisted values.
+ * @param props.onDeleteAccount - Callback fired when account deletion is requested.
+ * @returns The rendered profile-management form.
+ */
 export function ProfileSection({
   person,
   form,

@@ -18,6 +18,14 @@ const STATUS_CONFIG: Record<TripStatus, { label: string; badge: string }> = {
   },
 };
 
+/**
+ * Render a trip card inside the driver trip lists.
+ *
+ * @param props - Component props for the driver trip card.
+ * @param props.trip - Trip shown in the card.
+ * @param props.status - Driver-oriented status bucket for the trip.
+ * @returns The rendered driver trip link.
+ */
 function TripCard({ trip, status }: { trip: Trip; status: TripStatus }) {
   const config = STATUS_CONFIG[status];
   const from = trip.departure_address?.city?.name ?? "Unknown";
@@ -51,6 +59,17 @@ function TripCard({ trip, status }: { trip: Trip; status: TripStatus }) {
   );
 }
 
+/**
+ * Group driver trips by status with shared framing.
+ *
+ * @param props - Component props configuring the trip group.
+ * @param props.title - Group title.
+ * @param props.icon - Icon shown next to the title.
+ * @param props.trips - Trips rendered inside the group.
+ * @param props.status - Status used to style each trip card.
+ * @param props.emptyMessage - Message shown when the group has no trips.
+ * @returns The rendered grouped trip section.
+ */
 function TripGroup({
   title,
   icon,
@@ -102,6 +121,15 @@ type Props = {
   pastTrips: Trip[];
 };
 
+/**
+ * Organize the driver's trips into current, upcoming, and past lanes.
+ *
+ * @param props - Component props containing grouped driver trips.
+ * @param props.currentTrips - Trips currently in progress.
+ * @param props.incomingTrips - Upcoming trips scheduled for later.
+ * @param props.pastTrips - Completed trips kept for history.
+ * @returns The rendered driver trips dashboard.
+ */
 export function MyTripsSection({ currentTrips, incomingTrips, pastTrips }: Props) {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">

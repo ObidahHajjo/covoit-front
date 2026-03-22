@@ -16,6 +16,12 @@ type Props = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
+/**
+ * Format chat timestamps for message bubbles.
+ *
+ * @param value - Raw date-time string for the message.
+ * @returns A localized short time string, or `"Now"` when the value is invalid.
+ */
 function formatMessageTime(value: string) {
   const date = new Date(value);
 
@@ -26,6 +32,23 @@ function formatMessageTime(value: string) {
   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
+/**
+ * Display a conversation thread with a message composer.
+ *
+ * @param props - Component props for the live chat screen.
+ * @param props.title - Main conversation title.
+ * @param props.subtitle - Supporting copy shown under the title.
+ * @param props.counterpartLabel - Label describing the other participant.
+ * @param props.messages - Messages currently shown in the thread.
+ * @param props.isRealtimeConnected - Whether realtime updates are connected.
+ * @param props.draft - Current draft message text.
+ * @param props.sending - Whether a send action is in progress.
+ * @param props.success - Optional success message shown in a toast.
+ * @param props.error - Optional error message shown in a toast.
+ * @param props.onDraftChange - Callback fired when the draft changes.
+ * @param props.onSubmit - Form submit handler for sending a message.
+ * @returns The rendered live chat screen.
+ */
 export function LiveChatSection({
   title,
   subtitle,

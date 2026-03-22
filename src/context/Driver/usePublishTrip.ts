@@ -4,6 +4,9 @@ import { searchAddress } from "../../features/geo/geoApi";
 import { publishTrip } from "../../features/trips/tripApi";
 import type { GeoPfFeature } from "../../types/GeoPfSearchResponse";
 
+/**
+ * Describes the normalized address fields used by the trip publishing form.
+ */
 export type SelectedAddress = {
     streetNumber: string;
     streetName: string;
@@ -12,6 +15,12 @@ export type SelectedAddress = {
     label: string;
 };
 
+/**
+ * Maps a Geo API feature into the address shape expected by the publish-trip form.
+ *
+ * @param feature - Address feature returned by the geocoding API.
+ * @returns A normalized address object ready for local form state.
+ */
 export function parseAddressFeature(feature: GeoPfFeature): SelectedAddress {
     const p = feature.properties;
     return {
@@ -23,6 +32,9 @@ export function parseAddressFeature(feature: GeoPfFeature): SelectedAddress {
     };
 }
 
+/**
+ * Describes the state tracked for each address autocomplete input.
+ */
 export type AddressFieldState = {
     query: string;
     results: GeoPfFeature[];
@@ -37,6 +49,11 @@ const EMPTY_ADDRESS_FIELD: AddressFieldState = {
     selected: null,
 };
 
+/**
+ * Manages the trip publishing form, including debounced address autocompletion.
+ *
+ * @returns Publish-trip form state and handlers.
+ */
 export function usePublishTrip() {
     const navigate = useNavigate();
 
@@ -52,7 +69,14 @@ export function usePublishTrip() {
     const startingTimerRef = useRef<number | null>(null);
     const arrivalTimerRef = useRef<number | null>(null);
 
-    // ── Generic address search handler ────────────────────────────────────────
+    // The returned handler captures the matching setter and timer so both address inputs reuse one debounced flow.
+    /**
+     * Builds a debounced change handler for an address autocomplete field.
+     *
+     * @param setter - State setter for the target address field.
+     * @param timerRef - Mutable timer reference used to debounce remote searches.
+     * @returns A change handler that updates query state and fetches suggestions.
+     */
     function makeAddressChangeHandler(
         setter: React.Dispatch<React.SetStateAction<AddressFieldState>>,
         timerRef: React.MutableRefObject<number | null>,
@@ -110,6 +134,12 @@ export function usePublishTrip() {
         window.setTimeout(() => setArrival((p) => ({ ...p, open: false })), 150);
     }
 
+    /**
+     * Publishes a new trip from the current form state.
+     *
+     * @param event - Form submission event from the publish-trip form.
+     * @returns A promise that resolves once the publish flow completes.
+     */
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 

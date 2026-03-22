@@ -3,6 +3,11 @@ import { apiClient } from "./app/apiClient";
 import { apiClient as externalApiClient } from "./app/externalApiClient";
 import { useLoading } from "./context/LoadingContext";
 
+/**
+ * Mounts axios loading interceptors for both internal and external API clients.
+ *
+ * @returns `null` because this provider only performs side effects.
+ */
 export function AxiosInterceptorProvider() {
     const { startLoading, stopLoading } = useLoading();
 

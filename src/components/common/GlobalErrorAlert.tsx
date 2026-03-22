@@ -1,6 +1,11 @@
 import { useError } from "../../app/useError";
 import { Notice, SereneButton } from "./SerenePrimitives";
 
+/**
+ * Show the current app-level error at the top of the page.
+ *
+ * @returns The rendered global error banner, or `null` when no error is active.
+ */
 export default function GlobalErrorAlert() {
   const { error, clearError } = useError();
 

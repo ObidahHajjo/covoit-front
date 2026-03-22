@@ -5,6 +5,11 @@ import { cancelReservation, getTripById, getTripPassengers } from "../../feature
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
 
+/**
+ * Loads a passenger booking and exposes actions related to that reservation.
+ *
+ * @returns Booking details state and handlers for cancellation and driver contact.
+ */
 export function useBookingDetails() {
     const { tripId } = useParams();
     const navigate = useNavigate();
@@ -41,6 +46,11 @@ export function useBookingDetails() {
         return new Date(trip.departure_time).getTime() <= Date.now();
     }, [trip?.departure_time]);
 
+    /**
+     * Cancels the current reservation and redirects back to the bookings list.
+     *
+     * @returns A promise that resolves once the cancellation flow completes.
+     */
     async function handleCancel() {
         if (!tripId) return;
         try {
@@ -62,6 +72,11 @@ export function useBookingDetails() {
         }
     }
 
+    /**
+     * Opens or creates the chat thread associated with the trip driver.
+     *
+     * @returns A promise that resolves once navigation to the chat screen is triggered.
+     */
     async function navigateToContactDriver() {
         if (!trip) return;
 

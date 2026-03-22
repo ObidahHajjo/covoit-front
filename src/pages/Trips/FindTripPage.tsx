@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { FindTripForm } from "../../components/ui/FindTripForm";
 import type { CityPostalOption } from "../../types/Commune";
 
+/**
+ * Render the trip search page that collects departure, arrival, and optional travel date filters.
+ *
+ * @returns The trip search form and supporting page copy for browsing available rides.
+ */
 export default function FindTripPage() {
     const navigate = useNavigate();
 
@@ -13,6 +18,7 @@ export default function FindTripPage() {
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        // Only defined filters are serialized so the results page can distinguish untouched fields from explicit choices.
         const params = new URLSearchParams();
 
         if (startingCity) {

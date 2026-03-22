@@ -3,6 +3,11 @@ import { ProfileSection } from "../../components/ui/ProfileSection";
 import { CarSection } from "../../components/ui/ProfileCarSection";
 import PageLoadingState from "../../components/common/PageLoadingState";
 
+/**
+ * Render the account management page where the user can update profile details and registered vehicle data.
+ *
+ * @returns The account settings interface or a loading state while account data is loading.
+ */
 export default function MyAccountPage() {
   const account = useMyAccount();
 

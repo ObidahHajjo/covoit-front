@@ -3,6 +3,11 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../features/auth/authApi";
 
+/**
+ * Manages registration form state and redirects the user into profile completion.
+ *
+ * @returns Registration form state, derived flags, and navigation handlers.
+ */
 export function useRegister() {
   const navigate = useNavigate();
 
@@ -22,6 +27,12 @@ export function useRegister() {
     return true;
   }, [email, password, passwordConfirm, isSubmitting]);
 
+  /**
+   * Submits the registration form and stores onboarding state for the next step.
+   *
+   * @param event - Form submission event from the registration form.
+   * @returns A promise that resolves once the registration flow completes.
+   */
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 

@@ -10,6 +10,16 @@ type CityAutocompleteProps = {
   onSelect: (option: CityPostalOption | null) => void;
 };
 
+/**
+ * Autocomplete French city and postal-code selections.
+ *
+ * @param props - Component props controlling the autocomplete field state.
+ * @param props.label - Visible label for the field.
+ * @param props.placeholder - Placeholder text shown in the text input.
+ * @param props.selectedOption - Currently selected city option, if any.
+ * @param props.onSelect - Callback fired when a city option is chosen or cleared.
+ * @returns The rendered city autocomplete field.
+ */
 export default function CityAutocomplete({
   label,
   placeholder,
@@ -52,6 +62,12 @@ export default function CityAutocomplete({
     return () => window.clearTimeout(timeoutId);
   }, [query]);
 
+  /**
+   * Update the query and clear the selected city when the typed value diverges.
+   *
+   * @param value - Current raw input value from the text field.
+   * @returns Nothing.
+   */
   function handleChange(value: string): void {
     setQuery(value);
     setIsOpen(true);
@@ -61,6 +77,12 @@ export default function CityAutocomplete({
     }
   }
 
+  /**
+   * Apply a chosen autocomplete option and close the results list.
+   *
+   * @param option - City and postal-code option selected by the user.
+   * @returns Nothing.
+   */
   function handleSelect(option: CityPostalOption): void {
     onSelect(option);
     setQuery(option.cityName);
@@ -81,6 +103,7 @@ export default function CityAutocomplete({
             }
           }}
           onBlur={() => {
+            // Delay closing so option clicks fired on mouse down can complete before blur hides the list.
             window.setTimeout(() => {
               setIsOpen(false);
             }, 150);

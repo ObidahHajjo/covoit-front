@@ -2,6 +2,11 @@ import { type FormEvent, useState } from "react";
 import { apiClient } from "../../app/apiClient";
 import type { AxiosError } from "axios";
 
+/**
+ * Render the password recovery page that requests a reset link for the submitted email address.
+ *
+ * @returns The forgot-password layout with recovery messaging and submission feedback.
+ */
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);

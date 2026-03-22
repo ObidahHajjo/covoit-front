@@ -4,6 +4,11 @@ import { getTrips } from "../../features/trips/tripApi";
 import type { Trip } from "../../types/Trip";
 import { useError } from "../../app/useError";
 
+/**
+ * Loads trip search results from the current URL query parameters.
+ *
+ * @returns Search parameters plus the resulting trip collection and loading state.
+ */
 export function useTripResults() {
   const [searchParams] = useSearchParams();
   const [trips, setTrips] = useState<Trip[]>([]);

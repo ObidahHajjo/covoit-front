@@ -6,6 +6,14 @@ import FloatingToast from "../common/FloatingToast";
 const inputClass =
   "w-full rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[var(--theme-primary)] focus:ring-1 focus:ring-[rgba(82,100,72,0.16)] disabled:cursor-not-allowed disabled:opacity-50";
 
+/**
+ * Wrap a publish-trip form control with its label.
+ *
+ * @param props - Component props for the field wrapper.
+ * @param props.label - Visible field label.
+ * @param props.children - Form control rendered inside the wrapper.
+ * @returns The rendered field wrapper.
+ */
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="space-y-2">
@@ -15,6 +23,13 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
+/**
+ * Show the selected address details after search.
+ *
+ * @param props - Component props for the selected-address preview.
+ * @param props.selected - Normalized selected address, or `null` when none is chosen.
+ * @returns The rendered selected-address preview, or `null` when no address is selected.
+ */
 function AddressPreview({ selected }: { selected: SelectedAddress | null }) {
   if (!selected) return null;
 
@@ -35,6 +50,18 @@ function AddressPreview({ selected }: { selected: SelectedAddress | null }) {
   );
 }
 
+/**
+ * Provide searchable address selection for one trip endpoint.
+ *
+ * @param props - Component props for one address search input.
+ * @param props.placeholder - Placeholder text shown in the search field.
+ * @param props.field - Full address field state, including query, results, and selection.
+ * @param props.onChange - Callback fired when the search query changes.
+ * @param props.onFocus - Callback fired when the input gains focus.
+ * @param props.onBlur - Callback fired when the input loses focus.
+ * @param props.onSelect - Callback fired when a search result is chosen.
+ * @returns The rendered searchable address input and preview.
+ */
 function AddressSearch({
   placeholder,
   field,
@@ -96,6 +123,15 @@ function AddressSearch({
   );
 }
 
+/**
+ * Group publish-trip inputs into titled sections.
+ *
+ * @param props - Component props for the titled form section.
+ * @param props.icon - Icon shown beside the section title.
+ * @param props.title - Section title.
+ * @param props.children - Inputs rendered inside the section.
+ * @returns The rendered form section.
+ */
 function FormSection({ icon, title, children }: { icon: string; title: string; children: ReactNode }) {
   return (
     <section className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
@@ -134,6 +170,32 @@ type Props = {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 };
 
+/**
+ * Collect the inputs required to publish a new trip.
+ *
+ * @param props - Component props for the publish-trip form.
+ * @param props.tripDateTime - Current departure date-time value.
+ * @param props.availableSeats - Current available-seat value.
+ * @param props.smokingAllowed - Whether smoking is allowed on the trip.
+ * @param props.error - Optional error message shown in a toast.
+ * @param props.submitting - Whether the publish request is in progress.
+ * @param props.isSubmitDisabled - Whether the publish button should be disabled.
+ * @param props.starting - Search state for the starting address field.
+ * @param props.arrival - Search state for the arrival address field.
+ * @param props.onTripDateTimeChange - Callback fired when the departure date-time changes.
+ * @param props.onAvailableSeatsChange - Callback fired when the available-seat value changes.
+ * @param props.onSmokingAllowedChange - Callback fired when smoking permission changes.
+ * @param props.onStartingChange - Callback fired when the starting-address query changes.
+ * @param props.onArrivalChange - Callback fired when the arrival-address query changes.
+ * @param props.onStartingFocus - Callback fired when the starting field gains focus.
+ * @param props.onStartingBlur - Callback fired when the starting field loses focus.
+ * @param props.onArrivalFocus - Callback fired when the arrival field gains focus.
+ * @param props.onArrivalBlur - Callback fired when the arrival field loses focus.
+ * @param props.onSelectStarting - Callback fired when a starting-address result is chosen.
+ * @param props.onSelectArrival - Callback fired when an arrival-address result is chosen.
+ * @param props.onSubmit - Form submit handler for publishing the trip.
+ * @returns The rendered publish-trip form.
+ */
 export function PublishTripForm({
   tripDateTime,
   availableSeats,

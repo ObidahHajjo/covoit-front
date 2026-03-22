@@ -51,6 +51,13 @@ const items: NavItem[] = [
   },
 ];
 
+/**
+ * Render the icon used by each bottom-navigation item.
+ *
+ * @param props - Component props describing the icon to render.
+ * @param props.icon - Icon identifier for the matching navigation glyph.
+ * @returns The rendered SVG icon.
+ */
 function NavGlyph({ icon }: { icon: string }) {
   if (icon === "home") {
     return (
@@ -107,6 +114,11 @@ function NavGlyph({ icon }: { icon: string }) {
   );
 }
 
+/**
+ * Show the mobile-first bottom navigation and chat alerts.
+ *
+ * @returns The rendered bottom navigation and optional incoming-message alert.
+ */
 export default function BottomNav() {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -118,6 +130,7 @@ export default function BottomNav() {
     const nextSeenMap: Record<number, string> = {};
     let newestIncoming: { id: number; name: string; body: string; updatedAt: string } | null = null;
 
+    // Track the last seen update timestamp per conversation so only newly changed unread threads trigger alerts.
     for (const conversation of conversations) {
       const currentUpdatedAt = conversation.updatedAt;
       const previousUpdatedAt = seenMapRef.current[conversation.id];

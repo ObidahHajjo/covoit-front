@@ -3,10 +3,16 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { apiClient } from "../../app/apiClient";
 import type { AxiosError } from "axios";
 
+/**
+ * Render the password reset confirmation page using the recovery token and email carried in the URL.
+ *
+ * @returns The reset-password form with success, error, and incomplete-link states.
+ */
 export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  // Memoizing the query values keeps the reset request and disabled state stable until the URL itself changes.
   const token = useMemo(() => searchParams.get("token") ?? "", [searchParams]);
   const email = useMemo(() => searchParams.get("email") ?? "", [searchParams]);
 

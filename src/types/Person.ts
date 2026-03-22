@@ -1,5 +1,10 @@
+/**
+ * Person domain types used by profile and trip features.
+ */
+
 import type { Car } from "./Car";
 
+/** Person entity returned by profile and trip endpoints. */
 export interface Person  {
     id: number;
     pseudo?: string;
@@ -13,6 +18,7 @@ export interface Person  {
     car?: Car | null;
 }
 
+/** Partial payload used to update the current profile. */
 export interface UpdateMePayload  {
     pseudo?: string|null;
     first_name?: string|null;

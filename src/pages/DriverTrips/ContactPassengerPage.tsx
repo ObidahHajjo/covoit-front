@@ -1,6 +1,11 @@
 import { useContactPassenger } from "../../context/Contact/useContactPassenger";
 import { LiveChatSection } from "../../components/ui/LiveChatSection";
 
+/**
+ * Render the direct chat page a driver uses to coordinate details with a passenger.
+ *
+ * @returns The live chat section configured for driver-to-passenger messaging.
+ */
 export default function ContactPassengerPage() {
   const {
     draft,

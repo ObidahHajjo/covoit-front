@@ -2,6 +2,11 @@ import { Navigate, Outlet } from "react-router-dom";
 import { isProfileComplete } from "../auth/profileCompletion";
 import { useAuth } from "../context/useAuth.ts";
 
+/**
+ * Redirects authenticated users away from guest-only routes.
+ *
+ * @returns The nested guest route outlet or a redirect/loading state.
+ */
 export default function GuestRoute() {
     const { status, user } = useAuth();
 

@@ -1,3 +1,8 @@
+/**
+ * Chat domain models used by the messaging UI.
+ */
+
+/** Message model used by the chat UI. */
 export type ChatMessage = {
   id: number;
   body: string;
@@ -6,6 +11,7 @@ export type ChatMessage = {
   createdAt: string;
 };
 
+/** Conversation model used by the chat UI. */
 export type ChatConversation = {
   id: number;
   participantId: number;

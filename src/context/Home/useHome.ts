@@ -5,12 +5,25 @@ import { useAuth } from "../useAuth.ts";
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
 
+/**
+ * Returns whether a trip is still upcoming.
+ *
+ * @param trip - Trip to evaluate.
+ * @returns `true` when the trip departure is in the future.
+ */
 function isUpcomingTrip(trip: Trip): boolean {
     const departure = new Date(trip.departure_time);
     if (Number.isNaN(departure.getTime())) return false;
     return departure >= new Date();
 }
 
+/**
+ * Sorts upcoming trips by departure time and limits the returned list size.
+ *
+ * @param trips - Trips to filter and sort.
+ * @param limit - Maximum number of upcoming trips to keep.
+ * @returns The earliest upcoming trips up to the requested limit.
+ */
 function sortAndSlice(trips: Trip[], limit = 3): Trip[] {
     return trips
         .filter(isUpcomingTrip)
@@ -18,6 +31,11 @@ function sortAndSlice(trips: Trip[], limit = 3): Trip[] {
         .slice(0, limit);
 }
 
+/**
+ * Loads dashboard data for the authenticated home page.
+ *
+ * @returns Home dashboard state, counts, and upcoming-trip collections.
+ */
 export function useHome() {
     const navigate = useNavigate();
     const { logoutLocal, user } = useAuth();

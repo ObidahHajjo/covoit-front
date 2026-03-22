@@ -4,6 +4,13 @@ import { apiClient } from "../app/apiClient";
 import type { AuthUser } from "../types/MeResponse";
 import { AuthContext, type AuthStatus } from "../context/AuthContext";
 
+/**
+ * Provides authenticated user state and session refresh helpers to the app.
+ *
+ * @param props - Component props.
+ * @param props.children - Descendant React nodes that consume auth state.
+ * @returns The auth context provider wrapping the provided children.
+ */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("loading");
   const [user, setUser] = useState<AuthUser | null>(null);

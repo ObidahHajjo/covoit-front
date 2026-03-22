@@ -4,6 +4,11 @@ import { useAuth } from "../../context/useAuth";
 import { useCompleteProfile } from "../../context/Person/useCompleteProfile";
 import { CompleteProfileSection } from "../../components/ui/CompleteProfileSection";
 
+/**
+ * Render the profile completion page that finalizes required user information after authentication.
+ *
+ * @returns The profile completion form, a loading state, or a redirect when the user is ineligible for this step.
+ */
 export default function CompleteProfilePage() {
   const { status, user } = useAuth();
   const {

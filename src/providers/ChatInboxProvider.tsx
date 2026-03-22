@@ -12,6 +12,13 @@ import { useChatRealtime } from "../features/chat/useChatRealtime";
 import type { ChatConversation } from "../types/Chat";
 import { useAuth } from "../context/useAuth";
 
+/**
+ * Provides chat inbox data, unread counters, and realtime connection state.
+ *
+ * @param props - Component props.
+ * @param props.children - Descendant React nodes that consume inbox state.
+ * @returns The chat inbox context provider wrapping the provided children.
+ */
 export function ChatInboxProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [conversations, setConversations] = useState<ChatConversation[]>([]);
@@ -69,6 +76,7 @@ export function ChatInboxProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener(CHAT_READ_EVENT, handleReadChange);
   }, []);
 
+  // The realtime payload shape varies by broadcast source, so the identifiers are narrowed defensively.
   const { isRealtimeConnected } = useChatRealtime(user?.person?.id ? `chat.user.${user.person.id}` : null, (payload) => {
     const messageSenderId = typeof payload === "object" && payload !== null && "message" in payload
       ? (payload as { message?: { sender_person_id?: number }; conversation_id?: number }).message?.sender_person_id

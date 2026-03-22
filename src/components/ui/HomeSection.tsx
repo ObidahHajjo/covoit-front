@@ -4,6 +4,14 @@ import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
 import type { AuthUser } from "../../types/MeResponse";
 
+/**
+ * Render a compact trip preview card for dashboard lists.
+ *
+ * @param props - Component props for the dashboard trip preview.
+ * @param props.trip - Trip displayed in the card.
+ * @param props.detailsPath - Route to the corresponding trip details page.
+ * @returns The rendered trip preview link.
+ */
 function TripPreviewCard({ trip, detailsPath }: { trip: Trip; detailsPath: string }) {
   const from = trip.departure_address?.city?.name ?? "Unknown";
   const to = trip.arrival_address?.city?.name ?? "Unknown";
@@ -35,6 +43,18 @@ function TripPreviewCard({ trip, detailsPath }: { trip: Trip; detailsPath: strin
   );
 }
 
+/**
+ * Group upcoming trips with a shared heading and empty state.
+ *
+ * @param props - Component props configuring the trip group.
+ * @param props.title - Section title.
+ * @param props.countLabel - Short summary label for the number of trips.
+ * @param props.trips - Trips rendered in the section.
+ * @param props.emptyMessage - Message shown when no trips are available.
+ * @param props.allPath - Route to the full listing page.
+ * @param props.detailsBasePath - Base path used to build detail links.
+ * @returns The rendered dashboard trip section.
+ */
 function TripSection({
   title,
   countLabel,
@@ -96,6 +116,18 @@ type Props = {
   upcomingBookingsCount: number;
 };
 
+/**
+ * Build the home dashboard for the signed-in user.
+ *
+ * @param props - Component props containing dashboard data.
+ * @param props.person - Current person profile used for the greeting.
+ * @param props.user - Authenticated user used for permission-based sections.
+ * @param props.upcomingDriverTrips - Upcoming trips owned by the current driver.
+ * @param props.upcomingBookings - Upcoming trips booked by the current rider.
+ * @param props.upcomingDriverTripsCount - Total number of upcoming driver trips.
+ * @param props.upcomingBookingsCount - Total number of upcoming bookings.
+ * @returns The rendered home dashboard.
+ */
 export function HomeSection({
   person,
   user,

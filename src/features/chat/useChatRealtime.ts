@@ -2,6 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import Pusher from "pusher-js";
 import { getChatEcho } from "./chatEcho";
 
+/**
+ * Subscribes to a private chat channel and exposes the realtime connection state.
+ *
+ * @param channelName Private channel name to subscribe to, or `null` to disable realtime updates.
+ * @param onSignal Callback invoked whenever a chat message event is received.
+ * @returns An object describing whether the realtime connection is currently established.
+ */
 export function useChatRealtime(channelName: string | null, onSignal: (payload?: unknown) => void) {
   const [isRealtimeConnected, setIsRealtimeConnected] = useState(false);
   const onSignalRef = useRef(onSignal);

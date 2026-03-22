@@ -1,6 +1,12 @@
 import { useContext } from "react";
 import { ChatInboxContext } from "./ChatInboxContext";
 
+/**
+ * Returns the chat inbox context value.
+ *
+ * @returns The shared chat inbox context API.
+ * @throws Error When the hook is used outside `ChatInboxProvider`.
+ */
 export function useChatInbox() {
   const context = useContext(ChatInboxContext);
 

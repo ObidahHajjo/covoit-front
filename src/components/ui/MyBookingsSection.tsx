@@ -6,6 +6,14 @@ type Props = {
   now?: number;
 };
 
+/**
+ * Render one booked trip card with status.
+ *
+ * @param props - Component props for the booking card.
+ * @param props.trip - Trip shown in the card.
+ * @param props.now - Current timestamp used to decide whether the trip is past.
+ * @returns The rendered booking card link.
+ */
 function TripCard({ trip, now }: { trip: Trip; now: number }) {
   const from = trip.departure_address?.city?.name ?? "-";
   const to = trip.arrival_address?.city?.name ?? "-";
@@ -42,6 +50,14 @@ function TripCard({ trip, now }: { trip: Trip; now: number }) {
 
 const CURRENT_TIME = Date.now();
 
+/**
+ * List the rider's current and past bookings.
+ *
+ * @param props - Component props for the bookings section.
+ * @param props.bookings - Trips booked by the current rider.
+ * @param props.now - Current timestamp override used for status calculations.
+ * @returns The rendered bookings section.
+ */
 export function MyBookingsSection({ bookings, now = CURRENT_TIME }: Props) {
   return (
     <section className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 text-[var(--theme-ink)] sm:p-6">

@@ -2,8 +2,17 @@ import { useEffect, useMemo, useState } from "react";
 import { getMyDriverTrips } from "../../features/person/personApi";
 import type { Trip } from "../../types/Trip";
 
+/**
+ * Lists the trip timing buckets used to organize driver trips in the UI.
+ */
 export type TripStatus = "past" | "current" | "incoming";
 
+/**
+ * Classifies a trip based on its departure and arrival times.
+ *
+ * @param trip - Trip to classify.
+ * @returns The computed timing bucket for the provided trip.
+ */
 export function getTripStatus(trip: Trip): TripStatus {
     const now = new Date();
     const departure = new Date(trip.departure_time);
@@ -26,6 +35,11 @@ export function getTripStatus(trip: Trip): TripStatus {
     return "incoming";
 }
 
+/**
+ * Loads the authenticated driver's trips and groups them by status.
+ *
+ * @returns Driver trip collections grouped into current, incoming, and past buckets.
+ */
 export function useMyTrips() {
     const [trips, setTrips] = useState<Trip[]>([]);
     const [loading, setLoading] = useState(true);

@@ -14,6 +14,20 @@ type Props = {
     onShowAll: () => void;
 };
 
+/**
+ * Collect trip search criteria for riders.
+ *
+ * @param props - Component props for the trip-search form.
+ * @param props.startingCity - Selected departure city option.
+ * @param props.arrivalCity - Selected arrival city option.
+ * @param props.tripDate - Selected departure date.
+ * @param props.onStartingCityChange - Callback fired when the departure city changes.
+ * @param props.onArrivalCityChange - Callback fired when the arrival city changes.
+ * @param props.onTripDateChange - Callback fired when the departure date changes.
+ * @param props.onSubmit - Form submit handler for running the search.
+ * @param props.onShowAll - Callback fired when the user wants to browse all trips.
+ * @returns The rendered trip-search form.
+ */
 export function FindTripForm({
     startingCity,
     arrivalCity,

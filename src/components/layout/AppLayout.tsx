@@ -3,6 +3,12 @@ import { logout } from "../../features/auth/authApi";
 import { useAuth } from "../../context/useAuth";
 import BottomNav from "./BottomNav";
 
+/**
+ * Resolve the current route to the header label.
+ *
+ * @param pathname - Current browser pathname.
+ * @returns The header label associated with the route.
+ */
 function getPageLabel(pathname: string): string {
   if (pathname === "/home") return "Dashboard";
   if (pathname === "/find-trip") return "Find Trips";
@@ -23,12 +29,22 @@ function getPageLabel(pathname: string): string {
   return "Dashboard";
 }
 
+/**
+ * Provide the authenticated app shell with header and bottom navigation.
+ *
+ * @returns The rendered authenticated application layout.
+ */
 export default function AppLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { logoutLocal, user } = useAuth();
   const pageLabel = getPageLabel(location.pathname);
 
+  /**
+   * Log the user out locally even if the remote logout request fails.
+   *
+   * @returns A promise that settles after local cleanup and navigation complete.
+   */
   async function handleLogout() {
     try {
       await logout();

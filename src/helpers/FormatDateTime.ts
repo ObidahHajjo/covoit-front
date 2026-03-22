@@ -1,3 +1,9 @@
+/**
+ * Formats an ISO-like datetime string as `dd/mm/yyyy hh:mm`.
+ *
+ * @param value Datetime string to format.
+ * @returns A human-readable date and time string, the original value when parsing fails, or an em dash when the value is empty.
+ */
 export function formatDateTimeRaw(value?: string | null): string {
     if (!value) return "—";
 

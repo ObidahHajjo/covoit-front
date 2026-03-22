@@ -3,6 +3,15 @@ import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
 import FloatingToast from "../common/FloatingToast";
 
+/**
+ * Show a grouped set of trip facts inside the driver view.
+ *
+ * @param props - Component props describing the info card content.
+ * @param props.icon - Icon displayed for the card section.
+ * @param props.title - Section title.
+ * @param props.rows - Key-value rows rendered inside the card.
+ * @returns The rendered info card.
+ */
 function InfoCard({ icon, title, rows }: {
   icon: string;
   title: string;
@@ -26,6 +35,14 @@ function InfoCard({ icon, title, rows }: {
   );
 }
 
+/**
+ * Render one passenger entry with a contact action.
+ *
+ * @param props - Component props for the passenger row.
+ * @param props.passenger - Passenger displayed in the row.
+ * @param props.onContact - Callback fired when the contact button is pressed.
+ * @returns The rendered passenger row.
+ */
 function PassengerRow({ passenger, onContact }: { passenger: Person; onContact: (passenger: Person) => void }) {
   const name = [passenger.first_name, passenger.last_name].filter(Boolean).join(" ") || "Passenger";
 
@@ -58,6 +75,18 @@ type Props = {
   onContactPassenger: (passenger: Person) => void;
 };
 
+/**
+ * Present the driver-facing trip management screen.
+ *
+ * @param props - Component props for the driver trip-details view.
+ * @param props.trip - Trip being managed by the driver.
+ * @param props.passengers - Passenger list currently booked on the trip.
+ * @param props.error - Optional error message shown in a toast.
+ * @param props.cancelling - Whether a cancellation request is in progress.
+ * @param props.onCancelTrip - Callback fired when the trip is cancelled.
+ * @param props.onContactPassenger - Callback fired when the driver contacts a passenger.
+ * @returns The rendered driver trip-details section.
+ */
 export function DriverTripDetailsSection({
   trip,
   passengers,

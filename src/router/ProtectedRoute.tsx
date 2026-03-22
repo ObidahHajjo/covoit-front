@@ -3,6 +3,11 @@ import { isProfileComplete } from "../auth/profileCompletion";
 import { useAuth } from "../context/useAuth";
 import AppLayout from "../components/layout/AppLayout.tsx";
 
+/**
+ * Guards authenticated routes and redirects incomplete profiles when needed.
+ *
+ * @returns The protected app layout or a redirect/loading state.
+ */
 export default function ProtectedRoute() {
     const { status, user } = useAuth();
     const location = useLocation();

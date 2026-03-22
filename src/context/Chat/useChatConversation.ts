@@ -5,6 +5,11 @@ import { markConversationRead, syncConversationUnread } from "../../features/cha
 import { useChatRealtime } from "../../features/chat/useChatRealtime";
 import type { ChatConversation } from "../../types/Chat";
 
+/**
+ * Manages a single chat conversation, including polling, realtime refresh, and sending.
+ *
+ * @returns Conversation state and handlers for the active chat thread.
+ */
 export function useChatConversation() {
   const { conversationId } = useParams();
   const [conversation, setConversation] = useState<ChatConversation | null>(null);
@@ -62,6 +67,12 @@ export function useChatConversation() {
     },
   );
 
+  /**
+   * Sends the current draft to the active conversation.
+   *
+   * @param event - Form submission event from the chat composer.
+   * @returns A promise that resolves once the send flow completes.
+   */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 

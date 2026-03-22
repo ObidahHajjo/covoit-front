@@ -4,6 +4,11 @@ import type { ApiResponse } from "../../types/ApiResponse";
 import type { Person, UpdateMePayload } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
 
+/**
+ * Reads the authenticated person id from session storage.
+ *
+ * @returns The numeric person identifier stored for the active session.
+ */
 function getSessionPersonId(): number {
     const personId = Number(sessionStorage.getItem("personId"));
 
@@ -14,6 +19,11 @@ function getSessionPersonId(): number {
     return personId;
 }
 
+/**
+ * Fetches the current person's profile.
+ *
+ * @returns The person profile associated with the active session.
+ */
 export async function getPerson(): Promise<Person> {
     try {
         const personId = getSessionPersonId();
@@ -24,6 +34,12 @@ export async function getPerson(): Promise<Person> {
     }
 }
 
+/**
+ * Updates the current person's profile.
+ *
+ * @param payload Profile fields to update for the authenticated person.
+ * @returns The updated person profile returned by the API.
+ */
 export async function updateMe(payload: UpdateMePayload): Promise<Person> {
     try {
         const personId = getSessionPersonId();
@@ -34,6 +50,11 @@ export async function updateMe(payload: UpdateMePayload): Promise<Person> {
     }
 }
 
+/**
+ * Returns trips created by the current user as driver.
+ *
+ * @returns The list of trips published by the authenticated user.
+ */
 export async function getMyDriverTrips(): Promise<Trip[]> {
     try {
         const personId = getSessionPersonId();
@@ -44,6 +65,11 @@ export async function getMyDriverTrips(): Promise<Trip[]> {
     }
 }
 
+/**
+ * Returns trips booked by the current user as passenger.
+ *
+ * @returns The list of trips reserved by the authenticated user.
+ */
 export async function getMyPassengerTrips(): Promise<Trip[]> {
     try {
         const personId = getSessionPersonId();
@@ -54,6 +80,11 @@ export async function getMyPassengerTrips(): Promise<Trip[]> {
     }
 }
 
+/**
+ * Deletes the current user's account.
+ *
+ * @returns A promise that resolves when the account deletion request succeeds.
+ */
 export async function deleteMyAccount(): Promise<void> {
     try {
         const personId = getSessionPersonId();

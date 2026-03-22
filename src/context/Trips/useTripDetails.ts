@@ -4,6 +4,11 @@ import { contactDriver } from "../../features/chat/chatApi";
 import { getTripById, reserveTrip } from "../../features/trips/tripApi";
 import type { Trip } from "../../types/Trip";
 
+/**
+ * Loads a public trip and exposes reservation and contact actions.
+ *
+ * @returns Trip details state and handlers for reservation and driver contact.
+ */
 export function useTripDetails() {
   const { tripId } = useParams();
   const navigate = useNavigate();
@@ -35,6 +40,11 @@ export function useTripDetails() {
     void load();
   }, [tripId]);
 
+  /**
+   * Reserves the current trip and redirects to the bookings page.
+   *
+   * @returns A promise that resolves once the reservation flow completes.
+   */
   async function handleReserve() {
     if (!tripId) return;
 
@@ -58,6 +68,11 @@ export function useTripDetails() {
     }
   }
 
+  /**
+   * Opens or creates the chat thread associated with the trip driver.
+   *
+   * @returns A promise that resolves once navigation to the chat screen is triggered.
+   */
   async function navigateToContactDriver() {
     if (!trip) return;
 

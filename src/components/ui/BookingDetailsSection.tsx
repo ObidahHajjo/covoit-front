@@ -12,6 +12,14 @@ type Props = {
   onContactDriver: () => void;
 };
 
+/**
+ * Display a labeled booking detail value.
+ *
+ * @param props - Component props for the detail card.
+ * @param props.label - Label describing the value.
+ * @param props.value - Text value shown for the detail.
+ * @returns The rendered detail card.
+ */
 function DetailCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4">
@@ -21,6 +29,19 @@ function DetailCard({ label, value }: { label: string; value: string }) {
   );
 }
 
+/**
+ * Present the passenger view of a booked trip.
+ *
+ * @param props - Component props for the booking-details screen.
+ * @param props.trip - Trip associated with the booking.
+ * @param props.passengers - Passenger list attached to the trip.
+ * @param props.isTripEnded - Whether the trip has already finished.
+ * @param props.cancelling - Whether a cancellation request is currently in progress.
+ * @param props.error - Optional error message shown in a toast.
+ * @param props.onCancel - Callback fired when the rider cancels the reservation.
+ * @param props.onContactDriver - Callback fired when the rider wants to message the driver.
+ * @returns The rendered booking-details section.
+ */
 export function BookingDetailsSection({
   trip,
   passengers,

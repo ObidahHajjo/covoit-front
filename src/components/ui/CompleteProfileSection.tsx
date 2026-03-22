@@ -20,6 +20,25 @@ type Props = {
 const inputClass =
   "w-full rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[#ccc] focus:bg-[var(--theme-surface)] focus:ring-2 focus:ring-[rgba(82,100,72,0.12)]";
 
+/**
+ * Collect the profile fields required to finish onboarding.
+ *
+ * @param props - Component props for the profile-completion form.
+ * @param props.email - Email address shown as a read-only onboarding reference.
+ * @param props.firstName - Current first-name field value.
+ * @param props.onFirstNameChange - Callback fired when the first name changes.
+ * @param props.lastName - Current last-name field value.
+ * @param props.onLastNameChange - Callback fired when the last name changes.
+ * @param props.pseudo - Current pseudo field value.
+ * @param props.onPseudoChange - Callback fired when the pseudo changes.
+ * @param props.phone - Current phone field value.
+ * @param props.onPhoneChange - Callback fired when the phone changes.
+ * @param props.isSubmitting - Whether the profile save request is in progress.
+ * @param props.error - Optional error message shown in a toast.
+ * @param props.canSubmit - Whether the submit button should be enabled.
+ * @param props.onSubmit - Form submit handler for saving the profile.
+ * @returns The rendered onboarding profile form.
+ */
 export function CompleteProfileSection({
   email,
   firstName,

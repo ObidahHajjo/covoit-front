@@ -1,6 +1,11 @@
 import { usePublishTrip } from "../../context/Driver/usePublishTrip";
 import { PublishTripForm } from "../../components/ui/PublishTripForm";
 
+/**
+ * Render the driver trip publishing page used to define route, timing, seating, and trip preferences.
+ *
+ * @returns The trip creation layout containing the publish-trip form.
+ */
 export default function PublishTripPage() {
   const trip = usePublishTrip();
 

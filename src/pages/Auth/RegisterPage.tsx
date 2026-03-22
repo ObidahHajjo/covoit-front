@@ -1,6 +1,11 @@
 import { useRegister } from "../../context/Auth/useRegister";
 import { RegisterSection } from "../../components/ui/RegisterSection";
 
+/**
+ * Render the account registration page with form state, validation feedback, and navigation back to sign-in.
+ *
+ * @returns The registration form section for creating a new account.
+ */
 export default function RegisterPage() {
   const {
     email,

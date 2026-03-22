@@ -5,6 +5,11 @@ import { cancelTripAsDriver, getTripById, getTripPassengers } from "../../featur
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
 
+/**
+ * Loads a driver's trip details and exposes trip-management actions.
+ *
+ * @returns Driver trip details state and handlers for cancellation and passenger contact.
+ */
 export function useDriverTripDetails() {
     const { tripId } = useParams();
     const navigate = useNavigate();
@@ -36,6 +41,11 @@ export function useDriverTripDetails() {
         void load();
     }, [tripId]);
 
+    /**
+     * Cancels the current trip and redirects back to the driver's trips list.
+     *
+     * @returns A promise that resolves once the cancellation flow completes.
+     */
     async function handleCancelTrip() {
         if (!tripId) return;
         try {
@@ -57,6 +67,12 @@ export function useDriverTripDetails() {
         }
     }
 
+    /**
+     * Opens or creates the chat thread for a passenger on this trip.
+     *
+     * @param passenger - Passenger whose conversation should be opened.
+     * @returns A promise that resolves once navigation to the chat screen is triggered.
+     */
     async function openPassengerChat(passenger: Person) {
         if (!trip) return;
 

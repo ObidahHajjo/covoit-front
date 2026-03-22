@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
 
+/**
+ * Render the second marketing template preview featuring a bold hero, highlighted rides, and product statistics.
+ *
+ * @returns The second template showcase page used to preview an alternate marketing direction.
+ */
 export default function TemplateTwoPage() {
   return (
     <main className="min-h-screen bg-[#0f0f0f] text-white">

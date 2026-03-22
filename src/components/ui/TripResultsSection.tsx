@@ -8,6 +8,13 @@ type Props = {
   loading: boolean;
 };
 
+/**
+ * Render a single trip result card.
+ *
+ * @param props - Component props for the trip result card.
+ * @param props.trip - Trip displayed in the search results.
+ * @returns The rendered trip result link.
+ */
 function TripCard({ trip }: { trip: Trip }) {
   const from = trip.departure_address?.city?.name ?? "Unknown";
   const to = trip.arrival_address?.city?.name ?? "Unknown";
@@ -37,6 +44,14 @@ function TripCard({ trip }: { trip: Trip }) {
   );
 }
 
+/**
+ * Display the list of trips returned by a search.
+ *
+ * @param props - Component props for the trip-results view.
+ * @param props.trips - Trips returned by the current search.
+ * @param props.loading - Whether search results are still loading.
+ * @returns The rendered trip-results section.
+ */
 export function TripResultsSection({ trips, loading }: Props) {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">

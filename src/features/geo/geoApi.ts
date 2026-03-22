@@ -3,6 +3,12 @@ import { extractApiErrorMessage } from "../../app/apiError";
 import type { CommuneApiItem, CityPostalOption } from "../../types/Commune";
 import type {GeoPfFeature, GeoPfSearchResponse} from "../../types/GeoPfSearchResponse.ts";
 
+/**
+ * Searches French communes by name or postal code.
+ *
+ * @param query Free-text query or five-digit postal code entered by the user.
+ * @returns A normalized list of city and postal-code options derived from the API response.
+ */
 export async function searchCommunes(query: string): Promise<CityPostalOption[]> {
     try {
         const trimmed = query.trim();
@@ -25,6 +31,12 @@ export async function searchCommunes(query: string): Promise<CityPostalOption[]>
     }
 }
 
+/**
+ * Searches address suggestions from the GeoPF geocoding API.
+ *
+ * @param query Free-text address query submitted by the user.
+ * @returns The list of matching GeoPF address features.
+ */
 export async function  searchAddress(query:string): Promise<GeoPfFeature[]>
 {
     try{
@@ -39,6 +51,12 @@ export async function  searchAddress(query:string): Promise<GeoPfFeature[]>
     }
 }
 
+/**
+ * Flattens commune results into unique city and postal-code options.
+ *
+ * @param communes Raw commune items returned by the external geo API.
+ * @returns A deduplicated list of city and postal-code options.
+ */
 function mapCommunesToCityPostalOptions(
     communes: CommuneApiItem[],
 ): CityPostalOption[] {

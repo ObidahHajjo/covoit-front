@@ -8,6 +8,15 @@ type FloatingToastProps = {
   durationMs?: number;
 };
 
+/**
+ * Display a temporary floating toast when a message is present.
+ *
+ * @param props - Component props controlling the toast content and timing.
+ * @param props.message - Content to show in the toast. When nullish, no toast is rendered.
+ * @param props.tone - Visual tone applied to the toast styling.
+ * @param props.durationMs - Time in milliseconds before the toast hides itself.
+ * @returns The rendered toast container, or `null` when nothing should be shown.
+ */
 export default function FloatingToast({ message, tone, durationMs = 5000 }: FloatingToastProps) {
   const [displayedMessage, setDisplayedMessage] = useState<ReactNode | null>(null);
   const [visible, setVisible] = useState(false);

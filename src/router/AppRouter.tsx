@@ -22,6 +22,11 @@ import MyAccountPage from "../pages/Account/MyAccountPage";
 import ChatInboxPage from "../pages/Chat/ChatInboxPage";
 import ChatConversationPage from "../pages/Chat/ChatConversationPage";
 
+/**
+ * Declares the application's public, protected, and permission-based routes.
+ *
+ * @returns The browser router and route tree for the application.
+ */
 export default function AppRouter() {
   return (
     <BrowserRouter>

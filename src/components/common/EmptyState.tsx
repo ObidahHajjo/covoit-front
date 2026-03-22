@@ -3,6 +3,14 @@ type EmptyStateProps = {
   description: string;
 };
 
+/**
+ * Render a simple empty-state message block.
+ *
+ * @param props - Component props for the empty-state copy.
+ * @param props.title - Main empty-state heading.
+ * @param props.description - Supporting text explaining the empty state.
+ * @returns The rendered empty-state panel.
+ */
 export default function EmptyState({ title, description }: EmptyStateProps) {
   return (
     <div className="serene-empty sm:p-8">

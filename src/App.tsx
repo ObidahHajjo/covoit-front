@@ -7,6 +7,11 @@ import { ChatInboxProvider } from "./providers/ChatInboxProvider";
 import AppRouter from "./router/AppRouter";
 import { AxiosInterceptorProvider } from "./bootstrap";
 
+/**
+ * Renders the root application shell with all shared providers and the router.
+ *
+ * @returns The top-level React application tree.
+ */
 export default function App() {
   return (
     <LoadingProvider>

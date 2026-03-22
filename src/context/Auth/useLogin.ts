@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../features/auth/authApi";
 import { useAuth } from "../useAuth";
 
+/**
+ * Manages login form state and session restoration after authentication.
+ *
+ * @returns Login form state, derived flags, and event handlers.
+ */
 export function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +20,12 @@ export function useLogin() {
 
   const canSubmit = email.trim().length > 7 && password.length > 7 && !isSubmitting;
 
+  /**
+   * Submits the login form and refreshes the authenticated user state.
+   *
+   * @param event - Form submission event from the login form.
+   * @returns A promise that resolves once the submission flow finishes.
+   */
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 

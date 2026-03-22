@@ -48,6 +48,24 @@ const trustNotes = [
   },
 ];
 
+/**
+ * Render the sign-in experience for returning users.
+ *
+ * @param props - Component props for the login form and related actions.
+ * @param props.email - Current email field value.
+ * @param props.onEmailChange - Callback fired when the email changes.
+ * @param props.password - Current password field value.
+ * @param props.onPasswordChange - Callback fired when the password changes.
+ * @param props.showPassword - Whether the password is currently visible.
+ * @param props.onTogglePassword - Callback fired when password visibility is toggled.
+ * @param props.isSubmitting - Whether the sign-in request is in progress.
+ * @param props.canSubmit - Whether the sign-in button should be enabled.
+ * @param props.error - Optional error message shown in an inline notice.
+ * @param props.onSubmit - Form submit handler for signing in.
+ * @param props.onClear - Callback fired when the form is cleared.
+ * @param props.onNavigateToRegister - Callback fired when the user opens registration.
+ * @returns The rendered login screen.
+ */
 export function LoginSection({
   email,
   onEmailChange,

@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { getMyPassengerTrips } from "../../features/person/personApi";
 import type { Trip } from "../../types/Trip";
 
+/**
+ * Loads the authenticated passenger's bookings list.
+ *
+ * @returns Booking list state for the current passenger.
+ */
 export function useMyBookings() {
     const [bookings, setBookings] = useState<Trip[]>([]);
     const [loading, setLoading] = useState(true);

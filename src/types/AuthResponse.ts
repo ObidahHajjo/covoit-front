@@ -1,3 +1,8 @@
+/**
+ * Authentication response payload types.
+ */
+
+/** Token payload returned after successful authentication. */
 export interface AuthResponse  {
     access_token: string;
     token_type: string;

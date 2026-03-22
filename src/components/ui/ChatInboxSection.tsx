@@ -9,6 +9,13 @@ type Props = {
   isRealtimeConnected: boolean;
 };
 
+/**
+ * Render a single conversation preview in the inbox.
+ *
+ * @param props - Component props for the conversation row.
+ * @param props.conversation - Conversation data displayed in the row.
+ * @returns The rendered conversation preview link.
+ */
 function ChatRow({ conversation }: { conversation: ChatConversation }) {
   const preview = conversation.latestMessage?.body || conversation.tripLabel || "Open conversation";
   const hasUnread = getConversationUnread(
@@ -53,6 +60,15 @@ function ChatRow({ conversation }: { conversation: ChatConversation }) {
   );
 }
 
+/**
+ * List chat conversations with live-connection status.
+ *
+ * @param props - Component props for the inbox view.
+ * @param props.conversations - Conversations to display in the inbox.
+ * @param props.error - Optional error message shown in a toast.
+ * @param props.isRealtimeConnected - Whether the realtime chat connection is active.
+ * @returns The rendered chat inbox section.
+ */
 export function ChatInboxSection({ conversations, error, isRealtimeConnected }: Props) {
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">

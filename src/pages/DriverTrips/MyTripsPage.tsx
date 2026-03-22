@@ -5,6 +5,11 @@ import { useMyTrips } from "../../context/Driver/useMyTrips";
 import { MyTripsSection } from "../../components/ui/MyTripsSection";
 import PageLoadingState from "../../components/common/PageLoadingState";
 
+/**
+ * Render the driver's trip management page with current, upcoming, and completed trip groupings.
+ *
+ * @returns The trips dashboard, a loading state, an error state, and optional transient toast feedback.
+ */
 export default function MyTripsPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,6 +19,7 @@ export default function MyTripsPage() {
   useEffect(() => {
     if (!toast) return;
 
+    // Remove the navigation state after the toast window closes to avoid showing stale feedback on revisit.
     const timer = window.setTimeout(() => {
       navigate(location.pathname, { replace: true, state: null });
     }, 7000);

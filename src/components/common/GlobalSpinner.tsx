@@ -1,5 +1,11 @@
 import { useLoading } from "../../context/LoadingContext";
 
+/**
+ * Map the current route to a contextual loading title.
+ *
+ * @param pathname - Current browser pathname used to infer the loading context.
+ * @returns A route-specific title for the global loading overlay.
+ */
 function getLoadingTitle(pathname: string) {
   if (pathname.startsWith("/home")) return "Loading your dashboard";
   if (pathname.startsWith("/bookings/")) return "Loading your booking details";
@@ -14,6 +20,11 @@ function getLoadingTitle(pathname: string) {
   return "Loading your page";
 }
 
+/**
+ * Cover the app with a global loading overlay while navigation is pending.
+ *
+ * @returns The rendered loading overlay, or `null` when the app is not loading.
+ */
 export default function GlobalSpinner() {
   const { isLoading } = useLoading();
 

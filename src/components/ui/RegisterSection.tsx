@@ -16,6 +16,25 @@ type Props = {
   onNavigateToLogin: () => void;
 };
 
+/**
+ * Render the account registration screen.
+ *
+ * @param props - Component props for the registration form and navigation actions.
+ * @param props.email - Current email field value.
+ * @param props.onEmailChange - Callback fired when the email changes.
+ * @param props.password - Current password field value.
+ * @param props.onPasswordChange - Callback fired when the password changes.
+ * @param props.passwordConfirm - Current password-confirmation value.
+ * @param props.onPasswordConfirmChange - Callback fired when the confirmation changes.
+ * @param props.isSubmitting - Whether the registration request is in progress.
+ * @param props.canSubmit - Whether the create-account button should be enabled.
+ * @param props.error - Optional error message shown inline.
+ * @param props.onSubmit - Form submit handler for creating the account.
+ * @param props.onCancel - Callback fired when registration is cancelled.
+ * @param props.onGoBack - Callback fired when the back control is used.
+ * @param props.onNavigateToLogin - Callback fired when the user switches to login.
+ * @returns The rendered registration screen.
+ */
 export function RegisterSection({
   email,
   onEmailChange,

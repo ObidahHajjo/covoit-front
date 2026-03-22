@@ -9,6 +9,9 @@ import type { Person } from "../../types/Person";
 import type { Car } from "../../types/Car";
 import { extractApiErrorMessage, extractApiFieldErrors } from "../../app/apiError";
 
+/**
+ * Describes the editable profile fields shown in the account page.
+ */
 export type ProfileFormState = {
     pseudo: string;
     first_name: string;
@@ -16,6 +19,9 @@ export type ProfileFormState = {
     phone: string;
 };
 
+/**
+ * Describes the editable car fields shown in the account page.
+ */
 export type CarFormState = {
     brand_name: string;
     model_name: string;
@@ -26,9 +32,20 @@ export type CarFormState = {
     delete_car: boolean;
 };
 
+/**
+ * Lists the account page sections that can be displayed.
+ */
 export type AccountSection = "profile" | "car";
+/**
+ * Maps backend field keys to validation messages.
+ */
 export type FieldErrors = Record<string, string[]>;
 
+/**
+ * Lists the preset car colors offered by the account form.
+ *
+ * @returns The default color options used by the UI.
+ */
 export const DEFAULT_CAR_COLORS = [
     { name: "Black", hex: "#000000" },
     { name: "White", hex: "#FFFFFF" },
@@ -59,6 +76,12 @@ const EMPTY_CAR_FORM: CarFormState = {
     delete_car: false,
 };
 
+/**
+ * Converts a person record into the editable profile form state.
+ *
+ * @param person - Person record used to seed the profile form.
+ * @returns Profile form values derived from the provided person.
+ */
 function mapPersonToProfileForm(person: Person | null): ProfileFormState {
     if (!person) return EMPTY_PROFILE_FORM;
     return {
@@ -69,6 +92,12 @@ function mapPersonToProfileForm(person: Person | null): ProfileFormState {
     };
 }
 
+/**
+ * Converts a person record into the editable car form state.
+ *
+ * @param person - Person record used to seed the car form.
+ * @returns Car form values derived from the provided person.
+ */
 function mapPersonToCarForm(person: Person | null): CarFormState {
     if (!person) return EMPTY_CAR_FORM;
     return {
@@ -82,6 +111,11 @@ function mapPersonToCarForm(person: Person | null): CarFormState {
     };
 }
 
+/**
+ * Manages profile, car, and account-deletion flows for the account page.
+ *
+ * @returns Account page state, validation helpers, and submit handlers.
+ */
 export function useMyAccount() {
     const navigate = useNavigate();
     const { refreshMe } = useAuth();
@@ -167,6 +201,12 @@ export function useMyAccount() {
     }, [carSearch, carForm.brand_name, carForm.delete_car]);
 
     // ── Helpers ───────────────────────────────────────────────────────────────
+    /**
+     * Clears validation errors for the provided field keys.
+     *
+     * @param keys - Backend field keys whose errors should be removed.
+     * @returns Does not return a value.
+     */
     function clearFieldError(keys: string[]) {
         setFieldErrors((prev) => {
             if (keys.every((k) => !(k in prev))) return prev;
@@ -176,6 +216,12 @@ export function useMyAccount() {
         });
     }
 
+    /**
+     * Returns the first validation error found for the provided field keys.
+     *
+     * @param keys - Candidate backend field keys to inspect in order.
+     * @returns The first matching validation message, or `null` when none exist.
+     */
     function getFieldError(...keys: string[]): string | null {
         for (const key of keys) {
             const msgs = fieldErrors[key];
@@ -185,6 +231,13 @@ export function useMyAccount() {
     }
 
     // ── Profile field update ──────────────────────────────────────────────────
+    /**
+     * Updates a profile field and clears related feedback state.
+     *
+     * @param key - Profile form field to update.
+     * @param value - New value for the selected field.
+     * @returns Does not return a value.
+     */
     function updateProfileField<K extends keyof ProfileFormState>(key: K, value: ProfileFormState[K]) {
         setProfileForm((prev) => ({ ...prev, [key]: value }));
         setProfileError(null);
@@ -203,6 +256,13 @@ export function useMyAccount() {
         delete_car: [],
     };
 
+    /**
+     * Updates a car field and clears related feedback state.
+     *
+     * @param key - Car form field to update.
+     * @param value - New value for the selected field.
+     * @returns Does not return a value.
+     */
     function updateCarField<K extends keyof CarFormState>(key: K, value: CarFormState[K]) {
         setCarForm((prev) => ({ ...prev, [key]: value }));
         setCarError(null);
@@ -249,6 +309,11 @@ export function useMyAccount() {
     }
 
     // ── Refresh person ────────────────────────────────────────────────────────
+    /**
+     * Reloads account data and rehydrates the local form state.
+     *
+     * @returns A promise that resolves once account data is refreshed.
+     */
     async function refreshPersonState() {
         const me = await getPerson();
         setPerson(me);
@@ -260,6 +325,12 @@ export function useMyAccount() {
     }
 
     // ── Submit handlers ───────────────────────────────────────────────────────
+    /**
+     * Persists profile form changes.
+     *
+     * @param event - Form submission event from the profile section.
+     * @returns A promise that resolves once the save flow completes.
+     */
     async function handleProfileSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         try {
@@ -283,6 +354,12 @@ export function useMyAccount() {
         }
     }
 
+    /**
+     * Creates, updates, or deletes the user's car depending on form state.
+     *
+     * @param event - Form submission event from the car section.
+     * @returns A promise that resolves once the save flow completes.
+     */
     async function handleCarSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         try {
@@ -327,6 +404,11 @@ export function useMyAccount() {
         }
     }
 
+    /**
+     * Deletes the current account after explicit user confirmation.
+     *
+     * @returns A promise that resolves once the deletion flow completes.
+     */
     async function handleDeleteAccount() {
         const confirmed = window.confirm(
             "Are you sure you want to delete your account? This action cannot be undone.",
@@ -345,6 +427,11 @@ export function useMyAccount() {
     }
 
     // ── Reset helpers ─────────────────────────────────────────────────────────
+    /**
+     * Restores profile form values from the latest loaded person state.
+     *
+     * @returns Does not return a value.
+     */
     function resetProfileForm() {
         setProfileError(null);
         setProfileSuccess(null);
@@ -352,6 +439,11 @@ export function useMyAccount() {
         setProfileForm(mapPersonToProfileForm(person));
     }
 
+    /**
+     * Restores car form values from the latest loaded person state.
+     *
+     * @returns Does not return a value.
+     */
     function resetCarForm() {
         setCarError(null);
         setCarSuccess(null);

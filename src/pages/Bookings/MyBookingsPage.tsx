@@ -5,6 +5,11 @@ import { MyBookingsSection } from "../../components/ui/MyBookingsSection";
 import FloatingToast from "../../components/common/FloatingToast";
 import PageLoadingState from "../../components/common/PageLoadingState";
 
+/**
+ * Render the bookings overview page with the user's current reservations, past bookings, and transient feedback toast.
+ *
+ * @returns The bookings page content with loading, error, and toast states.
+ */
 export default function MyBookingsPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,6 +19,7 @@ export default function MyBookingsPage() {
   useEffect(() => {
     if (!toast) return;
 
+    // Clear router-passed toast state after display so refreshes do not replay the same notification.
     const timer = window.setTimeout(() => {
       navigate(location.pathname, { replace: true, state: null });
     }, 7000);

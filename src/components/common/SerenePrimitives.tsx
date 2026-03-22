@@ -1,5 +1,11 @@
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 
+/**
+ * Join optional class names into a single string.
+ *
+ * @param values - Class-name fragments that may include falsy values.
+ * @returns A space-delimited class-name string containing only truthy entries.
+ */
 function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(" ");
 }
@@ -13,6 +19,18 @@ type PageIntroProps = {
   className?: string;
 };
 
+/**
+ * Provide the shared page intro shell with title, copy, and actions.
+ *
+ * @param props - Component props used to build the page introduction layout.
+ * @param props.eyebrow - Optional short label shown above the title.
+ * @param props.title - Main page title.
+ * @param props.description - Optional descriptive copy shown below the title.
+ * @param props.actions - Optional action area rendered beside the text content.
+ * @param props.children - Optional content rendered beneath the intro header.
+ * @param props.className - Optional extra classes applied to the outer section.
+ * @returns The rendered page intro section.
+ */
 export function PageIntro({
   eyebrow,
   title,
@@ -40,6 +58,14 @@ type SurfaceCardProps = HTMLAttributes<HTMLDivElement> & {
   hoverable?: boolean;
 };
 
+/**
+ * Wrap content in the shared serene card surface.
+ *
+ * @param props - Standard div props plus serene-card configuration.
+ * @param props.className - Optional extra classes applied to the card.
+ * @param props.hoverable - Whether hover styling should be enabled.
+ * @returns The rendered card wrapper.
+ */
 export function SurfaceCard({ className, hoverable = false, ...props }: SurfaceCardProps) {
   return <div className={cx("serene-card", hoverable && "serene-card-hover", className)} {...props} />;
 }
@@ -52,6 +78,17 @@ type FieldProps = {
   className?: string;
 };
 
+/**
+ * Pair a form control with its label and helper text.
+ *
+ * @param props - Component props describing the field wrapper content.
+ * @param props.label - Visible field label.
+ * @param props.error - Optional validation message shown with error styling.
+ * @param props.hint - Optional helper copy shown when no error is present.
+ * @param props.children - Form control rendered inside the field wrapper.
+ * @param props.className - Optional extra classes applied to the wrapper.
+ * @returns The rendered field container.
+ */
 export function FormField({ label, error, hint, children, className }: FieldProps) {
   return (
     <div className={cx("space-y-2", className)}>
@@ -69,6 +106,15 @@ type SereneButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
 };
 
+/**
+ * Render a button using the shared visual variants.
+ *
+ * @param props - Standard button props plus variant selection.
+ * @param props.variant - Shared visual variant applied to the button.
+ * @param props.className - Optional extra classes applied to the button.
+ * @param props.type - Native button type. Defaults to `"button"`.
+ * @returns The rendered button element.
+ */
 export function SereneButton({ variant = "primary", className, type = "button", ...props }: SereneButtonProps) {
   const variantClass =
     variant === "primary"
@@ -86,6 +132,15 @@ type NoticeProps = {
   className?: string;
 };
 
+/**
+ * Display a styled inline notice with an optional tone.
+ *
+ * @param props - Component props describing the notice content and styling.
+ * @param props.children - Notice content.
+ * @param props.tone - Optional semantic tone controlling the notice colors.
+ * @param props.className - Optional extra classes applied to the notice.
+ * @returns The rendered notice container.
+ */
 export function Notice({ children, tone = "default", className }: NoticeProps) {
   const toneClass =
     tone === "error"

@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
 
+/**
+ * Render the first lightweight marketing template preview with quick sample rides and a primary call to action.
+ *
+ * @returns The first template showcase page for design preview purposes.
+ */
 export default function TemplateOnePage() {
   return (
     <main className="min-h-screen bg-[var(--theme-bg-soft)]">

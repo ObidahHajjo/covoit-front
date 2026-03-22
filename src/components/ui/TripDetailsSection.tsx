@@ -13,6 +13,14 @@ type Props = {
     onContactDriver: () => void;
 };
 
+/**
+ * Display a labeled trip detail value.
+ *
+ * @param props - Component props for the trip detail card.
+ * @param props.label - Label describing the value.
+ * @param props.value - Text value shown inside the card.
+ * @returns The rendered detail card.
+ */
 function DetailCard({ label, value }: { label: string; value: string }) {
 	return (
 	<div className="rounded-[12px] bg-[var(--theme-bg-soft)] p-4">
@@ -22,6 +30,19 @@ function DetailCard({ label, value }: { label: string; value: string }) {
 	);
 }
 
+/**
+ * Show the rider-facing details for a single trip.
+ *
+ * @param props - Component props for the trip-details screen.
+ * @param props.trip - Trip to display, or `null` when unavailable.
+ * @param props.loading - Whether trip data is still loading.
+ * @param props.loadError - Error message for loading the trip details.
+ * @param props.actionError - Error message for booking or contact actions.
+ * @param props.submitting - Whether the booking action is currently in progress.
+ * @param props.onReserve - Callback fired when the rider books the trip.
+ * @param props.onContactDriver - Callback fired when the rider contacts the driver.
+ * @returns The rendered trip-details view, loading state, or fallback message.
+ */
 export function TripDetailsSection({
     trip,
     loading,

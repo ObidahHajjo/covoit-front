@@ -1,6 +1,13 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { LoadingContext } from "../context/LoadingContext.ts";
 
+/**
+ * Provides global request-loading state derived from the number of active calls.
+ *
+ * @param props - Component props.
+ * @param props.children - Descendant React nodes that consume loading state.
+ * @returns The loading context provider wrapping the provided children.
+ */
 export function LoadingProvider({ children }: { children: ReactNode }) {
     const [pendingRequests, setPendingRequests] = useState(0);
 

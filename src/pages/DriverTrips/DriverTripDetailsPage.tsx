@@ -2,6 +2,11 @@ import { useDriverTripDetails } from "../../context/Driver/useDriverTripDetails"
 import { DriverTripDetailsSection } from "../../components/ui/DriverTripDetailsSection";
 import PageLoadingState from "../../components/common/PageLoadingState";
 
+/**
+ * Render the details page for a driver's published trip with passenger management and cancellation actions.
+ *
+ * @returns The driver trip details view, a loading state, or a not-found fallback when the trip is unavailable.
+ */
 export default function DriverTripDetailsPage() {
   const {
     trip,

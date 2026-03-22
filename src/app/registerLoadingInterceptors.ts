@@ -1,5 +1,13 @@
 import type { AxiosInstance } from "axios";
 
+/**
+ * Attaches loading interceptors to an axios client and returns a cleanup helper.
+ *
+ * @param client - Axios instance that should drive the global loading state.
+ * @param startLoading - Callback fired before a tracked request starts.
+ * @param stopLoading - Callback fired after a tracked request finishes or fails.
+ * @returns An object exposing an `eject` method that unregisters both interceptors.
+ */
 export function registerLoadingInterceptors(
     client: AxiosInstance,
     startLoading: () => void,

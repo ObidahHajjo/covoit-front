@@ -2,6 +2,11 @@ import PageLoadingState from "../../components/common/PageLoadingState";
 import { LiveChatSection } from "../../components/ui/LiveChatSection";
 import { useChatConversation } from "../../context/Chat/useChatConversation";
 
+/**
+ * Render a live conversation view with message history, draft state, and realtime connectivity feedback.
+ *
+ * @returns The active conversation interface, a loading state, or an unavailable fallback.
+ */
 export default function ChatConversationPage() {
   const { conversation, loading, draft, setDraft, sending, success, error, handleSubmit, isRealtimeConnected } = useChatConversation();
 

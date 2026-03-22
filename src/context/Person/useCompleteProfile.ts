@@ -8,6 +8,11 @@ type LocationState = {
   email?: string;
 };
 
+/**
+ * Manages the onboarding form used to complete a user's profile.
+ *
+ * @returns Complete-profile form state, validation flags, and submit handler.
+ */
 export function useCompleteProfile() {
   const navigate = useNavigate();
   const location = useLocation();

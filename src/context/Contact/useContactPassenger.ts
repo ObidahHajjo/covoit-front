@@ -3,6 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { contactPassenger } from "../../features/contact/contactApi";
 import type { ChatMessage } from "../../types/Chat";
 
+/**
+ * Manages the form used to open or resume a chat with a trip passenger.
+ *
+ * @returns Contact form state and submit handler for the passenger conversation flow.
+ */
 export function useContactPassenger() {
   const { tripId, personId } = useParams();
   const navigate = useNavigate();
@@ -12,6 +17,12 @@ export function useContactPassenger() {
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
 
+  /**
+   * Creates or reuses the passenger conversation, then redirects to chat.
+   *
+   * @param event - Form submission event from the contact form.
+   * @returns A promise that resolves once the chat-open flow completes.
+   */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 

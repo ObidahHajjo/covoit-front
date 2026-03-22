@@ -8,10 +8,21 @@ type WindowWithPusher = Window & typeof globalThis & {
   Pusher?: typeof Pusher;
 };
 
+/**
+ * Resolves the websocket host used by the Reverb broadcaster.
+ *
+ * @returns The configured websocket host, or the current browser hostname as a fallback.
+ */
 function resolveHost() {
   return (import.meta.env.VITE_REVERB_HOST as string | undefined) || window.location.hostname;
 }
 
+/**
+ * Resolves the websocket port associated with the selected transport security mode.
+ *
+ * @param forceTls Indicates whether the secure websocket port should be resolved.
+ * @returns The configured websocket port number.
+ */
 function resolvePort(forceTls: boolean) {
   const raw = forceTls
     ? (import.meta.env.VITE_REVERB_WSS_PORT as string | undefined) || (import.meta.env.VITE_REVERB_PORT as string | undefined)
@@ -20,6 +31,11 @@ function resolvePort(forceTls: boolean) {
   return Number(raw || (forceTls ? 443 : 8080));
 }
 
+/**
+ * Returns the singleton Echo client configured for authenticated chat channels.
+ *
+ * @returns The shared Echo instance, or `null` when executed outside the browser.
+ */
 export function getChatEcho() {
   if (typeof window === "undefined") {
     return null;
@@ -45,7 +61,8 @@ export function getChatEcho() {
     withCredentials: true,
     authorizer: (channel) => ({
       authorize: (socketId, callback) => {
-        apiClient  // withCredentials: true → sends httpOnly cookie automatically
+        // The auth proxy keeps private-channel authorization aligned with the app's cookie-based session.
+        apiClient
             .post("/broadcasting/auth-proxy", {
               socket_id: socketId,
               channel_name: channel.name,
