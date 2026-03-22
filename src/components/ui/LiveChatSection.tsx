@@ -273,7 +273,7 @@ export function LiveChatSection({
             <div id="live-chat-messages" className="flex-1 space-y-4 bg-[rgba(246,248,245,0.86)] px-4 py-5 sm:px-6 sm:py-6">
               {selectedMessageIds.length > 0 && onClearMessages ? (
                 <>
-                  <div className="h-[92px] sm:h-[88px]" aria-hidden="true" />
+                  <div className="h-[128px] sm:h-[118px] lg:h-[126px]" aria-hidden="true" />
                   <div
                     className="fixed z-30 flex flex-col gap-3 rounded-2xl border border-[var(--theme-line)] bg-[rgba(255,255,255,0.96)] px-3 py-3 shadow-[0_16px_34px_-24px_rgba(15,23,42,0.35)] backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-4"
                     style={{
