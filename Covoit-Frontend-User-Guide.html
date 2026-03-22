@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Covoit Frontend User Guide</title>
+    <link rel="stylesheet" href="docs/app.css">
+  </head>
+  <body>
+    <section class="cover">
+      <div class="eyebrow">Covoit Platform</div>
+      <h1>Frontend User Guide</h1>
+      <p class="subtitle">
+        Professional reference guide for end users of the Covoit web application. This document explains how to access the platform,
+        manage an account, search and reserve trips, follow driver workflows, and use in-app messaging confidently across desktop and mobile.
+      </p>
+
+      <div class="chip-row">
+        <span class="chip">Web App</span>
+        <span class="chip">Drivers</span>
+        <span class="chip">Passengers</span>
+        <span class="chip">Chat</span>
+        <span class="chip">Bookings</span>
+        <span class="chip">Account</span>
+      </div>
+
+      <table class="meta-grid">
+        <tr><td>Product</td><td>Covoit Frontend</td></tr>
+        <tr><td>Audience</td><td>Passengers, drivers, support staff, and onboarding teams</td></tr>
+        <tr><td>Supported Interface</td><td>Responsive web application for desktop and mobile browsers</td></tr>
+        <tr><td>Languages</td><td>English, French, and Arabic</td></tr>
+        <tr><td>Document Purpose</td><td>End-user operational guide for everyday platform usage</td></tr>
+      </table>
+    </section>
+
+    <section class="panel toc">
+      <h2>Table of Contents</h2>
+      <ol>
+        <li><a href="#overview">Application Overview</a></li>
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><a href="#navigation">Navigation and Layout</a></li>
+        <li><a href="#passenger">Passenger Journey</a></li>
+        <li><a href="#driver">Driver Journey</a></li>
+        <li><a href="#chat">Chat and Notifications</a></li>
+        <li><a href="#account">Account and Profile Management</a></li>
+        <li><a href="#language">Language and Accessibility</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+        <li><a href="#support">Support Recommendations</a></li>
+      </ol>
+    </section>
+
+    <h2 id="overview">Application Overview</h2>
+    <p>
+      Covoit is a responsive carpooling interface designed to support both passengers and drivers from a single account area. The frontend gives
+      users a structured path from authentication to day-to-day trip coordination.
+    </p>
+    <div class="panel">
+      <h3>Main capabilities</h3>
+      <ul>
+        <li>Create an account, sign in, and recover access through password reset flows.</li>
+        <li>Complete a user profile before entering the main application.</li>
+        <li>Search available trips and compare practical route details before booking.</li>
+        <li>Reserve and review upcoming bookings when booking permissions are enabled.</li>
+        <li>Publish, manage, and cancel driver trips when driver permissions are enabled.</li>
+        <li>Use an integrated chat inbox and live conversation screen with unread indicators.</li>
+        <li>Maintain personal details, vehicle information, and language preference.</li>
+      </ul>
+    </div>
+
+    <div class="note">
+      The visible sections of the application depend on the permissions attached to the authenticated user account. Some users will only see
+      passenger flows, while others will also see driver and booking management areas.
+    </div>
+
+    <figure class="figure-single">
+      <img src="docs/user-guide-screenshots/driver-mobile-home.png" alt="Covoit mobile dashboard home screen for a driver">
+      <figcaption>Mobile dashboard example showing the authenticated home experience.</figcaption>
+    </figure>
+
+    <h2 id="getting-started">Getting Started</h2>
+    <h3>1. Sign in or create an account</h3>
+    <ol class="steps">
+      <li>Open the application in your browser.</li>
+      <li>Select <strong>Login</strong> if you already have an account, or <strong>Register</strong> if you are new.</li>
+      <li>Enter your email address and password.</li>
+      <li>Submit the form to access the platform.</li>
+    </ol>
+
+    <h3>2. Recover access if needed</h3>
+    <p>
+      If you cannot sign in, use the <strong>Forgot Password</strong> page to request a reset link. After opening the reset link, enter a new password
+      and confirm it to restore access.
+    </p>
+
+    <h3>3. Complete your profile</h3>
+    <p>
+      New users may be redirected to the profile completion screen before the main dashboard becomes available. This step ensures the account has the
+      essential identity information required by the platform.
+    </p>
+    <div class="warning">
+      A profile that is not fully completed may block access to protected sections of the application.
+    </div>
+    <div class="figure-grid">
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-login.png" alt="Mobile login screen">
+        <figcaption>Login screen on mobile.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-register.png" alt="Mobile registration screen">
+        <figcaption>Registration screen on mobile.</figcaption>
+      </figure>
+    </div>
+
+    <h2 id="navigation">Navigation and Layout</h2>
+    <p>
+      The frontend is responsive and adapts navigation based on screen size. On desktop, navigation appears in the top application header. On mobile,
+      the app uses a bottom navigation pattern with a <strong>More</strong> entry for overflow destinations.
+    </p>
+    <div class="panel">
+      <h3>Primary navigation areas</h3>
+      <ul>
+        <li><strong>Home</strong> - Dashboard and key activity summary</li>
+        <li><strong>Find Trip</strong> - Search form and trip discovery</li>
+        <li><strong>Chat</strong> - Inbox and direct conversations</li>
+        <li><strong>Bookings</strong> - Passenger reservation history and details</li>
+        <li><strong>My Trips</strong> - Driver trip management</li>
+        <li><strong>My Account</strong> - Profile, vehicle, and account settings</li>
+      </ul>
+    </div>
+    <div class="figure-grid">
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-home.png" alt="Mobile main navigation on dashboard">
+        <figcaption>Main mobile shell and bottom navigation.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-more-menu.png" alt="Mobile more menu opened">
+        <figcaption>Expanded More menu for overflow navigation destinations.</figcaption>
+      </figure>
+    </div>
+
+    <h3>Dashboard</h3>
+    <p>
+      The home page acts as a control center. It highlights upcoming activity, such as driver trips and bookings, and provides direct access to the
+      most relevant next actions for the current user.
+    </p>
+    <div class="figure-grid">
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-home.png" alt="Passenger dashboard on mobile">
+        <figcaption>Passenger dashboard on mobile.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-home.png" alt="Driver dashboard on mobile">
+        <figcaption>Driver dashboard on mobile.</figcaption>
+      </figure>
+    </div>
+
+    <h2 id="passenger">Passenger Journey</h2>
+    <h3>Search for a trip</h3>
+    <ol class="steps">
+      <li>Open <strong>Find Trip</strong>.</li>
+      <li>Choose a departure city and an arrival city.</li>
+      <li>Select the desired date.</li>
+      <li>Run the search to view matching rides.</li>
+    </ol>
+
+    <h3>Review search results</h3>
+    <p>
+      The results page presents available trips in an easy-to-scan list. Each item is designed to help the user evaluate route and availability before
+      opening the full trip details page.
+    </p>
+    <div class="panel">
+      <h3>What to check before booking</h3>
+      <ul>
+        <li>Departure and arrival timing</li>
+        <li>Remaining available seats</li>
+        <li>Route context and city information</li>
+        <li>Driver-facing details shown in the trip card or details view</li>
+      </ul>
+    </div>
+    <div class="figure-grid">
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-find-trip.png" alt="Find trip screen on mobile">
+        <figcaption>Trip search form.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-trip-results.png" alt="Trip results screen on mobile">
+        <figcaption>Trip search results list.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-trip-details.png" alt="Trip details screen on mobile">
+        <figcaption>Trip details before booking.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-bookings.png" alt="Bookings list on mobile">
+        <figcaption>Bookings overview for passengers.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-booking-details.png" alt="Booking details page on mobile">
+        <figcaption>Booking details page.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-trip-details-booked.png" alt="Trip already booked state on mobile">
+        <figcaption>Trip page after an existing reservation is detected.</figcaption>
+      </figure>
+    </div>
+
+    <h3>Book a seat</h3>
+    <p>
+      After opening a trip detail screen, the passenger can continue with the booking action when seats are available and the account is allowed to
+      make reservations.
+    </p>
+
+    <h3>Review bookings</h3>
+    <p>
+      The <strong>Bookings</strong> area centralizes reserved rides. Users can review current plans and revisit the information associated with each trip.
+    </p>
+
+    <h2 id="driver">Driver Journey</h2>
+    <h3>Publish a trip</h3>
+    <ol class="steps">
+      <li>Open <strong>My Trips</strong> and choose the create or publish action.</li>
+      <li>Fill in route, timing, vehicle, and seat information.</li>
+      <li>Review the entered details carefully.</li>
+      <li>Submit the form to publish the trip.</li>
+    </ol>
+
+    <h3>Manage existing trips</h3>
+    <p>
+      Drivers can use the <strong>My Trips</strong> section to review active trips, inspect passenger-related context, and handle updates or cancellations.
+    </p>
+
+    <h3>Trip detail management</h3>
+    <div class="panel">
+      <h3>Typical driver actions</h3>
+      <ul>
+        <li>Review route and trip schedule details</li>
+        <li>See passenger-related trip information</li>
+        <li>Cancel a trip when required</li>
+        <li>Open a conversation with a passenger from the dedicated contact flow</li>
+      </ul>
+    </div>
+    <div class="figure-grid">
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-my-trips.png" alt="My trips page on mobile">
+        <figcaption>Driver trip list.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-publish-trip.png" alt="Publish trip form on mobile">
+        <figcaption>Trip publication form.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-trip-details.png" alt="Driver trip details page on mobile">
+        <figcaption>Driver trip details view.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-trip-details-passenger-list.png" alt="Driver trip details showing passenger list">
+        <figcaption>Passenger list and driver actions inside a trip.</figcaption>
+      </figure>
+    </div>
+
+    <h2 id="chat">Chat and Notifications</h2>
+    <p>
+      The chat module provides an inbox view and dedicated conversation screens. It supports unread badges, direct message sending, and user-specific
+      conversation management tools.
+    </p>
+
+    <h3>Inbox behavior</h3>
+    <ul>
+      <li>Unread conversations display an unread indicator.</li>
+      <li>Desktop navigation also shows the unread badge for the chat section.</li>
+      <li>Incoming alerts can appear briefly when a new unread conversation update is detected.</li>
+    </ul>
+
+    <h3>Conversation features</h3>
+    <ul>
+      <li>Send messages in real time when the backend channel is connected.</li>
+      <li>Continue working even if the app temporarily falls back to periodic refreshes.</li>
+      <li>Clear a full conversation for your account only.</li>
+      <li>Select one or more individual messages to clear them for your account only.</li>
+      <li>Long-press on touch devices to start message selection.</li>
+      <li>Copy one selected message at a time through the selection bar.</li>
+    </ul>
+
+    <div class="note">
+      Message clearing is user-specific. Clearing a conversation or selected messages does not remove them for the other participant.
+    </div>
+    <div class="figure-grid">
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-chat-inbox.png" alt="Chat inbox on mobile">
+        <figcaption>Chat inbox on mobile.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/passenger-mobile-chat-conversation.png" alt="Chat conversation on mobile">
+        <figcaption>Conversation screen with message composer.</figcaption>
+      </figure>
+    </div>
+
+    <h2 id="account">Account and Profile Management</h2>
+    <h3>Profile updates</h3>
+    <p>
+      The <strong>My Account</strong> page is the main place for maintaining personal information such as identity details and public-facing profile data.
+    </p>
+
+    <h3>Vehicle information</h3>
+    <p>
+      When vehicle editing is enabled, the account page also supports car information management so rides remain identifiable to passengers.
+    </p>
+
+    <h3>Danger zone</h3>
+    <p>
+      The profile screen includes a visually distinct danger section for destructive account actions. Users should review that section carefully before
+      confirming account deletion.
+    </p>
+    <div class="figure-grid">
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-account.png" alt="Account page on mobile">
+        <figcaption>Account and profile page on mobile.</figcaption>
+      </figure>
+      <figure class="figure-card">
+        <img src="docs/user-guide-screenshots/driver-mobile-account-arabic.png" alt="Account page in Arabic on mobile">
+        <figcaption>Arabic language and right-to-left account view.</figcaption>
+      </figure>
+    </div>
+
+    <h2 id="language">Language and Accessibility</h2>
+    <p>
+      The application currently supports <strong>English</strong>, <strong>French</strong>, and <strong>Arabic</strong>. The language switcher is available in the app shell and key
+      authentication screens.
+    </p>
+    <div class="panel">
+      <h3>Language behavior</h3>
+      <ul>
+        <li>The selected language is stored in the browser for future visits.</li>
+        <li>Arabic uses right-to-left document direction automatically.</li>
+        <li>Date and time formatting follows the selected locale.</li>
+      </ul>
+    </div>
+    <figure class="figure-single">
+      <img src="docs/user-guide-screenshots/driver-mobile-account-arabic.png" alt="Arabic mobile account layout">
+      <figcaption>Arabic mode example showing translated content and right-to-left layout.</figcaption>
+    </figure>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+    <h3>Common issues and responses</h3>
+    <ul>
+      <li><strong>I cannot sign in:</strong> verify credentials, then use the password recovery flow if necessary.</li>
+      <li><strong>I cannot access the dashboard:</strong> complete the required profile fields first.</li>
+      <li><strong>I cannot see My Trips or Bookings:</strong> the account may not have the permissions required for that area.</li>
+      <li><strong>Chat shows updating instead of connected:</strong> the app may be using fallback refresh behavior instead of a live channel.</li>
+      <li><strong>Unread badges look inconsistent:</strong> refresh the page and confirm the conversation was not already opened on the same account.</li>
+      <li><strong>Copy message is unavailable:</strong> select exactly one message before using the copy action.</li>
+    </ul>
+
+    <div class="warning">
+      If a user reports missing pages, always confirm whether the issue is caused by permissions rather than a visual or navigation failure.
+    </div>
+
+    <h2 id="support">Support Recommendations</h2>
+    <p>
+      This guide is most useful for onboarding, demos, support handoff, and internal product reviews. For implementation-level details such as routing,
+      providers, APIs, or deployment assumptions, pair it with the technical documentation in the project README.
+    </p>
+
+    <h2>Screenshot Index</h2>
+    <div class="panel">
+      <h3>Prepared screenshot assets</h3>
+      <div class="figure-grid">
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/passenger-mobile-login.png" alt="Login index image"><figcaption>Login</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/passenger-mobile-register.png" alt="Register index image"><figcaption>Register</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/passenger-mobile-find-trip.png" alt="Find trip index image"><figcaption>Find Trip</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/passenger-mobile-trip-results.png" alt="Trip results index image"><figcaption>Trip Results</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/passenger-mobile-bookings.png" alt="Bookings index image"><figcaption>Bookings</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/passenger-mobile-chat-inbox.png" alt="Chat inbox index image"><figcaption>Chat Inbox</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/driver-mobile-my-trips.png" alt="My trips index image"><figcaption>My Trips</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/driver-mobile-publish-trip.png" alt="Publish trip index image"><figcaption>Publish Trip</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/driver-mobile-account.png" alt="Account index image"><figcaption>My Account</figcaption></figure>
+        <figure class="figure-card"><img src="docs/user-guide-screenshots/driver-mobile-account-arabic.png" alt="Arabic account index image"><figcaption>Arabic Mode</figcaption></figure>
+      </div>
+      <p>Additional recommended captures can still be added later for the complete profile screen, desktop layouts, the vehicle tab, and the final multi-selection copy state in chat.</p>
+    </div>
+
+    <div class="footer">
+      Prepared for the Covoit frontend project. Visual direction in this guide reflects the product's calm light interface, soft panel treatment,
+      muted surfaces, and green-accented action system.
+    </div>
+  </body>
+</html>
