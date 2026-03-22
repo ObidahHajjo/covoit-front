@@ -3,6 +3,7 @@ import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
 import type { AuthUser } from "../../types/MeResponse";
+import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Render a compact trip preview card for dashboard lists.
@@ -13,8 +14,9 @@ import type { AuthUser } from "../../types/MeResponse";
  * @returns The rendered trip preview link.
  */
 function TripPreviewCard({ trip, detailsPath }: { trip: Trip; detailsPath: string }) {
-  const from = trip.departure_address?.city?.name ?? "Unknown";
-  const to = trip.arrival_address?.city?.name ?? "Unknown";
+  const { t } = useI18n();
+  const from = trip.departure_address?.city?.name ?? t("common.unknown");
+  const to = trip.arrival_address?.city?.name ?? t("common.unknown");
 
   return (
     <Link
@@ -31,13 +33,13 @@ function TripPreviewCard({ trip, detailsPath }: { trip: Trip; detailsPath: strin
         </p>
         <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-[var(--theme-muted)]">
           <span>{formatDateTimeRaw(trip.departure_time)}</span>
-          <span>{trip.available_seats} seats open</span>
+          <span>{t("home.seatsOpen", { count: trip.available_seats })}</span>
           <span>{trip.distance_km} km</span>
         </div>
       </div>
 
       <span className="inline-flex w-fit shrink-0 rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1 text-xs font-medium text-[var(--theme-muted-strong)] sm:self-center">
-        Open
+        {t("common.open")}
       </span>
     </Link>
   );
@@ -70,11 +72,13 @@ function TripSection({
   allPath: string;
   detailsBasePath: string;
 }) {
+  const { t } = useI18n();
+
   return (
     <section className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">At a glance</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.atAGlance")}</p>
           <h2 className="mt-2 font-medium text-xl text-[var(--theme-ink)]">{title}</h2>
           <p className="mt-1 text-sm text-[var(--theme-muted)]">{countLabel}</p>
         </div>
@@ -82,14 +86,14 @@ function TripSection({
           to={allPath}
           className="w-fit shrink-0 rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-2 text-xs font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]"
         >
-          See all
+          {t("common.seeAll")}
         </Link>
       </div>
 
       {trips.length === 0 ? (
         <div className="mt-5 rounded-xl border border-dashed border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-6 py-10 text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--theme-surface)] text-2xl">🗓</div>
-          <p className="mt-4 font-medium text-lg text-[var(--theme-ink)]">Nothing on the road yet.</p>
+          <p className="mt-4 font-medium text-lg text-[var(--theme-ink)]">{t("home.nothingOnRoad")}</p>
           <p className="mt-1 text-sm text-[var(--theme-muted)]">{emptyMessage}</p>
         </div>
       ) : (
@@ -136,6 +140,7 @@ export function HomeSection({
   upcomingDriverTripsCount,
   upcomingBookingsCount,
 }: Props) {
+  const { t } = useI18n();
   const displayName = person?.pseudo ?? person?.first_name ?? "User";
 
   return (
@@ -143,24 +148,24 @@ export function HomeSection({
       <div className="rounded-[1.75rem] border border-[var(--theme-line)] bg-[rgba(242,244,242,0.88)] px-4 py-5 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:px-6 sm:py-6 lg:px-7 lg:py-8">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:items-start">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">Shared routes</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.sharedRoutes")}</p>
             <h1 className="mt-3 max-w-3xl font-heading text-3xl font-extrabold leading-tight tracking-[-0.04em] text-[var(--theme-ink)] sm:text-4xl lg:text-5xl">
-              Welcome back, {displayName}.
+              {t("home.welcomeBack", { name: displayName })}
             </h1>
             <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted)] sm:text-base">
-              Keep an eye on departures, seat availability, and your latest bookings.
+              {t("home.body")}
             </p>
           </div>
 
           <div className="rounded-[1.5rem] border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 shadow-[var(--theme-shadow-warm)]">
-            <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">Quick pulse</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.quickPulse")}</p>
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               <div className="rounded-lg bg-[var(--theme-bg-soft)] p-4">
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">Driver trips</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.driverTrips")}</p>
                 <p className="mt-2 font-medium text-2xl text-[var(--theme-ink)]">{upcomingDriverTripsCount}</p>
               </div>
               <div className="rounded-lg bg-[var(--theme-bg-soft)] p-4">
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">Bookings</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-subtle)]">{t("home.bookings")}</p>
                 <p className="mt-2 font-medium text-2xl text-[var(--theme-ink)]">{upcomingBookingsCount}</p>
               </div>
             </div>
@@ -170,10 +175,10 @@ export function HomeSection({
         <div className="mt-6 grid gap-6 xl:grid-cols-2">
           {user?.permissions.can_manage_own_trips && (
             <TripSection
-              title="My upcoming driver trips"
-              countLabel={`${upcomingDriverTripsCount} trip${upcomingDriverTripsCount !== 1 ? "s" : ""} in your lane`}
-              trips={upcomingDriverTrips}
-              emptyMessage="Publish your next route and it will show up here."
+               title={t("home.myUpcomingDriverTrips")}
+               countLabel={t("home.tripCount", { count: upcomingDriverTripsCount, suffix: upcomingDriverTripsCount !== 1 ? "s" : "" })}
+               trips={upcomingDriverTrips}
+               emptyMessage={t("home.emptyDriverTrips")}
               allPath="/my-trips"
               detailsBasePath="/my-trips"
             />
@@ -181,10 +186,10 @@ export function HomeSection({
 
           {user?.permissions.can_view_bookings && (
             <TripSection
-              title="My upcoming bookings"
-              countLabel={`${upcomingBookingsCount} booking${upcomingBookingsCount !== 1 ? "s" : ""} confirmed`}
-              trips={upcomingBookings}
-              emptyMessage="Once you reserve a seat, the trip will land here."
+               title={t("home.myUpcomingBookings")}
+               countLabel={t("home.bookingCount", { count: upcomingBookingsCount, suffix: upcomingBookingsCount !== 1 ? "s" : "" })}
+               trips={upcomingBookings}
+               emptyMessage={t("home.emptyBookings")}
               allPath="/bookings"
               detailsBasePath="/bookings"
             />

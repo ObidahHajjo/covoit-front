@@ -2,6 +2,7 @@ import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FindTripForm } from "../../components/ui/FindTripForm";
 import type { CityPostalOption } from "../../types/Commune";
+import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Render the trip search page that collects departure, arrival, and optional travel date filters.
@@ -10,6 +11,7 @@ import type { CityPostalOption } from "../../types/Commune";
  */
 export default function FindTripPage() {
     const navigate = useNavigate();
+    const { t } = useI18n();
 
     const [startingCity, setStartingCity] = useState<CityPostalOption | null>(null);
     const [arrivalCity, setArrivalCity] = useState<CityPostalOption | null>(null);
@@ -44,9 +46,9 @@ export default function FindTripPage() {
         <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
 <div className="overflow-hidden rounded-[40px] border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 sm:px-7 sm:py-8">
 		<div className="mb-8 max-w-3xl">
-			<p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Find a trip</p>
-			<h1 className="mt-3 text-4xl font-medium leading-[1.1] text-[var(--theme-ink)] sm:text-5xl">Search the network with the same warm, community-first tone.</h1>
-			<p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">Pick a departure, an arrival, and an optional date to find the ride that fits best.</p>
+			<p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">{t("search.title")}</p>
+			<h1 className="mt-3 text-4xl font-medium leading-[1.1] text-[var(--theme-ink)] sm:text-5xl">{t("search.heading")}</h1>
+			<p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">{t("search.body")}</p>
 		</div>
 
                 <FindTripForm

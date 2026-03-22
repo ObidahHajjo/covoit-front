@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import type React from "react";
 import { useAuth } from "../useAuth";
 import { updateMe } from "../../features/person/personApi";
+import { translate } from "../../i18n/config";
 
 type LocationState = {
   email?: string;
@@ -56,7 +57,7 @@ export function useCompleteProfile() {
       sessionStorage.removeItem("pending_profile_email");
       navigate("/home", { replace: true });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Profile update failed");
+      setError(err instanceof Error ? err.message : translate("profile.updateFailed"));
     } finally {
       setIsSubmitting(false);
     }

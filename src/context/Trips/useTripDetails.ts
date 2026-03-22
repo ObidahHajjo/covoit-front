@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { contactDriver } from "../../features/chat/chatApi";
 import { getTripById, reserveTrip } from "../../features/trips/tripApi";
 import type { Trip } from "../../types/Trip";
+import { translate } from "../../i18n/config";
 
 /**
  * Loads a public trip and exposes reservation and contact actions.
@@ -25,13 +26,13 @@ export function useTripDetails() {
         setLoadError(null);
 
         if (!tripId) {
-          throw new Error("Missing tripId");
+          throw new Error(translate("trip.missingTripId"));
         }
 
         const data = await getTripById(Number(tripId));
         setTrip(data);
       } catch (err) {
-        setLoadError(err instanceof Error ? err.message : "Failed to load trip");
+        setLoadError(err instanceof Error ? err.message : translate("trip.loadFailed"));
       } finally {
         setLoading(false);
       }
@@ -57,12 +58,12 @@ export function useTripDetails() {
         state: {
           toast: {
             tone: "success",
-            message: "Reservation confirmed successfully.",
+            message: translate("trip.reservationConfirmed"),
           },
         },
       });
     } catch (err) {
-      setActionError(err instanceof Error ? err.message : "Booking failed");
+      setActionError(err instanceof Error ? err.message : translate("trip.bookingFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -81,13 +82,13 @@ export function useTripDetails() {
       setSubmitting(true);
 
       const conversation = await contactDriver(trip.id, {
-        subject: "Chat opened",
+        subject: translate("trip.chatOpened"),
         message: "",
       });
 
       navigate(`/chat/${conversation.id}`);
     } catch (err) {
-      setActionError(err instanceof Error ? err.message : "Failed to open driver chat");
+      setActionError(err instanceof Error ? err.message : translate("trip.openDriverChatFailed"));
     } finally {
       setSubmitting(false);
     }

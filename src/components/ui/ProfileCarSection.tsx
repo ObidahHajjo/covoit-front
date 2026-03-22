@@ -4,6 +4,7 @@ import type { Car } from "../../types/Car";
 import type { CarFormState } from "../../context/Account/UseMyAccount";
 import { DEFAULT_CAR_COLORS } from "../../context/Account/UseMyAccount";
 import FloatingToast from "../common/FloatingToast";
+import { useI18n } from "../../i18n/I18nProvider";
 
 type Props = {
   form: CarFormState;
@@ -92,6 +93,7 @@ export function CarSection({
   onSubmit,
   onReset,
 }: Props) {
+  const { t } = useI18n();
   const inputClass =
     "w-full rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[#ccc] focus:ring-2 focus:ring-[rgba(82,100,72,0.12)] disabled:cursor-not-allowed disabled:opacity-50";
   const hasCar = !form.delete_car && (form.brand_name || form.model_name);
@@ -109,18 +111,18 @@ export function CarSection({
             <div className="min-w-0 flex-1">
               {form.delete_car ? (
                 <>
-                  <p className="text-xl font-medium text-[var(--theme-ink)]">Car will be removed</p>
-                  <p className="mt-1 text-sm text-[var(--theme-muted)]">Saving now will unlink this vehicle from your profile.</p>
+                  <p className="text-xl font-medium text-[var(--theme-ink)]">{t("car.carRemoved")}</p>
+                  <p className="mt-1 text-sm text-[var(--theme-muted)]">{t("car.carRemovedBody")}</p>
                 </>
               ) : hasCar ? (
                 <>
                   <p className="truncate text-xl font-medium text-[var(--theme-ink)]">{form.brand_name} {form.model_name}</p>
-                  <p className="mt-1 text-sm text-[var(--theme-muted)]">{form.seats ? `${form.seats} seats` : "Seat count pending"}{form.license_plate ? ` - ${form.license_plate}` : ""}</p>
+                  <p className="mt-1 text-sm text-[var(--theme-muted)]">{form.seats ? t("car.seatsLabel", { count: form.seats }) : t("car.seatCountPending")}{form.license_plate ? ` - ${form.license_plate}` : ""}</p>
                 </>
               ) : (
                 <>
-                  <p className="text-xl font-medium text-[var(--theme-ink)]">No car registered yet</p>
-                  <p className="mt-1 text-sm text-[var(--theme-muted)]">Add your vehicle so passengers can recognize it quickly.</p>
+                  <p className="text-xl font-medium text-[var(--theme-ink)]">{t("car.noneYet")}</p>
+                  <p className="mt-1 text-sm text-[var(--theme-muted)]">{t("car.noneYetBody")}</p>
                 </>
               )}
             </div>
@@ -129,30 +131,30 @@ export function CarSection({
         </div>
 
         <div className="grid gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
-          <Field label="Brand" error={getFieldError("brand.name", "brand_id")}>
+          <Field label={t("car.brand")} error={getFieldError("brand.name", "brand_id")}>
             <select value={form.brand_name} onChange={(e) => onBrandChange(e.target.value)} disabled={form.delete_car} className={inputClass}>
-              <option value="">Select a brand</option>
+              <option value="">{t("car.selectBrand")}</option>
               {brands.map((brand) => (
                 <option key={brand.id} value={brand.name}>{brand.name}</option>
               ))}
             </select>
           </Field>
 
-          <Field label="Model search" error={getFieldError("model.name", "model_name")}>
+          <Field label={t("car.modelSearch")} error={getFieldError("model.name", "model_name")}>
             <div className="relative">
               <input
                 value={carSearch}
                 onChange={(e) => onCarSearchChange(e.target.value)}
-                placeholder={form.brand_name ? "Type a model name..." : "Select a brand first"}
+                placeholder={form.brand_name ? t("car.typeModel") : t("car.selectBrandFirst")}
                 disabled={form.delete_car || !form.brand_name}
                 className={inputClass}
               />
-              {carSearchLoading ? <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-[var(--theme-muted)]">Searching...</span> : null}
+               {carSearchLoading ? <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-[var(--theme-muted)]">{t("common.searching")}</span> : null}
               {showCarDropdown ? (
                 <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)]">
                   {carSuggestions.map((car) => {
                     const brandName = car.model?.brand?.name ?? form.brand_name;
-                    const modelName = car.model?.name ?? "Unknown model";
+                     const modelName = car.model?.name ?? t("car.unknownModel");
                     return (
                       <button key={car.id} type="button" onClick={() => onSelectSuggestion(car)} className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[var(--theme-bg-soft)]">
                         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-sm">🚗</span>
@@ -169,21 +171,21 @@ export function CarSection({
           </Field>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Selected model">
+            <Field label={t("car.selectedModel")}>
               <input value={form.model_name} readOnly placeholder="-" className={`${inputClass} cursor-default opacity-70`} />
             </Field>
 
-            <Field label="Seats" error={getFieldError("seats")}>
-              <input type="number" min="1" max="9" value={form.seats} onChange={(e) => onFieldChange("seats", e.target.value)} placeholder="e.g. 5" disabled={form.delete_car} className={inputClass} />
+            <Field label={t("car.seats")} error={getFieldError("seats")}>
+              <input type="number" min="1" max="9" value={form.seats} onChange={(e) => onFieldChange("seats", e.target.value)} placeholder={t("car.seatsPlaceholder")} disabled={form.delete_car} className={inputClass} />
             </Field>
           </div>
 
-          <Field label="License plate" error={getFieldError("carregistration", "license_plate")}>
+          <Field label={t("car.licensePlate")} error={getFieldError("carregistration", "license_plate")}>
             <input value={form.license_plate} onChange={(e) => onFieldChange("license_plate", e.target.value)} placeholder="AB-123-CD" disabled={form.delete_car} className={`${inputClass} uppercase`} />
           </Field>
 
           <div className="space-y-3">
-            <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Color</label>
+            <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("car.color")}</label>
             <div className="flex flex-wrap gap-2">
               {DEFAULT_CAR_COLORS.map((color) => {
                 const selected = form.hex.toLowerCase() === color.hex.toLowerCase();
@@ -219,24 +221,24 @@ export function CarSection({
               <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-[var(--theme-surface)] transition peer-checked:translate-x-5" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[var(--theme-ink)]">Remove my car</p>
-              <p className="text-xs text-[var(--theme-muted)]">Unlink and delete vehicle information from your account.</p>
+              <p className="text-sm font-medium text-[var(--theme-ink)]">{t("car.removeMyCar")}</p>
+              <p className="text-xs text-[var(--theme-muted)]">{t("car.removeMyCarBody")}</p>
             </div>
           </label>
 
           <div className="grid gap-3 pt-1 sm:grid-cols-2">
-            <button type="button" onClick={onReset} disabled={saving} className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)] disabled:opacity-40">Reset</button>
-            <button type="submit" disabled={saving} className="rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40">{saving ? "Saving..." : form.delete_car ? "Remove car" : "Save car"}</button>
+            <button type="button" onClick={onReset} disabled={saving} className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)] disabled:opacity-40">{t("common.reset")}</button>
+            <button type="submit" disabled={saving} className="rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40">{saving ? t("car.saving") : form.delete_car ? t("car.removeCar") : t("car.saveCar")}</button>
           </div>
         </div>
       </div>
 
       <div className="space-y-5 xl:sticky xl:top-8 xl:self-start">
         <div className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
-          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Vehicle notes</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("car.vehicleNotes")}</p>
           <div className="mt-3 space-y-2 text-sm leading-6 text-[var(--theme-muted-strong)]">
-            <p>Choose the most precise model you can, then set the exact seat count for your own car.</p>
-            <p>The saved color and license plate help passengers find you faster at pickup.</p>
+            <p>{t("car.vehicleNotesBody1")}</p>
+            <p>{t("car.vehicleNotesBody2")}</p>
           </div>
         </div>
       </div>

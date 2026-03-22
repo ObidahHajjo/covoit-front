@@ -2,6 +2,7 @@ import type { FormEvent, ReactNode } from "react";
 import type { GeoPfFeature } from "../../types/GeoPfSearchResponse";
 import type { AddressFieldState, SelectedAddress } from "../../context/Driver/usePublishTrip";
 import FloatingToast from "../common/FloatingToast";
+import { useI18n } from "../../i18n/I18nProvider";
 
 const inputClass =
   "w-full rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[var(--theme-primary)] focus:ring-1 focus:ring-[rgba(82,100,72,0.16)] disabled:cursor-not-allowed disabled:opacity-50";
@@ -31,15 +32,17 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
  * @returns The rendered selected-address preview, or `null` when no address is selected.
  */
 function AddressPreview({ selected }: { selected: SelectedAddress | null }) {
+  const { t } = useI18n();
+
   if (!selected) return null;
 
   return (
     <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
       {[
-        { label: "No.", value: selected.streetNumber || "-" },
-        { label: "Street", value: selected.streetName || "-" },
-        { label: "Postal", value: selected.postalCode || "-" },
-        { label: "City", value: selected.cityName || "-" },
+        { label: t("driverTrips.addressNumber"), value: selected.streetNumber || "-" },
+        { label: t("driverTrips.addressStreet"), value: selected.streetName || "-" },
+        { label: t("driverTrips.addressPostal"), value: selected.postalCode || "-" },
+        { label: t("driverTrips.addressCity"), value: selected.cityName || "-" },
       ].map(({ label, value }) => (
         <div key={label} className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-3">
           <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">{label}</p>
@@ -133,12 +136,14 @@ function AddressSearch({
  * @returns The rendered form section.
  */
 function FormSection({ icon, title, children }: { icon: string; title: string; children: ReactNode }) {
+  const { t } = useI18n();
+
   return (
     <section className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
       <div className="flex items-center gap-3">
         <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-base">{icon}</span>
         <div>
-          <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">Trip composer</p>
+          <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">{t("driverTrips.tripComposer")}</p>
           <h2 className="text-lg font-medium text-[var(--theme-ink)]">{title}</h2>
         </div>
       </div>
@@ -218,12 +223,14 @@ export function PublishTripForm({
   onSelectArrival,
   onSubmit,
 }: Props) {
+  const { t } = useI18n();
+
   return (
     <form onSubmit={onSubmit} className="space-y-4 xl:grid xl:grid-cols-2 xl:gap-6 xl:space-y-0">
       <FloatingToast tone="error" message={error} durationMs={6500} />
 
-      <FormSection icon="🕐" title="Trip information">
-        <Field label="Date and time">
+      <FormSection icon="🕐" title={t("driverTrips.tripInfo")}>
+        <Field label={t("driverTrips.dateTime")}>
           <input
             type="datetime-local"
             value={tripDateTime}
@@ -232,14 +239,14 @@ export function PublishTripForm({
           />
         </Field>
 
-        <Field label="Available seats">
+        <Field label={t("driverTrips.availableSeats")}>
           <input
             type="number"
             min="1"
             max="9"
             value={availableSeats}
             onChange={(e) => onAvailableSeatsChange(e.target.value)}
-            placeholder="e.g. 3"
+            placeholder="3"
             className={inputClass}
           />
         </Field>
@@ -256,15 +263,15 @@ export function PublishTripForm({
             <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-[var(--theme-surface)] transition peer-checked:translate-x-5" />
           </div>
           <div>
-            <p className="text-sm font-medium text-[var(--theme-ink)]">Smoking allowed</p>
-            <p className="text-xs text-[var(--theme-muted)]">Turn this on only if passengers may smoke during the ride.</p>
+            <p className="text-sm font-medium text-[var(--theme-ink)]">{t("driverTrips.smokingToggle")}</p>
+            <p className="text-xs text-[var(--theme-muted)]">{t("driverTrips.smokingToggleBody")}</p>
           </div>
         </label>
       </FormSection>
 
-      <FormSection icon="📍" title="Starting address">
+      <FormSection icon="📍" title={t("driverTrips.startingAddress")}>
         <AddressSearch
-          placeholder="Search starting address..."
+          placeholder={t("driverTrips.searchStartingAddress")}
           field={starting}
           onChange={onStartingChange}
           onFocus={onStartingFocus}
@@ -273,9 +280,9 @@ export function PublishTripForm({
         />
       </FormSection>
 
-      <FormSection icon="🏁" title="Arrival address">
+      <FormSection icon="🏁" title={t("driverTrips.arrivalAddress")}>
         <AddressSearch
-          placeholder="Search arrival address..."
+          placeholder={t("driverTrips.searchArrivalAddress")}
           field={arrival}
           onChange={onArrivalChange}
           onFocus={onArrivalFocus}
@@ -289,7 +296,7 @@ export function PublishTripForm({
         disabled={isSubmitDisabled}
         className="w-full rounded-lg border border-[var(--theme-primary)] bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[#444] disabled:cursor-not-allowed disabled:opacity-40 xl:col-span-2"
       >
-        {submitting ? "Publishing..." : "Publish trip"}
+        {submitting ? t("driverTrips.publishing") : t("driverTrips.publishTrip")}
       </button>
     </form>
   );

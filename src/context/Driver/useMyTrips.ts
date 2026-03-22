@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getMyDriverTrips } from "../../features/person/personApi";
 import type { Trip } from "../../types/Trip";
+import { translate } from "../../i18n/config";
 
 /**
  * Lists the trip timing buckets used to organize driver trips in the UI.
@@ -53,7 +54,7 @@ export function useMyTrips() {
                 const data = await getMyDriverTrips();
                 setTrips(data);
             } catch (err) {
-                setError(err instanceof Error ? err.message : "Failed to load my trips");
+                setError(err instanceof Error ? err.message : translate("driverTrips.loadFailed"));
             } finally {
                 setLoading(false);
             }

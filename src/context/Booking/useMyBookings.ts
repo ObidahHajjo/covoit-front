@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMyPassengerTrips } from "../../features/person/personApi";
 import type { Trip } from "../../types/Trip";
+import { translate } from "../../i18n/config";
 
 /**
  * Loads the authenticated passenger's bookings list.
@@ -20,7 +21,7 @@ export function useMyBookings() {
                 const data = await getMyPassengerTrips();
                 setBookings(data);
             } catch (err) {
-                setError(err instanceof Error ? err.message : "Failed to load bookings");
+                setError(err instanceof Error ? err.message : translate("bookings.loadFailed"));
             } finally {
                 setLoading(false);
             }

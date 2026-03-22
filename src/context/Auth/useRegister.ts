@@ -2,6 +2,7 @@ import type { FormEvent } from "react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../features/auth/authApi";
+import { translate } from "../../i18n/config";
 
 /**
  * Manages registration form state and redirects the user into profile completion.
@@ -55,7 +56,7 @@ export function useRegister() {
       sessionStorage.setItem("pending_profile_email", email.trim());
       navigate("/complete-profile", { state: { email: email.trim() } });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Register failed");
+      setError(err instanceof Error ? err.message : translate("auth.registerFailed"));
     } finally {
       setIsSubmitting(false);
     }

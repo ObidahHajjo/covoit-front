@@ -2,6 +2,7 @@ import type { FormEvent } from "react";
 import CityAutocomplete from "../../components/common/geo/CityAutocomplete";
 import type { CityPostalOption } from "../../types/Commune";
 import { FormField, SereneButton, SurfaceCard } from "../common/SerenePrimitives";
+import { useI18n } from "../../i18n/I18nProvider";
 
 type Props = {
     startingCity: CityPostalOption | null;
@@ -38,32 +39,34 @@ export function FindTripForm({
     onSubmit,
     onShowAll,
 }: Props) {
+  const { t } = useI18n();
+
   return (
     <SurfaceCard className="p-5 text-[var(--theme-ink)] sm:p-6">
       <form onSubmit={onSubmit}>
         <div className="grid gap-5 xl:grid-cols-2">
           <div className="serene-soft p-4">
-            <p className="mb-3 serene-kicker">From</p>
+            <p className="mb-3 serene-kicker">{t("search.from")}</p>
             <CityAutocomplete
-              label="Departure city"
-              placeholder="Search departure city"
+              label={t("search.departureCity")}
+              placeholder={t("search.searchDepartureCity")}
               selectedOption={startingCity}
               onSelect={onStartingCityChange}
             />
           </div>
 
           <div className="serene-soft p-4">
-            <p className="mb-3 serene-kicker">To</p>
+            <p className="mb-3 serene-kicker">{t("search.to")}</p>
             <CityAutocomplete
-              label="Arrival city"
-              placeholder="Search arrival city"
+              label={t("search.arrivalCity")}
+              placeholder={t("search.searchArrivalCity")}
               selectedOption={arrivalCity}
               onSelect={onArrivalCityChange}
             />
           </div>
 
           <div className="serene-soft p-4 xl:col-span-2">
-            <FormField label="Departure day">
+            <FormField label={t("search.departureDay")}>
               <input
                 type="date"
                 value={tripDate}
@@ -76,11 +79,11 @@ export function FindTripForm({
 
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           <SereneButton type="submit" disabled={!startingCity || !arrivalCity} className="w-full">
-            Search rides
+            {t("search.searchRides")}
           </SereneButton>
 
           <SereneButton type="button" variant="secondary" onClick={onShowAll} className="w-full">
-            Browse everything
+            {t("search.browseEverything")}
           </SereneButton>
         </div>
       </form>

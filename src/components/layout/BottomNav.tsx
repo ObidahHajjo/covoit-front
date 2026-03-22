@@ -4,10 +4,11 @@ import type { AuthUser } from "../../types/MeResponse.ts";
 import { useAuth } from "../../context/useAuth.ts";
 import { useChatInbox } from "../../context/Chat/useChatInbox.ts";
 import { getConversationUnread, getConversationUnreadCount } from "../../features/chat/chatReadState.ts";
+import { useI18n } from "../../i18n/I18nProvider.tsx";
 
 type NavItem = {
   to: string;
-  label: string;
+  labelKey: string;
   icon: string;
   visible: (user: AuthUser | null) => boolean;
 };
@@ -15,37 +16,37 @@ type NavItem = {
 const items: NavItem[] = [
   {
     to: "/home",
-    label: "Home",
+    labelKey: "nav.home",
     icon: "home",
     visible: () => true,
   },
   {
     to: "/my-trips",
-    label: "My Trips",
+    labelKey: "nav.myTrips",
     icon: "trips",
     visible: (user) => user?.permissions.can_manage_own_trips ?? false,
   },
   {
     to: "/find-trip",
-    label: "Find",
+    labelKey: "nav.find",
     icon: "find",
     visible: () => true,
   },
   {
     to: "/chat",
-    label: "Chat",
+    labelKey: "nav.chat",
     icon: "chat",
     visible: () => true,
   },
   {
     to: "/bookings",
-    label: "Bookings",
+    labelKey: "nav.bookings",
     icon: "bookings",
     visible: (user) => user?.permissions.can_view_bookings ?? false,
   },
   {
     to: "/my-account",
-    label: "Account",
+    labelKey: "nav.account",
     icon: "account",
     visible: (user) => user?.permissions.can_edit_profile ?? false,
   },
@@ -123,6 +124,7 @@ export default function BottomNav() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { unreadCount, conversations } = useChatInbox();
+  const { t } = useI18n();
   const seenMapRef = useRef<Record<number, string>>({});
   const [incomingAlert, setIncomingAlert] = useState<{ id: number; name: string; body: string } | null>(null);
 
@@ -148,8 +150,8 @@ export default function BottomNav() {
             id: conversation.id,
             name: conversation.participantName,
             body: unreadCountForConversation > 1
-              ? `${unreadCountForConversation} unread messages`
-              : (conversation.latestMessage?.body ?? "New message"),
+              ? t("nav.unreadMessages", { count: unreadCountForConversation })
+              : (conversation.latestMessage?.body ?? t("nav.newMessageFallback")),
             updatedAt: currentUpdatedAt,
           };
         }
@@ -181,7 +183,7 @@ export default function BottomNav() {
           onClick={() => navigate(`/chat/${incomingAlert.id}`)}
           className="fixed right-4 top-4 z-[80] max-w-sm rounded-2xl border border-[var(--theme-line)] bg-[rgba(255,255,255,0.96)] px-4 py-3 text-left shadow-[0_18px_40px_-24px_rgba(15,23,42,0.4)] backdrop-blur-xl transition hover:scale-[1.01] sm:right-6 sm:top-6"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--theme-muted)]">New Message</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--theme-muted)]">{t("nav.newMessage")}</p>
           <p className="mt-1 text-sm font-semibold text-[var(--theme-ink)]">{incomingAlert.name}</p>
           <p className="mt-1 line-clamp-2 text-sm text-[var(--theme-muted)]">{incomingAlert.body}</p>
         </button>
@@ -209,7 +211,7 @@ export default function BottomNav() {
                   </span>
                 ) : null}
               </span>
-              <span>{item.label}</span>
+              <span>{t(item.labelKey)}</span>
             </NavLink>
           ))}
         </div>

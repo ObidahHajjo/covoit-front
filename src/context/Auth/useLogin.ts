@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../features/auth/authApi";
 import { useAuth } from "../useAuth";
+import { translate } from "../../i18n/config";
 
 /**
  * Manages login form state and session restoration after authentication.
@@ -41,11 +42,11 @@ export function useLogin() {
       if (data.person_id) sessionStorage.setItem("personId", String(data.person_id));
       const authenticated = await refreshMe();
       if (!authenticated) {
-        throw new Error("Login succeeded but the session could not be restored. Check API cookie settings.");
+        throw new Error(translate("auth.loginRestoreFailed"));
       }
       navigate("/");
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Login failed";
+      const msg = err instanceof Error ? err.message : translate("auth.loginFailed");
       setError(msg);
     } finally {
       setIsSubmitting(false);

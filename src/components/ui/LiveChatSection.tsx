@@ -1,6 +1,8 @@
 import type { FormEvent } from "react";
 import FloatingToast from "../common/FloatingToast";
 import type { ChatMessage } from "../../types/Chat";
+import { useI18n } from "../../i18n/I18nProvider";
+import { formatLocaleTime } from "../../i18n/config";
 
 type Props = {
   title: string;
@@ -22,16 +24,6 @@ type Props = {
  * @param value - Raw date-time string for the message.
  * @returns A localized short time string, or `"Now"` when the value is invalid.
  */
-function formatMessageTime(value: string) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return "Now";
-  }
-
-  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-}
-
 /**
  * Display a conversation thread with a message composer.
  *
@@ -62,6 +54,8 @@ export function LiveChatSection({
   onDraftChange,
   onSubmit,
 }: Props) {
+  const { t } = useI18n();
+
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
       <FloatingToast tone="success" message={success} durationMs={6500} />
@@ -69,14 +63,14 @@ export function LiveChatSection({
 
       <section className="overflow-hidden rounded-[24px] border border-[var(--theme-line)] bg-[var(--theme-surface)] shadow-[var(--theme-shadow-warm)]">
         <div className="border-b border-[var(--theme-line)] bg-[linear-gradient(135deg,rgba(212,233,197,0.42),rgba(255,255,255,0.92))] px-5 py-6 sm:px-7 sm:py-7">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Conversation</p>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">{t("chat.conversation")}</p>
           <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">{title}</h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">{subtitle}</p>
               <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.85)] px-3 py-1.5 text-xs font-medium text-[var(--theme-muted-strong)]">
                 <span className={`h-2 w-2 rounded-full ${isRealtimeConnected ? "bg-green-500" : "bg-amber-400"}`} />
-                {isRealtimeConnected ? "Connected" : "Updating"}
+                {isRealtimeConnected ? t("common.connected") : t("common.updating")}
               </div>
             </div>
             <div className="rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.85)] px-4 py-2 text-sm font-medium text-[var(--theme-ink)]">
@@ -90,8 +84,8 @@ export function LiveChatSection({
               {messages.length === 0 ? (
                 <div className="flex h-full min-h-[240px] items-center justify-center">
                   <div className="rounded-2xl border border-dashed border-[var(--theme-line)] bg-[var(--theme-surface)] px-6 py-5 text-center">
-                    <p className="text-sm font-medium text-[var(--theme-ink)]">No messages yet</p>
-                    <p className="mt-2 text-sm text-[var(--theme-muted)]">Start the conversation here.</p>
+                    <p className="text-sm font-medium text-[var(--theme-ink)]">{t("chat.noneYet")}</p>
+                    <p className="mt-2 text-sm text-[var(--theme-muted)]">{t("chat.noneYetBody")}</p>
                   </div>
                 </div>
               ) : messages.map((message) => {
@@ -118,7 +112,7 @@ export function LiveChatSection({
                     >
                       <p className="text-sm leading-6">{message.body}</p>
                       <p className={`mt-2 text-[11px] font-medium ${isMine ? "text-white/70" : "text-[var(--theme-muted)]"}`}>
-                        {formatMessageTime(message.createdAt)}
+                        {formatLocaleTime(message.createdAt, undefined, t("common.now"))}
                       </p>
                     </div>
                   </div>
@@ -129,12 +123,12 @@ export function LiveChatSection({
             <form onSubmit={onSubmit} className="border-t border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 sm:p-5">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
                 <label className="flex-1">
-                  <span className="sr-only">Message</span>
+                  <span className="sr-only">{t("common.message")}</span>
                   <textarea
                     value={draft}
                     onChange={(event) => onDraftChange(event.target.value)}
                     rows={3}
-                    placeholder={`Send a message to ${counterpartLabel.toLowerCase()}...`}
+                    placeholder={t("chat.sendTo", { label: counterpartLabel.toLowerCase() })}
                     className="w-full resize-none rounded-2xl border border-[var(--theme-line)] bg-[rgba(246,248,245,0.86)] px-4 py-3 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[var(--theme-primary)] focus:ring-2 focus:ring-[rgba(82,100,72,0.12)]"
                   />
                 </label>
@@ -143,7 +137,7 @@ export function LiveChatSection({
                   disabled={sending || draft.trim().length === 0}
                   className="rounded-full bg-[var(--theme-primary)] px-5 py-3 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {sending ? "Sending..." : "Send"}
+                  {sending ? t("common.sending") : t("common.send")}
                 </button>
               </div>
             </form>

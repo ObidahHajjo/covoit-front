@@ -4,6 +4,7 @@ import FloatingToast from "../../components/common/FloatingToast";
 import { useMyTrips } from "../../context/Driver/useMyTrips";
 import { MyTripsSection } from "../../components/ui/MyTripsSection";
 import PageLoadingState from "../../components/common/PageLoadingState";
+import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Render the driver's trip management page with current, upcoming, and completed trip groupings.
@@ -11,6 +12,7 @@ import PageLoadingState from "../../components/common/PageLoadingState";
  * @returns The trips dashboard, a loading state, an error state, and optional transient toast feedback.
  */
 export default function MyTripsPage() {
+  const { t } = useI18n();
   const location = useLocation();
   const navigate = useNavigate();
   const { loading, error, currentTrips, incomingTrips, pastTrips } = useMyTrips();
@@ -28,7 +30,7 @@ export default function MyTripsPage() {
   }, [toast, navigate, location.pathname]);
 
   if (loading) {
-    return <PageLoadingState title="Loading your trips" />;
+    return <PageLoadingState title={t("loading.trips")} />;
   }
 
   if (error) {

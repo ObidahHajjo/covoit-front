@@ -1,4 +1,5 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
+import { getCurrentLocale } from "../i18n/config";
 
 /**
  * Stores the normalized base URL used by the authenticated backend client.
@@ -42,6 +43,11 @@ export const apiClient = axios.create({
         Accept: "application/json",
     },
     withCredentials: true,
+});
+
+apiClient.interceptors.request.use((config) => {
+    config.headers.set("Accept-Language", getCurrentLocale());
+    return config;
 });
 
 /**
@@ -93,7 +99,12 @@ apiClient.interceptors.response.use(
                 await axios.post(
                     `${API_BASE_URL}/auth/refresh`,
                     {},
-                    { withCredentials: true }
+                    {
+                        withCredentials: true,
+                        headers: {
+                            "Accept-Language": getCurrentLocale(),
+                        },
+                    }
                 );
 
                 return apiClient(originalRequest);

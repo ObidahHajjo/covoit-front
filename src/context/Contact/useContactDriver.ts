@@ -2,6 +2,7 @@ import { type FormEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { contactDriver } from "../../features/contact/contactApi";
 import type { ChatMessage } from "../../types/Chat";
+import { translate } from "../../i18n/config";
 
 /**
  * Manages the form used to open or resume a chat with a trip driver.
@@ -33,12 +34,12 @@ export function useContactDriver() {
       setError(null);
       setSuccess(null);
       setSending(true);
-      const conversation = await contactDriver(Number(tripId), { subject: "Chat message", message: content });
-      setSuccess("Opening chat...");
+      const conversation = await contactDriver(Number(tripId), { subject: translate("common.message"), message: content });
+      setSuccess(translate("chat.opening"));
       setDraft("");
       navigate(`/chat/${conversation.id}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to send message");
+      setError(err instanceof Error ? err.message : translate("chat.sendFailed"));
     } finally {
       setSending(false);
     }

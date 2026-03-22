@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Trip } from "../../types/Trip";
+import { useI18n } from "../../i18n/I18nProvider";
+import { formatLocaleDateTime } from "../../i18n/config";
 
 type Props = {
   bookings: Trip[];
@@ -15,14 +17,10 @@ type Props = {
  * @returns The rendered booking card link.
  */
 function TripCard({ trip, now }: { trip: Trip; now: number }) {
+  const { t } = useI18n();
   const from = trip.departure_address?.city?.name ?? "-";
   const to = trip.arrival_address?.city?.name ?? "-";
-  const date = trip.departure_time
-    ? new Date(trip.departure_time).toLocaleString(undefined, {
-        dateStyle: "medium",
-        timeStyle: "short",
-      })
-    : null;
+  const date = trip.departure_time ? formatLocaleDateTime(trip.departure_time) : null;
   const isPast = trip.departure_time ? new Date(trip.departure_time).getTime() <= now : false;
 
   return (
@@ -41,7 +39,7 @@ function TripCard({ trip, now }: { trip: Trip; now: number }) {
 
       <div className="flex shrink-0 items-center gap-2">
         <span className={`rounded-full border px-3 py-1 text-xs font-medium ${isPast ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
-          {isPast ? "Completed" : "Booked"}
+          {isPast ? t("bookings.completed") : t("bookings.booked")}
         </span>
       </div>
     </Link>
@@ -59,21 +57,23 @@ const CURRENT_TIME = Date.now();
  * @returns The rendered bookings section.
  */
 export function MyBookingsSection({ bookings, now = CURRENT_TIME }: Props) {
+  const { t } = useI18n();
+
   return (
     <section className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 text-[var(--theme-ink)] sm:p-6">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Booked routes</p>
-          <h2 className="mt-2 text-xl font-medium leading-tight text-[var(--theme-ink)]">Your ride plans</h2>
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("bookings.bookedRoutes")}</p>
+          <h2 className="mt-2 text-xl font-medium leading-tight text-[var(--theme-ink)]">{t("bookings.ridePlans")}</h2>
         </div>
-        <p className="text-sm text-[var(--theme-muted)]">{bookings.length} booking{bookings.length !== 1 ? "s" : ""} saved</p>
+        <p className="text-sm text-[var(--theme-muted)]">{t("bookings.savedCount", { count: bookings.length, suffix: bookings.length !== 1 ? "s" : "" })}</p>
       </div>
 
       {bookings.length === 0 ? (
         <div className="mt-6 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[var(--theme-line)] bg-[var(--theme-bg-soft)] py-16 text-center">
           <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-[var(--theme-surface)] text-3xl">🗓</span>
-          <p className="text-xl font-medium text-[var(--theme-ink)]">No bookings yet.</p>
-          <p className="text-sm text-[var(--theme-muted)]">Your upcoming trips will appear here as soon as you reserve a seat.</p>
+          <p className="text-xl font-medium text-[var(--theme-ink)]">{t("bookings.none")}</p>
+          <p className="text-sm text-[var(--theme-muted)]">{t("bookings.noneBody")}</p>
         </div>
       ) : (
         <div className="mt-6 space-y-3">

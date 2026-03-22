@@ -1,5 +1,6 @@
 import { usePublishTrip } from "../../context/Driver/usePublishTrip";
 import { PublishTripForm } from "../../components/ui/PublishTripForm";
+import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Render the driver trip publishing page used to define route, timing, seating, and trip preferences.
@@ -8,14 +9,15 @@ import { PublishTripForm } from "../../components/ui/PublishTripForm";
  */
 export default function PublishTripPage() {
   const trip = usePublishTrip();
+  const { t } = useI18n();
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
       <div className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] px-5 py-6 sm:px-7 sm:py-8">
         <div className="mb-8 max-w-3xl">
-          <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">Publish a trip</p>
-          <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">Offer a ride</h1>
-          <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">Set timing, seats, and route details clearly so passengers understand the trip at a glance.</p>
+          <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">{t("driverTrips.publishTitle")}</p>
+          <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">{t("driverTrips.offerRide")}</h1>
+          <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">{t("driverTrips.publishBody")}</p>
         </div>
 
         <PublishTripForm

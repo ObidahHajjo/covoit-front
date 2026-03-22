@@ -2,6 +2,7 @@ import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
 import FloatingToast from "../common/FloatingToast";
+import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Show a grouped set of trip facts inside the driver view.
@@ -44,7 +45,8 @@ function InfoCard({ icon, title, rows }: {
  * @returns The rendered passenger row.
  */
 function PassengerRow({ passenger, onContact }: { passenger: Person; onContact: (passenger: Person) => void }) {
-  const name = [passenger.first_name, passenger.last_name].filter(Boolean).join(" ") || "Passenger";
+  const { t } = useI18n();
+  const name = [passenger.first_name, passenger.last_name].filter(Boolean).join(" ") || t("driverTrips.passengerFallback");
 
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-4 sm:flex-row sm:items-center">
@@ -60,7 +62,7 @@ function PassengerRow({ passenger, onContact }: { passenger: Person; onContact: 
         onClick={() => onContact(passenger)}
         className="inline-flex shrink-0 items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-2 text-xs font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] hover:bg-[var(--theme-surface)]"
       >
-        Contact passenger
+        {t("driverTrips.contactPassenger")}
       </button>
     </div>
   );
@@ -95,6 +97,7 @@ export function DriverTripDetailsSection({
   onCancelTrip,
   onContactPassenger,
 }: Props) {
+  const { t } = useI18n();
   const from = trip.departure_address?.city?.name ?? "-";
   const to = trip.arrival_address?.city?.name ?? "-";
 
@@ -104,53 +107,53 @@ export function DriverTripDetailsSection({
       <section className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] px-5 py-6 sm:px-7 sm:py-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">Driver trip desk</p>
+            <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">{t("driverTrips.detailsDesk")}</p>
             <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">{from} - {to}</h1>
-            <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">Manage route details, passenger outreach, and cancellation from one composed view.</p>
+            <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">{t("driverTrips.detailsBody")}</p>
           </div>
           <span className="inline-flex rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-2 text-sm font-medium text-[var(--theme-muted-strong)]">Trip #{trip.id}</span>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <InfoCard
             icon="🕐"
-            title="Trip timing"
+            title={t("driverTrips.tripTiming")}
             rows={[
-              { label: "Departure", value: formatDateTimeRaw(trip.departure_time) },
-              { label: "Arrival", value: formatDateTimeRaw(trip.arrival_time) },
-              { label: "Distance", value: `${trip.distance_km} km` },
-              { label: "Seats left", value: trip.available_seats },
-              { label: "Smoking", value: trip.smoking_allowed ? "Allowed" : "Not allowed" },
+              { label: t("trip.departure"), value: formatDateTimeRaw(trip.departure_time) },
+              { label: t("trip.arrival"), value: formatDateTimeRaw(trip.arrival_time) },
+              { label: t("trip.distance"), value: `${trip.distance_km} km` },
+              { label: t("trip.seatsLeft"), value: trip.available_seats },
+              { label: t("driverTrips.smoking"), value: trip.smoking_allowed ? t("driverTrips.allowed") : t("driverTrips.notAllowed") },
             ]}
           />
 
           <InfoCard
             icon="👤"
-            title="Driver"
+            title={t("trip.driver")}
             rows={[
-              { label: "First name", value: trip.driver?.first_name },
-              { label: "Last name", value: trip.driver?.last_name },
-              { label: "Pseudo", value: trip.driver?.pseudo },
-              { label: "Phone", value: trip.driver?.phone },
+              { label: t("profile.firstName"), value: trip.driver?.first_name },
+              { label: t("profile.lastName"), value: trip.driver?.last_name },
+              { label: t("profile.pseudo"), value: trip.driver?.pseudo },
+              { label: t("profile.phone"), value: trip.driver?.phone },
             ]}
           />
 
           <InfoCard
             icon="📍"
-            title="Departure point"
+            title={t("driverTrips.departurePoint")}
             rows={[
-              { label: "Street", value: [trip.departure_address?.street_number, trip.departure_address?.street].filter(Boolean).join(" ") },
-              { label: "Postal", value: trip.departure_address?.city?.postal_code },
-              { label: "City", value: trip.departure_address?.city?.name },
+              { label: t("driverTrips.street"), value: [trip.departure_address?.street_number, trip.departure_address?.street].filter(Boolean).join(" ") },
+              { label: t("driverTrips.postal"), value: trip.departure_address?.city?.postal_code },
+              { label: t("driverTrips.city"), value: trip.departure_address?.city?.name },
             ]}
           />
 
           <InfoCard
             icon="🏁"
-            title="Arrival point"
+            title={t("driverTrips.arrivalPoint")}
             rows={[
-              { label: "Street", value: [trip.arrival_address?.street_number, trip.arrival_address?.street].filter(Boolean).join(" ") },
-              { label: "Postal", value: trip.arrival_address?.city?.postal_code },
-              { label: "City", value: trip.arrival_address?.city?.name },
+              { label: t("driverTrips.street"), value: [trip.arrival_address?.street_number, trip.arrival_address?.street].filter(Boolean).join(" ") },
+              { label: t("driverTrips.postal"), value: trip.arrival_address?.city?.postal_code },
+              { label: t("driverTrips.city"), value: trip.arrival_address?.city?.name },
             ]}
           />
         </div>
@@ -158,8 +161,8 @@ export function DriverTripDetailsSection({
         <div className="mt-8 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">Passenger list</p>
-              <h2 className="mt-2 text-lg font-medium text-[var(--theme-ink)]">Traveling with you</h2>
+               <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">{t("driverTrips.passengerList")}</p>
+               <h2 className="mt-2 text-lg font-medium text-[var(--theme-ink)]">{t("driverTrips.travelingWithYou")}</h2>
             </div>
             <span className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1 text-xs font-medium text-[var(--theme-muted-strong)]">{passengers.length}</span>
           </div>
@@ -167,8 +170,8 @@ export function DriverTripDetailsSection({
           {passengers.length === 0 ? (
             <div className="mt-5 rounded-xl border border-dashed border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-6 py-10 text-center">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] text-xl">👤</div>
-              <p className="mt-4 text-lg font-medium text-[var(--theme-ink)]">No passengers yet.</p>
-              <p className="mt-1 text-sm text-[var(--theme-muted)]">New reservations will appear here as they come in.</p>
+              <p className="mt-4 text-lg font-medium text-[var(--theme-ink)]">{t("driverTrips.noPassengers")}</p>
+              <p className="mt-1 text-sm text-[var(--theme-muted)]">{t("driverTrips.noPassengersBody")}</p>
             </div>
           ) : (
             <div className="mt-5 space-y-3">
@@ -188,7 +191,7 @@ export function DriverTripDetailsSection({
           disabled={cancelling}
           className="mt-8 w-full rounded-lg border border-[var(--theme-primary)] bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[#444] disabled:opacity-40"
         >
-          {cancelling ? "Cancelling..." : "Cancel this trip"}
+          {cancelling ? t("driverTrips.cancelling") : t("driverTrips.cancelTrip")}
         </button>
       </section>
     </div>

@@ -1,4 +1,5 @@
 import { useLoading } from "../../context/LoadingContext";
+import { useI18n } from "../../i18n/I18nProvider";
 
 type PageLoadingStateProps = {
   title: string;
@@ -15,6 +16,7 @@ type PageLoadingStateProps = {
  */
 export default function PageLoadingState({ title, compact = false }: PageLoadingStateProps) {
   const { isLoading } = useLoading();
+  const { t } = useI18n();
 
   if (isLoading) {
     return null;
@@ -25,7 +27,7 @@ export default function PageLoadingState({ title, compact = false }: PageLoading
       <div className="serene-panel w-full max-w-md px-8 py-10 text-center backdrop-blur-xl">
         <div className="serene-spinner mx-auto h-10 w-10" />
         <p className="mt-4 font-heading text-2xl font-bold text-[var(--theme-ink)]">{title}</p>
-        <p className="mt-2 text-sm text-[var(--theme-muted)]">Preparing your route.</p>
+        <p className="mt-2 text-sm text-[var(--theme-muted)]">{t("app.preparingRoute")}</p>
       </div>
     </div>
   );

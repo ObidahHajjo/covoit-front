@@ -4,6 +4,7 @@ import { getConversation, sendConversationMessage } from "../../features/chat/ch
 import { markConversationRead, syncConversationUnread } from "../../features/chat/chatReadState";
 import { useChatRealtime } from "../../features/chat/useChatRealtime";
 import type { ChatConversation } from "../../types/Chat";
+import { translate } from "../../i18n/config";
 
 /**
  * Manages a single chat conversation, including polling, realtime refresh, and sending.
@@ -22,7 +23,7 @@ export function useChatConversation() {
   const load = useCallback(async (isSilent = false) => {
     if (!conversationId) {
       setLoading(false);
-      setError("Conversation not found");
+      setError(translate("chat.conversationNotFound"));
       return;
     }
 
@@ -42,7 +43,7 @@ export function useChatConversation() {
       markConversationRead(nextConversation.id, nextConversation.updatedAt, nextConversation.latestMessage?.id);
     } catch (err) {
       setConversation(null);
-      setError(err instanceof Error ? err.message : "Failed to load conversation");
+      setError(err instanceof Error ? err.message : translate("chat.loadFailed"));
     } finally {
       if (!isSilent) {
         setLoading(false);
@@ -102,9 +103,9 @@ export function useChatConversation() {
       });
 
       setDraft("");
-      setSuccess("Message sent in chat.");
+      setSuccess(translate("chat.messageSent"));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to send message");
+      setError(err instanceof Error ? err.message : translate("chat.sendFailed"));
     } finally {
       setSending(false);
     }

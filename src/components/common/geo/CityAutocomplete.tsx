@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { searchCommunes } from "../../../features/geo/geoApi.ts";
 import type { CityPostalOption } from "../../../types/Commune.ts";
 import { FormField } from "../SerenePrimitives.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 type CityAutocompleteProps = {
   label: string;
@@ -26,6 +27,7 @@ export default function CityAutocomplete({
   selectedOption,
   onSelect,
 }: CityAutocompleteProps) {
+  const { t } = useI18n();
   const [query, setQuery] = useState(selectedOption?.cityName ?? "");
   const [results, setResults] = useState<CityPostalOption[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -115,7 +117,7 @@ export default function CityAutocomplete({
       </FormField>
 
       {isLoading && (
-        <p className="mt-2 text-sm text-[var(--theme-muted)]">Searching...</p>
+        <p className="mt-2 text-sm text-[var(--theme-muted)]">{t("common.searching")}</p>
       )}
 
       {!isLoading && isOpen && results.length > 0 && (

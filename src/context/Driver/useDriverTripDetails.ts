@@ -4,6 +4,7 @@ import { contactPassenger } from "../../features/chat/chatApi";
 import { cancelTripAsDriver, getTripById, getTripPassengers } from "../../features/trips/tripApi";
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
+import { translate } from "../../i18n/config";
 
 /**
  * Loads a driver's trip details and exposes trip-management actions.
@@ -25,7 +26,7 @@ export function useDriverTripDetails() {
             try {
                 setLoading(true);
                 setError(null);
-                if (!tripId) throw new Error("Missing tripId");
+                if (!tripId) throw new Error(translate("trip.missingTripId"));
                 const [tripData, passengerData] = await Promise.all([
                     getTripById(Number(tripId)),
                     getTripPassengers(Number(tripId)),
@@ -33,7 +34,7 @@ export function useDriverTripDetails() {
                 setTrip(tripData);
                 setPassengers(passengerData);
             } catch (err) {
-                setError(err instanceof Error ? err.message : "Failed to load trip details");
+                setError(err instanceof Error ? err.message : translate("trip.loadFailed"));
             } finally {
                 setLoading(false);
             }
@@ -56,12 +57,12 @@ export function useDriverTripDetails() {
                 state: {
                     toast: {
                         tone: "success",
-                        message: "Trip cancelled successfully.",
+                        message: translate("driverTrips.cancelledSuccess"),
                     },
                 },
             });
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Failed to cancel trip");
+            setError(err instanceof Error ? err.message : translate("driverTrips.cancelFailed"));
         } finally {
             setCancelling(false);
         }
@@ -79,12 +80,12 @@ export function useDriverTripDetails() {
         try {
             setError(null);
             const conversation = await contactPassenger(trip.id, passenger.id, {
-                subject: "Chat opened",
+                subject: translate("trip.chatOpened"),
                 message: "",
             });
             navigate(`/chat/${conversation.id}`);
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Failed to open passenger chat");
+            setError(err instanceof Error ? err.message : translate("driverTrips.openPassengerChatFailed"));
         }
     }
 

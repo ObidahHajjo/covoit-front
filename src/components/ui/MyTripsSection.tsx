@@ -2,18 +2,19 @@ import { Link } from "react-router-dom";
 import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
 import type { Trip } from "../../types/Trip";
 import type { TripStatus } from "../../context/Driver/useMyTrips";
+import { useI18n } from "../../i18n/I18nProvider";
 
-const STATUS_CONFIG: Record<TripStatus, { label: string; badge: string }> = {
+const STATUS_CONFIG: Record<TripStatus, { labelKey: string; badge: string }> = {
   current: {
-    label: "On the road",
+    labelKey: "driverTrips.onRoad",
     badge: "border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-ink)]",
   },
   incoming: {
-    label: "Coming up",
+    labelKey: "driverTrips.comingUp",
     badge: "border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted-strong)]",
   },
   past: {
-    label: "Archive",
+    labelKey: "driverTrips.archive",
     badge: "border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]",
   },
 };
@@ -27,9 +28,10 @@ const STATUS_CONFIG: Record<TripStatus, { label: string; badge: string }> = {
  * @returns The rendered driver trip link.
  */
 function TripCard({ trip, status }: { trip: Trip; status: TripStatus }) {
+  const { t } = useI18n();
   const config = STATUS_CONFIG[status];
-  const from = trip.departure_address?.city?.name ?? "Unknown";
-  const to = trip.arrival_address?.city?.name ?? "Unknown";
+  const from = trip.departure_address?.city?.name ?? t("common.unknown");
+  const to = trip.arrival_address?.city?.name ?? t("common.unknown");
 
   return (
     <Link
@@ -44,14 +46,14 @@ function TripCard({ trip, status }: { trip: Trip; status: TripStatus }) {
         <div className="flex flex-col items-start justify-between gap-2 sm:flex-row">
           <p className="min-w-0 text-lg font-medium text-[var(--theme-ink)] sm:truncate">{from} - {to}</p>
           <span className={`rounded-full px-3 py-1 text-xs font-medium ${config.badge}`}>
-            {config.label}
+            {t(config.labelKey)}
           </span>
         </div>
 
         <div className="flex flex-wrap gap-2 text-xs text-[var(--theme-muted)]">
-          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">Departure {formatDateTimeRaw(trip.departure_time)}</span>
-          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">Arrival {formatDateTimeRaw(trip.arrival_time)}</span>
-          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{trip.available_seats} seats</span>
+          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{t("driverTrips.departureTag", { value: formatDateTimeRaw(trip.departure_time) })}</span>
+          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{t("driverTrips.arrivalTag", { value: formatDateTimeRaw(trip.arrival_time) })}</span>
+          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{t("driverTrips.seatsTag", { count: trip.available_seats })}</span>
           <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{trip.distance_km} km</span>
         </div>
       </div>
@@ -83,13 +85,15 @@ function TripGroup({
   status: TripStatus;
   emptyMessage: string;
 }) {
+  const { t } = useI18n();
+
   return (
     <section className="min-w-0 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
       <div className="flex min-w-0 items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-base">{icon}</span>
           <div className="min-w-0">
-            <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">Trip lane</p>
+            <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">{t("driverTrips.tripLane")}</p>
             <h2 className="truncate text-xl font-medium text-[var(--theme-ink)]">{title}</h2>
           </div>
         </div>
@@ -101,7 +105,7 @@ function TripGroup({
       {trips.length === 0 ? (
         <div className="mt-5 rounded-xl border border-dashed border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-6 py-10 text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] text-xl">🗓</div>
-          <p className="mt-4 text-lg font-medium text-[var(--theme-ink)]">No trips in this lane.</p>
+          <p className="mt-4 text-lg font-medium text-[var(--theme-ink)]">{t("driverTrips.noTripsLane")}</p>
           <p className="mt-1 text-sm text-[var(--theme-muted)]">{emptyMessage}</p>
         </div>
       ) : (
@@ -131,47 +135,49 @@ type Props = {
  * @returns The rendered driver trips dashboard.
  */
 export function MyTripsSection({ currentTrips, incomingTrips, pastTrips }: Props) {
+  const { t } = useI18n();
+
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
       <div className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] px-5 py-6 sm:px-7 sm:py-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
-            <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">Driver desk</p>
-            <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">My Trips</h1>
-            <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">Track what is active now, what is scheduled next, and what has already rolled through.</p>
+            <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-muted)]">{t("driverTrips.driverDesk")}</p>
+            <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">{t("driverTrips.heading")}</h1>
+            <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">{t("driverTrips.body")}</p>
           </div>
           <Link
             to="/my-trips/new"
             className="inline-flex w-full items-center justify-center rounded-lg border border-[var(--theme-primary)] bg-[var(--theme-primary)] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#444] sm:w-auto"
           >
-            Publish a new trip
+            {t("driverTrips.publishNew")}
           </Link>
         </div>
 
         <div className="mt-8 grid gap-6 xl:grid-cols-2">
           <TripGroup
-            title="Current trips"
+            title={t("driverTrips.currentTrips")}
             icon="🟢"
             trips={currentTrips}
             status="current"
-            emptyMessage="Your active rides will appear here while they are in progress."
+            emptyMessage={t("driverTrips.currentEmpty")}
           />
 
           <TripGroup
-            title="Incoming trips"
+            title={t("driverTrips.incomingTrips")}
             icon="🕐"
             trips={incomingTrips}
             status="incoming"
-            emptyMessage="Schedule another route and it will land here before departure."
+            emptyMessage={t("driverTrips.incomingEmpty")}
           />
 
           <div className="xl:col-span-2">
             <TripGroup
-              title="Past trips"
+              title={t("driverTrips.pastTrips")}
               icon="📁"
               trips={pastTrips}
               status="past"
-              emptyMessage="Completed trips stay here as a simple archive."
+              emptyMessage={t("driverTrips.pastEmpty")}
             />
           </div>
         </div>

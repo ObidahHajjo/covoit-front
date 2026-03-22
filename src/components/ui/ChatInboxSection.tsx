@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import type { ChatConversation } from "../../types/Chat";
 import { getConversationUnread } from "../../features/chat/chatReadState";
 import FloatingToast from "../common/FloatingToast";
+import { useI18n } from "../../i18n/I18nProvider";
+import { formatLocaleTime } from "../../i18n/config";
 
 type Props = {
   conversations: ChatConversation[];
@@ -17,7 +19,8 @@ type Props = {
  * @returns The rendered conversation preview link.
  */
 function ChatRow({ conversation }: { conversation: ChatConversation }) {
-  const preview = conversation.latestMessage?.body || conversation.tripLabel || "Open conversation";
+  const { t } = useI18n();
+  const preview = conversation.latestMessage?.body || conversation.tripLabel || t("chat.openConversation");
   const hasUnread = getConversationUnread(
     conversation.id,
     conversation.updatedAt,
@@ -40,14 +43,14 @@ function ChatRow({ conversation }: { conversation: ChatConversation }) {
             <p className="truncate text-sm font-semibold text-[var(--theme-ink)] sm:text-base">{conversation.participantName}</p>
             {hasUnread ? (
               <span className="shrink-0 rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
-                New
+                {t("common.new")}
               </span>
             ) : null}
           </div>
           <div className="flex items-center gap-2">
             {hasUnread ? <span className="h-2.5 w-2.5 rounded-full bg-[var(--theme-primary)]" /> : null}
             <p className="shrink-0 text-xs text-[var(--theme-muted)]">
-              {new Date(conversation.updatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+              {formatLocaleTime(conversation.updatedAt)}
             </p>
           </div>
         </div>
@@ -70,20 +73,22 @@ function ChatRow({ conversation }: { conversation: ChatConversation }) {
  * @returns The rendered chat inbox section.
  */
 export function ChatInboxSection({ conversations, error, isRealtimeConnected }: Props) {
+  const { t } = useI18n();
+
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
       <FloatingToast tone="error" message={error} durationMs={6500} />
 
       <section className="overflow-hidden rounded-[28px] border border-[var(--theme-line)] bg-[var(--theme-surface)] shadow-[var(--theme-shadow-warm)]">
         <div className="border-b border-[var(--theme-line)] bg-[linear-gradient(135deg,rgba(212,233,197,0.4),rgba(255,255,255,0.9))] px-5 py-6 sm:px-7 sm:py-7">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Messages</p>
-          <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">Chats</h1>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">{t("chat.messages")}</p>
+          <h1 className="mt-3 text-3xl font-medium leading-tight text-[var(--theme-ink)] sm:text-4xl">{t("chat.chats")}</h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">
-            Keep up with your conversations and trip updates in one place.
+            {t("chat.inboxBody")}
           </p>
           <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.8)] px-3 py-1.5 text-xs font-medium text-[var(--theme-muted-strong)]">
             <span className={`h-2 w-2 rounded-full ${isRealtimeConnected ? "bg-green-500" : "bg-amber-400"}`} />
-            {isRealtimeConnected ? "Connected" : "Updating"}
+            {isRealtimeConnected ? t("common.connected") : t("common.updating")}
           </div>
         </div>
 
@@ -96,9 +101,9 @@ export function ChatInboxSection({ conversations, error, isRealtimeConnected }: 
         ) : (
           <div className="px-5 py-12 text-center sm:px-6">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--theme-bg-soft)] text-xl">💬</div>
-            <p className="mt-4 text-lg font-medium text-[var(--theme-ink)]">No chats yet</p>
+            <p className="mt-4 text-lg font-medium text-[var(--theme-ink)]">{t("chat.none")}</p>
             <p className="mt-2 text-sm text-[var(--theme-muted)]">
-              Start a conversation from a trip, booking, or passenger list and it will appear here.
+              {t("chat.noneBody")}
             </p>
           </div>
         )}

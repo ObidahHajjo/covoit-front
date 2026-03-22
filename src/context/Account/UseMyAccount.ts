@@ -8,6 +8,7 @@ import type { Brand } from "../../types/Brand";
 import type { Person } from "../../types/Person";
 import type { Car } from "../../types/Car";
 import { extractApiErrorMessage, extractApiFieldErrors } from "../../app/apiError";
+import { translate } from "../../i18n/config";
 
 /**
  * Describes the editable profile fields shown in the account page.
@@ -305,7 +306,7 @@ export function useMyAccount() {
     function handleCustomColorChange(hex: string) {
         updateCarField("hex", hex);
         const matched = DEFAULT_CAR_COLORS.find((c) => c.hex.toLowerCase() === hex.toLowerCase());
-        updateCarField("color_name", matched?.name ?? "Custom");
+        updateCarField("color_name", matched?.name ?? translate("car.custom"));
     }
 
     // ── Refresh person ────────────────────────────────────────────────────────
@@ -345,7 +346,7 @@ export function useMyAccount() {
                 phone: profileForm.phone.trim() || undefined,
             });
             await refreshPersonState();
-            setProfileSuccess("Profile updated successfully.");
+            setProfileSuccess(translate("profile.updatedSuccess"));
         } catch (err) {
             setProfileError(extractApiErrorMessage(err));
             setFieldErrors(extractApiFieldErrors(err));
@@ -395,7 +396,7 @@ export function useMyAccount() {
 
             await refreshPersonState();
             await refreshMe();
-            setCarSuccess(carForm.delete_car ? "Car deleted successfully." : "Car updated successfully.");
+            setCarSuccess(carForm.delete_car ? translate("car.deletedSuccess") : translate("car.updatedSuccess"));
         } catch (err) {
             setCarError(extractApiErrorMessage(err));
             setFieldErrors(extractApiFieldErrors(err));
@@ -411,7 +412,7 @@ export function useMyAccount() {
      */
     async function handleDeleteAccount() {
         const confirmed = window.confirm(
-            "Are you sure you want to delete your account? This action cannot be undone.",
+            translate("profile.deleteConfirm"),
         );
         if (!confirmed) return;
         try {

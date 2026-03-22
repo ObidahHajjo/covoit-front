@@ -1,5 +1,7 @@
 import type React from "react";
 import { Notice, SereneButton, SurfaceCard } from "../common/SerenePrimitives";
+import { useI18n } from "../../i18n/I18nProvider";
+import LanguageSwitcher from "../common/LanguageSwitcher";
 
 type Props = {
   email: string;
@@ -16,7 +18,7 @@ type Props = {
   onNavigateToRegister: () => void;
 };
 
-const trustNotes = [
+const trustNotesBase = [
   {
     label: "Verified profiles",
     icon: (
@@ -80,6 +82,13 @@ export function LoginSection({
   onClear,
   onNavigateToRegister,
 }: Props) {
+  const { t } = useI18n();
+  const trustNotes = [
+    { label: t("auth.verifiedProfiles"), icon: trustNotesBase[0].icon },
+    { label: t("auth.transparentPricing"), icon: trustNotesBase[1].icon },
+    { label: t("auth.activeCommunity"), icon: trustNotesBase[2].icon },
+  ];
+
   return (
     <div className="min-h-dvh bg-transparent px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
       <SurfaceCard className="mx-auto grid w-full max-w-6xl overflow-hidden bg-[rgba(255,255,255,0.92)] md:grid-cols-[1.08fr_0.92fr]">
@@ -88,23 +97,26 @@ export function LoginSection({
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center opacity-35" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,233,197,0.75),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(212,229,239,0.4),transparent_28%)]" />
           <div className="absolute -left-20 bottom-20 h-64 w-64 rounded-full bg-[rgba(212,233,197,0.45)] blur-3xl" />
-          <div className="absolute right-6 top-6 serene-chip bg-[rgba(255,255,255,0.72)] shadow-[var(--theme-shadow-warm)]">
-            Editorial serenity
+          <div className="absolute right-6 top-6 flex items-center gap-3">
+            <LanguageSwitcher compact />
+            <div className="serene-chip bg-[rgba(255,255,255,0.72)] shadow-[var(--theme-shadow-warm)]">
+              {t("auth.editorialSerenity")}
+            </div>
           </div>
 
           <div className="relative z-10 flex flex-1 flex-col p-12 lg:p-14">
             <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 rounded-full bg-[rgba(255,255,255,0.78)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--theme-muted-strong)] shadow-[var(--theme-shadow-warm)]">
                 <span className="h-2 w-2 rounded-full bg-[var(--theme-primary)]" />
-                The Serene Path
+                {t("auth.serenePath")}
               </div>
 
               <h1 className="mt-8 max-w-[8ch] font-heading text-[clamp(3.8rem,6vw,6rem)] font-extrabold leading-[0.92] tracking-[-0.06em] text-[var(--theme-ink)]">
-                Welcome back.
+                {t("auth.welcomeBack")}
               </h1>
 
               <p className="mt-6 max-w-md text-lg leading-8 text-[var(--theme-muted-strong)]">
-                Re-enter your calm corner of travel. Quiet routes, trusted riders, and smoother journeys are waiting.
+                {t("auth.welcomeBackBody")}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -127,25 +139,25 @@ export function LoginSection({
           <div className="relative z-10 mx-auto w-full max-w-md">
             <div className="mb-8 flex items-center justify-between gap-4">
               <div>
-                <p className="serene-kicker">Authentication</p>
-                <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-[-0.04em] text-[var(--theme-ink)]">
-                  Sign in gently.
-                </h2>
+                  <p className="serene-kicker">{t("auth.authentication")}</p>
+                  <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-[-0.04em] text-[var(--theme-ink)]">
+                    {t("auth.signInGently")}
+                  </h2>
+                </div>
+                <span className="serene-chip">{t("auth.liveAccess")}</span>
               </div>
-              <span className="serene-chip">Live access</span>
-            </div>
 
             <div className="rounded-[2rem] border border-[var(--theme-line)] bg-[rgba(249,250,248,0.72)] p-5 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:p-6">
               <div>
-                <p className="serene-kicker">Continue your route</p>
+                <p className="serene-kicker">{t("auth.continueRoute")}</p>
                 <p className="mt-3 text-sm leading-7 text-[var(--theme-muted)]">
-                  Use your email and password to reopen your dashboard, bookings, and upcoming rides.
+                  {t("auth.signInBody")}
                 </p>
               </div>
 
               <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
                 <label htmlFor="email" className="grid gap-2">
-                  <span className="serene-label">Email address</span>
+                  <span className="serene-label">{t("auth.emailAddress")}</span>
                   <div className="relative">
                     <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--theme-subtle)]">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -167,8 +179,8 @@ export function LoginSection({
 
                 <label htmlFor="password" className="grid gap-2">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="serene-label">Password</span>
-                    <span className="text-xs font-medium text-[var(--theme-primary)]">Secure field</span>
+                     <span className="serene-label">{t("auth.password")}</span>
+                     <span className="text-xs font-medium text-[var(--theme-primary)]">{t("auth.secureField")}</span>
                   </div>
                   <div className="relative">
                     <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--theme-subtle)]">
@@ -181,7 +193,7 @@ export function LoginSection({
                       id="password"
                       type={showPassword ? "text" : "password"}
                       autoComplete="current-password"
-                      placeholder="Enter your password"
+                       placeholder={t("auth.enterPassword")}
                       value={password}
                       onChange={(e) => onPasswordChange(e.target.value)}
                       className="serene-input pl-12 pr-12"
@@ -189,7 +201,7 @@ export function LoginSection({
                     <button
                       type="button"
                       tabIndex={-1}
-                      aria-label={showPassword ? "Masquer" : "Afficher"}
+                       aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
                       onClick={onTogglePassword}
                       className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-2 text-[var(--theme-subtle)] transition hover:bg-[rgba(82,100,72,0.08)] hover:text-[var(--theme-ink)]"
                     >
@@ -215,11 +227,11 @@ export function LoginSection({
                   {isSubmitting ? (
                     <>
                       <span className="h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-white/35 border-t-white" />
-                      Signing in...
+                       {t("auth.signingIn")}
                     </>
                   ) : (
                     <>
-                      Sign in
+                       {t("auth.signIn")}
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14" />
                         <path d="m12 5 7 7-7 7" />
@@ -230,16 +242,16 @@ export function LoginSection({
 
                 <div className="grid gap-3 sm:grid-cols-2">
                   <SereneButton type="button" variant="secondary" onClick={onNavigateToRegister} className="w-full">
-                    Create account
+                     {t("auth.createAccount")}
                   </SereneButton>
                   <SereneButton type="button" variant="secondary" onClick={onClear} className="w-full bg-[var(--theme-bg-soft)]">
-                    Clear form
+                     {t("auth.clearForm")}
                   </SereneButton>
                 </div>
               </form>
             </div>
 
-            <p className="mt-6 px-1 text-xs text-[var(--theme-subtle)]">Calm, minimal, community-first.</p>
+            <p className="mt-6 px-1 text-xs text-[var(--theme-subtle)]">{t("auth.communityFirst")}</p>
           </div>
         </section>
       </SurfaceCard>

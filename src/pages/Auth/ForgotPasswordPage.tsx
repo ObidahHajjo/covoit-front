@@ -1,6 +1,8 @@
 import { type FormEvent, useState } from "react";
 import { apiClient } from "../../app/apiClient";
 import type { AxiosError } from "axios";
+import { useI18n } from "../../i18n/I18nProvider";
+import LanguageSwitcher from "../../components/common/LanguageSwitcher";
 
 /**
  * Render the password recovery page that requests a reset link for the submitted email address.
@@ -12,6 +14,7 @@ export default function ForgotPasswordPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const { t } = useI18n();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -21,10 +24,10 @@ export default function ForgotPasswordPage() {
 
     try {
       const { data } = await apiClient.post("/auth/forgot-password", { email });
-      setMessage(data.message ?? "If an account exists for this email, a reset link has been sent.");
+      setMessage(data.message ?? t("auth.resetEmailSent"));
     } catch (err) {
       const axiosError = err as AxiosError<{ message?: string }>;
-      setError(axiosError.response?.data?.message ?? "Unable to send reset link.");
+      setError(axiosError.response?.data?.message ?? t("auth.unableToSendReset"));
     } finally {
       setLoading(false);
     }
@@ -34,19 +37,22 @@ export default function ForgotPasswordPage() {
     <div className="min-h-dvh bg-[var(--theme-bg-soft)] px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto grid w-full max-w-5xl gap-6 lg:grid-cols-[1fr_1fr]">
         <section className="bg-[var(--theme-surface)] p-6 sm:p-8 lg:p-10">
+          <div className="flex justify-end">
+            <LanguageSwitcher compact />
+          </div>
           <div className="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase tracking-wider text-[var(--theme-muted-strong)]">
             <span className="h-2 w-2 rounded-full bg-[#60a5fa]" />
-            Account recovery
+            {t("auth.accountRecovery")}
           </div>
           <h1 className="mt-6 max-w-[11ch] text-[clamp(2rem,5vw,3.5rem)] font-medium leading-tight tracking-tight text-[var(--theme-ink)]">
-            Find your way back.
+            {t("auth.findWayBack")}
           </h1>
           <p className="mt-5 max-w-lg text-sm leading-7 text-[var(--theme-muted)] sm:text-base">
-            Enter the email linked to your account and we will send a reset link so you can get back in.
+            {t("auth.recoveryBody")}
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {["Secure reset flow", "Email verification", "Quick recovery"].map((item) => (
+            {[t("auth.secureResetFlow"), t("auth.emailVerification"), t("auth.quickRecovery")].map((item) => (
               <div
                 key={item}
                 className="border-b border-[var(--theme-line)] px-4 py-4 text-sm text-[var(--theme-muted-strong)]"
@@ -59,18 +65,18 @@ export default function ForgotPasswordPage() {
 
         <section className="bg-[var(--theme-surface)] p-5 sm:p-7 lg:p-10">
           <div className="border-b border-[var(--theme-line)] pb-6">
-            <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">Forgot password</p>
+            <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("auth.forgotPassword")}</p>
             <h2 className="mt-2 text-2xl font-medium tracking-tight text-[var(--theme-ink)]">
-              Send a reset link.
+              {t("auth.sendResetLink")}
             </h2>
             <p className="mt-3 text-sm leading-6 text-[var(--theme-muted)]">
-              We will email reset instructions if an account exists for this address.
+              {t("auth.sendResetBody")}
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
               <div className="space-y-2">
                 <label htmlFor="forgot-email" className="block text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">
-                  Email
+                  {t("common.email")}
                 </label>
                 <input
                   id="forgot-email"
@@ -100,8 +106,8 @@ export default function ForgotPasswordPage() {
                 disabled={loading}
                 className="w-full rounded-full bg-[var(--theme-primary)] px-4 py-3 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {loading ? "Sending link..." : "Send reset link"}
-              </button>
+                  {loading ? t("auth.sendingLink") : t("auth.sendResetLinkButton")}
+                </button>
             </form>
           </div>
         </section>

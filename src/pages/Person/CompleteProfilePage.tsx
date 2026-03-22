@@ -3,6 +3,7 @@ import { isProfileComplete } from "../../auth/profileCompletion";
 import { useAuth } from "../../context/useAuth";
 import { useCompleteProfile } from "../../context/Person/useCompleteProfile";
 import { CompleteProfileSection } from "../../components/ui/CompleteProfileSection";
+import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Render the profile completion page that finalizes required user information after authentication.
@@ -11,6 +12,7 @@ import { CompleteProfileSection } from "../../components/ui/CompleteProfileSecti
  */
 export default function CompleteProfilePage() {
   const { status, user } = useAuth();
+  const { t } = useI18n();
   const {
     email,
     firstName,
@@ -31,7 +33,7 @@ export default function CompleteProfilePage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[var(--theme-bg-soft)] px-6 text-[var(--theme-muted)]">
         <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-5 py-3 text-sm">
-          Loading profile setup...
+          {t("loading.profileSetup")}
         </div>
       </div>
     );

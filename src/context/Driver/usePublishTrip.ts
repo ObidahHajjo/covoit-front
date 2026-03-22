@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { searchAddress } from "../../features/geo/geoApi";
 import { publishTrip } from "../../features/trips/tripApi";
 import type { GeoPfFeature } from "../../types/GeoPfSearchResponse";
+import { translate } from "../../i18n/config";
 
 /**
  * Describes the normalized address fields used by the trip publishing form.
@@ -144,7 +145,7 @@ export function usePublishTrip() {
         event.preventDefault();
 
         if (!starting.selected || !arrival.selected) {
-            setError("Please select both addresses from the suggestions.");
+            setError(translate("driverTrips.selectSuggestedAddresses"));
             return;
         }
 
@@ -174,12 +175,12 @@ export function usePublishTrip() {
                 state: {
                     toast: {
                         tone: "success",
-                        message: "Trip published successfully.",
+                        message: translate("driverTrips.publishedSuccess"),
                     },
                 },
             });
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Failed to publish trip");
+            setError(err instanceof Error ? err.message : translate("driverTrips.publishFailed"));
         } finally {
             setSubmitting(false);
         }

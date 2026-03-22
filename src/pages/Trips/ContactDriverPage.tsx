@@ -1,5 +1,6 @@
 import { useContactDriver } from "../../context/Contact/useContactDriver";
 import { LiveChatSection } from "../../components/ui/LiveChatSection";
+import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Render the direct chat page a passenger uses to contact a driver about trip coordination.
@@ -7,6 +8,7 @@ import { LiveChatSection } from "../../components/ui/LiveChatSection";
  * @returns The live chat section configured for passenger-to-driver messaging.
  */
 export default function ContactDriverPage() {
+  const { t } = useI18n();
   const {
     draft,
     setDraft,
@@ -19,9 +21,9 @@ export default function ContactDriverPage() {
 
   return (
     <LiveChatSection
-      title="Chat with driver"
-      subtitle="Coordinate pickup details and timing directly inside the app instead of sending an email-style form."
-      counterpartLabel="Driver"
+      title={t("chat.contactDriverTitle")}
+      subtitle={t("chat.contactDriverBody")}
+      counterpartLabel={t("chat.driver")}
       messages={messages}
       draft={draft}
       sending={sending}

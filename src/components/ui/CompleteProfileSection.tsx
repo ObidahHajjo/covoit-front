@@ -1,5 +1,7 @@
 import type React from "react";
 import FloatingToast from "../common/FloatingToast";
+import { useI18n } from "../../i18n/I18nProvider";
+import LanguageSwitcher from "../common/LanguageSwitcher";
 
 type Props = {
   email: string;
@@ -54,35 +56,40 @@ export function CompleteProfileSection({
   canSubmit,
   onSubmit,
 }: Props) {
+  const { t } = useI18n();
+
   return (
     <div className="relative min-h-dvh overflow-hidden bg-[var(--theme-bg-soft)] px-4 py-8 text-[var(--theme-ink)] sm:px-6 lg:px-8">
       <FloatingToast tone="error" message={error} durationMs={6500} />
       <div className="relative mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[0.94fr_1.06fr] lg:items-stretch">
         <div className="flex flex-col justify-between rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-6 sm:p-8 lg:p-10">
+          <div className="mb-6 flex justify-end">
+            <LanguageSwitcher compact />
+          </div>
           <div>
             <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-2xl">
               👤
             </div>
-            <p className="mt-6 text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Profile completion</p>
+            <p className="mt-6 text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("profile.completion")}</p>
             <h1 className="mt-3 max-w-[12ch] text-2xl font-medium leading-tight text-[var(--theme-ink)]">
-              Let riders recognize the real you.
+              {t("profile.recognizeRealYou")}
             </h1>
             <p className="mt-4 max-w-lg text-sm leading-7 text-[var(--theme-muted-strong)] sm:text-base">
-              A complete profile adds the identity cues needed for trusted pickups, smoother conversations, and better route matching.
+              {t("profile.completionBody")}
             </p>
           </div>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             {[
-              ["Visible identity", "Names and a pseudo give other riders a clearer first impression."],
-              ["Reliable contact", "Phone stays optional, but useful for pickup coordination."],
-              ["Ready for protected routes", "This is the final step before the main app experience opens."],
+              [t("profile.visibleIdentity"), t("profile.visibleIdentityBody")],
+              [t("profile.reliableContact"), t("profile.reliableContactBody")],
+              [t("profile.readyForProtectedRoutes"), t("profile.readyForProtectedRoutesBody")],
             ].map(([title, copy]) => (
               <article
                 key={title}
                 className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] p-5"
               >
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Trust cue</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("profile.trustCue")}</p>
                 <h2 className="mt-2 text-base font-medium text-[var(--theme-ink)]">
                   {title}
                 </h2>
@@ -96,18 +103,18 @@ export function CompleteProfileSection({
           <div className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] p-5 sm:p-6 lg:p-8">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Step 2 of onboarding</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("profile.step2")}</p>
                 <h2 className="mt-2 text-xl font-medium text-[var(--theme-ink)]">
-                  Complete your profile.
+                  {t("profile.completeProfile")}
                 </h2>
               </div>
               <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-3 py-2 text-xs font-medium text-[var(--theme-muted-strong)]">
-                Community-ready
+                {t("profile.communityReady")}
               </span>
             </div>
 
             <div className="mt-5 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5">
-              <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">Email</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("common.email")}</p>
               <p className="mt-1 break-all text-sm font-medium text-[var(--theme-ink)]">{email || "-"}</p>
             </div>
 
@@ -115,11 +122,11 @@ export function CompleteProfileSection({
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
-                    First name
+                     {t("profile.firstName")}
                   </label>
                   <input
                     className={inputClass}
-                    placeholder="First name"
+                     placeholder={t("profile.firstName")}
                     value={firstName}
                     onChange={(e) => onFirstNameChange(e.target.value)}
                   />
@@ -127,11 +134,11 @@ export function CompleteProfileSection({
 
                 <div className="space-y-2">
                   <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
-                    Last name
+                     {t("profile.lastName")}
                   </label>
                   <input
                     className={inputClass}
-                    placeholder="Last name"
+                     placeholder={t("profile.lastName")}
                     value={lastName}
                     onChange={(e) => onLastNameChange(e.target.value)}
                   />
@@ -140,11 +147,11 @@ export function CompleteProfileSection({
 
               <div className="space-y-2">
                 <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
-                  Pseudo
+                   {t("profile.pseudo")}
                 </label>
                 <input
                   className={inputClass}
-                  placeholder="How other riders will recognize you"
+                   placeholder={t("profile.pseudoPlaceholder")}
                   value={pseudo}
                   onChange={(e) => onPseudoChange(e.target.value)}
                 />
@@ -152,7 +159,7 @@ export function CompleteProfileSection({
 
               <div className="space-y-2">
                 <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
-                  Phone <span className="normal-case font-normal text-[var(--theme-subtle)]">(optional)</span>
+                   {t("profile.phone")} <span className="normal-case font-normal text-[var(--theme-subtle)]">({t("common.optional")})</span>
                 </label>
                 <input
                   className={inputClass}
@@ -167,12 +174,12 @@ export function CompleteProfileSection({
                 disabled={!canSubmit}
                 className="w-full rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:cursor-not-allowed disabled:opacity-40"
               >
-                {isSubmitting ? "Saving profile..." : "Save profile"}
+                 {isSubmitting ? t("profile.savingProfile") : t("profile.saveProfile")}
               </button>
 
               {!email && (
                 <p className="text-center text-xs text-[var(--theme-subtle)]">
-                  Missing email - go back to registration before continuing.
+                  {t("profile.missingEmail")}
                 </p>
               )}
             </form>
