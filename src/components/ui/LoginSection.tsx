@@ -137,6 +137,10 @@ export function LoginSection({
           <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(212,233,197,0.28),transparent_72%)] md:hidden" />
 
           <div className="relative z-10 mx-auto w-full max-w-md">
+            <div className="mb-5 flex justify-end md:hidden">
+              <LanguageSwitcher compact />
+            </div>
+
             <div className="mb-8 flex items-center justify-between gap-4">
               <div>
                   <p className="serene-kicker">{t("auth.authentication")}</p>
