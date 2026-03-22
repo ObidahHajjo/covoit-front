@@ -66,7 +66,7 @@ export default function AppLayout() {
   return (
     <div className="relative min-h-screen bg-[transparent] text-[var(--theme-ink)]">
       <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-56 bg-[radial-gradient(circle_at_top,rgba(212,233,197,0.5),transparent_70%)]" />
-      <header className="relative z-20 border-b border-[var(--theme-line)] bg-[rgba(255,255,255,0.72)] backdrop-blur-xl">
+      <header id="app-shell-header" className="relative z-20 border-b border-[var(--theme-line)] bg-[rgba(255,255,255,0.72)] backdrop-blur-xl">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--theme-subtle)]">{t("app.name")}</p>

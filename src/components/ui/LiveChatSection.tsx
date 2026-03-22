@@ -71,6 +71,7 @@ export function LiveChatSection({
 }: Props) {
   const { t } = useI18n();
   const [selectedMessageIds, setSelectedMessageIds] = useState<number[]>([]);
+  const [selectionBarTop, setSelectionBarTop] = useState(16);
 
   useEffect(() => {
     if (clearingMessageIds.length === 0) {
@@ -87,6 +88,35 @@ export function LiveChatSection({
 
     setSelectedMessageIds((current) => current.filter((messageId) => messages.some((message) => message.id === messageId)));
   }, [messages, selectedMessageIds.length]);
+
+  useEffect(() => {
+    const updateSelectionBarTop = () => {
+      const header = document.getElementById("app-shell-header");
+      const messageSection = document.getElementById("live-chat-messages");
+      const messageSectionTop = messageSection?.getBoundingClientRect().top ?? 0;
+
+      const chatTopOffset = messageSectionTop > 0 ? messageSectionTop + 12 : 12;
+
+      if (!header) {
+        setSelectionBarTop(chatTopOffset);
+        return;
+      }
+
+      const rect = header.getBoundingClientRect();
+      const headerTopOffset = rect.bottom > 0 ? rect.bottom + 12 : 12;
+      const nextTop = Math.max(headerTopOffset, chatTopOffset);
+      setSelectionBarTop(nextTop);
+    };
+
+    updateSelectionBarTop();
+    window.addEventListener("scroll", updateSelectionBarTop, { passive: true });
+    window.addEventListener("resize", updateSelectionBarTop);
+
+    return () => {
+      window.removeEventListener("scroll", updateSelectionBarTop);
+      window.removeEventListener("resize", updateSelectionBarTop);
+    };
+  }, []);
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
@@ -124,9 +154,14 @@ export function LiveChatSection({
         </div>
 
         <div className="flex min-h-[58vh] flex-col">
-            <div className="flex-1 space-y-4 bg-[rgba(246,248,245,0.86)] px-4 py-5 sm:px-6 sm:py-6">
+            <div id="live-chat-messages" className="flex-1 space-y-4 bg-[rgba(246,248,245,0.86)] px-4 py-5 sm:px-6 sm:py-6">
               {selectedMessageIds.length > 0 && onClearMessages ? (
-                <div className="sticky top-3 z-10 flex items-center justify-between gap-3 rounded-2xl border border-[var(--theme-line)] bg-[rgba(255,255,255,0.94)] px-4 py-3 shadow-[0_16px_34px_-24px_rgba(15,23,42,0.35)] backdrop-blur-sm">
+                <>
+                  <div className="h-[72px] sm:h-[76px]" aria-hidden="true" />
+                  <div
+                    className="fixed left-1/2 z-30 flex w-[calc(100%-2rem)] max-w-[min(56rem,calc(100%-2rem))] -translate-x-1/2 items-center justify-between gap-3 rounded-2xl border border-[var(--theme-line)] bg-[rgba(255,255,255,0.96)] px-4 py-3 shadow-[0_16px_34px_-24px_rgba(15,23,42,0.35)] backdrop-blur-sm"
+                    style={{ top: `${selectionBarTop}px` }}
+                  >
                   <p className="text-sm font-medium text-[var(--theme-ink)]">{t("chat.messagesSelected", { count: selectedMessageIds.length })}</p>
                   <div className="flex items-center gap-2">
                     <button
@@ -145,7 +180,8 @@ export function LiveChatSection({
                       {clearingMessageIds.length > 0 ? t("chat.clearing") : t("chat.clearSelectedMessages")}
                     </button>
                   </div>
-                </div>
+                  </div>
+                </>
               ) : null}
 
               {messages.length === 0 ? (
@@ -169,14 +205,17 @@ export function LiveChatSection({
                 const isMine = message.sender === "me";
 
                 return (
-                  <div key={message.id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
+                  <div
+                    key={message.id}
+                    className={`-mx-2 rounded-2xl px-2 py-1.5 transition sm:-mx-3 sm:px-3 ${selectedMessageIds.includes(message.id) ? "bg-[rgba(82,100,72,0.08)]" : "bg-transparent"} ${isMine ? "flex justify-end" : "flex justify-start"}`}
+                  >
                     <button
                       type="button"
                       onClick={() => setSelectedMessageIds((current) => current.includes(message.id) ? current.filter((id) => id !== message.id) : [...current, message.id])}
                       className={`relative max-w-[85%] text-left sm:max-w-[70%] ${onClearMessages ? "cursor-pointer" : "cursor-default"}`}
                     >
                       <div
-                        className={`rounded-[20px] px-4 py-3 shadow-sm transition ${selectedMessageIds.includes(message.id) ? "ring-2 ring-[rgba(82,100,72,0.22)] ring-offset-2 ring-offset-[rgba(246,248,245,0.86)]" : ""} ${
+                        className={`rounded-[20px] px-4 py-3 shadow-sm transition ${selectedMessageIds.includes(message.id) ? "ring-1 ring-[rgba(82,100,72,0.16)]" : ""} ${
                           isMine
                             ? "rounded-br-md bg-[var(--theme-primary)] text-white"
                             : "rounded-bl-md border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)]"
