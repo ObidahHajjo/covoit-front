@@ -57,7 +57,7 @@ export function RegisterSection({
   return (
     <div className="min-h-dvh bg-[var(--theme-bg-soft)] px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto grid w-full max-w-5xl overflow-hidden bg-[var(--theme-surface)] lg:grid-cols-[1fr_1fr]">
-        <section className="relative flex flex-col justify-between border-b border-[var(--theme-line)] p-6 sm:p-8 lg:min-h-[640px] lg:border-b-0 lg:border-r lg:p-10">
+        <section className="relative hidden flex-col justify-between border-b border-[var(--theme-line)] p-6 sm:p-8 lg:flex lg:min-h-[640px] lg:border-b-0 lg:border-r lg:p-10">
           <div className="absolute right-6 top-6">
             <LanguageSwitcher compact />
           </div>
@@ -96,7 +96,19 @@ export function RegisterSection({
         </section>
 
         <section className="p-5 sm:p-7 lg:p-10">
-          <div className="flex items-center gap-3 border-b border-[var(--theme-line)] pb-5">
+          <div className="mb-5 flex items-center justify-between gap-3 lg:hidden">
+            <button
+              type="button"
+              onClick={onGoBack}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
+              aria-label={t("common.back")}
+            >
+              <span className="text-lg leading-none">←</span>
+            </button>
+            <LanguageSwitcher compact />
+          </div>
+
+          <div className="hidden items-center gap-3 border-b border-[var(--theme-line)] pb-5 lg:flex">
             <button
               type="button"
               onClick={onGoBack}
@@ -114,8 +126,8 @@ export function RegisterSection({
             </div>
           </div>
 
-          <div className="mt-6 border-b border-[var(--theme-line)] pb-6">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="mt-0 pb-0 lg:mt-6 lg:border-b lg:border-[var(--theme-line)] lg:pb-6">
+            <div className="hidden flex-wrap items-center justify-between gap-3 lg:flex">
               <div>
                  <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("auth.startHere")}</p>
                  <h2 className="mt-2 text-2xl font-medium tracking-tight text-[var(--theme-ink)]">
@@ -124,7 +136,7 @@ export function RegisterSection({
               </div>
             </div>
 
-            <form onSubmit={onSubmit} className="mt-6 space-y-4">
+            <form onSubmit={onSubmit} className="space-y-4 lg:mt-6">
               <div className="space-y-2">
                  <label htmlFor="register-email" className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("common.email")}</label>
                 <input
