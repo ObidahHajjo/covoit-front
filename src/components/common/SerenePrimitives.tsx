@@ -89,9 +89,9 @@ type NoticeProps = {
 export function Notice({ children, tone = "default", className }: NoticeProps) {
   const toneClass =
     tone === "error"
-      ? "border-[rgba(167,59,33,0.18)] bg-[rgba(167,59,33,0.08)]"
+      ? "border border-red-200 bg-red-50 text-red-700"
       : tone === "success"
-        ? "border-[rgba(82,100,72,0.16)] bg-[rgba(212,233,197,0.38)]"
+        ? "border border-green-200 bg-green-50 text-green-700"
         : "";
 
   return <div className={cx("serene-alert", toneClass, className)}>{children}</div>;

@@ -94,7 +94,6 @@ type Props = {
   upcomingBookings: Trip[];
   upcomingDriverTripsCount: number;
   upcomingBookingsCount: number;
-  onLogout: () => void;
 };
 
 export function HomeSection({
@@ -104,7 +103,6 @@ export function HomeSection({
   upcomingBookings,
   upcomingDriverTripsCount,
   upcomingBookingsCount,
-  onLogout,
 }: Props) {
   const displayName = person?.pseudo ?? person?.first_name ?? "User";
 
@@ -134,12 +132,6 @@ export function HomeSection({
                 <p className="mt-2 font-medium text-2xl text-[var(--theme-ink)]">{upcomingBookingsCount}</p>
               </div>
             </div>
-            <button
-              onClick={onLogout}
-              className="mt-4 w-full rounded-full border border-[var(--theme-primary)] bg-[linear-gradient(145deg,var(--theme-primary)_0%,var(--theme-primary-dim)_100%)] px-4 py-3 text-sm font-medium text-white transition hover:scale-[1.01]"
-            >
-              Log out
-            </button>
           </div>
         </div>
 

@@ -11,7 +11,6 @@ export default function HomePage() {
     upcomingBookings,
     upcomingDriverTripsCount,
     upcomingBookingsCount,
-    handleLogout,
   } = useHome();
 
   if (loading) {
@@ -26,7 +25,6 @@ export default function HomePage() {
       upcomingBookings={upcomingBookings}
       upcomingDriverTripsCount={upcomingDriverTripsCount}
       upcomingBookingsCount={upcomingBookingsCount}
-      onLogout={handleLogout}
     />
   );
 }

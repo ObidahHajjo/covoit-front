@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyDriverTrips, getMyPassengerTrips, getPerson } from "../../features/person/personApi";
-import { logout } from "../../features/auth/authApi";
 import { useAuth } from "../useAuth.ts";
 import type { Person } from "../../types/Person";
 import type { Trip } from "../../types/Trip";
@@ -50,17 +49,6 @@ export function useHome() {
         void load();
     }, [logoutLocal, navigate]);
 
-    async function handleLogout() {
-        try {
-            await logout();
-        } finally {
-            logoutLocal();
-            localStorage.removeItem("refresh_token");
-            sessionStorage.removeItem("personId");
-            navigate("/login", { replace: true });
-        }
-    }
-
     const upcomingDriverTrips = useMemo(() => sortAndSlice(driverTrips), [driverTrips]);
     const upcomingBookings = useMemo(() => sortAndSlice(bookings), [bookings]);
 
@@ -81,6 +69,5 @@ export function useHome() {
         upcomingBookings,
         upcomingDriverTripsCount,
         upcomingBookingsCount,
-        handleLogout,
     };
 }

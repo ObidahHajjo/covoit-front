@@ -1,6 +1,7 @@
 import type { FormEvent, ReactNode } from "react";
 import type { Person } from "../../types/Person";
 import type { ProfileFormState } from "../../context/Account/UseMyAccount";
+import FloatingToast from "../common/FloatingToast";
 
 type Props = {
   person: Person | null;
@@ -46,10 +47,9 @@ export function ProfileSection({
 
   return (
     <form onSubmit={onSubmit} className="space-y-5 xl:grid xl:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] xl:gap-6 xl:space-y-0">
+      <FloatingToast tone="success" message={success} durationMs={6500} />
+      <FloatingToast tone="error" message={error} durationMs={6500} />
       <div className="space-y-5">
-        {success ? <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)]">{success}</div> : null}
-        {error ? <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)]">{error}</div> : null}
-
         <div className="flex items-center gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-2xl font-medium text-[var(--theme-muted)]">
             {(form.first_name?.[0] ?? form.pseudo?.[0] ?? "?").toUpperCase()}
@@ -120,7 +120,7 @@ export function ProfileSection({
             <span className="text-[var(--theme-subtle)]">⚠</span>
             <h3 className="text-lg font-medium text-[var(--theme-ink)]">Danger zone</h3>
           </div>
-          {deleteAccountError ? <p className="mt-3 text-sm text-[var(--theme-subtle)]">{deleteAccountError}</p> : null}
+          {deleteAccountError ? <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{deleteAccountError}</p> : null}
           <p className="mt-3 text-sm leading-6 text-[var(--theme-muted)]">Deleting your account starts a 90-day grace period. Sign in again during that window to restore access.</p>
           <button
             type="button"

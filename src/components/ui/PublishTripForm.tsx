@@ -1,6 +1,7 @@
 import type { FormEvent, ReactNode } from "react";
 import type { GeoPfFeature } from "../../types/GeoPfSearchResponse";
 import type { AddressFieldState, SelectedAddress } from "../../context/Driver/usePublishTrip";
+import FloatingToast from "../common/FloatingToast";
 
 const inputClass =
   "w-full rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[var(--theme-primary)] focus:ring-1 focus:ring-[rgba(82,100,72,0.16)] disabled:cursor-not-allowed disabled:opacity-50";
@@ -157,11 +158,7 @@ export function PublishTripForm({
 }: Props) {
   return (
     <form onSubmit={onSubmit} className="space-y-4 xl:grid xl:grid-cols-2 xl:gap-6 xl:space-y-0">
-      {error ? (
-        <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-3.5 text-sm font-medium text-[var(--theme-ink)] xl:col-span-2">
-          {error}
-        </div>
-      ) : null}
+      <FloatingToast tone="error" message={error} durationMs={6500} />
 
       <FormSection icon="🕐" title="Trip information">
         <Field label="Date and time">

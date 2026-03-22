@@ -1,4 +1,5 @@
 import type React from "react";
+import FloatingToast from "../common/FloatingToast";
 
 type Props = {
   email: string;
@@ -36,6 +37,7 @@ export function CompleteProfileSection({
 }: Props) {
   return (
     <div className="relative min-h-dvh overflow-hidden bg-[var(--theme-bg-soft)] px-4 py-8 text-[var(--theme-ink)] sm:px-6 lg:px-8">
+      <FloatingToast tone="error" message={error} durationMs={6500} />
       <div className="relative mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[0.94fr_1.06fr] lg:items-stretch">
         <div className="flex flex-col justify-between rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-6 sm:p-8 lg:p-10">
           <div>
@@ -141,14 +143,6 @@ export function CompleteProfileSection({
                   onChange={(e) => onPhoneChange(e.target.value)}
                 />
               </div>
-
-              {error && (
-                <div className="flex items-center gap-3 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--theme-bg-soft)] text-xs font-medium text-[var(--theme-muted)]">!</span>
-                  <p className="text-sm font-medium text-[var(--theme-muted-strong)]">{error}</p>
-                </div>
-              )}
-
               <button
                 type="submit"
                 disabled={!canSubmit}

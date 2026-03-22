@@ -1,6 +1,7 @@
 import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
 import type { Trip } from "../../types/Trip";
 import PageLoadingState from "../common/PageLoadingState";
+import FloatingToast from "../common/FloatingToast";
 
 type Props = {
     trip: Trip | null;
@@ -59,6 +60,7 @@ if (loading) {
 
 return (
 	<div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
+		<FloatingToast tone="error" message={actionError} durationMs={6500} />
 		<section className="overflow-hidden rounded-[24px] border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 text-[var(--theme-ink)] sm:px-7 sm:py-8">
 		<p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--theme-muted)]">Trip details</p>
 		<div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -68,12 +70,6 @@ return (
 			</div>
 			<span className="inline-flex rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-2 text-sm font-medium text-[var(--theme-ink)]">Trip #{trip.id}</span>
 		</div>
-
-		{actionError ? (
-			<div className="mt-6 rounded-[12px] border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm font-medium text-[var(--theme-ink)]">
-			{actionError}
-			</div>
-		) : null}
 
 		<div className="mt-8 grid gap-4 md:grid-cols-2">
 			<DetailCard label="Departure" value={formatDateTimeRaw(trip.departure_time)} />
