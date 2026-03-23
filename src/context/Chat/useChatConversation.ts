@@ -1,11 +1,15 @@
 import { type FormEvent, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { clearConversation, clearConversationMessages, getConversation, sendConversationMessage } from "../../features/chat/chatApi";
+import {
+  clearConversation,
+  clearConversationMessages,
+  getConversation,
+  sendConversationMessage,
+} from "../../features/chat/chatApi";
 import { markConversationRead, syncConversationUnread } from "../../features/chat/chatReadState";
 import { useChatRealtime } from "../../features/chat/useChatRealtime";
 import type { ChatConversation } from "../../types/Chat";
 import { translate } from "../../i18n/config";
-import { useI18n } from "../../i18n/I18nProvider";
 
 /**
  * Manages a single chat conversation, including polling, realtime refresh, and sending.
@@ -13,7 +17,6 @@ import { useI18n } from "../../i18n/I18nProvider";
  * @returns Conversation state and handlers for the active chat thread.
  */
 export function useChatConversation() {
-  const { t } = useI18n();
   const { conversationId } = useParams();
   const [conversation, setConversation] = useState<ChatConversation | null>(null);
   const [loading, setLoading] = useState(true);
@@ -30,36 +33,43 @@ export function useChatConversation() {
    * @param isSilent - Whether to refresh without showing the full loading state.
    * @returns A promise that resolves once the conversation state has been updated.
    */
-  const load = useCallback(async (isSilent = false) => {
-    if (!conversationId) {
-      setLoading(false);
-      setError(translate("chat.conversationNotFound"));
-      return;
-    }
-
-    try {
-      if (!isSilent) {
-        setLoading(true);
-      }
-      setError(null);
-      const nextConversation = await getConversation(Number(conversationId));
-      setConversation(nextConversation);
-      syncConversationUnread(
-        nextConversation.id,
-        nextConversation.updatedAt,
-        nextConversation.latestMessage?.id,
-        nextConversation.latestMessage?.sender,
-      );
-      markConversationRead(nextConversation.id, nextConversation.updatedAt, nextConversation.latestMessage?.id);
-    } catch (err) {
-      setConversation(null);
-      setError(err instanceof Error ? err.message : translate("chat.loadFailed"));
-    } finally {
-      if (!isSilent) {
+  const load = useCallback(
+    async (isSilent = false) => {
+      if (!conversationId) {
         setLoading(false);
+        setError(translate("chat.conversationNotFound"));
+        return;
       }
-    }
-  }, [conversationId]);
+
+      try {
+        if (!isSilent) {
+          setLoading(true);
+        }
+        setError(null);
+        const nextConversation = await getConversation(Number(conversationId));
+        setConversation(nextConversation);
+        syncConversationUnread(
+          nextConversation.id,
+          nextConversation.updatedAt,
+          nextConversation.latestMessage?.id,
+          nextConversation.latestMessage?.sender,
+        );
+        markConversationRead(
+          nextConversation.id,
+          nextConversation.updatedAt,
+          nextConversation.latestMessage?.id,
+        );
+      } catch (err) {
+        setConversation(null);
+        setError(err instanceof Error ? err.message : translate("chat.loadFailed"));
+      } finally {
+        if (!isSilent) {
+          setLoading(false);
+        }
+      }
+    },
+    [conversationId],
+  );
 
   useEffect(() => {
     void load();
@@ -130,10 +140,6 @@ export function useChatConversation() {
   async function handleClearConversation() {
     if (!conversationId || !conversation) return;
 
-    if (!window.confirm(t("chat.clearConfirm"))) {
-      return;
-    }
-
     try {
       setError(null);
       setSuccess(null);
@@ -147,10 +153,14 @@ export function useChatConversation() {
         result.conversation.latestMessage?.id,
         result.conversation.latestMessage?.sender,
       );
-      markConversationRead(result.conversation.id, result.conversation.updatedAt, result.conversation.latestMessage?.id);
-      setSuccess(result.message || t("chat.clearSuccess"));
+      markConversationRead(
+        result.conversation.id,
+        result.conversation.updatedAt,
+        result.conversation.latestMessage?.id,
+      );
+      setSuccess(result.message || translate("chat.clearSuccess"));
     } catch (err) {
-      setError(err instanceof Error ? err.message : t("chat.clearFailed"));
+      setError(err instanceof Error ? err.message : translate("chat.clearFailed"));
     } finally {
       setClearing(false);
     }
@@ -166,10 +176,6 @@ export function useChatConversation() {
     if (!conversationId || !conversation) return;
     if (messageIds.length === 0) return;
 
-    if (!window.confirm(t("chat.clearMessageConfirm", { count: messageIds.length }))) {
-      return;
-    }
-
     try {
       setError(null);
       setSuccess(null);
@@ -183,10 +189,14 @@ export function useChatConversation() {
         result.conversation.latestMessage?.id,
         result.conversation.latestMessage?.sender,
       );
-      markConversationRead(result.conversation.id, result.conversation.updatedAt, result.conversation.latestMessage?.id);
-      setSuccess(result.message || t("chat.clearMessageSuccess"));
+      markConversationRead(
+        result.conversation.id,
+        result.conversation.updatedAt,
+        result.conversation.latestMessage?.id,
+      );
+      setSuccess(result.message || translate("chat.clearMessageSuccess"));
     } catch (err) {
-      setError(err instanceof Error ? err.message : t("chat.clearMessageFailed"));
+      setError(err instanceof Error ? err.message : translate("chat.clearMessageFailed"));
     } finally {
       setClearingMessageIds([]);
     }
