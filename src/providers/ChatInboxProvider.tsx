@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { ChatInboxContext } from "../context/ChatInboxContext.tsx";
+import { ChatInboxContext } from "../context/ChatInboxContext.ts";
 import { listConversations } from "../features/chat/chatApi";
 import {
   CHAT_READ_EVENT,

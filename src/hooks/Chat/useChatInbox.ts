@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ChatInboxContext } from "../../context/ChatInboxContext.tsx";
+import { ChatInboxContext } from "../../context/ChatInboxContext.ts";
 
 /**
  * Returns the chat inbox context value.
