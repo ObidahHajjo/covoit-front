@@ -7,6 +7,11 @@ export default defineConfig({
 	server: {
 		host:'127.0.0.1',
 		port: 5173,
-		allowedHosts:['covoit.local'],
+		allowedHosts:[
+			'api.ohajjo.online',
+			'covoit.ohajjo.online',
+			'covoit.local',
+			'127.0.0.1',
+			'localhost'],
 	},
 })
