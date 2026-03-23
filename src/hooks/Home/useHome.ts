@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyDriverTrips, getMyPassengerTrips, getPerson } from "../../features/person/personApi";
-import { useAuth } from "../useAuth.ts";
-import type { Person } from "../../types/Person";
-import type { Trip } from "../../types/Trip";
+import { getMyDriverTrips, getMyPassengerTrips, getPerson } from "../../features/person/personApi.ts";
+import { useAuth } from "../Auth/useAuth.ts";
+import type { Person } from "../../types/Person.ts";
+import type { Trip } from "../../types/Trip.ts";
 
 /**
  * Returns whether a trip is still upcoming.

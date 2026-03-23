@@ -1,8 +1,8 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { contactPassenger } from "../../features/contact/contactApi";
-import type { ChatMessage } from "../../types/Chat";
-import { translate } from "../../i18n/config";
+import { contactPassenger } from "../../features/contact/contactApi.ts";
+import type { ChatMessage } from "../../types/Chat.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Manages the form used to open or resume a chat with a trip passenger.

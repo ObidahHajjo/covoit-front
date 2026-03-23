@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { getMyDriverTrips } from "../../features/person/personApi";
-import type { Trip } from "../../types/Trip";
-import { translate } from "../../i18n/config";
+import { getMyDriverTrips } from "../../features/person/personApi.ts";
+import type { Trip } from "../../types/Trip.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Lists the trip timing buckets used to organize driver trips in the UI.

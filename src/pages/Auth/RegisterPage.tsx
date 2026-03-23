@@ -1,4 +1,4 @@
-import { useRegister } from "../../context/Auth/useRegister";
+import { useRegister } from "../../hooks/Auth/useRegister";
 import { RegisterSection } from "../../components/ui/Auth/RegisterSection.tsx";
 
 /**

@@ -5,11 +5,11 @@ import {
   clearConversationMessages,
   getConversation,
   sendConversationMessage,
-} from "../../features/chat/chatApi";
-import { markConversationRead, syncConversationUnread } from "../../features/chat/chatReadState";
-import { useChatRealtime } from "../../features/chat/useChatRealtime";
-import type { ChatConversation } from "../../types/Chat";
-import { translate } from "../../i18n/config";
+} from "../../features/chat/chatApi.ts";
+import { markConversationRead, syncConversationUnread } from "../../features/chat/chatReadState.ts";
+import { useChatRealtime } from "../../features/chat/useChatRealtime.ts";
+import type { ChatConversation } from "../../types/Chat.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Manages a single chat conversation, including polling, realtime refresh, and sending.

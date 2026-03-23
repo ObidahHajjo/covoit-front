@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getTrips } from "../../features/trips/tripApi";
-import type { Trip } from "../../types/Trip";
-import { useError } from "../useError.ts";
+import { getTrips } from "../../features/trips/tripApi.ts";
+import type { Trip } from "../../types/Trip.ts";
+import { useError } from "../../context/ErrorContext.ts";
 
 /**
  * Loads trip search results from the current URL query parameters.

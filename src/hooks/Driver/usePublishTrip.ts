@@ -1,9 +1,9 @@
 import { type FormEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { searchAddress } from "../../features/geo/geoApi";
-import { publishTrip } from "../../features/trips/tripApi";
-import type { GeoPfFeature } from "../../types/GeoPfSearchResponse";
-import { translate } from "../../i18n/config";
+import { searchAddress } from "../../features/geo/geoApi.ts";
+import { publishTrip } from "../../features/trips/tripApi.ts";
+import type { GeoPfFeature } from "../../types/GeoPfSearchResponse.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Describes the normalized address fields used by the trip publishing form.

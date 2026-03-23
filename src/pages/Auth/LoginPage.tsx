@@ -1,4 +1,4 @@
-import { useLogin } from "../../context/Auth/useLogin";
+import { useLogin } from "../../hooks/Auth/useLogin";
 import { LoginSection } from "../../components/ui/Auth/LoginSection.tsx";
 
 /**

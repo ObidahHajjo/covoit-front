@@ -1,4 +1,4 @@
-import { useBookingDetails } from "../../context/Booking/useBookingDetails";
+import { useBookingDetails } from "../../hooks/Booking/useBookingDetails";
 import { BookingDetailsSection } from "../../components/ui/Booking/BookingDetailsSection.tsx";
 import PageLoadingState from "../../components/common/PageLoadingState";
 import { useI18n } from "../../i18n/I18nProvider";

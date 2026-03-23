@@ -1,6 +1,6 @@
 import type { FormEvent, ReactNode } from "react";
 import type { GeoPfFeature } from "../../../types/GeoPfSearchResponse.ts";
-import type { AddressFieldState, SelectedAddress } from "../../../context/Driver/usePublishTrip.ts";
+import type { AddressFieldState, SelectedAddress } from "../../../hooks/Driver/usePublishTrip.ts";
 import FloatingToast from "../../common/FloatingToast.tsx";
 import { useI18n } from "../../../i18n/I18nProvider.tsx";
 

@@ -1,14 +1,14 @@
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../useAuth";
-import { createCar, deleteCar, searchCar, updateCar } from "../../features/cars/carApi";
-import { getBrands } from "../../features/brands/brandApi";
-import { deleteMyAccount, getPerson, updateMe } from "../../features/person/personApi";
-import type { Brand } from "../../types/Brand";
-import type { Person } from "../../types/Person";
-import type { Car } from "../../types/Car";
-import { extractApiErrorMessage, extractApiFieldErrors } from "../../app/apiError";
-import { translate } from "../../i18n/config";
+import { useAuth } from "../Auth/useAuth.ts";
+import { createCar, deleteCar, searchCar, updateCar } from "../../features/cars/carApi.ts";
+import { getBrands } from "../../features/brands/brandApi.ts";
+import { deleteMyAccount, getPerson, updateMe } from "../../features/person/personApi.ts";
+import type { Brand } from "../../types/Brand.ts";
+import type { Person } from "../../types/Person.ts";
+import type { Car } from "../../types/Car.ts";
+import { extractApiErrorMessage, extractApiFieldErrors } from "../../app/apiError.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Describes the editable profile fields shown in the account page.

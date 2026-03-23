@@ -1,4 +1,4 @@
-import { usePublishTrip } from "../../context/Driver/usePublishTrip";
+import { usePublishTrip } from "../../hooks/Driver/usePublishTrip";
 import { PublishTripForm } from "../../components/ui/DriverTrips/PublishTripForm.tsx";
 import { useI18n } from "../../i18n/I18nProvider";
 

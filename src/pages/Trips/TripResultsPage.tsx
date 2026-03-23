@@ -1,4 +1,4 @@
-import { useTripResults } from "../../context/Trips/useTripResults";
+import { useTripResults } from "../../hooks/Trips/useTripResults";
 import { TripResultsSection } from "../../components/ui/Trips/TripResultsSection.tsx";
 
 /**

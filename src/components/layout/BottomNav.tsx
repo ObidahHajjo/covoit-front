@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import type { AuthUser } from "../../types/MeResponse.ts";
-import { useAuth } from "../../context/useAuth.ts";
-import { useChatInbox } from "../../context/Chat/useChatInbox.ts";
+import { useAuth } from "../../hooks/Auth/useAuth.ts";
+import { useChatInbox } from "../../hooks/Chat/useChatInbox.ts";
 import { getConversationUnread, getConversationUnreadCount } from "../../features/chat/chatReadState.ts";
 import { useI18n } from "../../i18n/I18nProvider.tsx";
 

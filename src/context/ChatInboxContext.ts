@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { ChatConversation } from "../../types/Chat";
+import type { ChatConversation } from "../types/Chat.ts";
 
 /**
  * Describes the value exposed by the chat inbox context.

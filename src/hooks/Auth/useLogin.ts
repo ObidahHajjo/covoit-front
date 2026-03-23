@@ -1,9 +1,9 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../features/auth/authApi";
-import { useAuth } from "../useAuth";
-import { translate } from "../../i18n/config";
+import { login } from "../../features/auth/authApi.ts";
+import { useAuth } from "./useAuth.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Manages login form state and session restoration after authentication.

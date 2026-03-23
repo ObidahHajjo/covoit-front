@@ -255,7 +255,6 @@ export function LoginSection({
               </form>
             </div>
 
-            <p className="mt-6 px-1 text-xs text-[var(--theme-subtle)]">{t("auth.communityFirst")}</p>
           </div>
         </section>
       </SurfaceCard>

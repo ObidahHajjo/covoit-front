@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import type React from "react";
-import { useAuth } from "../useAuth";
-import { updateMe } from "../../features/person/personApi";
-import { translate } from "../../i18n/config";
+import { useAuth } from "../Auth/useAuth.ts";
+import { updateMe } from "../../features/person/personApi.ts";
+import { translate } from "../../i18n/config.ts";
 
 type LocationState = {
   email?: string;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FloatingToast from "../../components/common/FloatingToast";
-import { useMyTrips } from "../../context/Driver/useMyTrips";
+import { useMyTrips } from "../../hooks/Driver/useMyTrips";
 import { MyTripsSection } from "../../components/ui/DriverTrips/MyTripsSection.tsx";
 import PageLoadingState from "../../components/common/PageLoadingState";
 import { useI18n } from "../../i18n/I18nProvider";

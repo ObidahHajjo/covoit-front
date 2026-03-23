@@ -1,6 +1,6 @@
 import type { FormEvent, ReactNode } from "react";
 import type { Person } from "../../../types/Person.ts";
-import type { ProfileFormState } from "../../../context/Account/UseMyAccount.ts";
+import type { ProfileFormState } from "../../../hooks/Account/UseMyAccount.ts";
 import FloatingToast from "../../common/FloatingToast.tsx";
 import { useI18n } from "../../../i18n/I18nProvider.tsx";
 

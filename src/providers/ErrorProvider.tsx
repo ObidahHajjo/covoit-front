@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { ErrorContext, type ErrorContextType } from "../context/useError.ts";
+import { ErrorContext, type ErrorContextType } from "../context/ErrorContext.ts";
 
 /**
  * Provides app-wide error state and helpers to descendant components.

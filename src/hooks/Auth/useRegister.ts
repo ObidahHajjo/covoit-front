@@ -1,8 +1,8 @@
 import type { FormEvent } from "react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../features/auth/authApi";
-import { translate } from "../../i18n/config";
+import { register } from "../../features/auth/authApi.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Manages registration form state and redirects the user into profile completion.

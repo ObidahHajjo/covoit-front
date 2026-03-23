@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getMyPassengerTrips } from "../../features/person/personApi";
-import type { Trip } from "../../types/Trip";
-import { translate } from "../../i18n/config";
+import { getMyPassengerTrips } from "../../features/person/personApi.ts";
+import type { Trip } from "../../types/Trip.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Loads the authenticated passenger's bookings list.

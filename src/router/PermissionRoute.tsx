@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import type { AuthPermissions } from "../types/MeResponse";
 import { isProfileComplete } from "../auth/profileCompletion";
-import {useAuth} from "../context/useAuth.ts";
+import {useAuth} from "../hooks/Auth/useAuth.ts";
 import { useI18n } from "../i18n/I18nProvider";
 
 /**

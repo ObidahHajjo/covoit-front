@@ -1,8 +1,8 @@
 import type { FormEvent, ReactNode } from "react";
 import type { Brand } from "../../../types/Brand.ts";
 import type { Car } from "../../../types/Car.ts";
-import type { CarFormState } from "../../../context/Account/UseMyAccount.ts";
-import { DEFAULT_CAR_COLORS } from "../../../context/Account/UseMyAccount.ts";
+import type { CarFormState } from "../../../hooks/Account/UseMyAccount.ts";
+import { DEFAULT_CAR_COLORS } from "../../../hooks/Account/UseMyAccount.ts";
 import FloatingToast from "../../common/FloatingToast.tsx";
 import { useI18n } from "../../../i18n/I18nProvider.tsx";
 

@@ -1,6 +1,6 @@
 import PageLoadingState from "../components/common/PageLoadingState";
 import { HomeSection } from "../components/ui/HomeSection";
-import { useHome } from "../context/Home/useHome";
+import { useHome } from "../hooks/Home/useHome";
 import { useI18n } from "../i18n/I18nProvider";
 
 /**

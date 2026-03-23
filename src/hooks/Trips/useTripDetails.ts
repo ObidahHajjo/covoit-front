@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { contactDriver } from "../../features/chat/chatApi";
-import { getTripById, reserveTrip } from "../../features/trips/tripApi";
-import type { Trip } from "../../types/Trip";
-import { translate } from "../../i18n/config";
+import { contactDriver } from "../../features/chat/chatApi.ts";
+import { getTripById, reserveTrip } from "../../features/trips/tripApi.ts";
+import type { Trip } from "../../types/Trip.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Loads a public trip and exposes reservation and contact actions.

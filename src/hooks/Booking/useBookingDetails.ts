@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { contactDriver } from "../../features/chat/chatApi";
-import { cancelReservation, getTripById, getTripPassengers } from "../../features/trips/tripApi";
-import type { Person } from "../../types/Person";
-import type { Trip } from "../../types/Trip";
-import { translate } from "../../i18n/config";
+import { contactDriver } from "../../features/chat/chatApi.ts";
+import { cancelReservation, getTripById, getTripPassengers } from "../../features/trips/tripApi.ts";
+import type { Person } from "../../types/Person.ts";
+import type { Trip } from "../../types/Trip.ts";
+import { translate } from "../../i18n/config.ts";
 
 /**
  * Loads a passenger booking and exposes actions related to that reservation.

@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { isProfileComplete } from "../../auth/profileCompletion";
-import { useAuth } from "../../context/useAuth";
-import { useCompleteProfile } from "../../context/Person/useCompleteProfile";
+import { useAuth } from "../../hooks/Auth/useAuth.ts";
+import { useCompleteProfile } from "../../hooks/Person/useCompleteProfile";
 import { CompleteProfileSection } from "../../components/ui/Auth/CompleteProfileSection.tsx";
 import { useI18n } from "../../i18n/I18nProvider";
 

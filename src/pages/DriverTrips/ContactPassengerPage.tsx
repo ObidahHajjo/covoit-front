@@ -1,4 +1,4 @@
-import { useContactPassenger } from "../../context/Contact/useContactPassenger";
+import { useContactPassenger } from "../../hooks/Contact/useContactPassenger";
 import { LiveChatSection } from "../../components/ui/Chat/LiveChatSection.tsx";
 import { useI18n } from "../../i18n/I18nProvider";
 

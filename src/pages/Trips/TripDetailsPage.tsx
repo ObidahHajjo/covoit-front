@@ -1,4 +1,4 @@
-import { useTripDetails } from "../../context/Trips/useTripDetails";
+import { useTripDetails } from "../../hooks/Trips/useTripDetails";
 import { TripDetailsSection } from "../../components/ui/Trips/TripDetailsSection.tsx";
 
 /**

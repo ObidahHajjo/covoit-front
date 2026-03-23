@@ -1,11 +1,11 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../features/auth/authApi";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../hooks/Auth/useAuth.ts";
 import BottomNav, { navItems } from "./BottomNav";
 import { useI18n } from "../../i18n/I18nProvider";
 import LanguageSwitcher from "../common/LanguageSwitcher";
 import { NavLink } from "react-router-dom";
-import { useChatInbox } from "../../context/Chat/useChatInbox";
+import { useChatInbox } from "../../hooks/Chat/useChatInbox";
 
 /**
  * Resolve the current route to the header label.

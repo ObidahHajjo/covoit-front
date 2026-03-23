@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { isProfileComplete } from "../auth/profileCompletion";
-import { useAuth } from "../context/useAuth";
+import { useAuth } from "../hooks/Auth/useAuth.ts";
 import AppLayout from "../components/layout/AppLayout.tsx";
 import { useI18n } from "../i18n/I18nProvider";
 

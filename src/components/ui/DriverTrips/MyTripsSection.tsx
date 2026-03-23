@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { formatDateTimeRaw } from "../../../helpers/FormatDateTime.ts";
 import type { Trip } from "../../../types/Trip.ts";
-import type { TripStatus } from "../../../context/Driver/useMyTrips.ts";
+import type { TripStatus } from "../../../hooks/Driver/useMyTrips.ts";
 import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 const STATUS_CONFIG: Record<TripStatus, { labelKey: string; badge: string }> = {

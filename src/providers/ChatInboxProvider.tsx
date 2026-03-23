@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { ChatInboxContext } from "../context/Chat/ChatInboxContext";
+import { ChatInboxContext } from "../context/ChatInboxContext.tsx";
 import { listConversations } from "../features/chat/chatApi";
 import {
   CHAT_READ_EVENT,
@@ -10,7 +10,7 @@ import {
 } from "../features/chat/chatReadState";
 import { useChatRealtime } from "../features/chat/useChatRealtime";
 import type { ChatConversation } from "../types/Chat";
-import { useAuth } from "../context/useAuth";
+import { useAuth } from "../hooks/Auth/useAuth.ts";
 
 /**
  * Provides chat inbox data, unread counters, and realtime connection state.
