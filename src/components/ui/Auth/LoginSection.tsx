@@ -1,7 +1,7 @@
 import type React from "react";
-import { Notice, SereneButton, SurfaceCard } from "../common/SerenePrimitives";
-import { useI18n } from "../../i18n/I18nProvider";
-import LanguageSwitcher from "../common/LanguageSwitcher";
+import { Notice, SereneButton, SurfaceCard } from "../../common/SerenePrimitives.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
+import LanguageSwitcher from "../../common/LanguageSwitcher.tsx";
 
 type Props = {
   email: string;

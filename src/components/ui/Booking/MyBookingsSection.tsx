@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import type { Trip } from "../../types/Trip";
-import { useI18n } from "../../i18n/I18nProvider";
-import { formatLocaleDateTime } from "../../i18n/config";
+import type { Trip } from "../../../types/Trip.ts";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
+import { formatLocaleDateTime } from "../../../i18n/config.ts";
 
 type Props = {
   bookings: Trip[];

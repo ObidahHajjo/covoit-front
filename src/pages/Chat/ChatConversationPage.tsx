@@ -1,5 +1,5 @@
 import PageLoadingState from "../../components/common/PageLoadingState";
-import { LiveChatSection } from "../../components/ui/LiveChatSection";
+import { LiveChatSection } from "../../components/ui/Chat/LiveChatSection.tsx";
 import { useChatConversation } from "../../context/Chat/useChatConversation";
 import { useI18n } from "../../i18n/I18nProvider";
 

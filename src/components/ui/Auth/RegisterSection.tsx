@@ -1,6 +1,6 @@
 import type React from "react";
-import { useI18n } from "../../i18n/I18nProvider";
-import LanguageSwitcher from "../common/LanguageSwitcher";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
+import LanguageSwitcher from "../../common/LanguageSwitcher.tsx";
 
 type Props = {
   email: string;

@@ -1,8 +1,8 @@
-import type { Person } from "../../types/Person";
-import type { Trip } from "../../types/Trip";
-import FloatingToast from "../common/FloatingToast";
-import { useI18n } from "../../i18n/I18nProvider";
-import { formatLocaleDateTime } from "../../i18n/config";
+import type { Person } from "../../../types/Person.ts";
+import type { Trip } from "../../../types/Trip.ts";
+import FloatingToast from "../../common/FloatingToast.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
+import { formatLocaleDateTime } from "../../../i18n/config.ts";
 
 type Props = {
   trip: Trip;

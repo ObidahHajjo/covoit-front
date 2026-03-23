@@ -1,5 +1,5 @@
 import { useRegister } from "../../context/Auth/useRegister";
-import { RegisterSection } from "../../components/ui/RegisterSection";
+import { RegisterSection } from "../../components/ui/Auth/RegisterSection.tsx";
 
 /**
  * Render the account registration page with form state, validation feedback, and navigation back to sign-in.

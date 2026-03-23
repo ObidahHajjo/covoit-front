@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import type { ChatConversation } from "../../types/Chat";
-import { getConversationUnread } from "../../features/chat/chatReadState";
-import FloatingToast from "../common/FloatingToast";
-import { useI18n } from "../../i18n/I18nProvider";
-import { formatLocaleTime } from "../../i18n/config";
+import type { ChatConversation } from "../../../types/Chat.ts";
+import { getConversationUnread } from "../../../features/chat/chatReadState.ts";
+import FloatingToast from "../../common/FloatingToast.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
+import { formatLocaleTime } from "../../../i18n/config.ts";
 
 type Props = {
   conversations: ChatConversation[];

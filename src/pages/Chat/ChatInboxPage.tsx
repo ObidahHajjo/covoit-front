@@ -1,5 +1,5 @@
 import PageLoadingState from "../../components/common/PageLoadingState";
-import { ChatInboxSection } from "../../components/ui/ChatInboxSection";
+import { ChatInboxSection } from "../../components/ui/Chat/ChatInboxSection.tsx";
 import { useChatInbox } from "../../context/Chat/useChatInbox";
 import { useI18n } from "../../i18n/I18nProvider";
 

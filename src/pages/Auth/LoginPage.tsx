@@ -1,5 +1,5 @@
 import { useLogin } from "../../context/Auth/useLogin";
-import { LoginSection } from "../../components/ui/LoginSection";
+import { LoginSection } from "../../components/ui/Auth/LoginSection.tsx";
 
 /**
  * Render the sign-in page with credential fields, validation state, and navigation to account creation.

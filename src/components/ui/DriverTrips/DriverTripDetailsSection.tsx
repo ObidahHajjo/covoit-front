@@ -1,8 +1,8 @@
-import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
-import type { Person } from "../../types/Person";
-import type { Trip } from "../../types/Trip";
-import FloatingToast from "../common/FloatingToast";
-import { useI18n } from "../../i18n/I18nProvider";
+import { formatDateTimeRaw } from "../../../helpers/FormatDateTime.ts";
+import type { Person } from "../../../types/Person.ts";
+import type { Trip } from "../../../types/Trip.ts";
+import FloatingToast from "../../common/FloatingToast.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 /**
  * Show a grouped set of trip facts inside the driver view.

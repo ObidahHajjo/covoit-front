@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import FloatingToast from "../common/FloatingToast";
-import type { ChatMessage } from "../../types/Chat";
-import { useI18n } from "../../i18n/I18nProvider";
-import { formatLocaleTime } from "../../i18n/config";
+import FloatingToast from "../../common/FloatingToast.tsx";
+import type { ChatMessage } from "../../../types/Chat.ts";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
+import { formatLocaleTime } from "../../../i18n/config.ts";
 
 type ConfirmDialogState =
   | { kind: null }

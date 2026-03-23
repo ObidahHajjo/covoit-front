@@ -1,8 +1,8 @@
 import type { FormEvent, ReactNode } from "react";
-import type { Person } from "../../types/Person";
-import type { ProfileFormState } from "../../context/Account/UseMyAccount";
-import FloatingToast from "../common/FloatingToast";
-import { useI18n } from "../../i18n/I18nProvider";
+import type { Person } from "../../../types/Person.ts";
+import type { ProfileFormState } from "../../../context/Account/UseMyAccount.ts";
+import FloatingToast from "../../common/FloatingToast.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 type Props = {
   person: Person | null;

@@ -1,6 +1,6 @@
 import { useMyAccount } from "../../context/Account/UseMyAccount";
-import { ProfileSection } from "../../components/ui/ProfileSection";
-import { CarSection } from "../../components/ui/ProfileCarSection";
+import { ProfileSection } from "../../components/ui/Account/ProfileSection.tsx";
+import { CarSection } from "../../components/ui/Account/ProfileCarSection.tsx";
 import PageLoadingState from "../../components/common/PageLoadingState";
 import { useI18n } from "../../i18n/I18nProvider";
 

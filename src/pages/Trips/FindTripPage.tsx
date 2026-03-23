@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FindTripForm } from "../../components/ui/FindTripForm";
+import { FindTripForm } from "../../components/ui/Trips/FindTripForm.tsx";
 import type { CityPostalOption } from "../../types/Commune";
 import { useI18n } from "../../i18n/I18nProvider";
 

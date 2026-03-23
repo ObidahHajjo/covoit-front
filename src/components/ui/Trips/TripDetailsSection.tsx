@@ -1,8 +1,8 @@
-import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
-import type { Trip } from "../../types/Trip";
-import PageLoadingState from "../common/PageLoadingState";
-import FloatingToast from "../common/FloatingToast";
-import { useI18n } from "../../i18n/I18nProvider";
+import { formatDateTimeRaw } from "../../../helpers/FormatDateTime.ts";
+import type { Trip } from "../../../types/Trip.ts";
+import PageLoadingState from "../../common/PageLoadingState.tsx";
+import FloatingToast from "../../common/FloatingToast.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 type Props = {
     trip: Trip | null;

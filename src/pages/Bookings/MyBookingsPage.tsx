@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMyBookings } from "../../context/Booking/useMyBookings";
-import { MyBookingsSection } from "../../components/ui/MyBookingsSection";
+import { MyBookingsSection } from "../../components/ui/Booking/MyBookingsSection.tsx";
 import FloatingToast from "../../components/common/FloatingToast";
 import PageLoadingState from "../../components/common/PageLoadingState";
 import { useI18n } from "../../i18n/I18nProvider";

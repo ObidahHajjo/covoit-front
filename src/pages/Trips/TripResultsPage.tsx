@@ -1,5 +1,5 @@
 import { useTripResults } from "../../context/Trips/useTripResults";
-import { TripResultsSection } from "../../components/ui/TripResultsSection";
+import { TripResultsSection } from "../../components/ui/Trips/TripResultsSection.tsx";
 
 /**
  * Render the trip results page showing rides that match the active search criteria.

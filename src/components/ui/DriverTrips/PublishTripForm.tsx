@@ -1,8 +1,8 @@
 import type { FormEvent, ReactNode } from "react";
-import type { GeoPfFeature } from "../../types/GeoPfSearchResponse";
-import type { AddressFieldState, SelectedAddress } from "../../context/Driver/usePublishTrip";
-import FloatingToast from "../common/FloatingToast";
-import { useI18n } from "../../i18n/I18nProvider";
+import type { GeoPfFeature } from "../../../types/GeoPfSearchResponse.ts";
+import type { AddressFieldState, SelectedAddress } from "../../../context/Driver/usePublishTrip.ts";
+import FloatingToast from "../../common/FloatingToast.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 const inputClass =
   "w-full rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[var(--theme-primary)] focus:ring-1 focus:ring-[rgba(82,100,72,0.16)] disabled:cursor-not-allowed disabled:opacity-50";

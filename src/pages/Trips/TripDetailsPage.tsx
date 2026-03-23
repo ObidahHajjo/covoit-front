@@ -1,5 +1,5 @@
 import { useTripDetails } from "../../context/Trips/useTripDetails";
-import { TripDetailsSection } from "../../components/ui/TripDetailsSection";
+import { TripDetailsSection } from "../../components/ui/Trips/TripDetailsSection.tsx";
 
 /**
  * Render the passenger-facing trip details page with reservation and driver contact actions.

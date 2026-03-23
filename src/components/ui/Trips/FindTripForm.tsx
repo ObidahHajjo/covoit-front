@@ -1,8 +1,8 @@
 import type { FormEvent } from "react";
-import CityAutocomplete from "../../components/common/geo/CityAutocomplete";
-import type { CityPostalOption } from "../../types/Commune";
-import { FormField, SereneButton, SurfaceCard } from "../common/SerenePrimitives";
-import { useI18n } from "../../i18n/I18nProvider";
+import CityAutocomplete from "../../common/geo/CityAutocomplete.tsx";
+import type { CityPostalOption } from "../../../types/Commune.ts";
+import { FormField, SereneButton, SurfaceCard } from "../../common/SerenePrimitives.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 type Props = {
     startingCity: CityPostalOption | null;

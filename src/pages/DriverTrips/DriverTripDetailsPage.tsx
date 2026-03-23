@@ -1,5 +1,5 @@
 import { useDriverTripDetails } from "../../context/Driver/useDriverTripDetails";
-import { DriverTripDetailsSection } from "../../components/ui/DriverTripDetailsSection";
+import { DriverTripDetailsSection } from "../../components/ui/DriverTrips/DriverTripDetailsSection.tsx";
 import PageLoadingState from "../../components/common/PageLoadingState";
 import { useI18n } from "../../i18n/I18nProvider";
 

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { formatDateTimeRaw } from "../../helpers/FormatDateTime";
-import type { Trip } from "../../types/Trip";
-import { PageIntro, SurfaceCard } from "../common/SerenePrimitives";
-import { useI18n } from "../../i18n/I18nProvider";
+import { formatDateTimeRaw } from "../../../helpers/FormatDateTime.ts";
+import type { Trip } from "../../../types/Trip.ts";
+import { PageIntro, SurfaceCard } from "../../common/SerenePrimitives.tsx";
+import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 type Props = {
   trips: Trip[];
