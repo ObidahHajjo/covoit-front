@@ -65,6 +65,9 @@ export const dictionaries = {
     "nav.newMessage": "New Message",
     "nav.unreadMessages": "{count} unread messages",
     "nav.newMessageFallback": "New message",
+    "footer.tagline": "Plan calm rides, messages, and bookings from one shared space.",
+    "footer.quickLinks": "Quick links",
+    "footer.note": "Travel lightly, stay coordinated.",
 
     "loading.welcomeFlow": "Preparing the welcome flow...",
     "loading.welcomeFlowBody": "A quick session check before we show the sign-in pages.",
@@ -94,13 +97,15 @@ export const dictionaries = {
     "auth.editorialSerenity": "Editorial serenity",
     "auth.serenePath": "The Serene Path",
     "auth.welcomeBack": "Welcome back.",
-    "auth.welcomeBackBody": "Re-enter your calm corner of travel. Quiet routes, trusted riders, and smoother journeys are waiting.",
+    "auth.welcomeBackBody":
+      "Re-enter your calm corner of travel. Quiet routes, trusted riders, and smoother journeys are waiting.",
     "auth.verifiedProfiles": "Verified profiles",
     "auth.transparentPricing": "Transparent pricing",
     "auth.activeCommunity": "Active community",
     "auth.signInGently": "Sign in gently.",
     "auth.continueRoute": "Continue your route",
-    "auth.signInBody": "Use your email and password to reopen your dashboard, bookings, and upcoming rides.",
+    "auth.signInBody":
+      "Use your email and password to reopen your dashboard, bookings, and upcoming rides.",
     "auth.emailAddress": "Email address",
     "auth.password": "Password",
     "auth.secureField": "Secure field",
@@ -112,7 +117,8 @@ export const dictionaries = {
     "auth.createAccount": "Create account",
     "auth.clearForm": "Clear form",
     "auth.joinCommunity": "Join the community.",
-    "auth.registerBody": "Registration is simple. Create your account and start sharing rides with trusted people.",
+    "auth.registerBody":
+      "Registration is simple. Create your account and start sharing rides with trusted people.",
     "auth.quickSetup": "Quick setup",
     "auth.quickSetupBody": "Create your account in seconds.",
     "auth.secureAccess": "Secure access",
@@ -132,7 +138,8 @@ export const dictionaries = {
     "auth.alreadyHaveAccount": "Already have an account?",
     "auth.accountRecovery": "Account recovery",
     "auth.findWayBack": "Find your way back.",
-    "auth.recoveryBody": "Enter the email linked to your account and we will send a reset link so you can get back in.",
+    "auth.recoveryBody":
+      "Enter the email linked to your account and we will send a reset link so you can get back in.",
     "auth.secureResetFlow": "Secure reset flow",
     "auth.emailVerification": "Email verification",
     "auth.quickRecovery": "Quick recovery",
@@ -145,7 +152,8 @@ export const dictionaries = {
     "auth.unableToSendReset": "Unable to send reset link.",
     "auth.passwordRefresh": "Password refresh",
     "auth.setNewPassword": "Set a new password.",
-    "auth.resetBody": "Choose a new password, confirm it once, and we will guide you back to login after the update succeeds.",
+    "auth.resetBody":
+      "Choose a new password, confirm it once, and we will guide you back to login after the update succeeds.",
     "auth.resetTokenDetected": "Reset token detected",
     "auth.missingToken": "Missing token",
     "auth.emailPrefilled": "Email pre-filled",
@@ -153,27 +161,33 @@ export const dictionaries = {
     "auth.autoRedirect": "Automatic redirect on success",
     "auth.resetPassword": "Reset password",
     "auth.confirmNewPassword": "Confirm your new password.",
-    "auth.confirmNewPasswordBody": "Enter your new password below to complete the recovery process.",
+    "auth.confirmNewPasswordBody":
+      "Enter your new password below to complete the recovery process.",
     "auth.newPassword": "New password",
     "auth.confirmPassword": "Confirm password",
-    "auth.incompleteResetLink": "The reset link is incomplete. Request a new recovery email and try again.",
+    "auth.incompleteResetLink":
+      "The reset link is incomplete. Request a new recovery email and try again.",
     "auth.passwordResetSuccess": "Password reset successfully.",
     "auth.unableToResetPassword": "Unable to reset password.",
     "auth.resettingPassword": "Resetting password...",
-    "auth.loginRestoreFailed": "Login succeeded but the session could not be restored. Check API cookie settings.",
+    "auth.loginRestoreFailed":
+      "Login succeeded but the session could not be restored. Check API cookie settings.",
     "auth.loginFailed": "Login failed",
     "auth.registerFailed": "Register failed",
 
     "profile.loadingSetup": "Loading profile setup...",
     "profile.completion": "Profile completion",
     "profile.recognizeRealYou": "Let riders recognize the real you.",
-    "profile.completionBody": "A complete profile adds the identity cues needed for trusted pickups, smoother conversations, and better route matching.",
+    "profile.completionBody":
+      "A complete profile adds the identity cues needed for trusted pickups, smoother conversations, and better route matching.",
     "profile.visibleIdentity": "Visible identity",
-    "profile.visibleIdentityBody": "Names and a pseudo give other riders a clearer first impression.",
+    "profile.visibleIdentityBody":
+      "Names and a pseudo give other riders a clearer first impression.",
     "profile.reliableContact": "Reliable contact",
     "profile.reliableContactBody": "Phone stays optional, but useful for pickup coordination.",
     "profile.readyForProtectedRoutes": "Ready for protected routes",
-    "profile.readyForProtectedRoutesBody": "This is the final step before the main app experience opens.",
+    "profile.readyForProtectedRoutesBody":
+      "This is the final step before the main app experience opens.",
     "profile.trustCue": "Trust cue",
     "profile.step2": "Step 2 of onboarding",
     "profile.completeProfile": "Complete your profile.",
@@ -189,13 +203,17 @@ export const dictionaries = {
     "profile.updateFailed": "Profile update failed",
     "profile.updatedSuccess": "Profile updated successfully.",
     "profile.notes": "Profile notes",
-    "profile.notesBody1": "Use your real first and last name so drivers and passengers can spot you quickly.",
-    "profile.notesBody2": "Keep your phone number current for smoother coordination close to departure.",
+    "profile.notesBody1":
+      "Use your real first and last name so drivers and passengers can spot you quickly.",
+    "profile.notesBody2":
+      "Keep your phone number current for smoother coordination close to departure.",
     "profile.dangerZone": "Danger zone",
-    "profile.deleteBody": "Deleting your account starts a 90-day grace period. Sign in again during that window to restore access.",
+    "profile.deleteBody":
+      "Deleting your account starts a 90-day grace period. Sign in again during that window to restore access.",
     "profile.deleting": "Deleting...",
     "profile.deleteAccount": "Delete my account",
-    "profile.deleteConfirm": "Are you sure you want to delete your account? This action cannot be undone.",
+    "profile.deleteConfirm":
+      "Are you sure you want to delete your account? This action cannot be undone.",
     "profile.yourProfile": "Your profile",
     "profile.yourUsername": "Your username",
 
@@ -222,15 +240,18 @@ export const dictionaries = {
     "car.saveCar": "Save car",
     "car.saving": "Saving...",
     "car.vehicleNotes": "Vehicle notes",
-    "car.vehicleNotesBody1": "Choose the most precise model you can, then set the exact seat count for your own car.",
-    "car.vehicleNotesBody2": "The saved color and license plate help passengers find you faster at pickup.",
+    "car.vehicleNotesBody1":
+      "Choose the most precise model you can, then set the exact seat count for your own car.",
+    "car.vehicleNotesBody2":
+      "The saved color and license plate help passengers find you faster at pickup.",
     "car.updatedSuccess": "Car updated successfully.",
     "car.deletedSuccess": "Car deleted successfully.",
     "car.custom": "Custom",
 
     "account.myAccount": "My account",
     "account.heading": "Manage your personal details and vehicle information in one place.",
-    "account.body": "Update your profile, keep your car easy to recognize, and manage your account settings.",
+    "account.body":
+      "Update your profile, keep your car easy to recognize, and manage your account settings.",
 
     "home.sharedRoutes": "Shared routes",
     "home.welcomeBack": "Welcome back, {name}.",
@@ -250,7 +271,8 @@ export const dictionaries = {
 
     "search.title": "Find a trip",
     "search.heading": "Search available trips across the network.",
-    "search.body": "Pick a departure, an arrival, and an optional date to find the ride that fits best.",
+    "search.body":
+      "Pick a departure, an arrival, and an optional date to find the ride that fits best.",
     "search.from": "From",
     "search.to": "To",
     "search.departureCity": "Departure city",
@@ -262,7 +284,8 @@ export const dictionaries = {
     "search.browseEverything": "Browse everything",
     "search.tripSearch": "Trip search",
     "search.chooseRide": "Choose the ride that feels right.",
-    "search.compare": "Compare departure times, available seats, and route details to choose the right trip.",
+    "search.compare":
+      "Compare departure times, available seats, and route details to choose the right trip.",
     "search.routePreview": "Route preview",
     "search.seatCount": "{count} seat{suffix}",
     "search.tripNumber": "Trip #{id}",
@@ -272,7 +295,8 @@ export const dictionaries = {
     "search.tryDifferent": "Try a different city pair or broaden the day to see more options.",
 
     "trip.tripDetails": "Trip details",
-    "trip.detailsBody": "Review the trip schedule, route information, and booking options before you confirm.",
+    "trip.detailsBody":
+      "Review the trip schedule, route information, and booking options before you confirm.",
     "trip.departure": "Departure",
     "trip.arrival": "Arrival",
     "trip.arrivalPending": "Arrival time pending",
@@ -298,7 +322,8 @@ export const dictionaries = {
 
     "driverTrips.driverDesk": "Driver desk",
     "driverTrips.heading": "My Trips",
-    "driverTrips.body": "Track what is active now, what is scheduled next, and what has already rolled through.",
+    "driverTrips.body":
+      "Track what is active now, what is scheduled next, and what has already rolled through.",
     "driverTrips.publishNew": "Publish a new trip",
     "driverTrips.tripLane": "Trip lane",
     "driverTrips.noTripsLane": "No trips in this lane.",
@@ -317,7 +342,8 @@ export const dictionaries = {
     "driverTrips.loadFailed": "Failed to load my trips",
     "driverTrips.publishTitle": "Publish a trip",
     "driverTrips.offerRide": "Offer a ride",
-    "driverTrips.publishBody": "Set timing, seats, and route details clearly so passengers understand the trip at a glance.",
+    "driverTrips.publishBody":
+      "Set timing, seats, and route details clearly so passengers understand the trip at a glance.",
     "driverTrips.tripInfo": "Trip information",
     "driverTrips.dateTime": "Date and time",
     "driverTrips.availableSeats": "Available seats",
@@ -338,7 +364,8 @@ export const dictionaries = {
     "driverTrips.publishedSuccess": "Trip published successfully.",
     "driverTrips.publishFailed": "Failed to publish trip",
     "driverTrips.detailsDesk": "Driver trip desk",
-    "driverTrips.detailsBody": "Manage route details, passenger outreach, and cancellation from one composed view.",
+    "driverTrips.detailsBody":
+      "Manage route details, passenger outreach, and cancellation from one composed view.",
     "driverTrips.tripTiming": "Trip timing",
     "driverTrips.smoking": "Smoking",
     "driverTrips.allowed": "Allowed",
@@ -362,7 +389,8 @@ export const dictionaries = {
 
     "bookings.title": "My bookings",
     "bookings.heading": "All your bookings in one place.",
-    "bookings.body": "Review your upcoming rides and past trips with all the details for each booking.",
+    "bookings.body":
+      "Review your upcoming rides and past trips with all the details for each booking.",
     "bookings.bookedRoutes": "Booked routes",
     "bookings.ridePlans": "Your ride plans",
     "bookings.savedCount": "{count} booking{suffix} saved",
@@ -374,7 +402,8 @@ export const dictionaries = {
     "bookings.person": "person",
     "bookings.people": "people",
     "bookings.details": "Booking details",
-    "bookings.detailsBody": "Keep departure notes, passenger count, and cancellation actions together in one calm view.",
+    "bookings.detailsBody":
+      "Keep departure notes, passenger count, and cancellation actions together in one calm view.",
     "bookings.passengers": "Passengers",
     "bookings.reservationStatus": "Reservation status",
     "bookings.rideWrapped": "This ride has already wrapped up.",
@@ -393,13 +422,15 @@ export const dictionaries = {
     "chat.chats": "Chats",
     "chat.inboxBody": "Keep up with your conversations and trip updates in one place.",
     "chat.none": "No chats yet",
-    "chat.noneBody": "Start a conversation from a trip, booking, or passenger list and it will appear here.",
+    "chat.noneBody":
+      "Start a conversation from a trip, booking, or passenger list and it will appear here.",
     "chat.openConversation": "Open conversation",
     "chat.conversation": "Conversation",
     "chat.noneYet": "No messages yet",
     "chat.noneYetBody": "Start the conversation here.",
     "chat.cleared": "Conversation cleared",
-    "chat.clearedBody": "Older messages were cleared for your account. New messages will appear here.",
+    "chat.clearedBody":
+      "Older messages were cleared for your account. New messages will appear here.",
     "chat.clearConversation": "Clear conversation",
     "chat.clearMessage": "Clear message",
     "chat.clearSelectedMessages": "Clear selected",
@@ -424,16 +455,18 @@ export const dictionaries = {
     "chat.directConversation": "Direct conversation",
     "chat.defaultCounterpart": "Conversation",
     "chat.contactDriverTitle": "Chat with driver",
-    "chat.contactDriverBody": "Coordinate pickup details and timing directly inside the app instead of sending an email-style form.",
+    "chat.contactDriverBody":
+      "Coordinate pickup details and timing directly inside the app instead of sending an email-style form.",
     "chat.driver": "Driver",
     "chat.contactPassengerTitle": "Chat with passenger",
-    "chat.contactPassengerBody": "Keep trip coordination inside a direct chat experience so updates feel immediate and easier to follow.",
+    "chat.contactPassengerBody":
+      "Keep trip coordination inside a direct chat experience so updates feel immediate and easier to follow.",
     "chat.passenger": "Passenger",
     "chat.conversationNotFound": "Conversation not found",
     "chat.loadFailed": "Failed to load conversation",
     "chat.messageSent": "Message sent in chat.",
     "chat.sendFailed": "Failed to send message",
-    "chat.opening": "Opening chat..."
+    "chat.opening": "Opening chat...",
   },
   fr: {
     "language.label": "Langue",
@@ -496,9 +529,13 @@ export const dictionaries = {
     "nav.newMessage": "Nouveau message",
     "nav.unreadMessages": "{count} messages non lus",
     "nav.newMessageFallback": "Nouveau message",
+    "footer.tagline": "Planifiez trajets, messages et reservations depuis un seul espace partage.",
+    "footer.quickLinks": "Acces rapides",
+    "footer.note": "Voyagez leger, restez coordonne.",
 
     "loading.welcomeFlow": "Preparation de l'accueil...",
-    "loading.welcomeFlowBody": "Verification rapide de votre session avant d'afficher les ecrans de connexion.",
+    "loading.welcomeFlowBody":
+      "Verification rapide de votre session avant d'afficher les ecrans de connexion.",
     "loading.dashboardGate": "Ouverture de votre espace...",
     "loading.dashboardGateBody": "Nous verifions votre session et preparons votre espace trajet.",
     "loading.permission": "Verification des acces...",
@@ -525,13 +562,15 @@ export const dictionaries = {
     "auth.editorialSerenity": "Serenite editoriale",
     "auth.serenePath": "Le chemin serein",
     "auth.welcomeBack": "Bon retour.",
-    "auth.welcomeBackBody": "Retrouvez votre espace trajet apaisant. Des itineraire calmes, des voyageurs fiables et des deplacements plus fluides vous attendent.",
+    "auth.welcomeBackBody":
+      "Retrouvez votre espace trajet apaisant. Des itineraire calmes, des voyageurs fiables et des deplacements plus fluides vous attendent.",
     "auth.verifiedProfiles": "Profils verifies",
     "auth.transparentPricing": "Tarifs transparents",
     "auth.activeCommunity": "Communaute active",
     "auth.signInGently": "Connectez-vous en douceur.",
     "auth.continueRoute": "Poursuivre votre trajet",
-    "auth.signInBody": "Utilisez votre e-mail et votre mot de passe pour retrouver votre tableau de bord, vos reservations et vos prochains trajets.",
+    "auth.signInBody":
+      "Utilisez votre e-mail et votre mot de passe pour retrouver votre tableau de bord, vos reservations et vos prochains trajets.",
     "auth.emailAddress": "Adresse e-mail",
     "auth.password": "Mot de passe",
     "auth.secureField": "Champ securise",
@@ -543,7 +582,8 @@ export const dictionaries = {
     "auth.createAccount": "Creer un compte",
     "auth.clearForm": "Vider le formulaire",
     "auth.joinCommunity": "Rejoignez la communaute.",
-    "auth.registerBody": "L'inscription est simple. Creez votre compte et commencez a partager des trajets avec des personnes de confiance.",
+    "auth.registerBody":
+      "L'inscription est simple. Creez votre compte et commencez a partager des trajets avec des personnes de confiance.",
     "auth.quickSetup": "Mise en route rapide",
     "auth.quickSetupBody": "Creez votre compte en quelques secondes.",
     "auth.secureAccess": "Acces securise",
@@ -554,7 +594,8 @@ export const dictionaries = {
     "auth.registration": "Inscription",
     "auth.startHere": "Commencez ici",
     "auth.joinRoute": "Rejoignez l'itineraire.",
-    "auth.useRideHistoryEmail": "Utilisez l'e-mail que vous souhaitez associer a votre historique de trajets.",
+    "auth.useRideHistoryEmail":
+      "Utilisez l'e-mail que vous souhaitez associer a votre historique de trajets.",
     "auth.createPassword": "Creer un mot de passe",
     "auth.passwordMin": "Au moins 6 caracteres.",
     "auth.repeatPassword": "Repeter le mot de passe",
@@ -563,7 +604,8 @@ export const dictionaries = {
     "auth.alreadyHaveAccount": "Vous avez deja un compte ?",
     "auth.accountRecovery": "Recuperation du compte",
     "auth.findWayBack": "Retrouvez votre chemin.",
-    "auth.recoveryBody": "Saisissez l'e-mail lie a votre compte et nous enverrons un lien de reinitialisation.",
+    "auth.recoveryBody":
+      "Saisissez l'e-mail lie a votre compte et nous enverrons un lien de reinitialisation.",
     "auth.secureResetFlow": "Reinitialisation securisee",
     "auth.emailVerification": "Verification e-mail",
     "auth.quickRecovery": "Recuperation rapide",
@@ -572,11 +614,13 @@ export const dictionaries = {
     "auth.sendResetBody": "Nous enverrons des instructions si un compte existe pour cette adresse.",
     "auth.sendingLink": "Envoi du lien...",
     "auth.sendResetLinkButton": "Envoyer le lien",
-    "auth.resetEmailSent": "Si un compte existe pour cet e-mail, un lien de reinitialisation a ete envoye.",
+    "auth.resetEmailSent":
+      "Si un compte existe pour cet e-mail, un lien de reinitialisation a ete envoye.",
     "auth.unableToSendReset": "Impossible d'envoyer le lien de reinitialisation.",
     "auth.passwordRefresh": "Renouvellement du mot de passe",
     "auth.setNewPassword": "Definissez un nouveau mot de passe.",
-    "auth.resetBody": "Choisissez un nouveau mot de passe, confirmez-le et nous vous redirigerons vers la connexion apres la mise a jour.",
+    "auth.resetBody":
+      "Choisissez un nouveau mot de passe, confirmez-le et nous vous redirigerons vers la connexion apres la mise a jour.",
     "auth.resetTokenDetected": "Jeton detecte",
     "auth.missingToken": "Jeton manquant",
     "auth.emailPrefilled": "E-mail pre-rempli",
@@ -584,27 +628,34 @@ export const dictionaries = {
     "auth.autoRedirect": "Redirection automatique en cas de succes",
     "auth.resetPassword": "Reinitialiser le mot de passe",
     "auth.confirmNewPassword": "Confirmez votre nouveau mot de passe.",
-    "auth.confirmNewPasswordBody": "Saisissez votre nouveau mot de passe pour terminer la recuperation.",
+    "auth.confirmNewPasswordBody":
+      "Saisissez votre nouveau mot de passe pour terminer la recuperation.",
     "auth.newPassword": "Nouveau mot de passe",
     "auth.confirmPassword": "Confirmer le mot de passe",
-    "auth.incompleteResetLink": "Le lien de reinitialisation est incomplet. Demandez un nouvel e-mail de recuperation puis reessayez.",
+    "auth.incompleteResetLink":
+      "Le lien de reinitialisation est incomplet. Demandez un nouvel e-mail de recuperation puis reessayez.",
     "auth.passwordResetSuccess": "Mot de passe reinitialise avec succes.",
     "auth.unableToResetPassword": "Impossible de reinitialiser le mot de passe.",
     "auth.resettingPassword": "Reinitialisation du mot de passe...",
-    "auth.loginRestoreFailed": "La connexion a reussi mais la session n'a pas pu etre restauree. Verifiez la configuration des cookies API.",
+    "auth.loginRestoreFailed":
+      "La connexion a reussi mais la session n'a pas pu etre restauree. Verifiez la configuration des cookies API.",
     "auth.loginFailed": "Echec de la connexion",
     "auth.registerFailed": "Echec de l'inscription",
 
     "profile.loadingSetup": "Chargement du profil...",
     "profile.completion": "Completion du profil",
     "profile.recognizeRealYou": "Permettez aux voyageurs de vous reconnaitre.",
-    "profile.completionBody": "Un profil complet apporte les reperes necessaires pour des rendez-vous fiables, des conversations plus fluides et de meilleurs trajets.",
+    "profile.completionBody":
+      "Un profil complet apporte les reperes necessaires pour des rendez-vous fiables, des conversations plus fluides et de meilleurs trajets.",
     "profile.visibleIdentity": "Identite visible",
-    "profile.visibleIdentityBody": "Nom et pseudo donnent une impression plus claire aux autres voyageurs.",
+    "profile.visibleIdentityBody":
+      "Nom et pseudo donnent une impression plus claire aux autres voyageurs.",
     "profile.reliableContact": "Contact fiable",
-    "profile.reliableContactBody": "Le telephone reste optionnel, mais utile pour coordonner le depart.",
+    "profile.reliableContactBody":
+      "Le telephone reste optionnel, mais utile pour coordonner le depart.",
     "profile.readyForProtectedRoutes": "Pret pour les trajets proteges",
-    "profile.readyForProtectedRoutesBody": "C'est la derniere etape avant l'ouverture de l'application principale.",
+    "profile.readyForProtectedRoutesBody":
+      "C'est la derniere etape avant l'ouverture de l'application principale.",
     "profile.trustCue": "Repere de confiance",
     "profile.step2": "Etape 2 de l'inscription",
     "profile.completeProfile": "Completez votre profil.",
@@ -620,13 +671,17 @@ export const dictionaries = {
     "profile.updateFailed": "La mise a jour du profil a echoue",
     "profile.updatedSuccess": "Profil mis a jour avec succes.",
     "profile.notes": "Notes de profil",
-    "profile.notesBody1": "Utilisez votre vrai prenom et nom afin que conducteurs et passagers vous reperent rapidement.",
-    "profile.notesBody2": "Gardez votre numero de telephone a jour pour faciliter la coordination avant le depart.",
+    "profile.notesBody1":
+      "Utilisez votre vrai prenom et nom afin que conducteurs et passagers vous reperent rapidement.",
+    "profile.notesBody2":
+      "Gardez votre numero de telephone a jour pour faciliter la coordination avant le depart.",
     "profile.dangerZone": "Zone sensible",
-    "profile.deleteBody": "La suppression de votre compte lance une periode de grace de 90 jours. Reconnectez-vous durant cette periode pour restaurer l'acces.",
+    "profile.deleteBody":
+      "La suppression de votre compte lance une periode de grace de 90 jours. Reconnectez-vous durant cette periode pour restaurer l'acces.",
     "profile.deleting": "Suppression...",
     "profile.deleteAccount": "Supprimer mon compte",
-    "profile.deleteConfirm": "Voulez-vous vraiment supprimer votre compte ? Cette action est irreversible.",
+    "profile.deleteConfirm":
+      "Voulez-vous vraiment supprimer votre compte ? Cette action est irreversible.",
     "profile.yourProfile": "Votre profil",
     "profile.yourUsername": "Votre pseudo",
 
@@ -635,7 +690,8 @@ export const dictionaries = {
     "car.seatsLabel": "{count} places",
     "car.seatCountPending": "Nombre de places en attente",
     "car.noneYet": "Aucune voiture enregistree",
-    "car.noneYetBody": "Ajoutez votre vehicule pour que les passagers vous reconnaissent rapidement.",
+    "car.noneYetBody":
+      "Ajoutez votre vehicule pour que les passagers vous reconnaissent rapidement.",
     "car.brand": "Marque",
     "car.selectBrand": "Selectionnez une marque",
     "car.modelSearch": "Recherche de modele",
@@ -653,19 +709,24 @@ export const dictionaries = {
     "car.saveCar": "Enregistrer la voiture",
     "car.saving": "Enregistrement...",
     "car.vehicleNotes": "Notes vehicule",
-    "car.vehicleNotesBody1": "Choisissez le modele le plus precis possible puis indiquez le nombre exact de places de votre voiture.",
-    "car.vehicleNotesBody2": "La couleur enregistree et la plaque aident les passagers a vous trouver plus vite au rendez-vous.",
+    "car.vehicleNotesBody1":
+      "Choisissez le modele le plus precis possible puis indiquez le nombre exact de places de votre voiture.",
+    "car.vehicleNotesBody2":
+      "La couleur enregistree et la plaque aident les passagers a vous trouver plus vite au rendez-vous.",
     "car.updatedSuccess": "Voiture mise a jour avec succes.",
     "car.deletedSuccess": "Voiture supprimee avec succes.",
     "car.custom": "Personnalisee",
 
     "account.myAccount": "Mon compte",
-    "account.heading": "Gerez vos informations personnelles et celles de votre vehicule au meme endroit.",
-    "account.body": "Mettez a jour votre profil, gardez votre voiture facile a reconnaitre et gerez les reglages de votre compte.",
+    "account.heading":
+      "Gerez vos informations personnelles et celles de votre vehicule au meme endroit.",
+    "account.body":
+      "Mettez a jour votre profil, gardez votre voiture facile a reconnaitre et gerez les reglages de votre compte.",
 
     "home.sharedRoutes": "Trajets partages",
     "home.welcomeBack": "Bon retour, {name}.",
-    "home.body": "Gardez un oeil sur les departs, les places disponibles et vos dernieres reservations.",
+    "home.body":
+      "Gardez un oeil sur les departs, les places disponibles et vos dernieres reservations.",
     "home.quickPulse": "Apercu rapide",
     "home.driverTrips": "Trajets conducteur",
     "home.bookings": "Reservations",
@@ -681,7 +742,8 @@ export const dictionaries = {
 
     "search.title": "Trouver un trajet",
     "search.heading": "Recherchez les trajets disponibles sur le reseau.",
-    "search.body": "Choisissez un depart, une arrivee et une date optionnelle pour trouver le trajet ideal.",
+    "search.body":
+      "Choisissez un depart, une arrivee et une date optionnelle pour trouver le trajet ideal.",
     "search.from": "Depart",
     "search.to": "Arrivee",
     "search.departureCity": "Ville de depart",
@@ -693,17 +755,20 @@ export const dictionaries = {
     "search.browseEverything": "Tout parcourir",
     "search.tripSearch": "Recherche de trajet",
     "search.chooseRide": "Choisissez le trajet qui vous convient.",
-    "search.compare": "Comparez horaires, places et details de l'itineraire dans une liste simple a parcourir.",
+    "search.compare":
+      "Comparez horaires, places et details de l'itineraire dans une liste simple a parcourir.",
     "search.routePreview": "Apercu du trajet",
     "search.seatCount": "{count} place{suffix}",
     "search.tripNumber": "Trajet n°{id}",
     "search.pickupDetails": "Details de prise en charge inclus",
     "search.lookingForMatches": "Recherche de trajets correspondants...",
     "search.noMatches": "Aucun trajet ne correspond encore a cette recherche.",
-    "search.tryDifferent": "Essayez une autre paire de villes ou elargissez la date pour voir plus d'options.",
+    "search.tryDifferent":
+      "Essayez une autre paire de villes ou elargissez la date pour voir plus d'options.",
 
     "trip.tripDetails": "Details du trajet",
-    "trip.detailsBody": "Consultez l'horaire du trajet, les informations de parcours et les options de reservation avant de confirmer.",
+    "trip.detailsBody":
+      "Consultez l'horaire du trajet, les informations de parcours et les options de reservation avant de confirmer.",
     "trip.departure": "Depart",
     "trip.arrival": "Arrivee",
     "trip.arrivalPending": "Heure d'arrivee en attente",
@@ -729,7 +794,8 @@ export const dictionaries = {
 
     "driverTrips.driverDesk": "Espace conducteur",
     "driverTrips.heading": "Mes trajets",
-    "driverTrips.body": "Suivez ce qui est en cours, ce qui arrive bientot et ce qui est deja termine.",
+    "driverTrips.body":
+      "Suivez ce qui est en cours, ce qui arrive bientot et ce qui est deja termine.",
     "driverTrips.publishNew": "Publier un nouveau trajet",
     "driverTrips.tripLane": "Categorie",
     "driverTrips.noTripsLane": "Aucun trajet dans cette categorie.",
@@ -748,12 +814,14 @@ export const dictionaries = {
     "driverTrips.loadFailed": "Impossible de charger mes trajets",
     "driverTrips.publishTitle": "Publier un trajet",
     "driverTrips.offerRide": "Proposer un trajet",
-    "driverTrips.publishBody": "Definissez clairement horaire, places et itineraire pour que les passagers comprennent le trajet d'un coup d'oeil.",
+    "driverTrips.publishBody":
+      "Definissez clairement horaire, places et itineraire pour que les passagers comprennent le trajet d'un coup d'oeil.",
     "driverTrips.tripInfo": "Informations du trajet",
     "driverTrips.dateTime": "Date et heure",
     "driverTrips.availableSeats": "Places disponibles",
     "driverTrips.smokingToggle": "Fumeur autorise",
-    "driverTrips.smokingToggleBody": "Activez ceci seulement si les passagers peuvent fumer pendant le trajet.",
+    "driverTrips.smokingToggleBody":
+      "Activez ceci seulement si les passagers peuvent fumer pendant le trajet.",
     "driverTrips.startingAddress": "Adresse de depart",
     "driverTrips.searchStartingAddress": "Rechercher l'adresse de depart...",
     "driverTrips.arrivalAddress": "Adresse d'arrivee",
@@ -765,11 +833,13 @@ export const dictionaries = {
     "driverTrips.addressCity": "Ville",
     "driverTrips.publishTrip": "Publier le trajet",
     "driverTrips.publishing": "Publication...",
-    "driverTrips.selectSuggestedAddresses": "Veuillez selectionner les deux adresses dans les suggestions.",
+    "driverTrips.selectSuggestedAddresses":
+      "Veuillez selectionner les deux adresses dans les suggestions.",
     "driverTrips.publishedSuccess": "Trajet publie avec succes.",
     "driverTrips.publishFailed": "Impossible de publier le trajet",
     "driverTrips.detailsDesk": "Gestion du trajet conducteur",
-    "driverTrips.detailsBody": "Gerez les details, les passagers et l'annulation depuis une vue unique.",
+    "driverTrips.detailsBody":
+      "Gerez les details, les passagers et l'annulation depuis une vue unique.",
     "driverTrips.tripTiming": "Horaires du trajet",
     "driverTrips.smoking": "Fumeur",
     "driverTrips.allowed": "Autorise",
@@ -782,7 +852,8 @@ export const dictionaries = {
     "driverTrips.passengerList": "Liste des passagers",
     "driverTrips.travelingWithYou": "Passagers avec vous",
     "driverTrips.noPassengers": "Aucun passager pour le moment.",
-    "driverTrips.noPassengersBody": "Les nouvelles reservations apparaitront ici au fur et a mesure.",
+    "driverTrips.noPassengersBody":
+      "Les nouvelles reservations apparaitront ici au fur et a mesure.",
     "driverTrips.contactPassenger": "Contacter le passager",
     "driverTrips.cancelTrip": "Annuler ce trajet",
     "driverTrips.cancelling": "Annulation...",
@@ -793,7 +864,8 @@ export const dictionaries = {
 
     "bookings.title": "Mes reservations",
     "bookings.heading": "Toutes vos reservations au meme endroit.",
-    "bookings.body": "Consultez vos trajets a venir et vos trajets passes avec tous les details de chaque reservation.",
+    "bookings.body":
+      "Consultez vos trajets a venir et vos trajets passes avec tous les details de chaque reservation.",
     "bookings.bookedRoutes": "Trajets reserves",
     "bookings.ridePlans": "Vos trajets prevus",
     "bookings.savedCount": "{count} reservation{suffix} enregistree{suffix}",
@@ -805,7 +877,8 @@ export const dictionaries = {
     "bookings.person": "personne",
     "bookings.people": "personnes",
     "bookings.details": "Details de reservation",
-    "bookings.detailsBody": "Retrouvez horaires, passagers et actions d'annulation dans une vue claire.",
+    "bookings.detailsBody":
+      "Retrouvez horaires, passagers et actions d'annulation dans une vue claire.",
     "bookings.passengers": "Passagers",
     "bookings.reservationStatus": "Statut de la reservation",
     "bookings.rideWrapped": "Ce trajet est deja termine.",
@@ -824,13 +897,15 @@ export const dictionaries = {
     "chat.chats": "Conversations",
     "chat.inboxBody": "Retrouvez vos conversations et les mises a jour de trajet au meme endroit.",
     "chat.none": "Aucune conversation pour le moment",
-    "chat.noneBody": "Demarrez une conversation depuis un trajet, une reservation ou la liste des passagers : elle apparaitra ici.",
+    "chat.noneBody":
+      "Demarrez une conversation depuis un trajet, une reservation ou la liste des passagers : elle apparaitra ici.",
     "chat.openConversation": "Ouvrir la conversation",
     "chat.conversation": "Conversation",
     "chat.noneYet": "Aucun message pour le moment",
     "chat.noneYetBody": "Commencez la conversation ici.",
     "chat.cleared": "Conversation effacee",
-    "chat.clearedBody": "Les anciens messages ont ete effaces pour votre compte. Les nouveaux messages apparaitront ici.",
+    "chat.clearedBody":
+      "Les anciens messages ont ete effaces pour votre compte. Les nouveaux messages apparaitront ici.",
     "chat.clearConversation": "Effacer la conversation",
     "chat.clearMessage": "Effacer le message",
     "chat.clearSelectedMessages": "Effacer la selection",
@@ -842,7 +917,8 @@ export const dictionaries = {
     "chat.longPressToSelect": "Appui long pour selectionner",
     "chat.selected": "Selectionne",
     "chat.clearConfirm": "Effacer cette conversation pour votre compte uniquement ?",
-    "chat.clearMessageConfirm": "Effacer {count} message(s) selectionne(s) pour votre compte uniquement ?",
+    "chat.clearMessageConfirm":
+      "Effacer {count} message(s) selectionne(s) pour votre compte uniquement ?",
     "chat.clearSuccess": "La conversation a ete effacee pour votre compte.",
     "chat.clearFailed": "Impossible d'effacer la conversation",
     "chat.clearMessageSuccess": "Le message a ete efface pour votre compte.",
@@ -855,16 +931,18 @@ export const dictionaries = {
     "chat.directConversation": "Conversation directe",
     "chat.defaultCounterpart": "Conversation",
     "chat.contactDriverTitle": "Discuter avec le conducteur",
-    "chat.contactDriverBody": "Coordonnez le lieu de prise en charge et l'horaire directement dans l'application.",
+    "chat.contactDriverBody":
+      "Coordonnez le lieu de prise en charge et l'horaire directement dans l'application.",
     "chat.driver": "Conducteur",
     "chat.contactPassengerTitle": "Discuter avec le passager",
-    "chat.contactPassengerBody": "Gardez la coordination du trajet dans une conversation directe, plus immediate et plus simple a suivre.",
+    "chat.contactPassengerBody":
+      "Gardez la coordination du trajet dans une conversation directe, plus immediate et plus simple a suivre.",
     "chat.passenger": "Passager",
     "chat.conversationNotFound": "Conversation introuvable",
     "chat.loadFailed": "Impossible de charger la conversation",
     "chat.messageSent": "Message envoye dans la conversation.",
     "chat.sendFailed": "Impossible d'envoyer le message",
-    "chat.opening": "Ouverture de la conversation..."
+    "chat.opening": "Ouverture de la conversation...",
   },
   ar: {
     "language.label": "اللغة",
@@ -927,6 +1005,9 @@ export const dictionaries = {
     "nav.newMessage": "رسالة جديدة",
     "nav.unreadMessages": "{count} رسائل غير مقروءة",
     "nav.newMessageFallback": "رسالة جديدة",
+    "footer.tagline": "خطط للرحلات والرسائل والحجوزات من مساحة واحدة مشتركة.",
+    "footer.quickLinks": "روابط سريعة",
+    "footer.note": "سافر بخفة وابق منسقًا.",
 
     "loading.welcomeFlow": "جار تجهيز مسار الترحيب...",
     "loading.welcomeFlowBody": "فحص سريع للجلسة قبل عرض صفحات تسجيل الدخول.",
@@ -956,13 +1037,15 @@ export const dictionaries = {
     "auth.editorialSerenity": "هدوء تحريري",
     "auth.serenePath": "المسار الهادئ",
     "auth.welcomeBack": "مرحبًا بعودتك.",
-    "auth.welcomeBackBody": "عد إلى مساحتك الهادئة للسفر. طرق مريحة، وركاب موثوقون، ورحلات أكثر سلاسة بانتظارك.",
+    "auth.welcomeBackBody":
+      "عد إلى مساحتك الهادئة للسفر. طرق مريحة، وركاب موثوقون، ورحلات أكثر سلاسة بانتظارك.",
     "auth.verifiedProfiles": "ملفات شخصية موثقة",
     "auth.transparentPricing": "أسعار واضحة",
     "auth.activeCommunity": "مجتمع نشط",
     "auth.signInGently": "سجّل دخولك بسهولة.",
     "auth.continueRoute": "تابع رحلتك",
-    "auth.signInBody": "استخدم بريدك الإلكتروني وكلمة المرور لاستعادة لوحة التحكم والحجوزات والرحلات القادمة.",
+    "auth.signInBody":
+      "استخدم بريدك الإلكتروني وكلمة المرور لاستعادة لوحة التحكم والحجوزات والرحلات القادمة.",
     "auth.emailAddress": "عنوان البريد الإلكتروني",
     "auth.password": "كلمة المرور",
     "auth.secureField": "حقل آمن",
@@ -994,7 +1077,8 @@ export const dictionaries = {
     "auth.alreadyHaveAccount": "هل لديك حساب بالفعل؟",
     "auth.accountRecovery": "استعادة الحساب",
     "auth.findWayBack": "اعثر على طريق العودة.",
-    "auth.recoveryBody": "أدخل البريد الإلكتروني المرتبط بحسابك وسنرسل رابط إعادة تعيين لتتمكن من العودة.",
+    "auth.recoveryBody":
+      "أدخل البريد الإلكتروني المرتبط بحسابك وسنرسل رابط إعادة تعيين لتتمكن من العودة.",
     "auth.secureResetFlow": "مسار إعادة تعيين آمن",
     "auth.emailVerification": "التحقق من البريد الإلكتروني",
     "auth.quickRecovery": "استعادة سريعة",
@@ -1003,11 +1087,13 @@ export const dictionaries = {
     "auth.sendResetBody": "سنرسل تعليمات إعادة التعيين عبر البريد إذا كان هناك حساب لهذا العنوان.",
     "auth.sendingLink": "جار إرسال الرابط...",
     "auth.sendResetLinkButton": "إرسال رابط إعادة التعيين",
-    "auth.resetEmailSent": "إذا كان هناك حساب لهذا البريد الإلكتروني، فقد تم إرسال رابط إعادة التعيين.",
+    "auth.resetEmailSent":
+      "إذا كان هناك حساب لهذا البريد الإلكتروني، فقد تم إرسال رابط إعادة التعيين.",
     "auth.unableToSendReset": "تعذر إرسال رابط إعادة التعيين.",
     "auth.passwordRefresh": "تحديث كلمة المرور",
     "auth.setNewPassword": "عيّن كلمة مرور جديدة.",
-    "auth.resetBody": "اختر كلمة مرور جديدة، أكدها مرة واحدة، وسنعيد توجيهك إلى تسجيل الدخول بعد نجاح التحديث.",
+    "auth.resetBody":
+      "اختر كلمة مرور جديدة، أكدها مرة واحدة، وسنعيد توجيهك إلى تسجيل الدخول بعد نجاح التحديث.",
     "auth.resetTokenDetected": "تم اكتشاف رمز إعادة التعيين",
     "auth.missingToken": "رمز مفقود",
     "auth.emailPrefilled": "تمت تعبئة البريد الإلكتروني مسبقًا",
@@ -1018,20 +1104,24 @@ export const dictionaries = {
     "auth.confirmNewPasswordBody": "أدخل كلمة المرور الجديدة أدناه لإكمال عملية الاستعادة.",
     "auth.newPassword": "كلمة المرور الجديدة",
     "auth.confirmPassword": "تأكيد كلمة المرور",
-    "auth.incompleteResetLink": "رابط إعادة التعيين غير مكتمل. اطلب رسالة استعادة جديدة ثم أعد المحاولة.",
+    "auth.incompleteResetLink":
+      "رابط إعادة التعيين غير مكتمل. اطلب رسالة استعادة جديدة ثم أعد المحاولة.",
     "auth.passwordResetSuccess": "تمت إعادة تعيين كلمة المرور بنجاح.",
     "auth.unableToResetPassword": "تعذر إعادة تعيين كلمة المرور.",
     "auth.resettingPassword": "جار إعادة تعيين كلمة المرور...",
-    "auth.loginRestoreFailed": "نجح تسجيل الدخول لكن تعذر استعادة الجلسة. تحقق من إعدادات ملفات تعريف الارتباط الخاصة بالواجهة البرمجية.",
+    "auth.loginRestoreFailed":
+      "نجح تسجيل الدخول لكن تعذر استعادة الجلسة. تحقق من إعدادات ملفات تعريف الارتباط الخاصة بالواجهة البرمجية.",
     "auth.loginFailed": "فشل تسجيل الدخول",
     "auth.registerFailed": "فشل التسجيل",
 
     "profile.loadingSetup": "جار تحميل إعداد الملف الشخصي...",
     "profile.completion": "إكمال الملف الشخصي",
     "profile.recognizeRealYou": "دع الركاب يتعرفون عليك كما أنت.",
-    "profile.completionBody": "الملف الشخصي المكتمل يضيف مؤشرات الهوية اللازمة لعمليات الالتقاء الموثوقة، والمحادثات الأسهل، وتطابق الرحلات بشكل أفضل.",
+    "profile.completionBody":
+      "الملف الشخصي المكتمل يضيف مؤشرات الهوية اللازمة لعمليات الالتقاء الموثوقة، والمحادثات الأسهل، وتطابق الرحلات بشكل أفضل.",
     "profile.visibleIdentity": "هوية واضحة",
-    "profile.visibleIdentityBody": "الاسم والاسم المستعار يمنحان الركاب الآخرين انطباعًا أوليًا أوضح.",
+    "profile.visibleIdentityBody":
+      "الاسم والاسم المستعار يمنحان الركاب الآخرين انطباعًا أوليًا أوضح.",
     "profile.reliableContact": "وسيلة تواصل موثوقة",
     "profile.reliableContactBody": "يبقى الهاتف اختياريًا، لكنه مفيد للتنسيق قبل الانطلاق.",
     "profile.readyForProtectedRoutes": "جاهز للرحلات المحمية",
@@ -1051,10 +1141,12 @@ export const dictionaries = {
     "profile.updateFailed": "فشل تحديث الملف الشخصي",
     "profile.updatedSuccess": "تم تحديث الملف الشخصي بنجاح.",
     "profile.notes": "ملاحظات الملف الشخصي",
-    "profile.notesBody1": "استخدم اسمك الحقيقي الأول واسم العائلة حتى يتمكن السائقون والركاب من التعرف عليك بسرعة.",
+    "profile.notesBody1":
+      "استخدم اسمك الحقيقي الأول واسم العائلة حتى يتمكن السائقون والركاب من التعرف عليك بسرعة.",
     "profile.notesBody2": "حافظ على تحديث رقم هاتفك لتسهيل التنسيق قبل وقت الانطلاق.",
     "profile.dangerZone": "منطقة حساسة",
-    "profile.deleteBody": "يبدأ حذف حسابك فترة سماح مدتها 90 يومًا. سجّل الدخول مرة أخرى خلال هذه المدة لاستعادة الوصول.",
+    "profile.deleteBody":
+      "يبدأ حذف حسابك فترة سماح مدتها 90 يومًا. سجّل الدخول مرة أخرى خلال هذه المدة لاستعادة الوصول.",
     "profile.deleting": "جار الحذف...",
     "profile.deleteAccount": "حذف حسابي",
     "profile.deleteConfirm": "هل أنت متأكد من رغبتك في حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء.",
@@ -1085,7 +1177,8 @@ export const dictionaries = {
     "car.saving": "جار الحفظ...",
     "car.vehicleNotes": "ملاحظات السيارة",
     "car.vehicleNotesBody1": "اختر أدق طراز ممكن ثم حدّد العدد الصحيح للمقاعد في سيارتك.",
-    "car.vehicleNotesBody2": "يساعد اللون المحفوظ ولوحة الترخيص الركاب على العثور عليك بسرعة أكبر عند نقطة الالتقاء.",
+    "car.vehicleNotesBody2":
+      "يساعد اللون المحفوظ ولوحة الترخيص الركاب على العثور عليك بسرعة أكبر عند نقطة الالتقاء.",
     "car.updatedSuccess": "تم تحديث السيارة بنجاح.",
     "car.deletedSuccess": "تم حذف السيارة بنجاح.",
     "car.custom": "مخصص",
@@ -1124,7 +1217,8 @@ export const dictionaries = {
     "search.browseEverything": "تصفح الكل",
     "search.tripSearch": "البحث عن رحلة",
     "search.chooseRide": "اختر الرحلة التي تناسبك.",
-    "search.compare": "قارن بين أوقات الانطلاق، وعدد المقاعد المتاحة، وتفاصيل المسار لاختيار الرحلة المناسبة.",
+    "search.compare":
+      "قارن بين أوقات الانطلاق، وعدد المقاعد المتاحة، وتفاصيل المسار لاختيار الرحلة المناسبة.",
     "search.routePreview": "معاينة المسار",
     "search.seatCount": "{count} مقعد{suffix}",
     "search.tripNumber": "الرحلة رقم {id}",
@@ -1179,12 +1273,14 @@ export const dictionaries = {
     "driverTrips.loadFailed": "فشل تحميل رحلاتي",
     "driverTrips.publishTitle": "نشر رحلة",
     "driverTrips.offerRide": "اعرض رحلة",
-    "driverTrips.publishBody": "حدّد التوقيت والمقاعد وتفاصيل المسار بوضوح حتى يفهم الركاب الرحلة من نظرة واحدة.",
+    "driverTrips.publishBody":
+      "حدّد التوقيت والمقاعد وتفاصيل المسار بوضوح حتى يفهم الركاب الرحلة من نظرة واحدة.",
     "driverTrips.tripInfo": "معلومات الرحلة",
     "driverTrips.dateTime": "التاريخ والوقت",
     "driverTrips.availableSeats": "المقاعد المتاحة",
     "driverTrips.smokingToggle": "التدخين مسموح",
-    "driverTrips.smokingToggleBody": "فعّل هذا الخيار فقط إذا كان الركاب يستطيعون التدخين أثناء الرحلة.",
+    "driverTrips.smokingToggleBody":
+      "فعّل هذا الخيار فقط إذا كان الركاب يستطيعون التدخين أثناء الرحلة.",
     "driverTrips.startingAddress": "عنوان الانطلاق",
     "driverTrips.searchStartingAddress": "ابحث عن عنوان الانطلاق...",
     "driverTrips.arrivalAddress": "عنوان الوصول",
@@ -1236,7 +1332,8 @@ export const dictionaries = {
     "bookings.person": "شخص",
     "bookings.people": "أشخاص",
     "bookings.details": "تفاصيل الحجز",
-    "bookings.detailsBody": "احتفظ بملاحظات الانطلاق وعدد الركاب وخيارات الإلغاء معًا في عرض هادئ واحد.",
+    "bookings.detailsBody":
+      "احتفظ بملاحظات الانطلاق وعدد الركاب وخيارات الإلغاء معًا في عرض هادئ واحد.",
     "bookings.passengers": "الركاب",
     "bookings.reservationStatus": "حالة الحجز",
     "bookings.rideWrapped": "انتهت هذه الرحلة بالفعل.",
@@ -1286,17 +1383,19 @@ export const dictionaries = {
     "chat.directConversation": "محادثة مباشرة",
     "chat.defaultCounterpart": "محادثة",
     "chat.contactDriverTitle": "الدردشة مع السائق",
-    "chat.contactDriverBody": "نسّق تفاصيل الالتقاء والتوقيت مباشرة داخل التطبيق بدلًا من نموذج شبيه بالبريد الإلكتروني.",
+    "chat.contactDriverBody":
+      "نسّق تفاصيل الالتقاء والتوقيت مباشرة داخل التطبيق بدلًا من نموذج شبيه بالبريد الإلكتروني.",
     "chat.driver": "السائق",
     "chat.contactPassengerTitle": "الدردشة مع الراكب",
-    "chat.contactPassengerBody": "احتفظ بتنسيق الرحلة داخل محادثة مباشرة بحيث تبدو التحديثات فورية وأسهل للمتابعة.",
+    "chat.contactPassengerBody":
+      "احتفظ بتنسيق الرحلة داخل محادثة مباشرة بحيث تبدو التحديثات فورية وأسهل للمتابعة.",
     "chat.passenger": "الراكب",
     "chat.conversationNotFound": "لم يتم العثور على المحادثة",
     "chat.loadFailed": "فشل تحميل المحادثة",
     "chat.messageSent": "تم إرسال الرسالة في المحادثة.",
     "chat.sendFailed": "فشل إرسال الرسالة",
-    "chat.opening": "جار فتح المحادثة..."
-  }
+    "chat.opening": "جار فتح المحادثة...",
+  },
 } as const;
 
 export type TranslationDictionary = typeof dictionaries.en;

@@ -2,6 +2,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../features/auth/authApi";
 import { useAuth } from "../../hooks/Auth/useAuth.ts";
 import BottomNav, { navItems } from "./BottomNav";
+import Footer from "./Footer";
 import { useI18n } from "../../i18n/I18nProvider";
 import LanguageSwitcher from "../common/LanguageSwitcher";
 import { NavLink } from "react-router-dom";
@@ -19,7 +20,8 @@ function getPageLabel(pathname: string): string {
   if (pathname === "/chat") return "shell.chats";
   if (pathname.startsWith("/chat/")) return "shell.chat";
   if (pathname.startsWith("/find-trip/results")) return "shell.tripResults";
-  if (pathname.startsWith("/trips/") && pathname.endsWith("/contact-driver")) return "shell.driverChat";
+  if (pathname.startsWith("/trips/") && pathname.endsWith("/contact-driver"))
+    return "shell.driverChat";
   if (pathname.startsWith("/trips/")) return "shell.tripDetails";
   if (pathname === "/my-trips") return "shell.myTrips";
   if (pathname === "/my-trips/new") return "shell.publishTrip";
@@ -64,12 +66,17 @@ export default function AppLayout() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[transparent] text-[var(--theme-ink)]">
+    <div className="relative flex min-h-screen flex-col bg-[transparent] text-[var(--theme-ink)]">
       <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-56 bg-[radial-gradient(circle_at_top,rgba(212,233,197,0.5),transparent_70%)]" />
-      <header id="app-shell-header" className="relative z-20 border-b border-[var(--theme-line)] bg-[rgba(255,255,255,0.72)] backdrop-blur-xl">
+      <header
+        id="app-shell-header"
+        className="relative z-20 border-b border-[var(--theme-line)] bg-[rgba(255,255,255,0.72)] backdrop-blur-xl"
+      >
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--theme-subtle)]">{t("app.name")}</p>
+            <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--theme-subtle)]">
+              {t("app.name")}
+            </p>
             <p className="text-sm font-medium text-[var(--theme-ink)]">{pageLabel}</p>
           </div>
 
@@ -93,12 +100,14 @@ export default function AppLayout() {
               <NavLink
                 key={item.to}
                 to={item.to}
-                className={({ isActive }) => [
-                  "rounded-full px-4 py-2 text-sm font-medium transition",
-                  isActive
-                    ? "bg-[var(--theme-primary)] text-white shadow-[0_12px_28px_-18px_rgba(82,100,72,0.85)]"
-                    : "border border-[var(--theme-line)] bg-[rgba(255,255,255,0.78)] text-[var(--theme-muted-strong)] hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]",
-                ].join(" ")}
+                className={({ isActive }) =>
+                  [
+                    "rounded-full px-4 py-2 text-sm font-medium transition",
+                    isActive
+                      ? "bg-[var(--theme-primary)] text-white shadow-[0_12px_28px_-18px_rgba(82,100,72,0.85)]"
+                      : "border border-[var(--theme-line)] bg-[rgba(255,255,255,0.78)] text-[var(--theme-muted-strong)] hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)]",
+                  ].join(" ")
+                }
               >
                 <span className="relative inline-flex items-center">
                   {t(item.labelKey)}
@@ -113,9 +122,10 @@ export default function AppLayout() {
           </nav>
         </div>
       </header>
-      <main className="relative z-10 mx-auto min-h-screen w-full max-w-6xl px-4 py-5 pb-32 sm:px-6 sm:py-6 lg:px-8 lg:py-8 lg:pb-12">
+      <main className="relative z-10 mx-auto w-full max-w-6xl flex-1 px-4 py-5 pb-20 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
         <Outlet />
       </main>
+      <Footer />
 
       <BottomNav />
     </div>
