@@ -195,11 +195,11 @@ export function ProfileSection({
       </div>
 
       <div className="space-y-5 xl:sticky xl:top-8 xl:self-start">
-        <div className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
+        <div className="rounded-xl border border-green-200 bg-[linear-gradient(180deg,rgba(242, 254, 242,0.96),rgba(255,255,255,0.96))] p-5 shadow-[0_20px_40px_-30px_rgba(38,220,38,0.45)]">
           <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
             {t("profile.notes")}
           </p>
-          <div className="mt-3 space-y-2 text-sm leading-6 text-[var(--theme-muted-strong)]">
+          <div className="mt-3 space-y-2 text-sm leading-6 text-green-800/80">
             <p>{t("profile.notesBody1")}</p>
             <p>{t("profile.notesBody2")}</p>
           </div>
