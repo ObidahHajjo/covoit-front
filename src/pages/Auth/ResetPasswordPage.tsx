@@ -18,6 +18,7 @@ export default function ResetPasswordPage() {
     error,
     loading,
     onSubmit,
+    onNavigateToLogin,
   } = useResetPassword();
 
   return (
@@ -32,6 +33,7 @@ export default function ResetPasswordPage() {
       error={error}
       loading={loading}
       onSubmit={onSubmit}
+      onNavigateToLogin={onNavigateToLogin}
     />
   );
 }

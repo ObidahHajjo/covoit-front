@@ -53,6 +53,15 @@ export function useResetPassword() {
     }
   }
 
+  /**
+   * Returns the user to the login page.
+   *
+   * @returns Nothing.
+   */
+  function onNavigateToLogin() {
+    navigate("/login");
+  }
+
   return {
     token,
     email,
@@ -64,5 +73,6 @@ export function useResetPassword() {
     error,
     loading,
     onSubmit,
+    onNavigateToLogin,
   };
 }

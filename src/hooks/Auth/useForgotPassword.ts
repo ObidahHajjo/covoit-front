@@ -1,6 +1,7 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
 import type { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../app/apiClient";
 import { translate } from "../../i18n/config";
 
@@ -10,6 +11,7 @@ import { translate } from "../../i18n/config";
  * @returns Form state, feedback messages, and the submit handler.
  */
 export function useForgotPassword() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -38,6 +40,15 @@ export function useForgotPassword() {
     }
   }
 
+  /**
+   * Returns the user to the login page.
+   *
+   * @returns Nothing.
+   */
+  function onNavigateToLogin() {
+    navigate("/login");
+  }
+
   return {
     email,
     setEmail,
@@ -45,5 +56,6 @@ export function useForgotPassword() {
     error,
     loading,
     onSubmit,
+    onNavigateToLogin,
   };
 }

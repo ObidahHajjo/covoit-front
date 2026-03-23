@@ -7,7 +7,8 @@ import { useForgotPassword } from "../../hooks/Auth/useForgotPassword";
  * @returns The forgot-password layout with recovery messaging and submission feedback.
  */
 export default function ForgotPasswordPage() {
-  const { email, setEmail, message, error, loading, onSubmit } = useForgotPassword();
+  const { email, setEmail, message, error, loading, onSubmit, onNavigateToLogin } =
+    useForgotPassword();
 
   return (
     <ForgotPasswordSection
@@ -17,6 +18,7 @@ export default function ForgotPasswordPage() {
       error={error}
       loading={loading}
       onSubmit={onSubmit}
+      onNavigateToLogin={onNavigateToLogin}
     />
   );
 }

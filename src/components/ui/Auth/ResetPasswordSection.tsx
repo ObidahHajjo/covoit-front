@@ -13,6 +13,7 @@ type Props = {
   error: string | null;
   loading: boolean;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onNavigateToLogin: () => void;
 };
 
 /**
@@ -32,6 +33,7 @@ export function ResetPasswordSection({
   error,
   loading,
   onSubmit,
+  onNavigateToLogin,
 }: Props) {
   const { t } = useI18n();
 
@@ -71,6 +73,14 @@ export function ResetPasswordSection({
 
         <section className="bg-[var(--theme-surface)] p-5 sm:p-7 lg:p-10">
           <div className="border-b border-[var(--theme-line)] pb-6">
+            <button
+              type="button"
+              onClick={onNavigateToLogin}
+              className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-[var(--theme-primary)] transition hover:text-[var(--theme-primary-dim)]"
+            >
+              <span aria-hidden="true">&larr;</span>
+              {t("common.back")}
+            </button>
             <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">
               {t("auth.resetPassword")}
             </p>
