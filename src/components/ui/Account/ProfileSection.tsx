@@ -14,6 +14,7 @@ type Props = {
   passwordSuccess: string | null;
   error: string | null;
   passwordError: string | null;
+  profileValidationErrors: Record<"pseudo" | "first_name" | "last_name", string | null>;
   passwordValidationError: string | null;
   passwordConfirmationError: string | null;
   deleteAccountError: string | null;
@@ -30,6 +31,7 @@ type Props = {
   onReset: () => void;
   onPasswordReset: () => void;
   onDeleteAccount: () => void;
+  canSubmitProfile: boolean;
   canSubmitPassword: boolean;
 };
 
@@ -90,6 +92,7 @@ export function ProfileSection({
   passwordSuccess,
   error,
   passwordError,
+  profileValidationErrors,
   passwordValidationError,
   passwordConfirmationError,
   deleteAccountError,
@@ -103,6 +106,7 @@ export function ProfileSection({
   onReset,
   onPasswordReset,
   onDeleteAccount,
+  canSubmitProfile,
   canSubmitPassword,
 }: Props) {
   const { t } = useI18n();
@@ -141,7 +145,10 @@ export function ProfileSection({
             />
           </Field>
 
-          <Field label={t("profile.pseudo")} error={getFieldError("pseudo")}>
+          <Field
+            label={t("profile.pseudo")}
+            error={getFieldError("pseudo") ?? profileValidationErrors.pseudo}
+          >
             <input
               value={form.pseudo}
               onChange={(e) => onFieldChange("pseudo", e.target.value)}
@@ -151,7 +158,10 @@ export function ProfileSection({
           </Field>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label={t("profile.firstName")} error={getFieldError("first_name")}>
+            <Field
+              label={t("profile.firstName")}
+              error={getFieldError("first_name") ?? profileValidationErrors.first_name}
+            >
               <input
                 value={form.first_name}
                 onChange={(e) => onFieldChange("first_name", e.target.value)}
@@ -160,7 +170,10 @@ export function ProfileSection({
               />
             </Field>
 
-            <Field label={t("profile.lastName")} error={getFieldError("last_name")}>
+            <Field
+              label={t("profile.lastName")}
+              error={getFieldError("last_name") ?? profileValidationErrors.last_name}
+            >
               <input
                 value={form.last_name}
                 onChange={(e) => onFieldChange("last_name", e.target.value)}
@@ -191,7 +204,7 @@ export function ProfileSection({
             </button>
             <button
               type="submit"
-              disabled={saving}
+              disabled={!canSubmitProfile}
               className="rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40"
             >
               {saving ? t("car.saving") : t("profile.saveProfile")}

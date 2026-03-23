@@ -204,6 +204,7 @@ export const dictionaries = {
     "profile.savingProfile": "Saving profile...",
     "profile.missingEmail": "Missing email - go back to registration before continuing.",
     "profile.updateFailed": "Profile update failed",
+    "profile.requiredField": "This field is required.",
     "profile.updatedSuccess": "Profile updated successfully.",
     "profile.passwordSection": "Password & security",
     "profile.passwordSectionBody": "Update your password to keep your account secure.",
@@ -685,6 +686,7 @@ export const dictionaries = {
     "profile.savingProfile": "Enregistrement du profil...",
     "profile.missingEmail": "E-mail manquant - retournez a l'inscription avant de continuer.",
     "profile.updateFailed": "La mise a jour du profil a echoue",
+    "profile.requiredField": "Ce champ est obligatoire.",
     "profile.updatedSuccess": "Profil mis a jour avec succes.",
     "profile.passwordSection": "Mot de passe et securite",
     "profile.passwordSectionBody":
@@ -1167,6 +1169,7 @@ export const dictionaries = {
     "profile.savingProfile": "جار حفظ الملف الشخصي...",
     "profile.missingEmail": "البريد الإلكتروني مفقود - ارجع إلى التسجيل قبل المتابعة.",
     "profile.updateFailed": "فشل تحديث الملف الشخصي",
+    "profile.requiredField": "هذا الحقل مطلوب.",
     "profile.updatedSuccess": "تم تحديث الملف الشخصي بنجاح.",
     "profile.passwordSection": "كلمة المرور والأمان",
     "profile.passwordSectionBody": "حدّث كلمة المرور للحفاظ على أمان حسابك.",

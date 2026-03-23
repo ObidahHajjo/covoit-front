@@ -162,6 +162,21 @@ export function useMyAccount() {
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [passwordFieldErrors, setPasswordFieldErrors] = useState<FieldErrors>({});
+  const requiredProfileFieldError = translate("profile.requiredField");
+  const profileValidationErrors = useMemo(
+    () => ({
+      pseudo: profileForm.pseudo.trim() ? null : requiredProfileFieldError,
+      first_name: profileForm.first_name.trim() ? null : requiredProfileFieldError,
+      last_name: profileForm.last_name.trim() ? null : requiredProfileFieldError,
+    }),
+    [profileForm.first_name, profileForm.last_name, profileForm.pseudo, requiredProfileFieldError],
+  );
+  const canSubmitProfile = useMemo(() => {
+    if (profileSaving) return false;
+    return Boolean(
+      profileForm.pseudo.trim() && profileForm.first_name.trim() && profileForm.last_name.trim(),
+    );
+  }, [profileForm.first_name, profileForm.last_name, profileForm.pseudo, profileSaving]);
   const passwordValidation = useMemo(
     () => validatePassword(passwordForm.password),
     [passwordForm.password],
@@ -452,6 +467,7 @@ export function useMyAccount() {
    */
   async function handleProfileSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!canSubmitProfile) return;
     try {
       setProfileSaving(true);
       setProfileError(null);
@@ -639,6 +655,8 @@ export function useMyAccount() {
     profileError,
     carError,
     passwordError,
+    canSubmitProfile,
+    profileValidationErrors,
     deleteAccountError,
     fieldErrors,
     passwordFieldErrors,

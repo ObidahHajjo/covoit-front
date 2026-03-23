@@ -60,6 +60,7 @@ export default function MyAccountPage() {
             passwordSuccess={account.passwordSuccess}
             error={account.profileError}
             passwordError={account.passwordError}
+            profileValidationErrors={account.profileValidationErrors}
             passwordValidationError={account.passwordValidationError}
             passwordConfirmationError={account.passwordConfirmationError}
             deleteAccountError={account.deleteAccountError}
@@ -73,6 +74,7 @@ export default function MyAccountPage() {
             onReset={account.resetProfileForm}
             onPasswordReset={account.resetPasswordForm}
             onDeleteAccount={account.handleDeleteAccount}
+            canSubmitProfile={account.canSubmitProfile}
             canSubmitPassword={account.canSubmitPassword}
           />
         ) : (
