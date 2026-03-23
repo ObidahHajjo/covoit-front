@@ -1,4 +1,4 @@
-import { useError } from "../../app/useError";
+import { useError } from "../../context/useError.ts";
 import { useI18n } from "../../i18n/I18nProvider";
 import { Notice, SereneButton } from "./SerenePrimitives";
 
