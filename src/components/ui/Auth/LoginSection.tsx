@@ -16,6 +16,7 @@ type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onClear: () => void;
   onNavigateToRegister: () => void;
+  onNavigateToForgotPassword: () => void;
 };
 
 const trustNotesBase = [
@@ -93,6 +94,7 @@ const trustNotesBase = [
  * @param props.onSubmit - Form submit handler for signing in.
  * @param props.onClear - Callback fired when the form is cleared.
  * @param props.onNavigateToRegister - Callback fired when the user opens registration.
+ * @param props.onNavigateToForgotPassword - Callback fired when the user opens password recovery.
  * @returns The rendered login screen.
  */
 export function LoginSection({
@@ -108,6 +110,7 @@ export function LoginSection({
   onSubmit,
   onClear,
   onNavigateToRegister,
+  onNavigateToForgotPassword,
 }: Props) {
   const { t } = useI18n();
   const trustNotes = [
@@ -294,6 +297,16 @@ export function LoginSection({
                     </button>
                   </div>
                 </label>
+
+                <div className="-mt-1 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={onNavigateToForgotPassword}
+                    className="text-sm font-medium text-[var(--theme-primary)] transition hover:text-[var(--theme-primary-dim)]"
+                  >
+                    {t("auth.forgotPassword")}
+                  </button>
+                </div>
 
                 {error ? <Notice tone="error">{error}</Notice> : null}
 

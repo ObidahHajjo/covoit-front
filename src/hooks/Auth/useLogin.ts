@@ -82,6 +82,15 @@ export function useLogin() {
     navigate("/register");
   }
 
+  /**
+   * Navigates from the login flow to the forgot-password page.
+   *
+   * @returns Nothing.
+   */
+  function onNavigateToForgotPassword() {
+    navigate("/forgot-password");
+  }
+
   return {
     email,
     setEmail,
@@ -95,5 +104,6 @@ export function useLogin() {
     onClear,
     onTogglePassword,
     onNavigateToRegister,
+    onNavigateToForgotPassword,
   };
 }

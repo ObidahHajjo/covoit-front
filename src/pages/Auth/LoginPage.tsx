@@ -20,6 +20,7 @@ export default function LoginPage() {
     onClear,
     onTogglePassword,
     onNavigateToRegister,
+    onNavigateToForgotPassword,
   } = useLogin();
 
   return (
@@ -36,6 +37,7 @@ export default function LoginPage() {
       onSubmit={onSubmit}
       onClear={onClear}
       onNavigateToRegister={onNavigateToRegister}
+      onNavigateToForgotPassword={onNavigateToForgotPassword}
     />
   );
 }
