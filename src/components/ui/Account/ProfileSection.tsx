@@ -1,21 +1,32 @@
 import type { FormEvent, ReactNode } from "react";
 import type { Person } from "../../../types/Person.ts";
-import type { ProfileFormState } from "../../../hooks/Account/UseMyAccount.ts";
+import type { PasswordFormState, ProfileFormState } from "../../../hooks/Account/UseMyAccount.ts";
 import FloatingToast from "../../common/FloatingToast.tsx";
 import { useI18n } from "../../../i18n/I18nProvider.tsx";
 
 type Props = {
   person: Person | null;
   form: ProfileFormState;
+  passwordForm: PasswordFormState;
   saving: boolean;
+  passwordSaving: boolean;
   success: string | null;
+  passwordSuccess: string | null;
   error: string | null;
+  passwordError: string | null;
   deleteAccountError: string | null;
   accountDeleting: boolean;
   getFieldError: (...keys: string[]) => string | null;
+  getPasswordFieldError: (...keys: string[]) => string | null;
   onFieldChange: <K extends keyof ProfileFormState>(key: K, value: ProfileFormState[K]) => void;
+  onPasswordFieldChange: <K extends keyof PasswordFormState>(
+    key: K,
+    value: PasswordFormState[K],
+  ) => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onPasswordSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onReset: () => void;
+  onPasswordReset: () => void;
   onDeleteAccount: () => void;
 };
 
@@ -28,10 +39,20 @@ type Props = {
  * @param props.children - Form control rendered inside the field.
  * @returns The rendered field wrapper.
  */
-function Field({ label, error, children }: { label: string; error?: string | null; children: ReactNode }) {
+function Field({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string | null;
+  children: ReactNode;
+}) {
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{label}</label>
+      <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+        {label}
+      </label>
       {children}
       {error ? <p className="text-xs font-medium text-[var(--theme-subtle)]">{error}</p> : null}
     </div>
@@ -59,15 +80,23 @@ function Field({ label, error, children }: { label: string; error?: string | nul
 export function ProfileSection({
   person,
   form,
+  passwordForm,
   saving,
+  passwordSaving,
   success,
+  passwordSuccess,
   error,
+  passwordError,
   deleteAccountError,
   accountDeleting,
   getFieldError,
+  getPasswordFieldError,
   onFieldChange,
+  onPasswordFieldChange,
   onSubmit,
+  onPasswordSubmit,
   onReset,
+  onPasswordReset,
   onDeleteAccount,
 }: Props) {
   const { t } = useI18n();
@@ -75,9 +104,11 @@ export function ProfileSection({
     "w-full rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[#ccc] focus:ring-2 focus:ring-[rgba(82,100,72,0.12)]";
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5 xl:grid xl:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] xl:gap-6 xl:space-y-0">
+    <div className="space-y-5 xl:grid xl:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] xl:gap-6 xl:space-y-0">
       <FloatingToast tone="success" message={success} durationMs={6500} />
+      <FloatingToast tone="success" message={passwordSuccess} durationMs={6500} />
       <FloatingToast tone="error" message={error} durationMs={6500} />
+      <FloatingToast tone="error" message={passwordError} durationMs={6500} />
       <div className="space-y-5">
         <div className="flex items-center gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-2xl font-medium text-[var(--theme-muted)]">
@@ -92,27 +123,55 @@ export function ProfileSection({
           </div>
         </div>
 
-        <div className="grid gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6">
+        <form
+          onSubmit={onSubmit}
+          className="grid gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5 sm:p-6"
+        >
           <Field label={t("common.email")}>
-            <input value={person?.email ?? ""} readOnly className={`${inputClass} cursor-not-allowed opacity-60`} />
+            <input
+              value={person?.email ?? ""}
+              readOnly
+              className={`${inputClass} cursor-not-allowed opacity-60`}
+            />
           </Field>
 
           <Field label={t("profile.pseudo")} error={getFieldError("pseudo")}>
-            <input value={form.pseudo} onChange={(e) => onFieldChange("pseudo", e.target.value)} placeholder={t("profile.yourUsername")} className={inputClass} />
+            <input
+              value={form.pseudo}
+              onChange={(e) => onFieldChange("pseudo", e.target.value)}
+              placeholder={t("profile.yourUsername")}
+              className={inputClass}
+            />
           </Field>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label={t("profile.firstName")} error={getFieldError("first_name")}>
-              <input value={form.first_name} onChange={(e) => onFieldChange("first_name", e.target.value)} placeholder={t("profile.firstName")} className={inputClass} />
+              <input
+                value={form.first_name}
+                onChange={(e) => onFieldChange("first_name", e.target.value)}
+                placeholder={t("profile.firstName")}
+                className={inputClass}
+              />
             </Field>
 
             <Field label={t("profile.lastName")} error={getFieldError("last_name")}>
-              <input value={form.last_name} onChange={(e) => onFieldChange("last_name", e.target.value)} placeholder={t("profile.lastName")} className={inputClass} />
+              <input
+                value={form.last_name}
+                onChange={(e) => onFieldChange("last_name", e.target.value)}
+                placeholder={t("profile.lastName")}
+                className={inputClass}
+              />
             </Field>
           </div>
 
           <Field label={t("profile.phone")} error={getFieldError("phone")}>
-            <input value={form.phone} onChange={(e) => onFieldChange("phone", e.target.value)} placeholder="+1 234 567 890" type="tel" className={inputClass} />
+            <input
+              value={form.phone}
+              onChange={(e) => onFieldChange("phone", e.target.value)}
+              placeholder="+1 234 567 890"
+              type="tel"
+              className={inputClass}
+            />
           </Field>
 
           <div className="grid gap-3 pt-1 sm:grid-cols-2">
@@ -132,24 +191,101 @@ export function ProfileSection({
               {saving ? t("car.saving") : t("profile.saveProfile")}
             </button>
           </div>
-        </div>
+        </form>
       </div>
 
       <div className="space-y-5 xl:sticky xl:top-8 xl:self-start">
         <div className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
-          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("profile.notes")}</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+            {t("profile.notes")}
+          </p>
           <div className="mt-3 space-y-2 text-sm leading-6 text-[var(--theme-muted-strong)]">
             <p>{t("profile.notesBody1")}</p>
             <p>{t("profile.notesBody2")}</p>
           </div>
         </div>
 
+        <form
+          onSubmit={onPasswordSubmit}
+          className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5"
+        >
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+            {t("profile.passwordSection")}
+          </p>
+          <p className="mt-3 text-sm leading-6 text-[var(--theme-muted-strong)]">
+            {t("profile.passwordSectionBody")}
+          </p>
+
+          <div className="mt-4 space-y-4">
+            <Field
+              label={t("profile.currentPassword")}
+              error={getPasswordFieldError("current_password")}
+            >
+              <input
+                type="password"
+                value={passwordForm.current_password}
+                onChange={(e) => onPasswordFieldChange("current_password", e.target.value)}
+                placeholder={t("profile.currentPasswordPlaceholder")}
+                className={inputClass}
+                autoComplete="current-password"
+              />
+            </Field>
+
+            <Field label={t("auth.newPassword")} error={getPasswordFieldError("password")}>
+              <input
+                type="password"
+                value={passwordForm.password}
+                onChange={(e) => onPasswordFieldChange("password", e.target.value)}
+                placeholder={t("profile.newPasswordPlaceholder")}
+                className={inputClass}
+                autoComplete="new-password"
+              />
+            </Field>
+
+            <Field
+              label={t("auth.confirmPassword")}
+              error={getPasswordFieldError("password_confirmation")}
+            >
+              <input
+                type="password"
+                value={passwordForm.password_confirmation}
+                onChange={(e) => onPasswordFieldChange("password_confirmation", e.target.value)}
+                placeholder={t("profile.confirmPasswordPlaceholder")}
+                className={inputClass}
+                autoComplete="new-password"
+              />
+            </Field>
+          </div>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <button
+              type="button"
+              onClick={onPasswordReset}
+              disabled={passwordSaving}
+              className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)] hover:text-[var(--theme-ink)] disabled:opacity-40"
+            >
+              {t("common.reset")}
+            </button>
+            <button
+              type="submit"
+              disabled={passwordSaving}
+              className="rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40"
+            >
+              {passwordSaving ? t("profile.savingPassword") : t("profile.changePassword")}
+            </button>
+          </div>
+        </form>
+
         <div className="rounded-xl border border-red-200 bg-[linear-gradient(180deg,rgba(254,242,242,0.96),rgba(255,255,255,0.96))] p-5 shadow-[0_20px_40px_-30px_rgba(220,38,38,0.45)]">
           <div className="flex items-center gap-2">
             <span className="text-red-500">⚠</span>
             <h3 className="text-lg font-medium text-red-900">{t("profile.dangerZone")}</h3>
           </div>
-          {deleteAccountError ? <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{deleteAccountError}</p> : null}
+          {deleteAccountError ? (
+            <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+              {deleteAccountError}
+            </p>
+          ) : null}
           <p className="mt-3 text-sm leading-6 text-red-800/80">{t("profile.deleteBody")}</p>
           <button
             type="button"
@@ -161,6 +297,6 @@ export function ProfileSection({
           </button>
         </div>
       </div>
-    </form>
+    </div>
   );
 }

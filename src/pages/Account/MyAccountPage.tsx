@@ -21,9 +21,15 @@ export default function MyAccountPage() {
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
       <div className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 sm:px-7 sm:py-8">
         <div className="mb-8 max-w-3xl">
-          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("account.myAccount")}</p>
-          <h1 className="mt-3 text-2xl font-medium leading-tight text-[var(--theme-ink)] sm:text-3xl">{t("account.heading")}</h1>
-          <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">{t("account.body")}</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+            {t("account.myAccount")}
+          </p>
+          <h1 className="mt-3 text-2xl font-medium leading-tight text-[var(--theme-ink)] sm:text-3xl">
+            {t("account.heading")}
+          </h1>
+          <p className="mt-4 text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">
+            {t("account.body")}
+          </p>
         </div>
 
         <div className="mb-6 flex rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-1">
@@ -47,15 +53,23 @@ export default function MyAccountPage() {
           <ProfileSection
             person={account.person}
             form={account.profileForm}
+            passwordForm={account.passwordForm}
             saving={account.profileSaving}
+            passwordSaving={account.passwordSaving}
             success={account.profileSuccess}
+            passwordSuccess={account.passwordSuccess}
             error={account.profileError}
+            passwordError={account.passwordError}
             deleteAccountError={account.deleteAccountError}
             accountDeleting={account.accountDeleting}
             getFieldError={account.getFieldError}
+            getPasswordFieldError={account.getPasswordFieldError}
             onFieldChange={account.updateProfileField}
+            onPasswordFieldChange={account.updatePasswordField}
             onSubmit={account.handleProfileSubmit}
+            onPasswordSubmit={account.handlePasswordSubmit}
             onReset={account.resetProfileForm}
+            onPasswordReset={account.resetPasswordForm}
             onDeleteAccount={account.handleDeleteAccount}
           />
         ) : (

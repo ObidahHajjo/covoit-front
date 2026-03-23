@@ -5,16 +5,25 @@ import { extractApiErrorMessage } from "../../app/apiError";
  * Payload used to start the password reset flow.
  */
 export type ForgotPasswordPayload = {
-    email: string;
+  email: string;
 };
 
 /**
  * Payload used to complete the password reset flow.
  */
 export type ResetPasswordPayload = {
-    token: string;
-    password: string;
-    password_confirmation: string;
+  token: string;
+  password: string;
+  password_confirmation: string;
+};
+
+/**
+ * Payload used to change the password for an authenticated user.
+ */
+export type ChangePasswordPayload = {
+  current_password: string;
+  password: string;
+  password_confirmation: string;
 };
 
 /**
@@ -24,11 +33,11 @@ export type ResetPasswordPayload = {
  * @returns A promise that resolves when the reset email request completes successfully.
  */
 export async function forgotPassword(payload: ForgotPasswordPayload): Promise<void> {
-    try {
-        await apiClient.post("/auth/forgot-password", payload);
-    } catch (error) {
-        throw new Error(extractApiErrorMessage(error));
-    }
+  try {
+    await apiClient.post("/auth/forgot-password", payload);
+  } catch (error) {
+    throw new Error(extractApiErrorMessage(error));
+  }
 }
 
 /**
@@ -38,9 +47,23 @@ export async function forgotPassword(payload: ForgotPasswordPayload): Promise<vo
  * @returns A promise that resolves when the password has been updated successfully.
  */
 export async function resetPassword(payload: ResetPasswordPayload): Promise<void> {
-    try {
-        await apiClient.post("/auth/reset-password", payload);
-    } catch (error) {
-        throw new Error(extractApiErrorMessage(error));
-    }
+  try {
+    await apiClient.post("/auth/reset-password", payload);
+  } catch (error) {
+    throw new Error(extractApiErrorMessage(error));
+  }
+}
+
+/**
+ * Changes the password for the currently authenticated user.
+ *
+ * @param payload Current and replacement password values accepted by the API.
+ * @returns A promise that resolves when the password has been updated successfully.
+ */
+export async function changePassword(payload: ChangePasswordPayload): Promise<void> {
+  try {
+    await apiClient.post("/auth/change-password", payload);
+  } catch (error) {
+    throw new Error(extractApiErrorMessage(error));
+  }
 }
