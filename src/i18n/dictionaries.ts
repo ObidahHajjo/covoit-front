@@ -11,6 +11,56 @@ export const dictionaries = {
     "language.ar": "Arabic",
 
     "app.name": "Covoit",
+    "landing.headerLine": "Shared rides with a calmer rhythm",
+    "landing.kicker": "Quietly coordinated mobility",
+    "landing.heroTitle": "Move together without the planning noise.",
+    "landing.heroBody":
+      "Covoit helps drivers and passengers organize routes, bookings, and messages from one calm, reliable space.",
+    "landing.primaryGuest": "Create your route",
+    "landing.primaryAuthenticated": "Open my dashboard",
+    "landing.secondaryAuthenticated": "Search a ride",
+    "landing.completeProfile": "Complete my profile",
+    "landing.highlightSearch": "Search routes clearly",
+    "landing.highlightChat": "Keep every update in chat",
+    "landing.highlightBookings": "Track bookings at a glance",
+    "landing.metricOne": "Start with a simple account and keep all your ride details in one place.",
+    "landing.metricTwo": "Move from search to booking without losing the thread of the trip.",
+    "landing.metricThree": "Coordinate departures with messages designed for real ride updates.",
+    "landing.flowTitle": "Passenger and driver flow",
+    "landing.flowHeading": "One route, three calm steps.",
+    "landing.liveBadge": "Live access",
+    "landing.cardFindTitle": "Find the right route",
+    "landing.cardFindBody":
+      "Search departure and arrival cities, compare availability, and open ride details before you commit.",
+    "landing.cardOfferTitle": "Offer your own trip",
+    "landing.cardOfferBody":
+      "Publish a ride, define seats, and keep the route visible to passengers looking for a match.",
+    "landing.cardCoordinateTitle": "Coordinate without friction",
+    "landing.cardCoordinateBody":
+      "Use the built-in chat to confirm timing, pickup details, and last updates before departure.",
+    "landing.accountCardTitle": "Current access",
+    "landing.accountCardBody":
+      "Your next action adapts to your session so you can keep moving without rethinking the flow.",
+    "landing.routeCardTitle": "Trip rhythm",
+    "landing.routeCardHeading": "Search, reserve, depart",
+    "landing.routeCardBody":
+      "Every part of the app is organized to keep the route readable, calm, and ready for coordination.",
+    "landing.sectionOneKicker": "For passengers",
+    "landing.sectionOneTitle": "Compare routes with less clutter",
+    "landing.sectionOneBody":
+      "Ride details stay easy to scan, so you can focus on cities, seats, and practical departure information.",
+    "landing.sectionTwoKicker": "For drivers",
+    "landing.sectionTwoTitle": "Publish trips that stay clear",
+    "landing.sectionTwoBody":
+      "Vehicle details, seat availability, and passenger coordination live together in one structured flow.",
+    "landing.sectionThreeKicker": "For coordination",
+    "landing.sectionThreeTitle": "Keep every update in one thread",
+    "landing.sectionThreeBody":
+      "Messages, bookings, and trip details remain connected so nothing important gets lost before departure.",
+    "landing.finalKicker": "Ready when you are",
+    "landing.finalTitle": "Start with a calmer way to organize shared rides.",
+    "landing.finalBody":
+      "Create an account, continue your session, or jump straight into route search if you are already onboard.",
     "app.loading": "Loading...",
     "app.preparingRoute": "Preparing your route.",
 
@@ -489,6 +539,59 @@ export const dictionaries = {
     "language.ar": "Arabe",
 
     "app.name": "Covoit",
+    "landing.headerLine": "Le covoiturage dans un rythme plus serein",
+    "landing.kicker": "Une mobilite partagee, plus fluide",
+    "landing.heroTitle": "Avancez ensemble sans bruit dans l'organisation.",
+    "landing.heroBody":
+      "Covoit aide conducteurs et passagers a organiser trajets, reservations et messages depuis un seul espace calme et fiable.",
+    "landing.primaryGuest": "Creer mon trajet",
+    "landing.primaryAuthenticated": "Ouvrir mon tableau de bord",
+    "landing.secondaryAuthenticated": "Rechercher un trajet",
+    "landing.completeProfile": "Completer mon profil",
+    "landing.highlightSearch": "Rechercher clairement un trajet",
+    "landing.highlightChat": "Garder toutes les mises a jour en message",
+    "landing.highlightBookings": "Suivre les reservations d'un coup d'oeil",
+    "landing.metricOne":
+      "Commencez avec un compte simple et gardez toutes les informations utiles dans un meme endroit.",
+    "landing.metricTwo": "Passez de la recherche a la reservation sans perdre le fil du trajet.",
+    "landing.metricThree":
+      "Coordonnez les departs avec une messagerie pensee pour les vrais echanges de route.",
+    "landing.flowTitle": "Parcours passager et conducteur",
+    "landing.flowHeading": "Un trajet, trois etapes apaisantes.",
+    "landing.liveBadge": "Acces direct",
+    "landing.cardFindTitle": "Trouver le bon trajet",
+    "landing.cardFindBody":
+      "Recherchez ville de depart et d'arrivee, comparez les places disponibles et ouvrez le detail avant de reserver.",
+    "landing.cardOfferTitle": "Proposer son propre trajet",
+    "landing.cardOfferBody":
+      "Publiez un trajet, definissez les places et rendez votre route visible aux passagers qui cherchent une correspondance.",
+    "landing.cardCoordinateTitle": "Coordonner sans friction",
+    "landing.cardCoordinateBody":
+      "Utilisez la messagerie integree pour confirmer l'heure, le point de rendez-vous et les derniers details avant le depart.",
+    "landing.accountCardTitle": "Acces actuel",
+    "landing.accountCardBody":
+      "L'action principale s'adapte a votre session pour vous aider a reprendre le bon flux immediatement.",
+    "landing.routeCardTitle": "Rythme du trajet",
+    "landing.routeCardHeading": "Rechercher, reserver, partir",
+    "landing.routeCardBody":
+      "Chaque partie de l'application est organisee pour garder le trajet lisible, calme et pret a etre coordonne.",
+    "landing.sectionOneKicker": "Pour les passagers",
+    "landing.sectionOneTitle": "Comparer les trajets avec moins d'encombrement",
+    "landing.sectionOneBody":
+      "Les details restent faciles a lire pour vous concentrer sur les villes, les places et les informations pratiques.",
+    "landing.sectionTwoKicker": "Pour les conducteurs",
+    "landing.sectionTwoTitle": "Publier des trajets qui restent clairs",
+    "landing.sectionTwoBody":
+      "Vehicule, disponibilites et coordination passagers vivent ensemble dans un flux structure.",
+    "landing.sectionThreeKicker": "Pour la coordination",
+    "landing.sectionThreeTitle": "Garder toutes les mises a jour dans un meme fil",
+    "landing.sectionThreeBody":
+      "Messages, reservations et details du trajet restent relies pour qu'aucune information importante ne se perde avant le depart.",
+    "landing.finalKicker": "Pret quand vous l'etes",
+    "landing.finalTitle":
+      "Commencez avec une maniere plus sereine d'organiser les trajets partages.",
+    "landing.finalBody":
+      "Creez un compte, reprenez votre session ou lancez directement une recherche si vous etes deja en route.",
     "app.loading": "Chargement...",
     "app.preparingRoute": "Preparation de votre trajet.",
 
@@ -980,6 +1083,52 @@ export const dictionaries = {
     "language.ar": "العربية",
 
     "app.name": "Covoit",
+    "landing.headerLine": "رحلات مشتركة بإيقاع أكثر هدوءًا",
+    "landing.kicker": "تنقل مشترك أكثر سلاسة",
+    "landing.heroTitle": "تحركوا معًا من دون ضوضاء في التنظيم.",
+    "landing.heroBody":
+      "يساعد Covoit السائقين والركاب على تنظيم الرحلات والحجوزات والرسائل من مساحة واحدة هادئة وموثوقة.",
+    "landing.primaryGuest": "إنشاء رحلتي",
+    "landing.primaryAuthenticated": "فتح لوحة التحكم",
+    "landing.secondaryAuthenticated": "البحث عن رحلة",
+    "landing.completeProfile": "إكمال الملف الشخصي",
+    "landing.highlightSearch": "ابحث عن الرحلات بوضوح",
+    "landing.highlightChat": "احتفظ بكل التحديثات في المحادثة",
+    "landing.highlightBookings": "تابع الحجوزات بسرعة",
+    "landing.metricOne": "ابدأ بحساب بسيط واحتفظ بكل تفاصيل الرحلات في مكان واحد.",
+    "landing.metricTwo": "انتقل من البحث إلى الحجز من دون فقدان خيط الرحلة.",
+    "landing.metricThree": "نسق أوقات الانطلاق عبر رسائل مصممة لتحديثات الرحلات الواقعية.",
+    "landing.flowTitle": "مسار الراكب والسائق",
+    "landing.flowHeading": "رحلة واحدة، ثلاث خطوات هادئة.",
+    "landing.liveBadge": "وصول مباشر",
+    "landing.cardFindTitle": "اعثر على الرحلة المناسبة",
+    "landing.cardFindBody":
+      "ابحث عن مدينتي الانطلاق والوصول، وقارن التوفر، وافتح التفاصيل قبل الحجز.",
+    "landing.cardOfferTitle": "اعرض رحلتك الخاصة",
+    "landing.cardOfferBody":
+      "انشر رحلة وحدد المقاعد واجعل خط السير ظاهرًا للركاب الباحثين عن تطابق مناسب.",
+    "landing.cardCoordinateTitle": "نسق من دون تعقيد",
+    "landing.cardCoordinateBody":
+      "استخدم المحادثة المدمجة لتأكيد الوقت ونقطة الالتقاء وآخر التحديثات قبل الانطلاق.",
+    "landing.accountCardTitle": "الوصول الحالي",
+    "landing.accountCardBody": "تتكيّف الخطوة التالية مع جلستك حتى تتابع المسار المناسب فورًا.",
+    "landing.routeCardTitle": "إيقاع الرحلة",
+    "landing.routeCardHeading": "ابحث، احجز، انطلق",
+    "landing.routeCardBody": "كل جزء من التطبيق منظم ليبقى المسار واضحًا وهادئًا وجاهزًا للتنسيق.",
+    "landing.sectionOneKicker": "للركاب",
+    "landing.sectionOneTitle": "قارن الرحلات بوضوح أكبر",
+    "landing.sectionOneBody":
+      "تبقى التفاصيل سهلة القراءة حتى تركز على المدن والمقاعد ومعلومات الانطلاق المهمة.",
+    "landing.sectionTwoKicker": "للسائقين",
+    "landing.sectionTwoTitle": "انشر رحلات تبقى واضحة",
+    "landing.sectionTwoBody": "تجتمع بيانات السيارة والمقاعد وتنسيق الركاب في مسار واحد منظم.",
+    "landing.sectionThreeKicker": "للتنسيق",
+    "landing.sectionThreeTitle": "أبقِ كل تحديث في خيط واحد",
+    "landing.sectionThreeBody":
+      "تظل الرسائل والحجوزات وتفاصيل الرحلة مترابطة حتى لا تضيع أي معلومة مهمة قبل الانطلاق.",
+    "landing.finalKicker": "جاهز عندما تكون جاهزًا",
+    "landing.finalTitle": "ابدأ بطريقة أكثر هدوءًا لتنظيم الرحلات المشتركة.",
+    "landing.finalBody": "أنشئ حسابًا أو تابع جلستك أو ابدأ البحث مباشرة إذا كنت جاهزًا بالفعل.",
     "app.loading": "جار التحميل...",
     "app.preparingRoute": "جار تجهيز رحلتك.",
 

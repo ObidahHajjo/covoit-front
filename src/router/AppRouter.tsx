@@ -21,6 +21,7 @@ import BookingDetailsPage from "../pages/Bookings/BookingDetailsPage";
 import MyAccountPage from "../pages/Account/MyAccountPage";
 import ChatInboxPage from "../pages/Chat/ChatInboxPage";
 import ChatConversationPage from "../pages/Chat/ChatConversationPage";
+import LandingPage from "../pages/LandingPage";
 
 /**
  * Declares the application's public, protected, and permission-based routes.
@@ -31,7 +32,7 @@ export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/" element={<LandingPage />} />
 
         <Route element={<GuestRoute />}>
           <Route path="/login" element={<LoginPage />} />
