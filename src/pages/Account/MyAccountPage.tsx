@@ -60,6 +60,8 @@ export default function MyAccountPage() {
             passwordSuccess={account.passwordSuccess}
             error={account.profileError}
             passwordError={account.passwordError}
+            passwordValidationError={account.passwordValidationError}
+            passwordConfirmationError={account.passwordConfirmationError}
             deleteAccountError={account.deleteAccountError}
             accountDeleting={account.accountDeleting}
             getFieldError={account.getFieldError}
@@ -71,6 +73,7 @@ export default function MyAccountPage() {
             onReset={account.resetProfileForm}
             onPasswordReset={account.resetPasswordForm}
             onDeleteAccount={account.handleDeleteAccount}
+            canSubmitPassword={account.canSubmitPassword}
           />
         ) : (
           <CarSection

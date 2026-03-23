@@ -2,6 +2,7 @@ import type { FormEvent } from "react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../features/auth/authApi.ts";
+import { validatePassword } from "../../features/auth/passwordValidation.ts";
 import { translate } from "../../i18n/config.ts";
 
 /**
@@ -18,15 +19,23 @@ export function useRegister() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const passwordValidation = useMemo(() => validatePassword(password), [password]);
+  const passwordsMatch = password === passwordConfirm;
+  const passwordError =
+    password.length > 0 && !passwordValidation.isValid
+      ? translate("auth.passwordStrengthInvalid")
+      : null;
+  const passwordConfirmError =
+    passwordConfirm.length > 0 && !passwordsMatch ? translate("auth.passwordsMismatch") : null;
 
   const canSubmit = useMemo(() => {
     if (isSubmitting) return false;
     if (email.trim().length < 7) return false;
-    if (password.length < 6) return false;
-    if (passwordConfirm.length < 6) return false;
-    if (password !== passwordConfirm) return false;
+    if (!password.trim() || !passwordConfirm.trim()) return false;
+    if (!passwordValidation.isValid) return false;
+    if (!passwordsMatch) return false;
     return true;
-  }, [email, password, passwordConfirm, isSubmitting]);
+  }, [email, password, passwordConfirm, isSubmitting, passwordValidation.isValid, passwordsMatch]);
 
   /**
    * Submits the registration form and stores onboarding state for the next step.
@@ -98,6 +107,8 @@ export function useRegister() {
     setPasswordConfirm,
     isSubmitting,
     error,
+    passwordError,
+    passwordConfirmError,
     canSubmit,
     onSubmit,
     onCancel,

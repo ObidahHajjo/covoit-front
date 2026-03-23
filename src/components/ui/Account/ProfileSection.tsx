@@ -14,6 +14,8 @@ type Props = {
   passwordSuccess: string | null;
   error: string | null;
   passwordError: string | null;
+  passwordValidationError: string | null;
+  passwordConfirmationError: string | null;
   deleteAccountError: string | null;
   accountDeleting: boolean;
   getFieldError: (...keys: string[]) => string | null;
@@ -28,6 +30,7 @@ type Props = {
   onReset: () => void;
   onPasswordReset: () => void;
   onDeleteAccount: () => void;
+  canSubmitPassword: boolean;
 };
 
 /**
@@ -87,6 +90,8 @@ export function ProfileSection({
   passwordSuccess,
   error,
   passwordError,
+  passwordValidationError,
+  passwordConfirmationError,
   deleteAccountError,
   accountDeleting,
   getFieldError,
@@ -98,6 +103,7 @@ export function ProfileSection({
   onReset,
   onPasswordReset,
   onDeleteAccount,
+  canSubmitPassword,
 }: Props) {
   const { t } = useI18n();
   const inputClass =
@@ -231,7 +237,10 @@ export function ProfileSection({
               />
             </Field>
 
-            <Field label={t("auth.newPassword")} error={getPasswordFieldError("password")}>
+            <Field
+              label={t("auth.newPassword")}
+              error={getPasswordFieldError("password") ?? passwordValidationError}
+            >
               <input
                 type="password"
                 value={passwordForm.password}
@@ -244,7 +253,7 @@ export function ProfileSection({
 
             <Field
               label={t("auth.confirmPassword")}
-              error={getPasswordFieldError("password_confirmation")}
+              error={getPasswordFieldError("password_confirmation") ?? passwordConfirmationError}
             >
               <input
                 type="password"
@@ -268,7 +277,7 @@ export function ProfileSection({
             </button>
             <button
               type="submit"
-              disabled={passwordSaving}
+              disabled={!canSubmitPassword}
               className="rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40"
             >
               {passwordSaving ? t("profile.savingPassword") : t("profile.changePassword")}

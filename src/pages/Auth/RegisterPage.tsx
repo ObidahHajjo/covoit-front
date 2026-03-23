@@ -16,6 +16,8 @@ export default function RegisterPage() {
     setPasswordConfirm,
     isSubmitting,
     error,
+    passwordError,
+    passwordConfirmError,
     canSubmit,
     onSubmit,
     onCancel,
@@ -34,6 +36,8 @@ export default function RegisterPage() {
       isSubmitting={isSubmitting}
       canSubmit={canSubmit}
       error={error}
+      passwordError={passwordError}
+      passwordConfirmError={passwordConfirmError}
       onSubmit={onSubmit}
       onCancel={onCancel}
       onGoBack={onGoBack}

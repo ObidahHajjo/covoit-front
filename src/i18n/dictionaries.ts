@@ -131,9 +131,12 @@ export const dictionaries = {
     "auth.joinRoute": "Join the route.",
     "auth.useRideHistoryEmail": "Use the email you want tied to your ride history.",
     "auth.createPassword": "Create password",
-    "auth.passwordMin": "At least 6 characters.",
+    "auth.passwordMin":
+      "At least 8 characters, with uppercase, lowercase, number, and special character.",
     "auth.repeatPassword": "Repeat password",
     "auth.passwordsMismatch": "Passwords do not match yet.",
+    "auth.passwordStrengthInvalid":
+      "Use at least 8 characters with uppercase, lowercase, number, and special character.",
     "auth.creatingAccount": "Creating account...",
     "auth.alreadyHaveAccount": "Already have an account?",
     "auth.accountRecovery": "Account recovery",
@@ -607,9 +610,12 @@ export const dictionaries = {
     "auth.useRideHistoryEmail":
       "Utilisez l'e-mail que vous souhaitez associer a votre historique de trajets.",
     "auth.createPassword": "Creer un mot de passe",
-    "auth.passwordMin": "Au moins 6 caracteres.",
+    "auth.passwordMin":
+      "Au moins 8 caracteres, avec une majuscule, une minuscule, un chiffre et un caractere special.",
     "auth.repeatPassword": "Repeter le mot de passe",
     "auth.passwordsMismatch": "Les mots de passe ne correspondent pas encore.",
+    "auth.passwordStrengthInvalid":
+      "Utilisez au moins 8 caracteres avec une majuscule, une minuscule, un chiffre et un caractere special.",
     "auth.creatingAccount": "Creation du compte...",
     "auth.alreadyHaveAccount": "Vous avez deja un compte ?",
     "auth.accountRecovery": "Recuperation du compte",
@@ -1091,9 +1097,10 @@ export const dictionaries = {
     "auth.joinRoute": "انضم إلى الرحلة.",
     "auth.useRideHistoryEmail": "استخدم البريد الإلكتروني الذي تريد ربطه بسجل رحلاتك.",
     "auth.createPassword": "إنشاء كلمة مرور",
-    "auth.passwordMin": "6 أحرف على الأقل.",
+    "auth.passwordMin": "8 أحرف على الأقل مع حرف كبير وحرف صغير ورقم ورمز خاص.",
     "auth.repeatPassword": "إعادة كلمة المرور",
     "auth.passwordsMismatch": "كلمتا المرور غير متطابقتين بعد.",
+    "auth.passwordStrengthInvalid": "استخدم 8 أحرف على الأقل مع حرف كبير وحرف صغير ورقم ورمز خاص.",
     "auth.creatingAccount": "جار إنشاء الحساب...",
     "auth.alreadyHaveAccount": "هل لديك حساب بالفعل؟",
     "auth.accountRecovery": "استعادة الحساب",

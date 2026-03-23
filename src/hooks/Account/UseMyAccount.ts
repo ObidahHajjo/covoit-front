@@ -2,6 +2,7 @@ import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Auth/useAuth.ts";
 import { changePassword } from "../../features/auth/passwordApi.ts";
+import { validatePassword } from "../../features/auth/passwordValidation.ts";
 import { createCar, deleteCar, searchCar, updateCar } from "../../features/cars/carApi.ts";
 import { getBrands } from "../../features/brands/brandApi.ts";
 import { deleteMyAccount, getPerson, updateMe } from "../../features/person/personApi.ts";
@@ -161,6 +162,27 @@ export function useMyAccount() {
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [passwordFieldErrors, setPasswordFieldErrors] = useState<FieldErrors>({});
+  const passwordValidation = useMemo(
+    () => validatePassword(passwordForm.password),
+    [passwordForm.password],
+  );
+  const passwordsMatch = passwordForm.password === passwordForm.password_confirmation;
+  const passwordValidationError =
+    passwordForm.password.length > 0 && !passwordValidation.isValid
+      ? translate("auth.passwordStrengthInvalid")
+      : null;
+  const passwordConfirmationError =
+    passwordForm.password_confirmation.length > 0 && !passwordsMatch
+      ? translate("auth.passwordsMismatch")
+      : null;
+  const canSubmitPassword = useMemo(() => {
+    if (passwordSaving) return false;
+    if (!passwordForm.current_password.trim()) return false;
+    if (!passwordForm.password.trim() || !passwordForm.password_confirmation.trim()) return false;
+    if (!passwordValidation.isValid) return false;
+    if (!passwordsMatch) return false;
+    return true;
+  }, [passwordSaving, passwordForm, passwordValidation.isValid, passwordsMatch]);
 
   const [carSearch, setCarSearch] = useState("");
   const [carSuggestions, setCarSuggestions] = useState<Car[]>([]);
@@ -459,6 +481,7 @@ export function useMyAccount() {
    */
   async function handlePasswordSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!canSubmitPassword) return;
     try {
       setPasswordSaving(true);
       setPasswordError(null);
@@ -619,6 +642,9 @@ export function useMyAccount() {
     deleteAccountError,
     fieldErrors,
     passwordFieldErrors,
+    canSubmitPassword,
+    passwordValidationError,
+    passwordConfirmationError,
     carSearch,
     carSuggestions,
     carSearchLoading,

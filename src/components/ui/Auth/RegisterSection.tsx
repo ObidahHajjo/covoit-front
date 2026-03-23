@@ -12,6 +12,8 @@ type Props = {
   isSubmitting: boolean;
   canSubmit: boolean;
   error: string | null;
+  passwordError: string | null;
+  passwordConfirmError: string | null;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
   onGoBack: () => void;
@@ -47,6 +49,8 @@ export function RegisterSection({
   isSubmitting,
   canSubmit,
   error,
+  passwordError,
+  passwordConfirmError,
   onSubmit,
   onCancel,
   onGoBack,
@@ -81,14 +85,11 @@ export function RegisterSection({
               [t("auth.activeCommunity"), t("auth.activeCommunity")],
               [t("auth.profileReady"), t("auth.profileReadyBody")],
             ].map(([title, copy]) => (
-              <article
-                key={title}
-                className="border-b border-[var(--theme-line)] p-4"
-              >
-                <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("auth.feature")}</p>
-                <h2 className="mt-2 text-base font-medium text-[var(--theme-ink)]">
-                  {title}
-                </h2>
+              <article key={title} className="border-b border-[var(--theme-line)] p-4">
+                <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">
+                  {t("auth.feature")}
+                </p>
+                <h2 className="mt-2 text-base font-medium text-[var(--theme-ink)]">{title}</h2>
                 <p className="mt-2 text-sm leading-6 text-[var(--theme-muted)]">{copy}</p>
               </article>
             ))}
@@ -119,7 +120,9 @@ export function RegisterSection({
             </button>
 
             <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("auth.registration")}</p>
+              <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">
+                {t("auth.registration")}
+              </p>
               <p className="mt-1 text-xl font-medium tracking-tight text-[var(--theme-ink)]">
                 {t("auth.createAccount")}
               </p>
@@ -129,16 +132,23 @@ export function RegisterSection({
           <div className="mt-0 pb-0 lg:mt-6 lg:border-b lg:border-[var(--theme-line)] lg:pb-6">
             <div className="hidden flex-wrap items-center justify-between gap-3 lg:flex">
               <div>
-                 <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("auth.startHere")}</p>
-                 <h2 className="mt-2 text-2xl font-medium tracking-tight text-[var(--theme-ink)]">
-                   {t("auth.joinRoute")}
-                 </h2>
+                <p className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">
+                  {t("auth.startHere")}
+                </p>
+                <h2 className="mt-2 text-2xl font-medium tracking-tight text-[var(--theme-ink)]">
+                  {t("auth.joinRoute")}
+                </h2>
               </div>
             </div>
 
             <form onSubmit={onSubmit} className="space-y-4 lg:mt-6">
               <div className="space-y-2">
-                 <label htmlFor="register-email" className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("common.email")}</label>
+                <label
+                  htmlFor="register-email"
+                  className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]"
+                >
+                  {t("common.email")}
+                </label>
                 <input
                   id="register-email"
                   name="email"
@@ -148,40 +158,54 @@ export function RegisterSection({
                   onChange={(e) => onEmailChange(e.target.value)}
                   autoComplete="email"
                 />
-                 <p className="text-xs text-[var(--theme-muted)]">{t("auth.useRideHistoryEmail")}</p>
+                <p className="text-xs text-[var(--theme-muted)]">{t("auth.useRideHistoryEmail")}</p>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                   <label htmlFor="register-password" className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("common.password")}</label>
+                  <label
+                    htmlFor="register-password"
+                    className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]"
+                  >
+                    {t("common.password")}
+                  </label>
                   <input
                     id="register-password"
                     name="password"
                     className="w-full border-b border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[rgba(118,124,122,0.5)] focus:border-[var(--theme-primary)]"
                     type="password"
-                     placeholder={t("auth.createPassword")}
+                    placeholder={t("auth.createPassword")}
                     value={password}
                     onChange={(e) => onPasswordChange(e.target.value)}
                     autoComplete="new-password"
                   />
-                   <p className="text-xs text-[var(--theme-muted)]">{t("auth.passwordMin")}</p>
+                  <p
+                    className={`text-xs ${passwordError ? "text-[#f472b6]" : "text-[var(--theme-muted)]"}`}
+                  >
+                    {passwordError ?? t("auth.passwordMin")}
+                  </p>
                 </div>
 
                 <div className="space-y-2">
-                   <label htmlFor="register-password-confirm" className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]">{t("common.confirm")}</label>
+                  <label
+                    htmlFor="register-password-confirm"
+                    className="text-xs font-medium uppercase tracking-wider text-[var(--theme-subtle)]"
+                  >
+                    {t("common.confirm")}
+                  </label>
                   <input
                     id="register-password-confirm"
                     name="passwordConfirmation"
                     className="w-full border-b border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[rgba(118,124,122,0.5)] focus:border-[var(--theme-primary)]"
                     type="password"
-                     placeholder={t("auth.repeatPassword")}
+                    placeholder={t("auth.repeatPassword")}
                     value={passwordConfirm}
                     onChange={(e) => onPasswordConfirmChange(e.target.value)}
                     autoComplete="new-password"
                   />
-                  {passwordConfirm.length > 0 && password !== passwordConfirm && (
-                     <p className="text-xs text-[#f472b6]">{t("auth.passwordsMismatch")}</p>
-                  )}
+                  {passwordConfirmError ? (
+                    <p className="text-xs text-[#f472b6]">{passwordConfirmError}</p>
+                  ) : null}
                 </div>
               </div>
 
@@ -197,7 +221,7 @@ export function RegisterSection({
                   disabled={!canSubmit}
                   className="rounded-full bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                   {isSubmitting ? t("auth.creatingAccount") : t("auth.createAccount")}
+                  {isSubmitting ? t("auth.creatingAccount") : t("auth.createAccount")}
                 </button>
 
                 <button
@@ -205,20 +229,20 @@ export function RegisterSection({
                   onClick={onCancel}
                   className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-3.5 text-sm font-medium text-[var(--theme-muted-strong)] transition hover:border-[var(--theme-line-strong)]"
                 >
-                   {t("common.cancel")}
+                  {t("common.cancel")}
                 </button>
               </div>
             </form>
 
             <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--theme-line)] pt-4 text-sm text-[var(--theme-muted)]">
-               <span>{t("auth.alreadyHaveAccount")}</span>
+              <span>{t("auth.alreadyHaveAccount")}</span>
               <button
                 className="font-medium text-[var(--theme-ink)] underline underline-offset-4 transition hover:text-[var(--theme-muted-strong)]"
                 onClick={onNavigateToLogin}
                 type="button"
               >
-                 {t("auth.signIn")}
-               </button>
+                {t("auth.signIn")}
+              </button>
             </div>
           </div>
         </section>
