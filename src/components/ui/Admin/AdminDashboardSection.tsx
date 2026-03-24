@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useI18n } from "../../../i18n/I18nProvider";
 import type { DashboardStats } from "../../../features/admin/useAdminDashboard";
 
@@ -8,6 +9,7 @@ type Props = {
 
 export function AdminDashboardSection({ stats, loading }: Props) {
   const { t } = useI18n();
+  const navigate = useNavigate();
 
   if (loading) return <div className="p-4">{t("admin.loadingStats")}</div>;
 
@@ -100,6 +102,62 @@ export function AdminDashboardSection({ stats, loading }: Props) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Support Chat Stats */}
+      <h2 className="text-lg font-semibold text-gray-800">{t("admin.supportChat")}</h2>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <button
+          type="button"
+          onClick={() => navigate("/admin/support")}
+          className="overflow-hidden rounded-xl border bg-white p-6 shadow-sm text-left transition hover:shadow-md"
+        >
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">{t("admin.waitingSessions")}</p>
+              <p className="text-3xl font-bold text-gray-900">{stats.waitingSessions}</p>
+            </div>
+          </div>
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate("/admin/support")}
+          className="overflow-hidden rounded-xl border bg-white p-6 shadow-sm text-left transition hover:shadow-md"
+        >
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100 text-green-600">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">{t("admin.activeSessions")}</p>
+              <p className="text-3xl font-bold text-gray-900">{stats.activeSessions}</p>
+            </div>
+          </div>
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate("/admin/support")}
+          className="overflow-hidden rounded-xl border bg-white p-6 shadow-sm text-left transition hover:shadow-md"
+        >
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-red-100 text-red-600">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">{t("admin.unreadMessages")}</p>
+              <p className="text-3xl font-bold text-gray-900">{stats.unreadMessages}</p>
+            </div>
+          </div>
+        </button>
       </div>
     </div>
   );

@@ -8,6 +8,9 @@ export function useAdminDashboard() {
     total_cars: 0,
     total_brands: 0,
     total_models: 0,
+    waitingSessions: 0,
+    activeSessions: 0,
+    unreadMessages: 0,
   });
   const [loading, setLoading] = useState(true);
 

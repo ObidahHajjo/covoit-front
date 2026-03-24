@@ -6,6 +6,9 @@ export interface DashboardStats {
   total_cars: number;
   total_brands: number;
   total_models: number;
+  waitingSessions: number;
+  activeSessions: number;
+  unreadMessages: number;
 }
 
 export async function fetchDashboardStats(): Promise<DashboardStats> {

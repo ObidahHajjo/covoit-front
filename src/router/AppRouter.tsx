@@ -33,6 +33,8 @@ import AdminTripsPage from "../pages/Admin/AdminTripsPage";
 import AdminBrandsPage from "../pages/Admin/AdminBrandsPage";
 import AdminModelsPage from "../pages/Admin/AdminModelsPage";
 import AdminCarsPage from "../pages/Admin/AdminCarsPage";
+import AdminSupportInboxPage from "../pages/Admin/AdminSupportInboxPage";
+import AdminSupportChatPage from "../pages/Admin/AdminSupportChatPage";
 
 /**
  * Declares the application's public, protected, and permission-based routes.
@@ -97,6 +99,8 @@ export default function AppRouter() {
             <Route path="/admin/brands" element={<AdminBrandsPage />} />
             <Route path="/admin/models" element={<AdminModelsPage />} />
             <Route path="/admin/cars" element={<AdminCarsPage />} />
+            <Route path="/admin/support" element={<AdminSupportInboxPage />} />
+            <Route path="/admin/support/:sessionId" element={<AdminSupportChatPage />} />
           </Route>
         </Route>
 

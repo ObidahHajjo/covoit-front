@@ -12,6 +12,7 @@ export default function AdminLayout() {
 
   const menuItems = [
     { path: "/admin", label: t("admin.dashboard"), exact: true },
+    { path: "/admin/support", label: t("admin.supportChat") },
     { path: "/admin/users", label: t("admin.manageUsers") },
     { path: "/admin/trips", label: t("admin.manageTrips") },
     { path: "/admin/brands", label: t("admin.manageBrands") },
