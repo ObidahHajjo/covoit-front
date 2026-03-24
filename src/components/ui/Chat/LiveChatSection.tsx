@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import FloatingToast from "../../common/FloatingToast.tsx";
-import type { ChatMessage } from "../../../types/Chat.ts";
+import type { ChatAttachment, ChatMessage } from "../../../types/Chat.ts";
 import { useI18n } from "../../../i18n/I18nProvider.tsx";
 import { formatLocaleTime } from "../../../i18n/config.ts";
 
@@ -16,6 +16,7 @@ type Props = {
   messages: ChatMessage[];
   isRealtimeConnected?: boolean;
   draft: string;
+  selectedFiles?: File[];
   sending: boolean;
   clearing?: boolean;
   clearingMessageIds?: number[];
@@ -23,6 +24,7 @@ type Props = {
   success: string | null;
   error: string | null;
   onDraftChange: (value: string) => void;
+  onSelectedFilesChange?: (files: File[]) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   onClearConversation?: () => void;
   onClearMessages?: (messageIds: number[]) => void;
@@ -57,6 +59,7 @@ export function LiveChatSection({
   messages,
   isRealtimeConnected = false,
   draft,
+  selectedFiles = [],
   sending,
   clearing = false,
   clearingMessageIds = [],
@@ -64,6 +67,7 @@ export function LiveChatSection({
   success,
   error,
   onDraftChange,
+  onSelectedFilesChange,
   onSubmit,
   onClearConversation,
   onClearMessages,
@@ -324,6 +328,49 @@ export function LiveChatSection({
       : t("chat.clearSelectedMessages");
   const isConfirmSubmitting = clearing || clearingMessageIds.length > 0;
 
+  const formatFileSize = (sizeBytes: number) => {
+    if (sizeBytes < 1024) return `${sizeBytes} B`;
+    if (sizeBytes < 1024 * 1024) return `${(sizeBytes / 1024).toFixed(1)} KB`;
+    return `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  const handleFileSelection = (event: ChangeEvent<HTMLInputElement>) => {
+    const nextFiles = Array.from(event.target.files ?? []);
+    if (nextFiles.length === 0) return;
+
+    onSelectedFilesChange?.([...selectedFiles, ...nextFiles].slice(0, 5));
+    event.target.value = "";
+  };
+
+  const removeSelectedFile = (index: number) => {
+    onSelectedFilesChange?.(selectedFiles.filter((_, fileIndex) => fileIndex !== index));
+  };
+
+  const renderAttachments = (attachments: ChatAttachment[], isMine: boolean) => {
+    if (attachments.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="mt-3 grid gap-2">
+        {attachments.map((attachment) => (
+          <a
+            key={attachment.id}
+            href={attachment.url}
+            target="_blank"
+            rel="noreferrer"
+            className={`rounded-2xl border px-3 py-2 text-sm transition ${isMine ? "border-white/20 bg-white/10 text-white hover:bg-white/15" : "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-ink)] hover:border-[var(--theme-line-strong)]"}`}
+          >
+            <span className="block truncate font-medium">{attachment.name}</span>
+            <span className={`mt-1 block text-[11px] ${isMine ? "text-white/70" : "text-[var(--theme-muted)]"}`}>
+              {formatFileSize(attachment.sizeBytes)}
+            </span>
+          </a>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
       <FloatingToast tone="success" message={success} durationMs={6500} />
@@ -469,7 +516,8 @@ export function LiveChatSection({
                             : "rounded-bl-md border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)]"
                         }`}
                       >
-                        <p className="text-sm leading-6">{message.body}</p>
+                        {message.body ? <p className="text-sm leading-6">{message.body}</p> : null}
+                        {renderAttachments(message.attachments, isMine)}
                         <div className="mt-2 flex items-center justify-between gap-3">
                           <p
                             className={`text-[11px] font-medium ${isMine ? "text-white/70" : "text-[var(--theme-muted)]"}`}
@@ -500,6 +548,25 @@ export function LiveChatSection({
             onSubmit={onSubmit}
             className="border-t border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 sm:p-5"
           >
+            {selectedFiles.length > 0 ? (
+              <div className="mb-3 flex flex-wrap gap-2">
+                {selectedFiles.map((file, index) => (
+                  <span
+                    key={`${file.name}-${file.size}-${index}`}
+                    className="inline-flex items-center gap-2 rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1.5 text-xs font-medium text-[var(--theme-ink)]"
+                  >
+                    <span className="max-w-[12rem] truncate">{file.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeSelectedFile(index)}
+                      className="rounded-full text-[var(--theme-muted)] transition hover:text-[var(--theme-ink)]"
+                    >
+                      x
+                    </button>
+                  </span>
+                ))}
+              </div>
+            ) : null}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
               <label className="flex-1">
                 <span className="sr-only">{t("common.message")}</span>
@@ -511,13 +578,26 @@ export function LiveChatSection({
                   className="w-full resize-none rounded-2xl border border-[var(--theme-line)] bg-[rgba(246,248,245,0.86)] px-4 py-3 text-sm text-[var(--theme-ink)] outline-none transition placeholder:text-[var(--theme-subtle)] focus:border-[var(--theme-primary)] focus:ring-2 focus:ring-[rgba(82,100,72,0.12)]"
                 />
               </label>
-              <button
-                type="submit"
-                disabled={sending || draft.trim().length === 0}
-                className="rounded-full bg-[var(--theme-primary)] px-5 py-3 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {sending ? t("common.sending") : t("common.send")}
-              </button>
+              <div className="flex gap-2 sm:flex-col sm:items-stretch">
+                {onSelectedFilesChange ? (
+                  <label className="inline-flex cursor-pointer items-center justify-center rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3 text-sm font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]">
+                    <input
+                      type="file"
+                      multiple
+                      className="hidden"
+                      onChange={handleFileSelection}
+                    />
+                    {t("chat.addFiles")}
+                  </label>
+                ) : null}
+                <button
+                  type="submit"
+                  disabled={sending || (draft.trim().length === 0 && selectedFiles.length === 0)}
+                  className="rounded-full bg-[var(--theme-primary)] px-5 py-3 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {sending ? t("common.sending") : t("common.send")}
+                </button>
+              </div>
             </div>
           </form>
         </div>

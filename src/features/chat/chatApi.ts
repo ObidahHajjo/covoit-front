@@ -1,8 +1,17 @@
 import { apiClient } from "../../app/apiClient";
 import { extractApiErrorMessage } from "../../app/apiError";
 import type { ApiResponse } from "../../types/ApiResponse";
-import type { ChatConversation, ChatMessage } from "../../types/Chat";
+import type { ChatAttachment, ChatConversation, ChatMessage } from "../../types/Chat";
 import type { ContactPayload } from "../../types/Contact";
+import { API_BASE_URL } from "../../app/apiClient";
+
+type ChatAttachmentApi = {
+  id: number;
+  name: string;
+  mime_type: string;
+  size_bytes: number;
+  url: string;
+};
 
 type ChatMessageApi = {
   id: number;
@@ -10,6 +19,7 @@ type ChatMessageApi = {
   sender: "me" | "other";
   sender_person_id: number;
   created_at: string;
+  attachments?: ChatAttachmentApi[];
 };
 
 type ChatConversationApi = {
@@ -63,6 +73,25 @@ function mapMessage(message: ChatMessageApi): ChatMessage {
     sender: message.sender,
     senderPersonId: message.sender_person_id,
     createdAt: message.created_at,
+    attachments: (message.attachments ?? []).map(mapAttachment),
+  };
+}
+
+/**
+ * Maps a raw attachment payload returned by the API to the UI shape.
+ *
+ * @param attachment Raw attachment payload received from the backend.
+ * @returns The normalized attachment consumed by the frontend.
+ */
+function mapAttachment(attachment: ChatAttachmentApi): ChatAttachment {
+  const isAbsolute = /^https?:\/\//.test(attachment.url);
+
+  return {
+    id: attachment.id,
+    name: attachment.name,
+    mimeType: attachment.mime_type,
+    sizeBytes: attachment.size_bytes,
+    url: isAbsolute ? attachment.url : `${API_BASE_URL}${attachment.url}`,
   };
 }
 
@@ -140,11 +169,21 @@ export async function getConversation(conversationId: number): Promise<ChatConve
  * @param message Plain-text message body to send.
  * @returns The newly created chat message returned by the API.
  */
-export async function sendConversationMessage(conversationId: number, message: string): Promise<ChatMessage> {
+export async function sendConversationMessage(
+  conversationId: number,
+  message: string,
+  attachments: File[] = [],
+): Promise<ChatMessage> {
   try {
-    const { data } = await apiClient.post<ApiResponse<ChatMessageApi>>(`/conversations/${conversationId}/messages`, {
-      message,
-    }, {showGlobalLoader: false});
+    const payload = new FormData();
+    payload.append("message", message);
+    attachments.forEach((file) => payload.append("attachments[]", file));
+
+    const { data } = await apiClient.post<ApiResponse<ChatMessageApi>>(
+      `/conversations/${conversationId}/messages`,
+      payload,
+      { showGlobalLoader: false, headers: { "Content-Type": "multipart/form-data" } },
+    );
     return mapMessage(data.data);
   } catch (error) {
     throw new Error(extractApiErrorMessage(error));
@@ -232,7 +271,16 @@ export async function clearConversationMessages(
  */
 export async function contactDriver(tripId: number, payload: ContactPayload): Promise<ChatConversation> {
   try {
-    const { data } = await apiClient.post<ApiResponse<ContactChatResponse>>(`/trips/${tripId}/contact-driver`, payload,{showGlobalLoader: false});
+    const formData = new FormData();
+    formData.append("subject", payload.subject);
+    formData.append("message", payload.message);
+    payload.attachments?.forEach((file) => formData.append("attachments[]", file));
+
+    const { data } = await apiClient.post<ApiResponse<ContactChatResponse>>(
+      `/trips/${tripId}/contact-driver`,
+      formData,
+      { showGlobalLoader: false, headers: { "Content-Type": "multipart/form-data" } },
+    );
     return mapConversation({
       ...data.data.conversation,
       latest_message: data.data.message ?? data.data.conversation.latest_message ?? null,
@@ -252,7 +300,16 @@ export async function contactDriver(tripId: number, payload: ContactPayload): Pr
  */
 export async function contactPassenger(tripId: number, personId: number, payload: ContactPayload): Promise<ChatConversation> {
   try {
-    const { data } = await apiClient.post<ApiResponse<ContactChatResponse>>(`/my-trips/${tripId}/contact-passenger/${personId}`, payload, {showGlobalLoader: false});
+    const formData = new FormData();
+    formData.append("subject", payload.subject);
+    formData.append("message", payload.message);
+    payload.attachments?.forEach((file) => formData.append("attachments[]", file));
+
+    const { data } = await apiClient.post<ApiResponse<ContactChatResponse>>(
+      `/my-trips/${tripId}/contact-passenger/${personId}`,
+      formData,
+      { showGlobalLoader: false, headers: { "Content-Type": "multipart/form-data" } },
+    );
     return mapConversation({
       ...data.data.conversation,
       latest_message: data.data.message ?? data.data.conversation.latest_message ?? null,

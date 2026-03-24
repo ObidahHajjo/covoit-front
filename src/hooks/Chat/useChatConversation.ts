@@ -22,6 +22,7 @@ export function useChatConversation() {
   const [loading, setLoading] = useState(true);
   const [draft, setDraft] = useState("");
   const [sending, setSending] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [clearing, setClearing] = useState(false);
   const [clearingMessageIds, setClearingMessageIds] = useState<number[]>([]);
   const [success, setSuccess] = useState<string | null>(null);
@@ -100,14 +101,14 @@ export function useChatConversation() {
     if (!conversationId || !conversation) return;
 
     const content = draft.trim();
-    if (!content) return;
+    if (!content && selectedFiles.length === 0) return;
 
     try {
       setError(null);
       setSuccess(null);
       setSending(true);
 
-      const created = await sendConversationMessage(Number(conversationId), content);
+      const created = await sendConversationMessage(Number(conversationId), content, selectedFiles);
 
       setConversation((prev) => {
         if (!prev) return prev;
@@ -124,6 +125,7 @@ export function useChatConversation() {
       });
 
       setDraft("");
+      setSelectedFiles([]);
       setSuccess(translate("chat.messageSent"));
     } catch (err) {
       setError(err instanceof Error ? err.message : translate("chat.sendFailed"));
@@ -207,6 +209,8 @@ export function useChatConversation() {
     loading,
     draft,
     setDraft,
+    selectedFiles,
+    setSelectedFiles,
     sending,
     clearing,
     clearingMessageIds,

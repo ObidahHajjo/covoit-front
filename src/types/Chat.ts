@@ -3,12 +3,22 @@
  */
 
 /** Message model used by the chat UI. */
+export type ChatAttachment = {
+  id: number;
+  name: string;
+  mimeType: string;
+  sizeBytes: number;
+  url: string;
+};
+
+/** Message model used by the chat UI. */
 export type ChatMessage = {
   id: number;
   body: string;
   sender: "me" | "other" | "system";
   senderPersonId: number;
   createdAt: string;
+  attachments: ChatAttachment[];
 };
 
 /** Conversation model used by the chat UI. */
@@ -20,7 +30,7 @@ export type ChatConversation = {
   tripId: number;
   tripLabel: string;
   updatedAt: string;
-   clearedAt: string | null;
+  clearedAt: string | null;
   latestMessage?: ChatMessage | null;
   messages: ChatMessage[];
 };
