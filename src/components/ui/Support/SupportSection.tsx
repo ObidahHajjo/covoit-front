@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import FloatingToast from "../../common/FloatingToast";
 import { ContactEmailSection } from "../Contact/ContactEmailSection";
+import { SupportChatWidget, SupportChatTrigger } from "./SupportChatWidget";
 import type { FormEvent } from "react";
 import { useI18n } from "../../../i18n/I18nProvider";
+import type { ConnectionStatus } from "../../../hooks/Support/useSupportChat";
+import type { ChatMessage } from "../../../types/Chat";
 
 type FaqItem = {
   question: string;
@@ -23,8 +26,26 @@ type Props = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
-export function SupportSection(props: Props) {
+type ChatProps = {
+  isOpen: boolean;
+  messages: ChatMessage[];
+  draft: string;
+  selectedChatFiles: File[];
+  sendingChat: boolean;
+  connectionStatus: ConnectionStatus;
+  isAdminTyping: boolean;
+  chatSuccess: string | null;
+  chatError: string | null;
+  onDraftChange: (value: string) => void;
+  onChatFilesChange: (files: File[]) => void;
+  onChatSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  onOpenChat: () => void;
+  onCloseChat: () => void;
+};
+
+export function SupportSection(props: Props & Partial<ChatProps>) {
   const { t } = useI18n();
+  const showChat = props.isOpen !== undefined;
 
   return (
     <div className="space-y-6">
@@ -44,9 +65,19 @@ export function SupportSection(props: Props) {
             <h2 className="mt-2 text-xl font-medium text-[var(--theme-ink)]">{t("support.liveHelpTitle")}</h2>
             <p className="mt-2 text-sm leading-6 text-[var(--theme-muted)]">{t("support.liveHelpBody")}</p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <Link to="/chat" className="rounded-full bg-[var(--theme-primary)] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)]">
-                {t("support.openChat")}
-              </Link>
+              {showChat ? (
+                <button
+                  type="button"
+                  onClick={props.onOpenChat}
+                  className="rounded-full bg-[var(--theme-primary)] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)]"
+                >
+                  {t("supportChat.openChat")}
+                </button>
+              ) : (
+                <Link to="/chat" className="rounded-full bg-[var(--theme-primary)] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)]">
+                  {t("support.openChat")}
+                </Link>
+              )}
               <Link to="/find-trip" className="rounded-full border border-[var(--theme-line)] bg-white px-4 py-2.5 text-sm font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]">
                 {t("support.findTrip")}
               </Link>
@@ -85,6 +116,29 @@ export function SupportSection(props: Props) {
           compact
         />
       </section>
+
+      {showChat && props.isOpen !== undefined ? (
+        <>
+          <SupportChatWidget
+            isOpen={props.isOpen}
+            onClose={props.onCloseChat!}
+            messages={props.messages!}
+            draft={props.draft!}
+            selectedFiles={props.selectedChatFiles!}
+            sending={props.sendingChat!}
+            connectionStatus={props.connectionStatus!}
+            isAdminTyping={props.isAdminTyping!}
+            success={props.chatSuccess ?? null}
+            error={props.chatError ?? null}
+            onDraftChange={props.onDraftChange!}
+            onSelectedFilesChange={props.onChatFilesChange!}
+            onSubmit={props.onChatSubmit!}
+          />
+          {!props.isOpen && (
+            <SupportChatTrigger onClick={props.onOpenChat!} />
+          )}
+        </>
+      ) : null}
     </div>
   );
 }
