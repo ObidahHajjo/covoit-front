@@ -25,6 +25,14 @@ import ChatInboxPage from "../pages/Chat/ChatInboxPage";
 import ChatConversationPage from "../pages/Chat/ChatConversationPage";
 import LandingPage from "../pages/LandingPage";
 import SupportPage from "../pages/SupportPage";
+import AdminRoute from "./AdminRoute";
+import AdminLayout from "../components/layout/AdminLayout";
+import AdminDashboardPage from "../pages/Admin/AdminDashboardPage";
+import AdminUsersPage from "../pages/Admin/AdminUsersPage";
+import AdminTripsPage from "../pages/Admin/AdminTripsPage";
+import AdminBrandsPage from "../pages/Admin/AdminBrandsPage";
+import AdminModelsPage from "../pages/Admin/AdminModelsPage";
+import AdminCarsPage from "../pages/Admin/AdminCarsPage";
 
 /**
  * Declares the application's public, protected, and permission-based routes.
@@ -78,6 +86,17 @@ export default function AppRouter() {
 
           <Route element={<PermissionRoute permission="can_edit_profile" />}>
             <Route path="/my-account" element={<MyAccountPage />} />
+          </Route>
+        </Route>
+
+        <Route element={<AdminRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route path="/admin" element={<AdminDashboardPage />} />
+            <Route path="/admin/users" element={<AdminUsersPage />} />
+            <Route path="/admin/trips" element={<AdminTripsPage />} />
+            <Route path="/admin/brands" element={<AdminBrandsPage />} />
+            <Route path="/admin/models" element={<AdminModelsPage />} />
+            <Route path="/admin/cars" element={<AdminCarsPage />} />
           </Route>
         </Route>
 

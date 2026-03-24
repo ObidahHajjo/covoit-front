@@ -34,5 +34,9 @@ export default function ProtectedRoute() {
         return <Navigate to="/complete-profile" replace state={{ from: location }} />;
     }
 
+    if (user?.role?.name === 'admin' || user?.permissions?.can_manage_all_users) {
+        return <Navigate to="/admin" replace />;
+    }
+
     return <AppLayout />;
 }

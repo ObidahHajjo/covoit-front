@@ -29,6 +29,10 @@ export default function GuestRoute() {
             return <Navigate to="/complete-profile" replace />;
         }
 
+        if (user?.role?.name === 'admin' || user?.permissions?.can_manage_all_users) {
+            return <Navigate to="/admin" replace />;
+        }
+
         return <Navigate to="/home" replace />;
     }
 
