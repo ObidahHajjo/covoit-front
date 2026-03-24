@@ -38,13 +38,45 @@ export default function AdminCarsPage() {
     setCurrentPage(page);
   };
 
-  if (loading) return <div>{t("admin.loadingCars")}</div>;
+  if (loading) return <div className="text-gray-500">{t("admin.loadingCars")}</div>;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold text-gray-800">{t("admin.registeredVehicles")}</h1>
+    <div className="space-y-4 lg:space-y-6">
+      <h1 className="text-xl font-semibold text-gray-800 lg:text-2xl">{t("admin.registeredVehicles")}</h1>
 
-      <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
+      {/* Mobile Card View */}
+      <div className="space-y-3 lg:hidden">
+        {cars.map((car: any) => (
+          <div key={car.id} className="rounded-lg border bg-white p-4 shadow-sm">
+            <div className="flex items-start justify-between">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs text-gray-400">#{car.id}</p>
+                <p className="truncate font-medium text-gray-900">{car.license_plate}</p>
+                <p className="mt-1 text-sm text-gray-500">
+                  {car.model?.brand?.name || "N/A"} {car.model?.name || "N/A"}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <span className="inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                    {car.color?.name || "N/A"}
+                  </span>
+                  <span className="inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                    {car.seats} {t("admin.seats")}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => deleteCar(car.id)}
+                className="ml-3 rounded-md px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+              >
+                {t("admin.delete")}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden overflow-hidden rounded-xl border bg-white shadow-sm lg:block">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -73,6 +105,9 @@ export default function AdminCarsPage() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="rounded-lg border bg-white lg:border-0 lg:bg-transparent">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

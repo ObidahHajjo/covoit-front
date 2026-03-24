@@ -41,16 +41,65 @@ export default function AdminTripsPage() {
     return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   };
 
+  const formatShortDate = (dateString?: string) => {
+    if (!dateString) return "N/A";
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return "N/A";
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    return `${pad(d.getDate())}/${pad(d.getMonth() + 1)} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  };
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  if (loading) return <div>{t("admin.loadingTrips")}</div>;
+  if (loading) return <div className="text-gray-500">{t("admin.loadingTrips")}</div>;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold text-gray-800">{t("admin.manageTrips")}</h1>
-      <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
+    <div className="space-y-4 lg:space-y-6">
+      <h1 className="text-xl font-semibold text-gray-800 lg:text-2xl">{t("admin.manageTrips")}</h1>
+
+      {/* Mobile Card View */}
+      <div className="space-y-3 lg:hidden">
+        {trips.map((trip: any) => (
+          <div key={trip.id} className="rounded-lg border bg-white p-4 shadow-sm">
+            <div className="flex items-start justify-between">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs text-gray-400">#{trip.id}</p>
+                <p className="font-medium text-gray-900">{trip.driver?.first_name || "N/A"}</p>
+                <div className="mt-2 space-y-1 text-sm text-gray-500">
+                  <p>
+                    <span className="font-medium text-gray-700">{t("admin.from")}:</span>{" "}
+                    {trip.departure_address?.city?.name || trip.departureAddress?.city?.name || "Unknown"}
+                  </p>
+                  <p>
+                    <span className="font-medium text-gray-700">{t("admin.to")}:</span>{" "}
+                    {trip.arrival_address?.city?.name || trip.arrivalAddress?.city?.name || "Unknown"}
+                  </p>
+                </div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <span className="inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                    {formatShortDate(trip.departure_time)}
+                  </span>
+                  <span className="text-xs text-gray-400">→</span>
+                  <span className="inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                    {formatShortDate(trip.arrival_time)}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => deleteTrip(trip.id)}
+                className="ml-3 rounded-md px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+              >
+                {t("admin.delete")}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden overflow-hidden rounded-xl border bg-white shadow-sm lg:block">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -81,6 +130,9 @@ export default function AdminTripsPage() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="rounded-lg border bg-white lg:border-0 lg:bg-transparent">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
