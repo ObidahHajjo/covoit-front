@@ -80,7 +80,8 @@ npx eslint src/path/to/file.tsx
 ## Project Layout
 - `src/app`: shared infrastructure, Axios clients, API error helpers, error provider
 - `src/providers`: long-lived providers like auth, loading, chat inbox
-- `src/context`: contexts and page/domain hooks
+- `src/context`: contexts
+- `src/hooks`: page/domain hooks
 - `src/features`: API modules and feature integration code
 - `src/pages`: route-level pages
 - `src/components/common`: reusable primitives and shared UI
@@ -167,3 +168,63 @@ npx eslint src/path/to/file.tsx
 - Keep diffs narrow; do not fix unrelated formatting noise.
 - When no automated tests exist, state that validation relied on lint/build only.
 - If you add a test runner later, update this file with exact repo-specific test commands, especially single-test usage.
+
+## User Guide Generation
+
+### Scope
+When generating a user guide document for the carpooling app, follow all rules in this section.
+The guide must be a `.docx` Word file with a professional, modern layout that mirrors the app's visual identity.
+
+### Document Structure
+- Cover page: app logo (placeholder if unavailable), app name, version, and date.
+- Table of contents (auto-generated via Word styles).
+- One chapter per major feature area (e.g. Registration, Search a Ride, Offer a Ride, Booking, Profile, Notifications).
+- Each chapter follows this exact template:
+    1. Chapter title (Heading 1)
+    2. One-paragraph overview of the feature
+    3. Step-by-step numbered instructions (Heading 2 per step group)
+    4. Screenshot placeholder or embedded screenshot for EACH described action
+    5. Tips / Notes callout box at the end of the chapter (styled as a colored block)
+- Closing chapter: FAQ + Troubleshooting, then a Contact / Support page.
+
+### Visual Identity — Match the App
+- Primary color: extract the dominant brand color from `src/` (check Tailwind config, CSS variables, or shared tokens). Use it for chapter heading underlines, callout box backgrounds, and the cover page accent bar.
+- Typography: use a clean sans-serif pair — a bold weight for headings, regular for body. Default to Calibri or equivalent if no font is specified.
+- Spacing: generous margins (2.5 cm), 1.15 line spacing for body text, 6 pt spacing after paragraphs.
+- No decorative clipart; screenshots and icons only.
+
+### Screenshots
+- Capture one screenshot per distinct UI action described in the guide.
+- Screenshots must be full-page or cropped to the relevant component — never blurry or stretched.
+- Embed screenshots inline, centered, with a thin 1 pt border and a caption below (e.g. "Figure 3 — Search results page").
+- If a screenshot cannot be captured automatically, insert a clearly labeled placeholder: `[SCREENSHOT: <description>]` styled in italic gray text so it is obvious during review.
+- Screenshot filenames must follow the pattern `screenshot-<chapter>-<step>.png` and be stored in `docs/screenshots/`.
+
+### Word Styles Used
+The document must use only named Word styles — no direct formatting:
+- `Title` → cover page app name
+- `Heading 1` → chapter titles
+- `Heading 2` → step group titles within a chapter
+- `Heading 3` → sub-steps or optional detail sections
+- `Normal` → body text
+- `Caption` → figure captions below screenshots
+- `Intense Quote` → Tips / Notes callout blocks
+- `List Number` → numbered step lists
+- All styles must be customized to match the brand colors and typography defined above.
+
+### Language and Tone
+- The guide targets end users (not developers).
+- Write in plain, friendly language. No technical jargon.
+- Use the imperative mood for instructions: "Tap the Search button", not "The user should tap…"
+- The guide must be available in French (`docs/guide-fr.docx`) as the primary language. Add an English version (`docs/guide-en.docx`) if i18n strings exist for `en`.
+- Use the existing `src/i18n/` dictionaries as the authoritative source for UI label names — never invent label names.
+
+### File Output
+- Primary output: `docs/guide-fr.docx`
+- Secondary output (if English strings exist): `docs/guide-en.docx`
+- Screenshots folder: `docs/screenshots/`
+- After generation, print a summary of: chapters written, screenshots embedded, screenshots left as placeholders, and any sections that need manual review.
+
+### Validation
+- Open the `.docx` in python-docx or equivalent and verify: table of contents exists, all Heading 1 styles are applied, no raw `[SCREENSHOT]` placeholders remain without a note, and the file is not corrupted.
+- Report any validation failures clearly.
