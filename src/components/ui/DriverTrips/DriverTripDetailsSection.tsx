@@ -44,7 +44,15 @@ function InfoCard({ icon, title, rows }: {
  * @param props.onContact - Callback fired when the contact button is pressed.
  * @returns The rendered passenger row.
  */
-function PassengerRow({ passenger, onContact }: { passenger: Person; onContact: (passenger: Person) => void }) {
+function PassengerRow({
+  passenger,
+  onContact,
+  onEmail,
+}: {
+  passenger: Person;
+  onContact: (passenger: Person) => void;
+  onEmail: (passenger: Person) => void;
+}) {
   const { t } = useI18n();
   const name = [passenger.first_name, passenger.last_name].filter(Boolean).join(" ") || t("driverTrips.passengerFallback");
 
@@ -57,13 +65,22 @@ function PassengerRow({ passenger, onContact }: { passenger: Person; onContact: 
         <p className="truncate font-medium text-[var(--theme-ink)]">{name}</p>
         <p className="text-xs text-[var(--theme-muted)]">{passenger.pseudo ? `@${passenger.pseudo}` : `#${passenger.id}`}</p>
       </div>
-      <button
-        type="button"
-        onClick={() => onContact(passenger)}
-        className="inline-flex shrink-0 items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-2 text-xs font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] hover:bg-[var(--theme-surface)]"
-      >
-        {t("driverTrips.contactPassenger")}
-      </button>
+      <div className="flex shrink-0 gap-2">
+        <button
+          type="button"
+          onClick={() => onContact(passenger)}
+          className="inline-flex items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-2 text-xs font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] hover:bg-[var(--theme-surface)]"
+        >
+          {t("driverTrips.contactPassenger")}
+        </button>
+        <button
+          type="button"
+          onClick={() => onEmail(passenger)}
+          className="inline-flex items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[rgba(212,229,239,0.22)] px-4 py-2 text-xs font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] hover:bg-[var(--theme-surface)]"
+        >
+          {t("driverTrips.emailPassenger")}
+        </button>
+      </div>
     </div>
   );
 }
@@ -75,6 +92,7 @@ type Props = {
   cancelling: boolean;
   onCancelTrip: () => void;
   onContactPassenger: (passenger: Person) => void;
+  onContactPassengerEmail: (passenger: Person) => void;
 };
 
 /**
@@ -96,6 +114,7 @@ export function DriverTripDetailsSection({
   cancelling,
   onCancelTrip,
   onContactPassenger,
+  onContactPassengerEmail,
 }: Props) {
   const { t } = useI18n();
   const from = trip.departure_address?.city?.name ?? "-";
@@ -180,6 +199,7 @@ export function DriverTripDetailsSection({
                   key={passenger.id}
                   passenger={passenger}
                   onContact={onContactPassenger}
+                  onEmail={onContactPassengerEmail}
                 />
               ))}
             </div>

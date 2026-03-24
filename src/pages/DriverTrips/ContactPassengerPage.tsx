@@ -12,6 +12,8 @@ export default function ContactPassengerPage() {
   const {
     draft,
     setDraft,
+    selectedFiles,
+    setSelectedFiles,
     messages,
     sending,
     success,
@@ -26,10 +28,12 @@ export default function ContactPassengerPage() {
       counterpartLabel={t("chat.passenger")}
       messages={messages}
       draft={draft}
+      selectedFiles={selectedFiles}
       sending={sending}
       success={success}
       error={error}
       onDraftChange={setDraft}
+      onSelectedFilesChange={setSelectedFiles}
       onSubmit={handleSubmit}
     />
   );

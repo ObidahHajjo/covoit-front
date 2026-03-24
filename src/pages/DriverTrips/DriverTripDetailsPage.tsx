@@ -18,6 +18,7 @@ export default function DriverTripDetailsPage() {
     cancelling,
     handleCancelTrip,
     openPassengerChat,
+    openPassengerEmail,
   } = useDriverTripDetails();
 
   if (loading) {
@@ -45,6 +46,7 @@ export default function DriverTripDetailsPage() {
       cancelling={cancelling}
       onCancelTrip={handleCancelTrip}
       onContactPassenger={openPassengerChat}
+      onContactPassengerEmail={openPassengerEmail}
     />
   );
 }

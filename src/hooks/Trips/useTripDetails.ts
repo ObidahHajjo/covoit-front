@@ -99,6 +99,11 @@ export function useTripDetails() {
     }
   }
 
+  function navigateToContactDriverEmail() {
+    if (!trip) return;
+    navigate(`/trips/${trip.id}/contact-driver-email`);
+  }
+
   return {
     trip,
     loading,
@@ -107,5 +112,6 @@ export function useTripDetails() {
     submitting,
     handleReserve,
     navigateToContactDriver,
+    navigateToContactDriverEmail,
   };
 }

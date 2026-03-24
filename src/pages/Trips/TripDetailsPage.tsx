@@ -15,6 +15,7 @@ export default function TripDetailsPage() {
     submitting,
     handleReserve,
     navigateToContactDriver,
+    navigateToContactDriverEmail,
   } = useTripDetails();
 
   return (
@@ -26,6 +27,7 @@ export default function TripDetailsPage() {
       submitting={submitting}
       onReserve={handleReserve}
       onContactDriver={navigateToContactDriver}
+      onContactDriverEmail={navigateToContactDriverEmail}
     />
   );
 }

@@ -15,6 +15,8 @@ export default function ChatConversationPage() {
     loading,
     draft,
     setDraft,
+    selectedFiles,
+    setSelectedFiles,
     sending,
     clearing,
     clearingMessageIds,
@@ -49,6 +51,7 @@ export default function ChatConversationPage() {
       messages={conversation.messages}
       isRealtimeConnected={isRealtimeConnected}
       draft={draft}
+      selectedFiles={selectedFiles}
       sending={sending}
       clearing={clearing}
       clearingMessageIds={clearingMessageIds}
@@ -56,6 +59,7 @@ export default function ChatConversationPage() {
       success={success}
       error={error}
       onDraftChange={setDraft}
+      onSelectedFilesChange={setSelectedFiles}
       onSubmit={handleSubmit}
       onClearConversation={handleClearConversation}
       onClearMessages={handleClearMessages}

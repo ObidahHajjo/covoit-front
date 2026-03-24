@@ -12,6 +12,8 @@ export default function ContactDriverPage() {
   const {
     draft,
     setDraft,
+    selectedFiles,
+    setSelectedFiles,
     messages,
     sending,
     success,
@@ -26,10 +28,12 @@ export default function ContactDriverPage() {
       counterpartLabel={t("chat.driver")}
       messages={messages}
       draft={draft}
+      selectedFiles={selectedFiles}
       sending={sending}
       success={success}
       error={error}
       onDraftChange={setDraft}
+      onSelectedFilesChange={setSelectedFiles}
       onSubmit={handleSubmit}
     />
   );

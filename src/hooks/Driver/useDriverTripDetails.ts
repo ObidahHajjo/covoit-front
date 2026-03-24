@@ -94,6 +94,12 @@ export function useDriverTripDetails() {
         }
     }
 
+    function openPassengerEmail(passenger: Person) {
+        if (!trip) return;
+
+        navigate(`/my-trips/${trip.id}/contact-passenger/${passenger.id}/email`);
+    }
+
     return {
         trip,
         passengers,
@@ -102,5 +108,6 @@ export function useDriverTripDetails() {
         cancelling,
         handleCancelTrip,
         openPassengerChat,
+        openPassengerEmail,
     };
 }

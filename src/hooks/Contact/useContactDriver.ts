@@ -14,6 +14,7 @@ export function useContactDriver() {
   const navigate = useNavigate();
   const [draft, setDraft] = useState("");
   const [messages] = useState<ChatMessage[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -28,15 +29,20 @@ export function useContactDriver() {
     event.preventDefault();
 
     const content = draft.trim();
-    if (!content) return;
+    if (!content && selectedFiles.length === 0) return;
 
     try {
       setError(null);
       setSuccess(null);
       setSending(true);
-      const conversation = await contactDriver(Number(tripId), { subject: translate("common.message"), message: content });
+      const conversation = await contactDriver(Number(tripId), {
+        subject: translate("common.message"),
+        message: content,
+        attachments: selectedFiles,
+      });
       setSuccess(translate("chat.opening"));
       setDraft("");
+      setSelectedFiles([]);
       navigate(`/chat/${conversation.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : translate("chat.sendFailed"));
@@ -48,6 +54,8 @@ export function useContactDriver() {
   return {
     draft,
     setDraft,
+    selectedFiles,
+    setSelectedFiles,
     messages,
     sending,
     success,

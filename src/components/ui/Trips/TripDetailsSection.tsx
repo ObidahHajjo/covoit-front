@@ -12,6 +12,7 @@ type Props = {
     submitting: boolean;
     onReserve: () => void;
     onContactDriver: () => void;
+    onContactDriverEmail: () => void;
 };
 
 /**
@@ -52,6 +53,7 @@ export function TripDetailsSection({
     submitting,
     onReserve,
     onContactDriver,
+    onContactDriverEmail,
 }: Props) {
 const { t } = useI18n();
 if (loading) {
@@ -105,7 +107,7 @@ return (
 			<DetailCard label={t("trip.driver")} value={driverName} />
 		</div>
 
-		<div className="mt-8 grid gap-3 sm:grid-cols-2">
+		<div className="mt-8 grid gap-3 sm:grid-cols-3">
 			<button
 			onClick={onReserve}
 			disabled={submitting}
@@ -119,6 +121,13 @@ return (
 			className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5 text-sm font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
 			>
 			{t("trip.contactDriver")}
+			</button>
+
+			<button
+			onClick={onContactDriverEmail}
+			className="rounded-full border border-[var(--theme-line)] bg-[rgba(212,229,239,0.22)] px-4 py-3.5 text-sm font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
+			>
+			{t("trip.contactDriverEmail")}
 			</button>
 		</div>
 		</section>
