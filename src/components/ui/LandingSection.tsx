@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { AuthUser } from "../../types/MeResponse";
 import LanguageSwitcher from "../common/LanguageSwitcher";
@@ -17,6 +18,35 @@ type Props = {
  */
 export function LandingSection({ user, isAuthenticated, isProfileComplete }: Props) {
   const { t } = useI18n();
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    let frameId = 0;
+
+    const updateProgress = () => {
+      frameId = 0;
+      const maxScroll = Math.max(window.innerHeight * 0.9, 1);
+      setScrollProgress(Math.min(window.scrollY / maxScroll, 1));
+    };
+
+    const queueUpdate = () => {
+      if (frameId === 0) {
+        frameId = window.requestAnimationFrame(updateProgress);
+      }
+    };
+
+    queueUpdate();
+    window.addEventListener("scroll", queueUpdate, { passive: true });
+    window.addEventListener("resize", queueUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", queueUpdate);
+      window.removeEventListener("resize", queueUpdate);
+      if (frameId !== 0) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
+  }, []);
 
   const primaryHref = isAuthenticated
     ? isProfileComplete
@@ -56,6 +86,9 @@ export function LandingSection({ user, isAuthenticated, isProfileComplete }: Pro
       accent: "from-[rgba(232,253,216,0.92)] to-[rgba(255,255,255,0.72)]",
     },
   ];
+  const carPosition = 10 + scrollProgress * 76;
+  const carRotation = -2 + scrollProgress * 4;
+  const carBounce = Math.sin(scrollProgress * Math.PI * 3) * 3;
 
   return (
     <div className="relative overflow-hidden">
@@ -64,25 +97,31 @@ export function LandingSection({ user, isAuthenticated, isProfileComplete }: Pro
       <div className="pointer-events-none absolute right-[-5rem] top-56 h-64 w-64 rounded-full bg-[rgba(103,96,41,0.12)] blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-        <header className="flex flex-wrap items-center justify-between gap-4 rounded-full border border-[var(--theme-line)] bg-[rgba(255,255,255,0.78)] px-4 py-3 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:px-6">
-          <div className="flex items-center gap-3">
+        <header className="flex flex-col gap-4 rounded-[1.75rem] border border-[var(--theme-line)] bg-[rgba(255,255,255,0.78)] px-4 py-4 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:px-6 sm:py-3 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:rounded-full">
+          <div className="flex min-w-0 items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[linear-gradient(145deg,var(--theme-primary),var(--theme-primary-dim))] text-sm font-semibold uppercase tracking-[0.18em] text-[var(--theme-on-primary)] shadow-[0_18px_30px_-18px_rgba(82,100,72,0.9)]">
               CV
             </div>
-            <div>
+            <div className="min-w-0">
               <p className="serene-kicker">{t("app.name")}</p>
-              <p className="text-sm font-medium text-[var(--theme-ink)]">
+              <p className="text-sm font-medium leading-6 text-[var(--theme-ink)] sm:truncate">
                 {t("landing.headerLine")}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <LanguageSwitcher compact />
-            <Link to={secondaryHref} className="serene-button-ghost">
+          <div className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center lg:w-auto lg:justify-end">
+            <LanguageSwitcher compact hideLabelOnMobile />
+            <Link
+              to={secondaryHref}
+              className="serene-button-ghost w-full border border-[var(--theme-line)] bg-white/40 sm:w-auto"
+            >
               {secondaryLabel}
             </Link>
-            <Link to={primaryHref} className="serene-button-primary min-h-0 px-5 py-3 text-sm">
+            <Link
+              to={primaryHref}
+              className="serene-button-primary min-h-0 w-full px-5 py-3 text-sm sm:w-auto"
+            >
               {primaryLabel}
             </Link>
           </div>
@@ -108,19 +147,19 @@ export function LandingSection({ user, isAuthenticated, isProfileComplete }: Pro
               {highlights.map((item) => (
                 <span
                   key={item}
-                  className="inline-flex items-center gap-2 rounded-full bg-[rgba(255,255,255,0.8)] px-4 py-2 text-sm font-medium text-[var(--theme-muted-strong)] shadow-[var(--theme-shadow-warm)]"
+                  className="inline-flex min-w-0 items-center gap-2 rounded-full bg-[rgba(255,255,255,0.8)] px-4 py-2 text-sm font-medium text-[var(--theme-muted-strong)] shadow-[var(--theme-shadow-warm)]"
                 >
                   <span className="h-2 w-2 rounded-full bg-[var(--theme-primary)]" />
-                  {item}
+                  <span className="min-w-0 break-words">{item}</span>
                 </span>
               ))}
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 pt-1">
-              <Link to={primaryHref} className="serene-button-primary px-7">
+            <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+              <Link to={primaryHref} className="serene-button-primary w-full px-7 sm:w-auto">
                 {primaryLabel}
               </Link>
-              <Link to="/find-trip" className="serene-button-secondary px-7">
+              <Link to="/find-trip" className="serene-button-secondary w-full px-7 sm:w-auto">
                 {t("shell.findTrips")}
               </Link>
             </div>
@@ -152,6 +191,29 @@ export function LandingSection({ user, isAuthenticated, isProfileComplete }: Pro
             <div className="serene-panel relative overflow-hidden p-5 sm:p-6">
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(242,244,242,0.94))]" />
               <div className="relative grid gap-5">
+                <div className="overflow-hidden rounded-[1.6rem] border border-[var(--theme-line)] bg-[linear-gradient(135deg,rgba(246,249,245,0.96),rgba(255,255,255,0.85))] px-4 py-4 shadow-[0_18px_30px_-24px_rgba(46,52,50,0.28)]">
+                  <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--theme-muted)]">
+                    <span>01</span>
+                    <span>03</span>
+                  </div>
+                  <div className="relative mt-3 h-16" aria-hidden="true">
+                    <div className="absolute left-[10%] right-[10%] top-1/2 h-px -translate-y-1/2 border-t border-dashed border-[rgba(82,100,72,0.3)]" />
+                    <div className="absolute left-[10%] top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--theme-primary)] shadow-[0_0_0_6px_rgba(82,100,72,0.09)]" />
+                    <div className="absolute right-[10%] top-1/2 h-3.5 w-3.5 translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(82,100,72,0.22)] shadow-[0_0_0_6px_rgba(82,100,72,0.05)]" />
+                    <div
+                      className="absolute top-1/2 h-8 w-14 rounded-[1.1rem] bg-[linear-gradient(145deg,var(--theme-primary),var(--theme-primary-dim))] shadow-[0_14px_24px_-18px_rgba(82,100,72,0.9)] transition-transform duration-150 will-change-transform"
+                      style={{
+                        left: `calc(${carPosition}% - 1.75rem)`,
+                        transform: `translateY(calc(-50% + ${carBounce}px)) rotate(${carRotation}deg)`,
+                      }}
+                    >
+                      <div className="absolute left-2.5 right-2.5 top-1.5 h-3 rounded-full bg-white/30" />
+                      <div className="absolute bottom-[-0.35rem] left-2 h-3.5 w-3.5 rounded-full border-2 border-white/45 bg-[var(--theme-ink)]" />
+                      <div className="absolute bottom-[-0.35rem] right-2 h-3.5 w-3.5 rounded-full border-2 border-white/45 bg-[var(--theme-ink)]" />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="rounded-[1.75rem] border border-[var(--theme-line)] bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(233,239,236,0.9))] p-5 shadow-[var(--theme-shadow-warm)]">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -256,16 +318,16 @@ export function LandingSection({ user, isAuthenticated, isProfileComplete }: Pro
               {t("landing.finalBody")}
             </p>
           </div>
-          <div className="mt-6 flex flex-wrap gap-3 lg:mt-0 lg:justify-end">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:mt-0 lg:justify-end">
             <Link
               to={primaryHref}
-              className="inline-flex min-h-[3.25rem] items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[var(--theme-primary)] transition hover:translate-y-[-1px]"
+              className="inline-flex min-h-[3.25rem] w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[var(--theme-primary)] transition hover:translate-y-[-1px] sm:w-auto"
             >
               {primaryLabel}
             </Link>
             <Link
               to={secondaryHref}
-              className="inline-flex min-h-[3.25rem] items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/16"
+              className="inline-flex min-h-[3.25rem] w-full items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/16 sm:w-auto"
             >
               {secondaryLabel}
             </Link>
