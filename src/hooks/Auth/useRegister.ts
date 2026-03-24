@@ -86,7 +86,7 @@ export function useRegister() {
    * @returns Nothing.
    */
   function onGoBack() {
-    navigate(-1);
+    navigate("/");
   }
 
   /**

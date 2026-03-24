@@ -20,11 +20,7 @@ export function useCompleteProfile() {
   const { user, refreshMe } = useAuth();
   const state = (location.state ?? {}) as LocationState;
 
-  const email =
-    user?.email ??
-    state.email ??
-    sessionStorage.getItem("pending_profile_email") ??
-    "";
+  const email = user?.email ?? state.email ?? sessionStorage.getItem("pending_profile_email") ?? "";
 
   const [firstName, setFirstName] = useState(user?.person?.first_name ?? "");
   const [lastName, setLastName] = useState(user?.person?.last_name ?? "");
@@ -63,6 +59,15 @@ export function useCompleteProfile() {
     }
   };
 
+  /**
+   * Returns the user to the landing page.
+   *
+   * @returns Nothing.
+   */
+  function onNavigateToLanding() {
+    navigate("/");
+  }
+
   return {
     email,
     firstName,
@@ -77,5 +82,6 @@ export function useCompleteProfile() {
     error,
     canSubmit,
     onSubmit,
+    onNavigateToLanding,
   };
 }

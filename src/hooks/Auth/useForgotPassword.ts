@@ -49,6 +49,15 @@ export function useForgotPassword() {
     navigate("/login");
   }
 
+  /**
+   * Returns the user to the landing page.
+   *
+   * @returns Nothing.
+   */
+  function onNavigateToLanding() {
+    navigate("/");
+  }
+
   return {
     email,
     setEmail,
@@ -57,5 +66,6 @@ export function useForgotPassword() {
     loading,
     onSubmit,
     onNavigateToLogin,
+    onNavigateToLanding,
   };
 }

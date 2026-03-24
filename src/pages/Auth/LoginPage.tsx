@@ -21,6 +21,7 @@ export default function LoginPage() {
     onTogglePassword,
     onNavigateToRegister,
     onNavigateToForgotPassword,
+    onNavigateToLanding,
   } = useLogin();
 
   return (
@@ -38,6 +39,7 @@ export default function LoginPage() {
       onClear={onClear}
       onNavigateToRegister={onNavigateToRegister}
       onNavigateToForgotPassword={onNavigateToForgotPassword}
+      onNavigateToLanding={onNavigateToLanding}
     />
   );
 }

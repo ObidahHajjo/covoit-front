@@ -27,6 +27,7 @@ export default function CompleteProfilePage() {
     error,
     canSubmit,
     onSubmit,
+    onNavigateToLanding,
   } = useCompleteProfile();
 
   if (status === "loading") {
@@ -62,6 +63,7 @@ export default function CompleteProfilePage() {
       error={error}
       canSubmit={canSubmit}
       onSubmit={onSubmit}
+      onNavigateToLanding={onNavigateToLanding}
     />
   );
 }

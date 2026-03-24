@@ -10,6 +10,7 @@ type Props = {
   loading: boolean;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onNavigateToLogin: () => void;
+  onNavigateToLanding: () => void;
 };
 
 /**
@@ -26,6 +27,7 @@ export function ForgotPasswordSection({
   loading,
   onSubmit,
   onNavigateToLogin,
+  onNavigateToLanding,
 }: Props) {
   const { t } = useI18n();
 
@@ -33,7 +35,15 @@ export function ForgotPasswordSection({
     <div className="min-h-dvh bg-[var(--theme-bg-soft)] px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto grid w-full max-w-5xl gap-6 lg:grid-cols-[1fr_1fr]">
         <section className="bg-[var(--theme-surface)] p-6 sm:p-8 lg:p-10">
-          <div className="flex justify-end">
+          <div className="flex items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={onNavigateToLanding}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
+              aria-label={t("common.back")}
+            >
+              <span className="text-lg leading-none">←</span>
+            </button>
             <LanguageSwitcher compact />
           </div>
           <div className="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase tracking-wider text-[var(--theme-muted-strong)]">

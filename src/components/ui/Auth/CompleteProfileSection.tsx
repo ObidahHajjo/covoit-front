@@ -17,6 +17,7 @@ type Props = {
   error: string | null;
   canSubmit: boolean;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onNavigateToLanding: () => void;
 };
 
 const inputClass =
@@ -55,6 +56,7 @@ export function CompleteProfileSection({
   error,
   canSubmit,
   onSubmit,
+  onNavigateToLanding,
 }: Props) {
   const { t } = useI18n();
 
@@ -63,14 +65,24 @@ export function CompleteProfileSection({
       <FloatingToast tone="error" message={error} durationMs={6500} />
       <div className="relative mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[0.94fr_1.06fr] lg:items-stretch">
         <div className="flex flex-col justify-between rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-6 sm:p-8 lg:p-10">
-          <div className="mb-6 flex justify-end">
+          <div className="mb-6 flex items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={onNavigateToLanding}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
+              aria-label={t("common.back")}
+            >
+              <span className="text-lg leading-none">←</span>
+            </button>
             <LanguageSwitcher compact />
           </div>
           <div>
             <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-2xl">
               👤
             </div>
-            <p className="mt-6 text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("profile.completion")}</p>
+            <p className="mt-6 text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+              {t("profile.completion")}
+            </p>
             <h1 className="mt-3 max-w-[12ch] text-2xl font-medium leading-tight text-[var(--theme-ink)]">
               {t("profile.recognizeRealYou")}
             </h1>
@@ -89,10 +101,10 @@ export function CompleteProfileSection({
                 key={title}
                 className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] p-5"
               >
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("profile.trustCue")}</p>
-                <h2 className="mt-2 text-base font-medium text-[var(--theme-ink)]">
-                  {title}
-                </h2>
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+                  {t("profile.trustCue")}
+                </p>
+                <h2 className="mt-2 text-base font-medium text-[var(--theme-ink)]">{title}</h2>
                 <p className="mt-2 text-sm leading-6 text-[var(--theme-muted-strong)]">{copy}</p>
               </article>
             ))}
@@ -103,7 +115,9 @@ export function CompleteProfileSection({
           <div className="rounded-xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] p-5 sm:p-6 lg:p-8">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("profile.step2")}</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+                  {t("profile.step2")}
+                </p>
                 <h2 className="mt-2 text-xl font-medium text-[var(--theme-ink)]">
                   {t("profile.completeProfile")}
                 </h2>
@@ -114,19 +128,23 @@ export function CompleteProfileSection({
             </div>
 
             <div className="mt-5 rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] px-4 py-3.5">
-              <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("common.email")}</p>
-              <p className="mt-1 break-all text-sm font-medium text-[var(--theme-ink)]">{email || "-"}</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+                {t("common.email")}
+              </p>
+              <p className="mt-1 break-all text-sm font-medium text-[var(--theme-ink)]">
+                {email || "-"}
+              </p>
             </div>
 
             <form onSubmit={onSubmit} className="mt-5 space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
-                     {t("profile.firstName")}
+                    {t("profile.firstName")}
                   </label>
                   <input
                     className={inputClass}
-                     placeholder={t("profile.firstName")}
+                    placeholder={t("profile.firstName")}
                     value={firstName}
                     onChange={(e) => onFirstNameChange(e.target.value)}
                   />
@@ -134,11 +152,11 @@ export function CompleteProfileSection({
 
                 <div className="space-y-2">
                   <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
-                     {t("profile.lastName")}
+                    {t("profile.lastName")}
                   </label>
                   <input
                     className={inputClass}
-                     placeholder={t("profile.lastName")}
+                    placeholder={t("profile.lastName")}
                     value={lastName}
                     onChange={(e) => onLastNameChange(e.target.value)}
                   />
@@ -147,11 +165,11 @@ export function CompleteProfileSection({
 
               <div className="space-y-2">
                 <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
-                   {t("profile.pseudo")}
+                  {t("profile.pseudo")}
                 </label>
                 <input
                   className={inputClass}
-                   placeholder={t("profile.pseudoPlaceholder")}
+                  placeholder={t("profile.pseudoPlaceholder")}
                   value={pseudo}
                   onChange={(e) => onPseudoChange(e.target.value)}
                 />
@@ -159,7 +177,10 @@ export function CompleteProfileSection({
 
               <div className="space-y-2">
                 <label className="block text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
-                   {t("profile.phone")} <span className="normal-case font-normal text-[var(--theme-subtle)]">({t("common.optional")})</span>
+                  {t("profile.phone")}{" "}
+                  <span className="normal-case font-normal text-[var(--theme-subtle)]">
+                    ({t("common.optional")})
+                  </span>
                 </label>
                 <input
                   className={inputClass}
@@ -174,7 +195,7 @@ export function CompleteProfileSection({
                 disabled={!canSubmit}
                 className="w-full rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:cursor-not-allowed disabled:opacity-40"
               >
-                 {isSubmitting ? t("profile.savingProfile") : t("profile.saveProfile")}
+                {isSubmitting ? t("profile.savingProfile") : t("profile.saveProfile")}
               </button>
 
               {!email && (

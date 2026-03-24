@@ -17,6 +17,7 @@ type Props = {
   onClear: () => void;
   onNavigateToRegister: () => void;
   onNavigateToForgotPassword: () => void;
+  onNavigateToLanding: () => void;
 };
 
 const trustNotesBase = [
@@ -95,6 +96,7 @@ const trustNotesBase = [
  * @param props.onClear - Callback fired when the form is cleared.
  * @param props.onNavigateToRegister - Callback fired when the user opens registration.
  * @param props.onNavigateToForgotPassword - Callback fired when the user opens password recovery.
+ * @param props.onNavigateToLanding - Callback fired when the user returns to the landing page.
  * @returns The rendered login screen.
  */
 export function LoginSection({
@@ -111,6 +113,7 @@ export function LoginSection({
   onClear,
   onNavigateToRegister,
   onNavigateToForgotPassword,
+  onNavigateToLanding,
 }: Props) {
   const { t } = useI18n();
   const trustNotes = [
@@ -172,7 +175,15 @@ export function LoginSection({
           <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(212,233,197,0.28),transparent_72%)] md:hidden" />
 
           <div className="relative z-10 mx-auto w-full max-w-md">
-            <div className="mb-5 flex justify-end md:hidden">
+            <div className="mb-5 flex items-center justify-between md:hidden">
+              <button
+                type="button"
+                onClick={onNavigateToLanding}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
+                aria-label={t("common.back")}
+              >
+                <span className="text-lg leading-none">←</span>
+              </button>
               <LanguageSwitcher compact />
             </div>
 
@@ -183,7 +194,18 @@ export function LoginSection({
                   {t("auth.signInGently")}
                 </h2>
               </div>
-              <span className="serene-chip">{t("auth.liveAccess")}</span>
+              <div className="hidden items-center gap-3 md:flex">
+                <button
+                  type="button"
+                  onClick={onNavigateToLanding}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--theme-line)] bg-[var(--theme-surface)] text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
+                  aria-label={t("common.back")}
+                >
+                  <span className="text-lg leading-none">←</span>
+                </button>
+                <span className="serene-chip">{t("auth.liveAccess")}</span>
+              </div>
+              <span className="serene-chip md:hidden">{t("auth.liveAccess")}</span>
             </div>
 
             <div className="rounded-[2rem] border border-[var(--theme-line)] bg-[rgba(249,250,248,0.72)] p-5 shadow-[var(--theme-shadow-warm)] backdrop-blur-xl sm:p-6">

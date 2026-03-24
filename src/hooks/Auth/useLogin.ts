@@ -44,7 +44,7 @@ export function useLogin() {
       if (!authenticated) {
         throw new Error(translate("auth.loginRestoreFailed"));
       }
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       const msg = err instanceof Error ? err.message : translate("auth.loginFailed");
       setError(msg);
@@ -91,6 +91,15 @@ export function useLogin() {
     navigate("/forgot-password");
   }
 
+  /**
+   * Returns the user to the landing page.
+   *
+   * @returns Nothing.
+   */
+  function onNavigateToLanding() {
+    navigate("/");
+  }
+
   return {
     email,
     setEmail,
@@ -105,5 +114,6 @@ export function useLogin() {
     onTogglePassword,
     onNavigateToRegister,
     onNavigateToForgotPassword,
+    onNavigateToLanding,
   };
 }
