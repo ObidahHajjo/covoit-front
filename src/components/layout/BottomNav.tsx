@@ -60,6 +60,13 @@ export const navItems: NavItem[] = [
     visible: (user) => user?.permissions.can_edit_profile ?? false,
     mobileVisible: () => false,
   },
+  {
+    to: "/support",
+    labelKey: "nav.support",
+    icon: "support",
+    visible: () => true,
+    mobileVisible: () => false,
+  },
 ];
 
 const mobileMoreItem: NavItem = {
@@ -131,6 +138,16 @@ function NavGlyph({ icon }: { icon: string }) {
         <circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none" />
         <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
         <circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      </svg>
+    );
+  }
+
+  if (icon === "support") {
+    return (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="8" />
+        <path d="M9.6 9.6a2.5 2.5 0 1 1 4.1 2c-.86.7-1.45 1.21-1.45 2.3" />
+        <path d="M12 17h.01" />
       </svg>
     );
   }

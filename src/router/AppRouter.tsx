@@ -12,16 +12,19 @@ import FindTripPage from "../pages/Trips/FindTripPage";
 import TripResultsPage from "../pages/Trips/TripResultsPage";
 import TripDetailsPage from "../pages/Trips/TripDetailsPage";
 import ContactDriverPage from "../pages/Trips/ContactDriverPage";
+import ContactDriverEmailPage from "../pages/Trips/ContactDriverEmailPage";
 import MyTripsPage from "../pages/DriverTrips/MyTripsPage";
 import PublishTripPage from "../pages/DriverTrips/PublishTripPage";
 import DriverTripDetailsPage from "../pages/DriverTrips/DriverTripDetailsPage";
 import ContactPassengerPage from "../pages/DriverTrips/ContactPassengerPage";
+import ContactPassengerEmailPage from "../pages/DriverTrips/ContactPassengerEmailPage";
 import MyBookingsPage from "../pages/Bookings/MyBookingsPage";
 import BookingDetailsPage from "../pages/Bookings/BookingDetailsPage";
 import MyAccountPage from "../pages/Account/MyAccountPage";
 import ChatInboxPage from "../pages/Chat/ChatInboxPage";
 import ChatConversationPage from "../pages/Chat/ChatConversationPage";
 import LandingPage from "../pages/LandingPage";
+import SupportPage from "../pages/SupportPage";
 
 /**
  * Declares the application's public, protected, and permission-based routes.
@@ -48,9 +51,11 @@ export default function AppRouter() {
           <Route path="/find-trip" element={<FindTripPage />} />
           <Route path="/chat" element={<ChatInboxPage />} />
           <Route path="/chat/:conversationId" element={<ChatConversationPage />} />
+          <Route path="/support" element={<SupportPage />} />
           <Route path="/find-trip/results" element={<TripResultsPage />} />
           <Route path="/trips/:tripId" element={<TripDetailsPage />} />
           <Route path="/trips/:tripId/contact-driver" element={<ContactDriverPage />} />
+          <Route path="/trips/:tripId/contact-driver-email" element={<ContactDriverEmailPage />} />
 
           <Route element={<PermissionRoute permission="can_manage_own_trips" />}>
             <Route path="/my-trips" element={<MyTripsPage />} />
@@ -59,6 +64,10 @@ export default function AppRouter() {
             <Route
               path="/my-trips/:tripId/contact-passenger/:passengerId"
               element={<ContactPassengerPage />}
+            />
+            <Route
+              path="/my-trips/:tripId/contact-passenger/:passengerId/email"
+              element={<ContactPassengerEmailPage />}
             />
           </Route>
 

@@ -19,12 +19,16 @@ function getPageLabel(pathname: string): string {
   if (pathname === "/find-trip") return "shell.findTrips";
   if (pathname === "/chat") return "shell.chats";
   if (pathname.startsWith("/chat/")) return "shell.chat";
+  if (pathname === "/support") return "shell.support";
   if (pathname.startsWith("/find-trip/results")) return "shell.tripResults";
   if (pathname.startsWith("/trips/") && pathname.endsWith("/contact-driver"))
     return "shell.driverChat";
+  if (pathname.startsWith("/trips/") && pathname.endsWith("/contact-driver-email"))
+    return "shell.driverEmail";
   if (pathname.startsWith("/trips/")) return "shell.tripDetails";
   if (pathname === "/my-trips") return "shell.myTrips";
   if (pathname === "/my-trips/new") return "shell.publishTrip";
+  if (pathname.includes("/contact-passenger/") && pathname.endsWith("/email")) return "shell.passengerEmail";
   if (pathname.includes("/contact-passenger/")) return "shell.passengerChat";
   if (pathname.startsWith("/my-trips/")) return "shell.tripDetails";
   if (pathname === "/bookings") return "shell.bookings";
