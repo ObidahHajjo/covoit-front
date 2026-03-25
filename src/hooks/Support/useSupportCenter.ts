@@ -1,7 +1,14 @@
 import { type FormEvent, useMemo, useState } from "react";
 import { sendSupportEmail } from "../../features/contact/contactEmailApi";
+import { validateAttachments } from "../../features/contact/attachmentValidation";
 import { useI18n } from "../../i18n/I18nProvider";
 
+/**
+ * Hook to manage the support center interface.
+ * Provides FAQ data and handles support email submissions.
+ *
+ * @returns State and handlers for the support center.
+ */
 export function useSupportCenter() {
   const { t } = useI18n();
   const [subject, setSubject] = useState(t("support.defaultSubject"));
@@ -21,6 +28,30 @@ export function useSupportCenter() {
     [t],
   );
 
+  function handleFilesChange(files: File[]) {
+    const validation = validateAttachments(files);
+
+    if (!validation.isValid) {
+      setError(
+        validation.reason === "too_many_files"
+          ? t("contact.attachmentsCountError", { count: validation.maxCount })
+          : t("contact.attachmentTooLarge", {
+              fileName: validation.fileName,
+              maxSizeMb: validation.maxSizeMb,
+            }),
+      );
+      return;
+    }
+
+    setError(null);
+    setSelectedFiles(files);
+  }
+
+  /**
+   * Handles the submission of the support contact form.
+   *
+   * @param event - The React form event.
+   */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -47,7 +78,7 @@ export function useSupportCenter() {
     message,
     setMessage,
     selectedFiles,
-    setSelectedFiles,
+    handleFilesChange,
     sending,
     success,
     error,

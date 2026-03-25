@@ -17,7 +17,7 @@ export default function SupportPage() {
       faqs={support.faqs}
       onSubjectChange={support.setSubject}
       onMessageChange={support.setMessage}
-      onFilesChange={support.setSelectedFiles}
+      onFilesChange={support.handleFilesChange}
       onSubmit={support.handleSubmit}
       isOpen={supportChat.isOpen}
       messages={supportChat.conversation?.messages ?? []}
@@ -29,7 +29,7 @@ export default function SupportPage() {
       chatSuccess={supportChat.success}
       chatError={supportChat.error}
       onDraftChange={supportChat.setDraft}
-      onChatFilesChange={supportChat.setSelectedFiles}
+      onChatFilesChange={supportChat.handleFilesChange}
       onChatSubmit={supportChat.handleSubmit}
       onOpenChat={supportChat.openChat}
       onCloseChat={supportChat.closeChat}

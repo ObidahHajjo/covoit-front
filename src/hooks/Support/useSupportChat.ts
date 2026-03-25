@@ -6,12 +6,19 @@ import {
   sendSupportMessage,
   type SupportConversation,
 } from "../../features/chat/supportChatApi";
+import { validateAttachments } from "../../features/contact/attachmentValidation";
 import { useSupportChatRealtime } from "../../features/chat/useSupportChatRealtime";
 import { translate } from "../../i18n/config";
 import type { ChatMessage } from "../../types/Chat";
 
 export type ConnectionStatus = "connecting" | "connected" | "disconnected";
 
+/**
+ * Hook to manage the user-side support chat session.
+ * Handles fetching the conversation, realtime message updates, and sending messages.
+ *
+ * @returns State and handlers for the user support chat interface.
+ */
 export function useSupportChat() {
   const [conversation, setConversation] = useState<SupportConversation | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,6 +32,11 @@ export function useSupportChat() {
   const [isOpen, setIsOpen] = useState(false);
   const adminTypingTimeoutRef = useRef<number | null>(null);
 
+  /**
+   * Loads the current support conversation and its message history.
+   *
+   * @param isSilent - If true, prevents the loading spinner from showing.
+   */
   const load = useCallback(async (isSilent = false) => {
     try {
       if (!isSilent) {
@@ -72,7 +84,7 @@ export function useSupportChat() {
           }, 3000);
         }
       }
-    }
+    },
   );
 
   useEffect(() => {
@@ -83,6 +95,25 @@ export function useSupportChat() {
     setIsOpen(true);
     await load();
   }, [load]);
+
+  function handleFilesChange(files: File[]) {
+    const validation = validateAttachments(files);
+
+    if (!validation.isValid) {
+      setError(
+        validation.reason === "too_many_files"
+          ? translate("contact.attachmentsCountError", { count: validation.maxCount })
+          : translate("contact.attachmentTooLarge", {
+              fileName: validation.fileName,
+              maxSizeMb: validation.maxSizeMb,
+            }),
+      );
+      return;
+    }
+
+    setError(null);
+    setSelectedFiles(files);
+  }
 
   const closeChat = useCallback(async () => {
     setIsOpen(false);
@@ -100,6 +131,11 @@ export function useSupportChat() {
     setConnectionStatus("connecting");
   }, [conversation]);
 
+  /**
+   * Handles the submission of a new support message.
+   *
+   * @param event - The React form event.
+   */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -147,7 +183,7 @@ export function useSupportChat() {
     draft,
     setDraft,
     selectedFiles,
-    setSelectedFiles,
+    handleFilesChange,
     sending,
     success,
     error,

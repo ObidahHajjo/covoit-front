@@ -88,6 +88,7 @@ export const dictionaries = {
     "common.seeAll": "See all",
     "common.profile": "Profile",
     "common.car": "Car",
+    "car.model": "Model",
 
     "shell.dashboard": "Dashboard",
     "shell.findTrips": "Find Trips",
@@ -382,6 +383,7 @@ export const dictionaries = {
     "trip.confirmBooking": "Confirm booking",
     "trip.contactDriver": "Contact driver",
     "trip.contactDriverEmail": "Email driver",
+    "trip.vehicle": "Vehicle",
     "trip.notFound": "Trip not found.",
     "trip.missingTripId": "Missing tripId",
     "trip.loadFailed": "Failed to load trip",
@@ -545,39 +547,52 @@ export const dictionaries = {
     "contact.message": "Message",
     "contact.messagePlaceholder": "Share the details you want to send.",
     "contact.attachments": "Attachments",
-    "contact.attachmentsBody": "Add up to 5 files. You can send screenshots, documents, or pickup details.",
+    "contact.attachmentsBody":
+      "Add up to 5 files, 10 MB each. You can send screenshots, documents, or pickup details.",
     "contact.addFiles": "Add files",
     "contact.sendEmail": "Send email",
     "contact.emailSendFailed": "Unable to send email.",
+    "contact.attachmentsCountError": "You can attach up to {count} files.",
+    "contact.attachmentTooLarge": '"{fileName}" exceeds the {maxSizeMb} MB limit.',
     "contact.driverEmailTitle": "Email the driver",
-    "contact.driverEmailBody": "Send trip details by email when you need a longer message or documents.",
+    "contact.driverEmailBody":
+      "Send trip details by email when you need a longer message or documents.",
     "contact.passengerEmailTitle": "Email the passenger",
-    "contact.passengerEmailBody": "Share trip updates, pickup notes, or documents directly by email.",
+    "contact.passengerEmailBody":
+      "Share trip updates, pickup notes, or documents directly by email.",
     "contact.defaultDriverEmailSubject": "Question about this trip",
     "contact.defaultPassengerEmailSubject": "Update about your trip",
 
     "support.kicker": "Service client",
-    "support.title": "Help riders solve questions, emails, and live trip coordination from one space.",
-    "support.body": "Use the FAQ for quick answers, send support emails with attachments, or open live trip chat when a ride needs fast coordination.",
+    "support.title":
+      "Help riders solve questions, emails, and live trip coordination from one space.",
+    "support.body":
+      "Use the FAQ for quick answers, send support emails with attachments, or open live trip chat when a ride needs fast coordination.",
     "support.liveHelp": "Live help",
     "support.liveHelpTitle": "Need a real-time thread?",
-    "support.liveHelpBody": "Trip chat now supports file attachments, so passengers and drivers can exchange proofs, screenshots, or pickup notes without leaving the app.",
+    "support.liveHelpBody":
+      "Trip chat now supports file attachments, so passengers and drivers can exchange proofs, screenshots, or pickup notes without leaving the app.",
     "support.openChat": "Open live chat",
     "support.findTrip": "Find a trip",
     "support.faq": "Q and A",
     "support.faqTitle": "Quick answers before you contact us",
     "support.emailTitle": "Contact support by email",
-    "support.emailBody": "Describe the issue clearly and attach anything that helps the team understand it faster.",
+    "support.emailBody":
+      "Describe the issue clearly and attach anything that helps the team understand it faster.",
     "support.defaultSubject": "Support request",
     "support.emailFailed": "Unable to send your support email.",
     "support.faqAccountQuestion": "I cannot access my account. What should I do?",
-    "support.faqAccountAnswer": "Try password reset first. If the issue continues, send support a message with the email address you used to register.",
+    "support.faqAccountAnswer":
+      "Try password reset first. If the issue continues, send support a message with the email address you used to register.",
     "support.faqBookingQuestion": "How do I contact the other person about a trip?",
-    "support.faqBookingAnswer": "Open the trip details page and choose either live chat or email contact, depending on how much detail you need to send.",
+    "support.faqBookingAnswer":
+      "Open the trip details page and choose either live chat or email contact, depending on how much detail you need to send.",
     "support.faqChatQuestion": "When should I use live chat instead of email?",
-    "support.faqChatAnswer": "Use live chat for quick coordination before departure. Use email when you need a formal message, longer context, or attached documents.",
+    "support.faqChatAnswer":
+      "Use live chat for quick coordination before departure. Use email when you need a formal message, longer context, or attached documents.",
     "support.faqFilesQuestion": "What files can I attach?",
-    "support.faqFilesAnswer": "You can attach common files such as images, PDFs, and documents up to 10 MB each, with a limit of 5 files per message.",
+    "support.faqFilesAnswer":
+      "You can attach common files such as images, PDFs, and documents up to 10 MB each, with a limit of 5 files per message.",
 
     "supportChat.title": "Support Chat",
     "supportChat.openChat": "Open support chat",
@@ -754,17 +769,21 @@ export const dictionaries = {
     "common.seeAll": "Voir tout",
     "common.profile": "Profil",
     "common.car": "Voiture",
+    "car.model": "Modele",
 
     "shell.dashboard": "Tableau de bord",
     "shell.findTrips": "Rechercher",
     "shell.chats": "Messages",
     "shell.chat": "Conversation",
+    "shell.support": "Support",
     "shell.tripResults": "Resultats",
     "shell.driverChat": "Message conducteur",
+    "shell.driverEmail": "E-mail conducteur",
     "shell.tripDetails": "Details du trajet",
     "shell.myTrips": "Mes trajets",
     "shell.publishTrip": "Publier un trajet",
     "shell.passengerChat": "Message passager",
+    "shell.passengerEmail": "E-mail passager",
     "shell.bookings": "Reservations",
     "shell.bookingDetails": "Details de reservation",
     "shell.account": "Compte",
@@ -775,6 +794,7 @@ export const dictionaries = {
     "nav.myTrips": "Mes trajets",
     "nav.find": "Chercher",
     "nav.chat": "Chat",
+    "nav.support": "Support",
     "nav.bookings": "Reservations",
     "nav.account": "Compte",
     "nav.more": "Plus",
@@ -1053,6 +1073,8 @@ export const dictionaries = {
     "trip.booking": "Reservation...",
     "trip.confirmBooking": "Confirmer la reservation",
     "trip.contactDriver": "Contacter le conducteur",
+    "trip.contactDriverEmail": "E-mail conducteur",
+    "trip.vehicle": "Vehicule",
     "trip.notFound": "Trajet introuvable.",
     "trip.missingTripId": "tripId manquant",
     "trip.loadFailed": "Impossible de charger le trajet",
@@ -1124,6 +1146,7 @@ export const dictionaries = {
     "driverTrips.noPassengersBody":
       "Les nouvelles reservations apparaitront ici au fur et a mesure.",
     "driverTrips.contactPassenger": "Contacter le passager",
+    "driverTrips.emailPassenger": "E-mail passager",
     "driverTrips.cancelTrip": "Annuler ce trajet",
     "driverTrips.cancelling": "Annulation...",
     "driverTrips.cancelledSuccess": "Trajet annule avec succes.",
@@ -1213,28 +1236,57 @@ export const dictionaries = {
     "chat.sendFailed": "Impossible d'envoyer le message",
     "chat.opening": "Ouverture de la conversation...",
 
+    "contact.emailChannel": "Canal e-mail",
+    "contact.subject": "Objet",
+    "contact.message": "Message",
+    "contact.messagePlaceholder": "Partagez les details que vous souhaitez envoyer.",
+    "contact.attachments": "Pieces jointes",
+    "contact.attachmentsBody":
+      "Ajoutez jusqu'a 5 fichiers de 10 Mo chacun. Vous pouvez envoyer des captures d'ecran, documents ou details de rendez-vous.",
+    "contact.addFiles": "Ajouter des fichiers",
+    "contact.sendEmail": "Envoyer l'e-mail",
+    "contact.emailSendFailed": "Impossible d'envoyer l'e-mail.",
+    "contact.attachmentsCountError": "Vous pouvez joindre jusqu'a {count} fichiers.",
+    "contact.attachmentTooLarge": '"{fileName}" depasse la limite de {maxSizeMb} Mo.',
+    "contact.driverEmailTitle": "Envoyer un e-mail au conducteur",
+    "contact.driverEmailBody":
+      "Envoyez les details du trajet par e-mail lorsque vous avez besoin d'un message plus long ou de documents.",
+    "contact.passengerEmailTitle": "Envoyer un e-mail au passager",
+    "contact.passengerEmailBody":
+      "Partagez des informations de trajet, des consignes de rendez-vous ou des documents directement par e-mail.",
+    "contact.defaultDriverEmailSubject": "Question a propos de ce trajet",
+    "contact.defaultPassengerEmailSubject": "Mise a jour concernant votre trajet",
+
     "support.kicker": "Service client",
-    "support.title": "Aidez les utilisateurs à résoudre leurs questions, gérer leurs e-mails et coordonner leurs trajets en temps réel depuis un seul espace.",
-    "support.body": "Consultez la FAQ pour des réponses rapides, envoyez des e-mails avec pièces jointes ou ouvrez le chat en direct si un trajet nécessite une coordination rapide.",
+    "support.title":
+      "Obtenez de l'aide pour vos questions, vos e-mails et la coordination de vos trajets depuis un seul espace.",
+    "support.body":
+      "Consultez la FAQ pour des reponses rapides, envoyez un e-mail avec pieces jointes ou ouvrez le chat en direct si vous avez besoin d'une reponse rapide.",
     "support.liveHelp": "Aide en direct",
     "support.liveHelpTitle": "Besoin d'un échange en temps réel ?",
-    "support.liveHelpBody": "Le chat de trajet prend désormais en charge les pièces jointes, permettant aux passagers et conducteurs d'échanger des preuves, captures d'écran ou notes de prise en charge sans quitter l'application.",
+    "support.liveHelpBody":
+      "Le chat support permet d'echanger rapidement avec l'equipe, y compris avec des pieces jointes lorsque c'est necessaire.",
     "support.openChat": "Ouvrir le chat en direct",
     "support.findTrip": "Trouver un trajet",
     "support.faq": "Questions fréquentes",
     "support.faqTitle": "Réponses rapides avant de nous contacter",
     "support.emailTitle": "Contacter le support par e-mail",
-    "support.emailBody": "Décrivez clairement le problème et joignez tout élément utile pour que l'équipe comprenne plus vite.",
+    "support.emailBody":
+      "Décrivez clairement le problème et joignez tout élément utile pour que l'équipe comprenne plus vite.",
     "support.defaultSubject": "Demande de support",
     "support.emailFailed": "Impossible d'envoyer votre e-mail de support.",
     "support.faqAccountQuestion": "Je ne peux pas accéder à mon compte. Que faire ?",
-    "support.faqAccountAnswer": "Essayez d'abord la réinitialisation du mot de passe. Si le problème persiste, envoyez un message au support avec l'adresse e-mail utilisée lors de l'inscription.",
+    "support.faqAccountAnswer":
+      "Essayez d'abord la réinitialisation du mot de passe. Si le problème persiste, envoyez un message au support avec l'adresse e-mail utilisée lors de l'inscription.",
     "support.faqBookingQuestion": "Comment contacter l'autre personne concernant un trajet ?",
-    "support.faqBookingAnswer": "Ouvrez la page de détails du trajet et choisissez le chat en direct ou le contact par e-mail selon le niveau de détail que vous souhaitez envoyer.",
+    "support.faqBookingAnswer":
+      "Ouvrez la page de détails du trajet et choisissez le chat en direct ou le contact par e-mail selon le niveau de détail que vous souhaitez envoyer.",
     "support.faqChatQuestion": "Quand utiliser le chat en direct plutôt que l'e-mail ?",
-    "support.faqChatAnswer": "Utilisez le chat en direct pour une coordination rapide avant le départ. Utilisez l'e-mail pour un message formel, un contexte plus long ou des documents joints.",
+    "support.faqChatAnswer":
+      "Utilisez le chat en direct pour une coordination rapide avant le départ. Utilisez l'e-mail pour un message formel, un contexte plus long ou des documents joints.",
     "support.faqFilesQuestion": "Quels fichiers puis-je joindre ?",
-    "support.faqFilesAnswer": "Vous pouvez joindre des fichiers courants tels que des images, des PDF et des documents jusqu'à 10 Mo chacun, avec un maximum de 5 fichiers par message.",
+    "support.faqFilesAnswer":
+      "Vous pouvez joindre des fichiers courants tels que des images, des PDF et des documents jusqu'à 10 Mo chacun, avec un maximum de 5 fichiers par message.",
 
     "supportChat.title": "Chat Support",
     "supportChat.openChat": "Ouvrir le chat support",
@@ -1281,7 +1333,8 @@ export const dictionaries = {
     "admin.confirmDeleteTrip": "Etes-vous sur de vouloir supprimer ce trajet?",
     "admin.confirmDeleteBrand": "Supprimer cette marque?",
     "admin.confirmDeleteModel": "Supprimer ce modele?",
-    "admin.confirmDeleteCar": "Supprimer cette voiture definitivement? Cela peut decoincer les vehicules des conducteurs.",
+    "admin.confirmDeleteCar":
+      "Supprimer cette voiture definitivement? Cela peut decoincer les vehicules des conducteurs.",
     "admin.deleteError": "Erreur lors de la suppression",
     "admin.driver": "Conducteur",
     "admin.dateTime": "Date/Heure",
@@ -1404,6 +1457,7 @@ export const dictionaries = {
     "common.seeAll": "عرض الكل",
     "common.profile": "الملف الشخصي",
     "common.car": "السيارة",
+    "car.model": "الطراز",
 
     "shell.dashboard": "لوحة التحكم",
     "shell.findTrips": "البحث عن الرحلات",
@@ -1683,6 +1737,7 @@ export const dictionaries = {
     "trip.booking": "جار الحجز...",
     "trip.confirmBooking": "تأكيد الحجز",
     "trip.contactDriver": "التواصل مع السائق",
+    "trip.vehicle": "المركبة",
     "trip.notFound": "لم يتم العثور على الرحلة.",
     "trip.missingTripId": "معرّف الرحلة مفقود",
     "trip.loadFailed": "فشل تحميل الرحلة",
@@ -1836,11 +1891,14 @@ export const dictionaries = {
     "chat.opening": "جار فتح المحادثة...",
 
     "support.kicker": "خدمة العملاء",
-    "support.title": "ساعد المستخدمين في حل تساؤلاتهم وإدارة رسائلهم وتنسيق رحلاتهم في الوقت الفعلي من مكان واحد.",
-    "support.body": "استخدم الأسئلة الشائعة للحصول على إجابات سريعة، أو أرسل رسائل بريد إلكتروني مع مرفقات، أو افتح الدردشة المباشرة عند الحاجة إلى تنسيق سريع.",
+    "support.title":
+      "ساعد المستخدمين في حل تساؤلاتهم وإدارة رسائلهم وتنسيق رحلاتهم في الوقت الفعلي من مكان واحد.",
+    "support.body":
+      "استخدم الأسئلة الشائعة للحصول على إجابات سريعة، أو أرسل رسائل بريد إلكتروني مع مرفقات، أو افتح الدردشة المباشرة عند الحاجة إلى تنسيق سريع.",
     "support.liveHelp": "مساعدة فورية",
     "support.liveHelpTitle": "تحتاج إلى محادثة في الوقت الفعلي؟",
-    "support.liveHelpBody": "تدعم دردشة الرحلة الآن إرفاق الملفات، مما يتيح للركاب والسائقين تبادل الإثباتات أو لقطات الشاشة أو ملاحظات نقطة الالتقاء دون مغادرة التطبيق.",
+    "support.liveHelpBody":
+      "تدعم دردشة الرحلة الآن إرفاق الملفات، مما يتيح للركاب والسائقين تبادل الإثباتات أو لقطات الشاشة أو ملاحظات نقطة الالتقاء دون مغادرة التطبيق.",
     "support.openChat": "فتح الدردشة المباشرة",
     "support.findTrip": "ابحث عن رحلة",
     "support.faq": "الأسئلة الشائعة",
@@ -1850,13 +1908,17 @@ export const dictionaries = {
     "support.defaultSubject": "طلب دعم",
     "support.emailFailed": "تعذر إرسال بريدك الإلكتروني إلى الدعم.",
     "support.faqAccountQuestion": "لا أستطيع الوصول إلى حسابي. ماذا أفعل؟",
-    "support.faqAccountAnswer": "جرب إعادة تعيين كلمة المرور أولاً. إذا استمرت المشكلة، أرسل رسالة إلى الدعم مع عنوان البريد الإلكتروني الذي استخدمته عند التسجيل.",
+    "support.faqAccountAnswer":
+      "جرب إعادة تعيين كلمة المرور أولاً. إذا استمرت المشكلة، أرسل رسالة إلى الدعم مع عنوان البريد الإلكتروني الذي استخدمته عند التسجيل.",
     "support.faqBookingQuestion": "كيف أتواصل مع الشخص الآخر بشأن رحلة؟",
-    "support.faqBookingAnswer": "افتح صفحة تفاصيل الرحلة واختر إما الدردشة المباشرة أو التواصل عبر البريد الإلكتروني، بحسب كمية التفاصيل التي تريد إرسالها.",
+    "support.faqBookingAnswer":
+      "افتح صفحة تفاصيل الرحلة واختر إما الدردشة المباشرة أو التواصل عبر البريد الإلكتروني، بحسب كمية التفاصيل التي تريد إرسالها.",
     "support.faqChatQuestion": "متى يجب استخدام الدردشة المباشرة بدلاً من البريد الإلكتروني؟",
-    "support.faqChatAnswer": "استخدم الدردشة المباشرة للتنسيق السريع قبل المغادرة. استخدم البريد الإلكتروني عند الحاجة إلى رسالة رسمية أو سياق أطول أو مستندات مرفقة.",
+    "support.faqChatAnswer":
+      "استخدم الدردشة المباشرة للتنسيق السريع قبل المغادرة. استخدم البريد الإلكتروني عند الحاجة إلى رسالة رسمية أو سياق أطول أو مستندات مرفقة.",
     "support.faqFilesQuestion": "ما الملفات التي يمكنني إرفاقها؟",
-    "support.faqFilesAnswer": "يمكنك إرفاق الملفات الشائعة مثل الصور وملفات PDF والمستندات حتى 10 ميجابايت لكل منها، بحد أقصى 5 ملفات لكل رسالة.",
+    "support.faqFilesAnswer":
+      "يمكنك إرفاق الملفات الشائعة مثل الصور وملفات PDF والمستندات حتى 10 ميجابايت لكل منها، بحد أقصى 5 ملفات لكل رسالة.",
 
     "supportChat.title": "محادثة الدعم",
     "supportChat.openChat": "فتح محادثة الدعم",

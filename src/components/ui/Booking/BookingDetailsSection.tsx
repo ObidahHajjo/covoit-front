@@ -25,8 +25,57 @@ type Props = {
 function DetailCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4">
-      <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{label}</p>
+      <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+        {label}
+      </p>
       <p className="mt-2 text-sm font-medium leading-6 text-[var(--theme-ink)]">{value}</p>
+    </div>
+  );
+}
+
+function ColorDetailCard({ label, value, hex }: { label: string; value: string; hex?: string }) {
+  return (
+    <div className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+        {label}
+      </p>
+      <div className="mt-2 flex items-center gap-3">
+        <span
+          className="h-4 w-4 rounded-sm border border-[var(--theme-line-strong)]"
+          style={{ backgroundColor: hex ?? "transparent" }}
+          aria-hidden="true"
+        />
+        <p className="text-sm font-medium leading-6 text-[var(--theme-ink)]">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+function VehicleDetails({ trip }: { trip: Trip }) {
+  const { t } = useI18n();
+  const car = trip.driver?.car;
+
+  if (!car) {
+    return null;
+  }
+
+  const brand = car.model?.brand?.name ?? t("common.unknown");
+  const model = car.model?.name ?? t("common.unknown");
+  const plate = car.license_plate ?? t("common.unknown");
+  const color = car.color?.name ?? t("common.unknown");
+  const colorHex = car.color?.hex_code;
+
+  return (
+    <div className="mt-8 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
+      <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+        {t("trip.vehicle")}
+      </p>
+      <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <DetailCard label={t("car.brand")} value={brand} />
+        <DetailCard label={t("car.model")} value={model} />
+        <DetailCard label={t("car.licensePlate")} value={plate} />
+        <ColorDetailCard label={t("car.color")} value={color} hex={colorHex} />
+      </div>
     </div>
   );
 }
@@ -56,10 +105,20 @@ export function BookingDetailsSection({
   const { t } = useI18n();
   const from = trip.departure_address?.city?.name ?? "-";
   const to = trip.arrival_address?.city?.name ?? "-";
-  const departurePoint = [trip.departure_address?.street_number, trip.departure_address?.street, trip.departure_address?.city?.postal_code, trip.departure_address?.city?.name]
+  const departurePoint = [
+    trip.departure_address?.street_number,
+    trip.departure_address?.street,
+    trip.departure_address?.city?.postal_code,
+    trip.departure_address?.city?.name,
+  ]
     .filter(Boolean)
     .join(" ");
-  const arrivalPoint = [trip.arrival_address?.street_number, trip.arrival_address?.street, trip.arrival_address?.city?.postal_code, trip.arrival_address?.city?.name]
+  const arrivalPoint = [
+    trip.arrival_address?.street_number,
+    trip.arrival_address?.street,
+    trip.arrival_address?.city?.postal_code,
+    trip.arrival_address?.city?.name,
+  ]
     .filter(Boolean)
     .join(" ");
   const departureDate = trip.departure_time
@@ -70,27 +129,56 @@ export function BookingDetailsSection({
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-0">
       <FloatingToast tone="error" message={error} durationMs={6500} />
       <section className="overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-5 py-6 text-[var(--theme-ink)] sm:px-7 sm:py-8">
-        <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("bookings.details")}</p>
-        <h1 className="mt-3 text-2xl font-medium leading-tight text-[var(--theme-ink)] sm:text-3xl">{from} - {to}</h1>
-        <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">{t("bookings.detailsBody")}</p>
+        <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+          {t("bookings.details")}
+        </p>
+        <h1 className="mt-3 text-2xl font-medium leading-tight text-[var(--theme-ink)] sm:text-3xl">
+          {from} - {to}
+        </h1>
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--theme-muted-strong)] sm:text-base">
+          {t("bookings.detailsBody")}
+        </p>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <DetailCard label={t("trip.departure")} value={departureDate} />
-          <DetailCard label={t("bookings.passengers")} value={t("bookings.personCount", { count: passengers.length, label: passengers.length === 1 ? t("bookings.person") : t("bookings.people") })} />
-          <DetailCard label={t("trip.departureAddress")} value={departurePoint || t("common.addressUnavailable")} />
-          <DetailCard label={t("trip.arrivalAddress")} value={arrivalPoint || t("common.addressUnavailable")} />
+          <DetailCard
+            label={t("bookings.passengers")}
+            value={t("bookings.personCount", {
+              count: passengers.length,
+              label: passengers.length === 1 ? t("bookings.person") : t("bookings.people"),
+            })}
+          />
+          <DetailCard
+            label={t("trip.departureAddress")}
+            value={departurePoint || t("common.addressUnavailable")}
+          />
+          <DetailCard
+            label={t("trip.arrivalAddress")}
+            value={arrivalPoint || t("common.addressUnavailable")}
+          />
           <DetailCard label={t("trip.distance")} value={`${trip.distance_km} km`} />
-          <DetailCard label={t("trip.rideStyle")} value={trip.smoking_allowed ? t("trip.smokingAllowed") : t("trip.nonSmoking")} />
+          <DetailCard
+            label={t("trip.rideStyle")}
+            value={trip.smoking_allowed ? t("trip.smokingAllowed") : t("trip.nonSmoking")}
+          />
         </div>
+
+        <VehicleDetails trip={trip} />
 
         <div className="mt-8 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-5">
           <div className="flex items-center justify-between gap-4">
             <div>
-               <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">{t("bookings.reservationStatus")}</p>
-               <h2 className="mt-2 text-xl font-medium text-[var(--theme-ink)]">{isTripEnded ? t("bookings.rideWrapped") : t("bookings.rideReserved")}</h2>
-             </div>
-             <span className={`rounded-full border px-3 py-1 text-xs font-medium ${isTripEnded ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
-               {isTripEnded ? t("bookings.ended") : t("bookings.active")}
-             </span>
+              <p className="text-xs font-medium uppercase tracking-wide text-[var(--theme-muted)]">
+                {t("bookings.reservationStatus")}
+              </p>
+              <h2 className="mt-2 text-xl font-medium text-[var(--theme-ink)]">
+                {isTripEnded ? t("bookings.rideWrapped") : t("bookings.rideReserved")}
+              </h2>
+            </div>
+            <span
+              className={`rounded-full border px-3 py-1 text-xs font-medium ${isTripEnded ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}
+            >
+              {isTripEnded ? t("bookings.ended") : t("bookings.active")}
+            </span>
           </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -107,8 +195,8 @@ export function BookingDetailsSection({
                 disabled={cancelling}
                 className="rounded-lg bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[var(--theme-primary-dim)] disabled:opacity-40"
               >
-                 {cancelling ? t("bookings.cancelling") : t("bookings.cancelReservation")}
-               </button>
+                {cancelling ? t("bookings.cancelling") : t("bookings.cancelReservation")}
+              </button>
             ) : null}
           </div>
         </div>
