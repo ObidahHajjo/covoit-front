@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { register } from "../../features/auth/authApi.ts";
 import { validatePassword } from "../../features/auth/passwordValidation.ts";
 import { translate } from "../../i18n/config.ts";
+import { useAuth } from "./useAuth.ts";
 
 /**
  * Manages registration form state and redirects the user into profile completion.
@@ -12,6 +13,7 @@ import { translate } from "../../i18n/config.ts";
  */
 export function useRegister() {
   const navigate = useNavigate();
+  const { refreshMe } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,13 +57,18 @@ export function useRegister() {
     try {
       setIsSubmitting(true);
 
-      const data = await register({
+      await register({
         email: email,
         password,
         password_confirmation: passwordConfirm,
       });
 
-      navigate("/complete-profile", { state: { email: email.trim(), personId: data.person_id } });
+      const authenticated = await refreshMe();
+      if (!authenticated) {
+        throw new Error(translate("auth.loginRestoreFailed"));
+      }
+
+      navigate("/complete-profile", { state: { email: email.trim() } });
     } catch (err) {
       setError(err instanceof Error ? err.message : translate("auth.registerFailed"));
     } finally {
