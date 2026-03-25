@@ -145,7 +145,7 @@ export const dictionaries = {
     "loading.profileSetup": "Loading profile setup...",
 
     "error.title": "Error",
-
+    "auth.signInRequired": "Sign in required",
     "auth.authentication": "Authentication",
     "auth.liveAccess": "Live access",
     "auth.editorialSerenity": "Editorial serenity",
@@ -808,6 +808,7 @@ export const dictionaries = {
 
     "error.title": "Erreur",
 
+    "auth.signInRequired": "Connexion requise",
     "auth.authentication": "Authentification",
     "auth.liveAccess": "Acces direct",
     "auth.editorialSerenity": "Serenite editoriale",
@@ -1454,7 +1455,7 @@ export const dictionaries = {
     "loading.profileSetup": "جار تحميل إعداد الملف الشخصي...",
 
     "error.title": "خطأ",
-
+    "auth.signInRequired": "تسجيل الدخول مطلوب",
     "auth.authentication": "المصادقة",
     "auth.liveAccess": "وصول مباشر",
     "auth.editorialSerenity": "هدوء تحريري",
