@@ -51,9 +51,9 @@ export default function AdminSupportChatPage() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] flex-col overflow-hidden rounded-xl border border-[var(--theme-line)] bg-white shadow-sm">
+    <div className="flex h-[calc(100vh-5.5rem)] flex-col overflow-hidden rounded-xl border border-[var(--theme-line)] bg-white shadow-sm lg:h-[calc(100vh-8rem)]">
       {/* Header */}
-      <div className="flex shrink-0 items-center justify-between border-b border-[var(--theme-line)] px-4 py-3">
+      <div className="flex shrink-0 items-center justify-between gap-2 border-b border-[var(--theme-line)] px-3 py-3 sm:px-4">
         <div className="flex items-center gap-3">
           <button
             type="button"
@@ -88,7 +88,7 @@ export default function AdminSupportChatPage() {
             type="button"
             onClick={handleCloseSession}
             disabled={closing}
-            className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="shrink-0 rounded-lg border border-red-200 bg-red-50 px-2.5 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50 sm:px-3"
           >
             {closing ? t("admin.closing") : t("admin.closeSession")}
           </button>
@@ -98,9 +98,9 @@ export default function AdminSupportChatPage() {
       {/* User Info Bar */}
       {session?.user && (
         <div className="shrink-0 border-b border-[var(--theme-line)] bg-gray-50 px-4 py-2">
-          <div className="flex items-center gap-4 text-xs text-gray-500">
-            <span>{t("admin.email")}: {session.user.email}</span>
-            {session.subject && <span>{t("admin.subject")}: {session.subject}</span>}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500">
+            <span className="truncate">{t("admin.email")}: {session.user.email}</span>
+            {session.subject && <span className="truncate">{t("admin.subject")}: {session.subject}</span>}
           </div>
         </div>
       )}

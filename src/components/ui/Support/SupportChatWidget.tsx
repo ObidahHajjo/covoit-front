@@ -123,10 +123,10 @@ export function SupportChatWidget(props: Props) {
 
   return (
     <div
-      className={`fixed bottom-4 right-4 z-50 flex flex-col overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] shadow-[0_24px_48px_-12px_rgba(15,23,42,0.35)] transition-all duration-300 sm:bottom-6 sm:right-6 ${
+      className={`fixed z-50 flex flex-col overflow-hidden rounded-2xl border border-[var(--theme-line)] bg-[var(--theme-surface)] shadow-[0_24px_48px_-12px_rgba(15,23,42,0.35)] transition-all duration-300 ${
         props.isOpen && isVisible
-          ? "h-[70vh] max-h-[600px] w-[calc(100vw-2rem)] max-w-[380px] translate-y-0 opacity-100"
-          : "h-0 w-[calc(100vw-2rem)] max-w-[380px] translate-y-4 opacity-0"
+          ? "bottom-20 right-2 left-2 h-[calc(100dvh-5.5rem)] translate-y-0 opacity-100 sm:bottom-6 sm:left-auto sm:right-6 sm:h-[70vh] sm:max-h-[600px] sm:w-[380px]"
+          : "bottom-20 right-2 h-0 w-[calc(100vw-1rem)] max-w-[380px] translate-y-4 opacity-0 sm:bottom-6 sm:right-6 sm:w-[380px]"
       }`}
     >
       <div className="flex flex-col overflow-hidden rounded-t-2xl bg-[linear-gradient(135deg,rgba(212,233,197,0.42),rgba(255,255,255,0.92))]">
@@ -269,7 +269,7 @@ export function SupportChatTrigger(props: { onClick: () => void; hasUnread?: boo
     <button
       type="button"
       onClick={props.onClick}
-      className="fixed bottom-4 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--theme-primary)] text-white shadow-[0_8px_24px_-4px_rgba(82,100,72,0.5)] transition hover:bg-[var(--theme-primary-dim)] sm:bottom-6 sm:right-6"
+      className="fixed bottom-20 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--theme-primary)] text-white shadow-[0_8px_24px_-4px_rgba(82,100,72,0.5)] transition hover:bg-[var(--theme-primary-dim)] sm:bottom-6 sm:right-6"
       aria-label={t("supportChat.openChat")}
     >
       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
