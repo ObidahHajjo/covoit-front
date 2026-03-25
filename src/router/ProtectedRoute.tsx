@@ -27,7 +27,7 @@ export default function ProtectedRoute() {
     }
 
     if (status === "guest") {
-        return <Navigate to="/login" replace state={{ from: location }} />;
+        return <Navigate to="/login" replace state={{ from: location, flash: t("auth.signInRequired") }} />;
     }
 
     if (!isProfileComplete(user)) {

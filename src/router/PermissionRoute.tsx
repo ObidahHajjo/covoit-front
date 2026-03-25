@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import type { AuthPermissions } from "../types/MeResponse";
 import { isProfileComplete } from "../auth/profileCompletion";
-import {useAuth} from "../hooks/Auth/useAuth.ts";
+import { useAuth } from "../hooks/Auth/useAuth.ts";
 import { useI18n } from "../i18n/I18nProvider";
 
 /**
@@ -43,7 +43,7 @@ export default function PermissionRoute({ permission }: PermissionRouteProps) {
     }
 
     if (status === "guest") {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/login" replace state={{from: location, flash: t("auth.signInRequired")}} />;
     }
 
     if (!isProfileComplete(user)) {
