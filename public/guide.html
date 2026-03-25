@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Covoit — User Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Theme tokens (mirrors src/index.css) ─────────────────── */
+    :root {
+      --bg:               #f9faf8;
+      --bg-soft:          #f2f4f2;
+      --surface:          #ffffff;
+      --surface-alt:      #ebefec;
+      --ink:              #2e3432;
+      --muted:            #51616a;
+      --muted-strong:     #44545c;
+      --subtle:           #767c7a;
+      --line:             rgba(118,124,122,0.14);
+      --line-strong:      rgba(82,100,72,0.22);
+      --primary:          #526448;
+      --primary-dim:      #47583d;
+      --primary-soft:     #d4e9c5;
+      --on-primary:       #ecffdd;
+      --shadow-warm:      0 24px 48px -24px rgba(46,52,50,0.18);
+      --shadow-float:     0 20px 40px -28px rgba(46,52,50,0.28);
+      --font-body:        "Inter", sans-serif;
+      --font-heading:     "Manrope", sans-serif;
+    }
+
+    /* ── Reset & base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left,  rgba(212,233,197,.55), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(212,229,239,.55), transparent 24%),
+        linear-gradient(180deg, #fbfcfa 0%, var(--bg) 42%, #f4f7f4 100%);
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(82,100,72,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(82,100,72,.025) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(circle at center, black 42%, transparent 92%);
+      opacity: .3;
+      z-index: 0;
+    }
+    h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); letter-spacing: -.03em; }
+    a { color: var(--primary); text-decoration: none; }
+
+    /* ── RTL support ──────────────────────────────────────────── */
+    [dir="rtl"] { font-family: "Manrope", "Segoe UI", "Tahoma", sans-serif; }
+    [dir="rtl"] .step-num { margin-right: 0; margin-left: 1rem; }
+    [dir="rtl"] .badge      { margin-right: 0; margin-left: .5rem; }
+    [dir="rtl"] .lang-btn   { direction: ltr; }
+
+    /* ── Layout helpers ───────────────────────────────────────── */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
+
+    /* ── Header ───────────────────────────────────────────────── */
+    .site-header {
+      position: sticky; top: 1rem; z-index: 100;
+      margin: 1rem 1.5rem 0;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(20px);
+      border-radius: 9999px;
+      padding: .75rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: var(--shadow-warm);
+      max-width: 860px;
+      margin-left: auto; margin-right: auto;
+    }
+    .logo { display: flex; align-items: center; gap: .75rem; }
+    .logo-mark {
+      width: 2.25rem; height: 2.25rem;
+      border-radius: 9999px;
+      background: linear-gradient(145deg, var(--primary), var(--primary-dim));
+      color: var(--on-primary);
+      font-family: var(--font-heading);
+      font-size: .625rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 14px 24px -14px rgba(82,100,72,.7);
+    }
+    .logo-text { font-size: .75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .22em; }
+    .lang-switcher { display: flex; gap: .375rem; }
+    .lang-btn {
+      border: 1px solid var(--line);
+      background: transparent;
+      padding: .35rem .75rem;
+      border-radius: 9999px;
+      font-size: .7rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted-strong);
+      cursor: pointer;
+      transition: all .2s;
+      font-family: var(--font-body);
+    }
+    .lang-btn:hover { border-color: var(--line-strong); background: var(--bg-soft); }
+    .lang-btn.active {
+      background: linear-gradient(145deg, var(--primary), var(--primary-dim));
+      color: var(--on-primary);
+      border-color: transparent;
+      box-shadow: 0 10px 20px -12px rgba(82,100,72,.7);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .hero {
+      padding: 5rem 0 3rem;
+      text-align: center;
+    }
+    .kicker {
+      display: inline-block;
+      font-size: .6875rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .24em;
+      color: var(--subtle);
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: .96;
+      letter-spacing: -.05em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+    .hero p {
+      font-size: 1rem;
+      color: var(--muted-strong);
+      line-height: 1.8;
+      max-width: 520px;
+      margin: 0 auto 2rem;
+    }
+    .toc {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem;
+      margin-top: 1rem;
+    }
+    .toc-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .45rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.8);
+      font-size: .75rem; font-weight: 500;
+      color: var(--muted-strong);
+      transition: all .2s;
+      box-shadow: var(--shadow-warm);
+    }
+    .toc-link:hover { border-color: var(--line-strong); color: var(--primary); background: var(--surface); }
+
+    /* ── Section ──────────────────────────────────────────────── */
+    .guide-section {
+      margin-bottom: 3rem;
+      border: 1px solid var(--line);
+      border-radius: 1.5rem;
+      background: var(--surface);
+      box-shadow: var(--shadow-warm);
+      overflow: hidden;
+    }
+    .section-header {
+      padding: 1.75rem 2rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-icon {
+      width: 2.75rem; height: 2.75rem;
+      border-radius: 1rem;
+      background: var(--primary-soft);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .section-header-text .section-kicker {
+      font-size: .625rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .24em;
+      color: var(--subtle);
+      margin-bottom: .25rem;
+    }
+    .section-header h2 {
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--ink);
+    }
+    .section-body { padding: 1.75rem 2rem; }
+
+    /* ── Steps ────────────────────────────────────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 1.25rem; }
+    .step {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem;
+      border-radius: 1.15rem;
+      border: 1px solid var(--line);
+      background: var(--bg-soft);
+      transition: border-color .2s;
+    }
+    .step:hover { border-color: var(--line-strong); }
+    .step-num {
+      width: 2rem; height: 2rem;
+      border-radius: 9999px;
+      background: linear-gradient(145deg, var(--primary), var(--primary-dim));
+      color: var(--on-primary);
+      font-size: .7rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-right: 0;
+      box-shadow: 0 8px 16px -10px rgba(82,100,72,.7);
+    }
+    .step-content h3 {
+      font-size: .9375rem; font-weight: 600;
+      color: var(--ink);
+      margin-bottom: .3rem;
+    }
+    .step-content p {
+      font-size: .875rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── Tips ─────────────────────────────────────────────────── */
+    .tip {
+      margin-top: 1.25rem;
+      display: flex; gap: .75rem; align-items: flex-start;
+      padding: 1rem 1.25rem;
+      border-radius: 1.15rem;
+      border: 1px solid rgba(82,100,72,.18);
+      background: var(--primary-soft);
+    }
+    .tip-icon { font-size: 1rem; flex-shrink: 0; margin-top: .1rem; }
+    .tip p { font-size: .8125rem; color: var(--primary-dim); line-height: 1.7; font-weight: 500; }
+
+    /* ── Badge ────────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: .2rem .65rem;
+      border-radius: 9999px;
+      font-size: .625rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .16em;
+      background: var(--surface-alt);
+      color: var(--muted-strong);
+      margin-right: .5rem;
+      vertical-align: middle;
+    }
+    .badge.green { background: var(--primary-soft); color: var(--primary); }
+
+    /* ── Grid cards ───────────────────────────────────────────── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; margin-top: 1rem; }
+    .mini-card {
+      padding: 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 1.15rem;
+      background: var(--bg-soft);
+    }
+    .mini-card .icon { font-size: 1.5rem; margin-bottom: .6rem; }
+    .mini-card h4 { font-size: .875rem; font-weight: 600; color: var(--ink); margin-bottom: .3rem; }
+    .mini-card p  { font-size: .8125rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    .site-footer {
+      margin-top: 4rem;
+      padding: 2rem 0 3rem;
+      text-align: center;
+      border-top: 1px solid var(--line);
+    }
+    .site-footer p { font-size: .8125rem; color: var(--subtle); }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .site-header { border-radius: 1.5rem; margin: .75rem .75rem 0; }
+      .section-header { padding: 1.25rem 1.25rem 1rem; }
+      .section-body { padding: 1.25rem; }
+      .hero { padding: 3.5rem 0 2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-mark">CV</div>
+      <span class="logo-text" data-i18n="appName">Covoit</span>
+    </div>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn"        onclick="setLang('fr')">FR</button>
+      <button class="lang-btn"        onclick="setLang('ar')">ع</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ── Hero ───────────────────────────────────────────────── -->
+    <div class="hero">
+      <span class="kicker" data-i18n="heroKicker">User Guide</span>
+      <h1 data-i18n="heroTitle">Everything you need<br>to use Covoit.</h1>
+      <p data-i18n="heroSubtitle">Find a ride, offer a trip, coordinate with chat, and manage your account — step by step.</p>
+      <nav class="toc">
+        <a class="toc-link" href="#getting-started">🔑 <span data-i18n="toc1">Getting Started</span></a>
+        <a class="toc-link" href="#find-trip">🔍 <span data-i18n="toc2">Find a Trip</span></a>
+        <a class="toc-link" href="#booking">📋 <span data-i18n="toc3">Book a Trip</span></a>
+        <a class="toc-link" href="#offer-trip">🚗 <span data-i18n="toc4">Offer a Trip</span></a>
+        <a class="toc-link" href="#chat">💬 <span data-i18n="toc5">Chat</span></a>
+        <a class="toc-link" href="#account">👤 <span data-i18n="toc6">Account</span></a>
+      </nav>
+    </div>
+
+    <!-- ── 1. Getting Started ──────────────────────────────────── -->
+    <section class="guide-section" id="getting-started">
+      <div class="section-header">
+        <div class="section-icon">🔑</div>
+        <div class="section-header-text">
+          <p class="section-kicker" data-i18n="s1Kicker">Step 1</p>
+          <h2 data-i18n="s1Title">Getting Started</h2>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3 data-i18n="s1Step1Title">Create your account</h3>
+              <p data-i18n="s1Step1Body">Open the app and tap <strong>Create your route</strong>. Enter your email address and choose a strong password (at least 8 characters with uppercase, lowercase, number, and special character).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3 data-i18n="s1Step2Title">Complete your profile</h3>
+              <p data-i18n="s1Step2Body">After registration, you will be prompted to complete your profile — add your first name, pseudo, and your vehicle details. This unlocks all features of the app.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3 data-i18n="s1Step3Title">Sign in to your account</h3>
+              <p data-i18n="s1Step3Body">Already have an account? Tap <strong>Sign in</strong>, enter your email and password, and you will be taken directly to your dashboard.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h3 data-i18n="s1Step4Title">Forgot your password?</h3>
+              <p data-i18n="s1Step4Body">On the sign in page, tap <strong>Forgot password</strong>. Enter your email and a reset link will be sent to your inbox. Follow the link to set a new password.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <p data-i18n="s1Tip">Your session is remembered securely. You will not need to sign in again unless you explicitly sign out.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Find a Trip ──────────────────────────────────────── -->
+    <section class="guide-section" id="find-trip">
+      <div class="section-header">
+        <div class="section-icon">🔍</div>
+        <div class="section-header-text">
+          <p class="section-kicker" data-i18n="s2Kicker">Step 2</p>
+          <h2 data-i18n="s2Title">Find a Trip</h2>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3 data-i18n="s2Step1Title">Open the search page</h3>
+              <p data-i18n="s2Step1Body">From the bottom navigation, tap <span class="badge">Find</span>. The search form lets you enter your departure city, arrival city, and travel date.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3 data-i18n="s2Step2Title">Enter your route</h3>
+              <p data-i18n="s2Step2Body">Start typing a city name — an autocomplete list will appear. Select your departure and arrival cities. Choose your desired travel date from the date picker.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3 data-i18n="s2Step3Title">Browse results</h3>
+              <p data-i18n="s2Step3Body">Available trips are listed with driver name, departure time, available seats, and price. Use the pagination controls to browse more results.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h3 data-i18n="s2Step4Title">View trip details</h3>
+              <p data-i18n="s2Step4Body">Tap any result to open the full trip details — departure and arrival addresses, vehicle information, driver contact options, and seat availability.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <p data-i18n="s2Tip">If no trips match your search, try adjusting the date or check back later — drivers publish new trips regularly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Book a Trip ──────────────────────────────────────── -->
+    <section class="guide-section" id="booking">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <div class="section-header-text">
+          <p class="section-kicker" data-i18n="s3Kicker">Step 3</p>
+          <h2 data-i18n="s3Title">Book a Trip</h2>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3 data-i18n="s3Step1Title">Contact the driver</h3>
+              <p data-i18n="s3Step1Body">From the trip details page, you can contact the driver via in-app chat or email to confirm your seat and discuss pickup details before booking.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3 data-i18n="s3Step2Title">Confirm your booking</h3>
+              <p data-i18n="s3Step2Body">Once you are ready, tap the booking button on the trip details page. Your booking is registered and visible under <span class="badge">Bookings</span> in the navigation.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3 data-i18n="s3Step3Title">Track your booking</h3>
+              <p data-i18n="s3Step3Body">Open <span class="badge">Bookings</span> from the navigation bar to see all your upcoming and past reservations. Tap a booking to view full details and trip status.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-grid">
+          <div class="mini-card">
+            <div class="icon">💬</div>
+            <h4 data-i18n="s3Card1Title">Chat with driver</h4>
+            <p data-i18n="s3Card1Body">Coordinate pickup point, time, and any last-minute changes directly in the chat.</p>
+          </div>
+          <div class="mini-card">
+            <div class="icon">📧</div>
+            <h4 data-i18n="s3Card2Title">Email option</h4>
+            <p data-i18n="s3Card2Body">Prefer email? Use the email contact option on the trip details page for a formal message.</p>
+          </div>
+          <div class="mini-card">
+            <div class="icon">🗂️</div>
+            <h4 data-i18n="s3Card3Title">Booking history</h4>
+            <p data-i18n="s3Card3Body">All past and upcoming bookings are stored in your Bookings section with full details.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Offer a Trip ─────────────────────────────────────── -->
+    <section class="guide-section" id="offer-trip">
+      <div class="section-header">
+        <div class="section-icon">🚗</div>
+        <div class="section-header-text">
+          <p class="section-kicker" data-i18n="s4Kicker">For Drivers</p>
+          <h2 data-i18n="s4Title">Offer a Trip</h2>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3 data-i18n="s4Step1Title">Add your vehicle</h3>
+              <p data-i18n="s4Step1Body">Before publishing a trip, make sure your vehicle is registered in <span class="badge">Account</span> → Car. You need to select a brand, model, and year so passengers can identify your vehicle.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3 data-i18n="s4Step2Title">Publish a new trip</h3>
+              <p data-i18n="s4Step2Body">Go to <span class="badge">My Trips</span> and tap <strong>New Trip</strong>. Fill in the departure city, arrival city, departure date and time, number of available seats, and price per seat.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3 data-i18n="s4Step3Title">Manage your trips</h3>
+              <p data-i18n="s4Step3Body">All your published trips appear in <span class="badge">My Trips</span>. Tap any trip to see passenger bookings, manage seats, and access contact options for each passenger.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h3 data-i18n="s4Step4Title">Contact your passengers</h3>
+              <p data-i18n="s4Step4Body">From a trip's detail page, you can chat with or email each passenger individually to coordinate pickup points, timing, or any change before departure.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <p data-i18n="s4Tip">Publish your trip at least a few hours before departure so passengers have enough time to find and contact you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Chat ──────────────────────────────────────────────── -->
+    <section class="guide-section" id="chat">
+      <div class="section-header">
+        <div class="section-icon">💬</div>
+        <div class="section-header-text">
+          <p class="section-kicker" data-i18n="s5Kicker">Coordination</p>
+          <h2 data-i18n="s5Title">Chat &amp; Messages</h2>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3 data-i18n="s5Step1Title">Open your inbox</h3>
+              <p data-i18n="s5Step1Body">Tap <span class="badge">Chat</span> in the bottom navigation to see all your active conversations — both as a driver and as a passenger.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3 data-i18n="s5Step2Title">Real-time messaging</h3>
+              <p data-i18n="s5Step2Body">Messages are delivered in real-time. The app uses WebSocket technology for instant delivery. If the connection is unavailable, the inbox polls automatically every few seconds.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3 data-i18n="s5Step3Title">Unread notifications</h3>
+              <p data-i18n="s5Step3Body">A badge on the Chat icon shows the number of unread messages. A toast notification appears at the bottom of the screen when a new message arrives.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <p data-i18n="s5Tip">Use chat to confirm exact pickup address, any change in departure time, or luggage details — all in one thread per trip.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Account ──────────────────────────────────────────── -->
+    <section class="guide-section" id="account">
+      <div class="section-header">
+        <div class="section-icon">👤</div>
+        <div class="section-header-text">
+          <p class="section-kicker" data-i18n="s6Kicker">Settings</p>
+          <h2 data-i18n="s6Title">Your Account</h2>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="card-grid">
+          <div class="mini-card">
+            <div class="icon">✏️</div>
+            <h4 data-i18n="s6Card1Title">Edit profile</h4>
+            <p data-i18n="s6Card1Body">Update your first name, pseudo, and personal information from the Account section.</p>
+          </div>
+          <div class="mini-card">
+            <div class="icon">🚗</div>
+            <h4 data-i18n="s6Card2Title">Manage your car</h4>
+            <p data-i18n="s6Card2Body">Add or update your vehicle brand, model, and year. Required to publish trips as a driver.</p>
+          </div>
+          <div class="mini-card">
+            <div class="icon">🌍</div>
+            <h4 data-i18n="s6Card3Title">Language</h4>
+            <p data-i18n="s6Card3Body">Switch the app language between English, French, and Arabic at any time from any screen.</p>
+          </div>
+          <div class="mini-card">
+            <div class="icon">🔒</div>
+            <h4 data-i18n="s6Card4Title">Password &amp; security</h4>
+            <p data-i18n="s6Card4Body">Change your password via the forgot password flow — a reset link is sent to your email.</p>
+          </div>
+        </div>
+        <div class="tip" style="margin-top:1.5rem;">
+          <span class="tip-icon">💡</span>
+          <p data-i18n="s6Tip">Keep your profile complete and your vehicle up to date — passengers and drivers see this information before confirming a trip.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer container">
+    <p data-i18n="footerNote">Covoit — Plan calm rides, messages, and bookings from one shared space.</p>
+  </footer>
+
+  <script>
+    /* ── i18n content ─────────────────────────────────────────── */
+    const i18n = {
+      en: {
+        appName: "Covoit",
+        heroKicker: "User Guide",
+        heroTitle: "Everything you need\nto use Covoit.",
+        heroSubtitle: "Find a ride, offer a trip, coordinate with chat, and manage your account — step by step.",
+        toc1:"Getting Started", toc2:"Find a Trip", toc3:"Book a Trip",
+        toc4:"Offer a Trip",    toc5:"Chat",         toc6:"Account",
+
+        s1Kicker:"Step 1", s1Title:"Getting Started",
+        s1Step1Title:"Create your account",
+        s1Step1Body:"Open the app and tap <strong>Create your route</strong>. Enter your email address and choose a strong password (at least 8 characters with uppercase, lowercase, number, and special character).",
+        s1Step2Title:"Complete your profile",
+        s1Step2Body:"After registration you will be prompted to complete your profile — add your first name, pseudo, and vehicle details. This unlocks all features of the app.",
+        s1Step3Title:"Sign in to your account",
+        s1Step3Body:"Already have an account? Tap <strong>Sign in</strong>, enter your email and password, and you will be taken directly to your dashboard.",
+        s1Step4Title:"Forgot your password?",
+        s1Step4Body:"On the sign in page, tap <strong>Forgot password</strong>. Enter your email and a reset link will be sent to your inbox. Follow the link to set a new password.",
+        s1Tip:"Your session is remembered securely. You will not need to sign in again unless you explicitly sign out.",
+
+        s2Kicker:"Step 2", s2Title:"Find a Trip",
+        s2Step1Title:"Open the search page",
+        s2Step1Body:"From the bottom navigation, tap <span class='badge'>Find</span>. The search form lets you enter your departure city, arrival city, and travel date.",
+        s2Step2Title:"Enter your route",
+        s2Step2Body:"Start typing a city name — an autocomplete list will appear. Select your departure and arrival cities. Choose your desired travel date from the date picker.",
+        s2Step3Title:"Browse results",
+        s2Step3Body:"Available trips are listed with driver name, departure time, available seats, and price. Use the pagination controls to browse more results.",
+        s2Step4Title:"View trip details",
+        s2Step4Body:"Tap any result to open the full trip details — departure and arrival addresses, vehicle information, driver contact options, and seat availability.",
+        s2Tip:"If no trips match your search, try adjusting the date or check back later — drivers publish new trips regularly.",
+
+        s3Kicker:"Step 3", s3Title:"Book a Trip",
+        s3Step1Title:"Contact the driver",
+        s3Step1Body:"From the trip details page, you can contact the driver via in-app chat or email to confirm your seat and discuss pickup details before booking.",
+        s3Step2Title:"Confirm your booking",
+        s3Step2Body:"Once you are ready, tap the booking button on the trip details page. Your booking is registered and visible under <span class='badge'>Bookings</span> in the navigation.",
+        s3Step3Title:"Track your booking",
+        s3Step3Body:"Open <span class='badge'>Bookings</span> from the navigation bar to see all your upcoming and past reservations. Tap a booking to view full details and trip status.",
+        s3Card1Title:"Chat with driver", s3Card1Body:"Coordinate pickup point, time, and any last-minute changes directly in the chat.",
+        s3Card2Title:"Email option",      s3Card2Body:"Prefer email? Use the email contact option on the trip details page for a formal message.",
+        s3Card3Title:"Booking history",   s3Card3Body:"All past and upcoming bookings are stored in your Bookings section with full details.",
+
+        s4Kicker:"For Drivers", s4Title:"Offer a Trip",
+        s4Step1Title:"Add your vehicle",
+        s4Step1Body:"Before publishing a trip, make sure your vehicle is registered in <span class='badge'>Account</span> → Car. You need to select a brand, model, and year so passengers can identify your vehicle.",
+        s4Step2Title:"Publish a new trip",
+        s4Step2Body:"Go to <span class='badge'>My Trips</span> and tap <strong>New Trip</strong>. Fill in the departure city, arrival city, departure date and time, number of available seats, and price per seat.",
+        s4Step3Title:"Manage your trips",
+        s4Step3Body:"All your published trips appear in <span class='badge'>My Trips</span>. Tap any trip to see passenger bookings, manage seats, and access contact options for each passenger.",
+        s4Step4Title:"Contact your passengers",
+        s4Step4Body:"From a trip's detail page, chat with or email each passenger individually to coordinate pickup points, timing, or any last-minute change before departure.",
+        s4Tip:"Publish your trip at least a few hours before departure so passengers have enough time to find and contact you.",
+
+        s5Kicker:"Coordination", s5Title:"Chat & Messages",
+        s5Step1Title:"Open your inbox",
+        s5Step1Body:"Tap <span class='badge'>Chat</span> in the bottom navigation to see all your active conversations — both as a driver and as a passenger.",
+        s5Step2Title:"Real-time messaging",
+        s5Step2Body:"Messages are delivered in real-time via WebSocket. If the connection is unavailable, the inbox polls automatically every few seconds.",
+        s5Step3Title:"Unread notifications",
+        s5Step3Body:"A badge on the Chat icon shows the number of unread messages. A toast notification appears at the bottom of the screen when a new message arrives.",
+        s5Tip:"Use chat to confirm exact pickup address, any change in departure time, or luggage details — all in one thread per trip.",
+
+        s6Kicker:"Settings", s6Title:"Your Account",
+        s6Card1Title:"Edit profile",       s6Card1Body:"Update your first name, pseudo, and personal information from the Account section.",
+        s6Card2Title:"Manage your car",    s6Card2Body:"Add or update your vehicle brand, model, and year. Required to publish trips as a driver.",
+        s6Card3Title:"Language",           s6Card3Body:"Switch between English, French, and Arabic at any time from any screen.",
+        s6Card4Title:"Password & security",s6Card4Body:"Change your password via the forgot password flow — a reset link is sent to your email.",
+        s6Tip:"Keep your profile complete and your vehicle up to date — passengers and drivers see this information before confirming a trip.",
+
+        footerNote:"Covoit — Plan calm rides, messages, and bookings from one shared space.",
+      },
+
+      fr: {
+        appName: "Covoit",
+        heroKicker: "Guide Utilisateur",
+        heroTitle: "Tout ce dont vous avez besoin\npour utiliser Covoit.",
+        heroSubtitle: "Trouvez un trajet, proposez un voyage, coordonnez-vous par chat et gérez votre compte — étape par étape.",
+        toc1:"Démarrer",        toc2:"Trouver un trajet", toc3:"Réserver",
+        toc4:"Proposer un trajet", toc5:"Chat",            toc6:"Compte",
+
+        s1Kicker:"Étape 1", s1Title:"Démarrer",
+        s1Step1Title:"Créer votre compte",
+        s1Step1Body:"Ouvrez l'application et appuyez sur <strong>Créer votre trajet</strong>. Saisissez votre adresse e-mail et choisissez un mot de passe fort (au moins 8 caractères avec majuscule, minuscule, chiffre et caractère spécial).",
+        s1Step2Title:"Compléter votre profil",
+        s1Step2Body:"Après l'inscription, vous serez invité à compléter votre profil — ajoutez votre prénom, pseudo et les informations de votre véhicule. Cela débloque toutes les fonctionnalités de l'application.",
+        s1Step3Title:"Se connecter",
+        s1Step3Body:"Vous avez déjà un compte ? Appuyez sur <strong>Se connecter</strong>, saisissez votre e-mail et votre mot de passe, et vous serez redirigé vers votre tableau de bord.",
+        s1Step4Title:"Mot de passe oublié ?",
+        s1Step4Body:"Sur la page de connexion, appuyez sur <strong>Mot de passe oublié</strong>. Saisissez votre e-mail et un lien de réinitialisation sera envoyé dans votre boîte de réception.",
+        s1Tip:"Votre session est mémorisée de façon sécurisée. Vous n'aurez pas besoin de vous reconnecter sauf si vous vous déconnectez explicitement.",
+
+        s2Kicker:"Étape 2", s2Title:"Trouver un trajet",
+        s2Step1Title:"Ouvrir la page de recherche",
+        s2Step1Body:"Depuis la navigation en bas, appuyez sur <span class='badge'>Trouver</span>. Le formulaire vous permet de saisir votre ville de départ, d'arrivée et la date de voyage.",
+        s2Step2Title:"Saisir votre itinéraire",
+        s2Step2Body:"Commencez à taper un nom de ville — une liste d'autocomplétion apparaîtra. Sélectionnez vos villes de départ et d'arrivée, puis choisissez votre date.",
+        s2Step3Title:"Parcourir les résultats",
+        s2Step3Body:"Les trajets disponibles sont listés avec le nom du conducteur, l'heure de départ, les places disponibles et le prix. Utilisez la pagination pour voir plus de résultats.",
+        s2Step4Title:"Voir les détails du trajet",
+        s2Step4Body:"Appuyez sur un résultat pour ouvrir les détails complets — adresses de départ et d'arrivée, informations sur le véhicule, options de contact du conducteur et disponibilité des places.",
+        s2Tip:"Si aucun trajet ne correspond à votre recherche, essayez de modifier la date ou revenez plus tard — les conducteurs publient régulièrement de nouveaux trajets.",
+
+        s3Kicker:"Étape 3", s3Title:"Réserver un trajet",
+        s3Step1Title:"Contacter le conducteur",
+        s3Step1Body:"Depuis la page de détails du trajet, vous pouvez contacter le conducteur via le chat intégré ou par e-mail pour confirmer votre place et discuter des détails de prise en charge.",
+        s3Step2Title:"Confirmer votre réservation",
+        s3Step2Body:"Lorsque vous êtes prêt, appuyez sur le bouton de réservation sur la page de détails. Votre réservation est enregistrée et visible sous <span class='badge'>Réservations</span>.",
+        s3Step3Title:"Suivre votre réservation",
+        s3Step3Body:"Ouvrez <span class='badge'>Réservations</span> depuis la barre de navigation pour voir toutes vos réservations à venir et passées. Appuyez sur une réservation pour voir les détails complets.",
+        s3Card1Title:"Chat avec le conducteur", s3Card1Body:"Coordonnez le point de prise en charge, l'heure et tout changement de dernière minute directement dans le chat.",
+        s3Card2Title:"Option e-mail",            s3Card2Body:"Vous préférez l'e-mail ? Utilisez l'option de contact e-mail sur la page de détails du trajet.",
+        s3Card3Title:"Historique des réservations", s3Card3Body:"Toutes vos réservations passées et à venir sont stockées dans la section Réservations avec les détails complets.",
+
+        s4Kicker:"Pour les conducteurs", s4Title:"Proposer un trajet",
+        s4Step1Title:"Ajouter votre véhicule",
+        s4Step1Body:"Avant de publier un trajet, assurez-vous que votre véhicule est enregistré dans <span class='badge'>Compte</span> → Voiture. Vous devez sélectionner une marque, un modèle et une année.",
+        s4Step2Title:"Publier un nouveau trajet",
+        s4Step2Body:"Allez dans <span class='badge'>Mes trajets</span> et appuyez sur <strong>Nouveau trajet</strong>. Remplissez la ville de départ, la ville d'arrivée, la date et l'heure, le nombre de places disponibles et le prix par place.",
+        s4Step3Title:"Gérer vos trajets",
+        s4Step3Body:"Tous vos trajets publiés apparaissent dans <span class='badge'>Mes trajets</span>. Appuyez sur un trajet pour voir les réservations des passagers et accéder aux options de contact.",
+        s4Step4Title:"Contacter vos passagers",
+        s4Step4Body:"Depuis la page de détails d'un trajet, chattez ou envoyez un e-mail à chaque passager individuellement pour coordonner les points de prise en charge ou tout changement.",
+        s4Tip:"Publiez votre trajet au moins quelques heures avant le départ pour que les passagers aient le temps de vous trouver et de vous contacter.",
+
+        s5Kicker:"Coordination", s5Title:"Chat et messages",
+        s5Step1Title:"Ouvrir votre boîte de réception",
+        s5Step1Body:"Appuyez sur <span class='badge'>Chat</span> dans la navigation du bas pour voir toutes vos conversations actives — à la fois en tant que conducteur et passager.",
+        s5Step2Title:"Messagerie en temps réel",
+        s5Step2Body:"Les messages sont livrés en temps réel via WebSocket. En cas d'indisponibilité de la connexion, la boîte de réception se met à jour automatiquement toutes les quelques secondes.",
+        s5Step3Title:"Notifications de messages non lus",
+        s5Step3Body:"Un badge sur l'icône Chat affiche le nombre de messages non lus. Une notification toast apparaît en bas de l'écran lors de l'arrivée d'un nouveau message.",
+        s5Tip:"Utilisez le chat pour confirmer l'adresse exacte de prise en charge, tout changement d'heure ou les détails des bagages — tout dans un seul fil par trajet.",
+
+        s6Kicker:"Paramètres", s6Title:"Votre compte",
+        s6Card1Title:"Modifier le profil",    s6Card1Body:"Mettez à jour votre prénom, pseudo et informations personnelles depuis la section Compte.",
+        s6Card2Title:"Gérer votre voiture",   s6Card2Body:"Ajoutez ou mettez à jour la marque, le modèle et l'année de votre véhicule. Requis pour publier des trajets.",
+        s6Card3Title:"Langue",                s6Card3Body:"Changez la langue de l'application entre anglais, français et arabe à tout moment.",
+        s6Card4Title:"Mot de passe et sécurité", s6Card4Body:"Changez votre mot de passe via la procédure de mot de passe oublié — un lien de réinitialisation est envoyé par e-mail.",
+        s6Tip:"Gardez votre profil complet et votre véhicule à jour — les passagers et conducteurs voient ces informations avant de confirmer un trajet.",
+
+        footerNote:"Covoit — Planifiez des trajets partagés, des messages et des réservations depuis un espace calme.",
+      },
+
+      ar: {
+        appName: "كوڤوا",
+        heroKicker: "دليل المستخدم",
+        heroTitle: "كل ما تحتاجه\nلاستخدام Covoit.",
+        heroSubtitle: "ابحث عن رحلة، اعرض رحلة، تواصل عبر الدردشة، وأدر حسابك — خطوة بخطوة.",
+        toc1:"البدء",          toc2:"البحث عن رحلة",    toc3:"حجز رحلة",
+        toc4:"عرض رحلة",      toc5:"الدردشة",            toc6:"الحساب",
+
+        s1Kicker:"الخطوة 1", s1Title:"البدء",
+        s1Step1Title:"إنشاء حسابك",
+        s1Step1Body:"افتح التطبيق واضغط على <strong>إنشاء مسارك</strong>. أدخل بريدك الإلكتروني واختر كلمة مرور قوية (8 أحرف على الأقل تشمل حروفاً كبيرة وصغيرة وأرقاماً ورموزاً خاصة).",
+        s1Step2Title:"إكمال ملفك الشخصي",
+        s1Step2Body:"بعد التسجيل، ستُطلب منك إكمال ملفك الشخصي — أضف اسمك الأول والاسم المستعار ومعلومات سيارتك. هذا يفتح جميع ميزات التطبيق.",
+        s1Step3Title:"تسجيل الدخول إلى حسابك",
+        s1Step3Body:"هل لديك حساب بالفعل؟ اضغط على <strong>تسجيل الدخول</strong>، أدخل بريدك الإلكتروني وكلمة المرور، وستُنقل مباشرةً إلى لوحة التحكم.",
+        s1Step4Title:"نسيت كلمة المرور؟",
+        s1Step4Body:"في صفحة تسجيل الدخول، اضغط على <strong>نسيت كلمة المرور</strong>. أدخل بريدك الإلكتروني وسيُرسل إليك رابط إعادة التعيين في صندوق الوارد.",
+        s1Tip:"يتم حفظ جلستك بأمان. لن تحتاج إلى تسجيل الدخول مرة أخرى إلا إذا قمت بتسجيل الخروج بشكل صريح.",
+
+        s2Kicker:"الخطوة 2", s2Title:"البحث عن رحلة",
+        s2Step1Title:"فتح صفحة البحث",
+        s2Step1Body:"من شريط التنقل السفلي، اضغط على <span class='badge'>بحث</span>. يتيح لك نموذج البحث إدخال مدينة المغادرة والوصول وتاريخ السفر.",
+        s2Step2Title:"إدخال مسارك",
+        s2Step2Body:"ابدأ بكتابة اسم مدينة — ستظهر قائمة إكمال تلقائي. حدد مدينتي المغادرة والوصول، ثم اختر تاريخ السفر المطلوب.",
+        s2Step3Title:"تصفح النتائج",
+        s2Step3Body:"تُدرج الرحلات المتاحة مع اسم السائق ووقت المغادرة والمقاعد المتاحة والسعر. استخدم أدوات ترقيم الصفحات لتصفح المزيد من النتائج.",
+        s2Step4Title:"عرض تفاصيل الرحلة",
+        s2Step4Body:"اضغط على أي نتيجة لفتح تفاصيل الرحلة الكاملة — عناوين المغادرة والوصول ومعلومات السيارة وخيارات التواصل مع السائق وتوافر المقاعد.",
+        s2Tip:"إذا لم تتطابق أي رحلات مع بحثك، حاول تعديل التاريخ أو تحقق لاحقاً — يقوم السائقون بنشر رحلات جديدة بانتظام.",
+
+        s3Kicker:"الخطوة 3", s3Title:"حجز رحلة",
+        s3Step1Title:"التواصل مع السائق",
+        s3Step1Body:"من صفحة تفاصيل الرحلة، يمكنك التواصل مع السائق عبر الدردشة داخل التطبيق أو البريد الإلكتروني لتأكيد مقعدك ومناقشة تفاصيل نقطة الالتقاء.",
+        s3Step2Title:"تأكيد حجزك",
+        s3Step2Body:"عندما تكون مستعداً، اضغط على زر الحجز في صفحة تفاصيل الرحلة. سيُسجَّل حجزك ويظهر تحت <span class='badge'>الحجوزات</span> في شريط التنقل.",
+        s3Step3Title:"تتبع حجزك",
+        s3Step3Body:"افتح <span class='badge'>الحجوزات</span> من شريط التنقل لرؤية جميع حجوزاتك القادمة والسابقة. اضغط على حجز لعرض التفاصيل الكاملة وحالة الرحلة.",
+        s3Card1Title:"دردشة مع السائق",    s3Card1Body:"نسق نقطة الالتقاء والوقت وأي تغييرات في اللحظة الأخيرة مباشرة في الدردشة.",
+        s3Card2Title:"خيار البريد الإلكتروني", s3Card2Body:"تفضل البريد الإلكتروني؟ استخدم خيار التواصل بالبريد الإلكتروني في صفحة تفاصيل الرحلة.",
+        s3Card3Title:"سجل الحجوزات",       s3Card3Body:"جميع حجوزاتك السابقة والقادمة مخزنة في قسم الحجوزات مع التفاصيل الكاملة.",
+
+        s4Kicker:"للسائقين", s4Title:"عرض رحلة",
+        s4Step1Title:"إضافة سيارتك",
+        s4Step1Body:"قبل نشر رحلة، تأكد من تسجيل سيارتك في <span class='badge'>الحساب</span> → السيارة. تحتاج إلى تحديد الماركة والطراز والسنة حتى يتمكن الركاب من التعرف على سيارتك.",
+        s4Step2Title:"نشر رحلة جديدة",
+        s4Step2Body:"اذهب إلى <span class='badge'>رحلاتي</span> واضغط على <strong>رحلة جديدة</strong>. أدخل مدينة المغادرة والوصول وتاريخ ووقت المغادرة وعدد المقاعد المتاحة والسعر لكل مقعد.",
+        s4Step3Title:"إدارة رحلاتك",
+        s4Step3Body:"تظهر جميع رحلاتك المنشورة في <span class='badge'>رحلاتي</span>. اضغط على أي رحلة لرؤية حجوزات الركاب وإدارة المقاعد والوصول إلى خيارات التواصل.",
+        s4Step4Title:"التواصل مع ركابك",
+        s4Step4Body:"من صفحة تفاصيل الرحلة، تواصل بالدردشة أو البريد الإلكتروني مع كل راكب بشكل فردي لتنسيق نقاط الالتقاء أو أي تغيير قبل المغادرة.",
+        s4Tip:"انشر رحلتك قبل ساعات قليلة على الأقل من المغادرة حتى يتمكن الركاب من إيجادك والتواصل معك.",
+
+        s5Kicker:"التنسيق", s5Title:"الدردشة والرسائل",
+        s5Step1Title:"فتح صندوق الوارد",
+        s5Step1Body:"اضغط على <span class='badge'>الدردشة</span> في شريط التنقل السفلي لرؤية جميع محادثاتك النشطة — سواء كسائق أو كراكب.",
+        s5Step2Title:"المراسلة الفورية",
+        s5Step2Body:"تُسلَّم الرسائل في الوقت الفعلي عبر تقنية WebSocket. في حالة عدم توفر الاتصال، يقوم صندوق الوارد بالتحديث التلقائي كل بضع ثوانٍ.",
+        s5Step3Title:"إشعارات الرسائل غير المقروءة",
+        s5Step3Body:"تعرض شارة على أيقونة الدردشة عدد الرسائل غير المقروءة. تظهر إشعارات toast في أسفل الشاشة عند وصول رسالة جديدة.",
+        s5Tip:"استخدم الدردشة لتأكيد عنوان الالتقاء الدقيق أو أي تغيير في وقت المغادرة أو تفاصيل الأمتعة — كل ذلك في خيط واحد لكل رحلة.",
+
+        s6Kicker:"الإعدادات", s6Title:"حسابك",
+        s6Card1Title:"تعديل الملف الشخصي",    s6Card1Body:"حدّث اسمك الأول واسمك المستعار ومعلوماتك الشخصية من قسم الحساب.",
+        s6Card2Title:"إدارة سيارتك",           s6Card2Body:"أضف أو حدّث ماركة سيارتك وطرازها وسنة صنعها. مطلوب لنشر الرحلات كسائق.",
+        s6Card3Title:"اللغة",                  s6Card3Body:"قم بتبديل لغة التطبيق بين الإنجليزية والفرنسية والعربية في أي وقت ومن أي شاشة.",
+        s6Card4Title:"كلمة المرور والأمان",     s6Card4Body:"قم بتغيير كلمة المرور عبر إجراء نسيت كلمة المرور — يُرسل رابط إعادة التعيين إلى بريدك الإلكتروني.",
+        s6Tip:"حافظ على اكتمال ملفك الشخصي وتحديث بيانات سيارتك — يرى الركاب والسائقون هذه المعلومات قبل تأكيد الرحلة.",
+
+        footerNote:"Covoit — خطط لرحلات مشتركة هادئة ورسائل وحجوزات من مساحة واحدة.",
+      },
+    };
+
+    /* ── Language switcher ────────────────────────────────────── */
+    function setLang(lang) {
+      const dict = i18n[lang];
+      const isRtl = lang === 'ar';
+
+      document.documentElement.lang = lang;
+      document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+      document.title = `${dict.appName} — ${dict.heroKicker}`;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          el.innerHTML = dict[key].replace(/\n/g, '<br>');
+        }
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang || (btn.textContent.trim() === 'ع' && lang === 'ar'));
+      });
+
+      localStorage.setItem('guideLang', lang);
+    }
+
+    /* ── Init ─────────────────────────────────────────────────── */
+    const saved = localStorage.getItem('guideLang') || 'en';
+    setLang(saved);
+  </script>
+</body>
+</html>
