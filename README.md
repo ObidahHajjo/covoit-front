@@ -50,17 +50,17 @@
 
 Le frontend Covoit est une SPA React + TypeScript propulsée par Vite, centrée sur le parcours utilisateur connecté :
 
-| Étape | Description |
-|---|---|
-| 🔐 **Authentification** | Connexion, inscription, mot de passe oublié/réinitialisation |
-| 👤 **Compléter le profil** | Étape obligatoire avant d'accéder à l'application |
-| 🔍 **Découvrir des trajets** | Recherche de trajets disponibles et consultation des détails |
-| 🎟 **Réserver & Gérer** | Réserver des sièges, consulter et annuler ses réservations |
-| 🚗 **Conduire** | Publier des trajets, gérer les passagers, annuler des trajets |
-| 🏠 **Compte** | Mettre à jour son profil personnel et les informations du véhicule |
-| 💬 **Chat** | Échanger des messages avec conducteurs ou passagers en temps réel |
-| 🆘 **Support** | Chat en direct avec un administrateur et formulaire e-mail avec pièces jointes |
-| 🛡 **Admin** | Tableau de bord d'administration, gestion des utilisateurs, trajets, véhicules et support |
+| Étape                        | Description                                                                                           |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------- |
+| 🔐 **Authentification**      | Connexion, inscription, mot de passe oublié/réinitialisation                                          |
+| 👤 **Compléter le profil**   | Étape obligatoire avant d'accéder à l'application                                                     |
+| 🔍 **Découvrir des trajets** | Recherche de trajets disponibles et consultation des détails                                          |
+| 🎟 **Réserver & Gérer**      | Réserver des sièges, consulter et annuler ses réservations avec détails véhicule conducteur           |
+| 🚗 **Conduire**              | Publier des trajets, gérer les passagers, annuler des trajets                                         |
+| 🏠 **Compte**                | Mettre à jour son profil personnel et les informations du véhicule                                    |
+| 💬 **Chat**                  | Échanger des messages avec conducteurs ou passagers en temps réel                                     |
+| 🆘 **Support**               | Chat en direct avec un administrateur et formulaire e-mail avec pièces jointes validées côté frontend |
+| 🛡 **Admin**                 | Tableau de bord d'administration, gestion des utilisateurs, trajets, véhicules et support             |
 
 > L'application suppose qu'un backend Laravel compatible est en cours d'exécution. Plusieurs comportements dépendent des cookies de session, des flags de permission, du broadcasting de chat et des contrats d'API.
 
@@ -68,20 +68,21 @@ Le frontend Covoit est une SPA React + TypeScript propulsée par Vite, centrée 
 
 ## 🧱 Stack Technique
 
-| Technologie | Version | Rôle |
-|---|---|---|
-| ⚛️ **React** | 19 | Framework UI |
-| 🔷 **TypeScript** | 5 | Typage statique |
-| ⚡ **Vite** | 7 | Serveur de dev & bundler |
-| 🔀 **React Router DOM** | 7 | Routage côté client |
-| 🌐 **Axios** | latest | Client HTTP |
-| 📡 **Laravel Echo** | latest | Wrapper client WebSocket |
-| 🔌 **pusher-js** | latest | Transport navigateur pour Reverb |
-| 🎨 **Tailwind CSS** | via PostCSS | Styles utilitaires |
-| ✅ **ESLint** | 9 | Linting |
-| 🟩 **Nginx** | latest | Serveur statique SPA en déploiement |
+| Technologie             | Version     | Rôle                                |
+| ----------------------- | ----------- | ----------------------------------- |
+| ⚛️ **React**            | 19          | Framework UI                        |
+| 🔷 **TypeScript**       | 5           | Typage statique                     |
+| ⚡ **Vite**             | 7           | Serveur de dev & bundler            |
+| 🔀 **React Router DOM** | 7           | Routage côté client                 |
+| 🌐 **Axios**            | latest      | Client HTTP                         |
+| 📡 **Laravel Echo**     | latest      | Wrapper client WebSocket            |
+| 🔌 **pusher-js**        | latest      | Transport navigateur pour Reverb    |
+| 🎨 **Tailwind CSS**     | via PostCSS | Styles utilitaires                  |
+| ✅ **ESLint**           | 9           | Linting                             |
+| 🟩 **Nginx**            | latest      | Serveur statique SPA en déploiement |
 
 > **Notes :**
+>
 > - Tailwind est activé via les directives `@tailwind` dans `src/index.css` et la config PostCSS
 > - Aucun fichier de config Tailwind n'est présent dans le dépôt pour l'instant
 > - Aucun test runner n'est configuré dans `package.json` pour l'instant
@@ -95,11 +96,11 @@ Le frontend Covoit est une SPA React + TypeScript propulsée par Vite, centrée 
 🛡  Guards ................. guest-only · gate profil · basés sur les permissions
 🏠  Tableau de bord ........ trajets conducteur à venir · réservations à venir
 🔍  Découverte ............. recherche · résultats · détail d'un trajet
-🎟  Réservations ........... réserver un siège · annuler une réservation
+🎟  Réservations ........... réserver un siège · annuler une réservation · consulter le véhicule du conducteur
 🚗  Outils conducteur ...... publier · gérer · annuler · contacter un passager
 👤  Compte ................. gestion du profil · gestion du véhicule
 💬  Chat ................... boîte de réception · fil de conversation · mises à jour temps réel
-🆘  Support ................ chat en direct avec admin · formulaire e-mail · FAQ intégrée
+🆘  Support ................ chat en direct avec admin · formulaire e-mail · FAQ intégrée · validation PJ (5 fichiers / 10 Mo)
 🛡  Admin .................. dashboard · utilisateurs · trajets · marques · modèles · véhicules · support
 ⚠️  Feedback global ........ overlay chargement · alerte d'erreur
 ```
@@ -123,16 +124,16 @@ LoadingProvider
 
 ### Responsabilités par couche
 
-| Couche | Chemin | Responsabilité |
-|---|---|---|
-| 🏛 **Infra app** | `src/app/` | Clients Axios, helpers erreurs API, error provider global |
-| 🌐 **Providers** | `src/providers/` | État auth, chargement, inbox chat |
-| 🔀 **Router** | `src/router/` | Arbre de routes et guards d'accès |
-| 📦 **Features** | `src/features/` | Modules API backend et utilitaires chat/temps réel |
-| 🧠 **Context** | `src/context/` | Hooks page/domaine et React contexts |
-| 📄 **Pages** | `src/pages/` | Composants de page au niveau des routes |
-| 🧩 **Components** | `src/components/` | Layout, primitives partagées, sections UI |
-| 🔷 **Types** | `src/types/` | Modèles TypeScript API/domaine |
+| Couche            | Chemin            | Responsabilité                                            |
+| ----------------- | ----------------- | --------------------------------------------------------- |
+| 🏛 **Infra app**  | `src/app/`        | Clients Axios, helpers erreurs API, error provider global |
+| 🌐 **Providers**  | `src/providers/`  | État auth, chargement, inbox chat                         |
+| 🔀 **Router**     | `src/router/`     | Arbre de routes et guards d'accès                         |
+| 📦 **Features**   | `src/features/`   | Modules API backend et utilitaires chat/temps réel        |
+| 🧠 **Context**    | `src/context/`    | Hooks page/domaine et React contexts                      |
+| 📄 **Pages**      | `src/pages/`      | Composants de page au niveau des routes                   |
+| 🧩 **Components** | `src/components/` | Layout, primitives partagées, sections UI                 |
+| 🔷 **Types**      | `src/types/`      | Modèles TypeScript API/domaine                            |
 
 ---
 
@@ -141,6 +142,7 @@ LoadingProvider
 Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et des guards imbriqués.
 
 ### 🔓 Routes publiques / invitées
+
 > Enveloppées par `GuestRoute` — redirige les utilisateurs authentifiés hors des écrans d'auth
 
 ```
@@ -151,6 +153,7 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 ```
 
 ### 👤 Route de complétion du profil
+
 > Activée si `first_name`, `last_name` ou `pseudo` sont absents de l'utilisateur authentifié
 
 ```
@@ -158,6 +161,7 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 ```
 
 ### 🔒 Routes protégées
+
 > Nécessitent une authentification
 
 ```
@@ -173,6 +177,7 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 ```
 
 ### 🚗 Routes conducteur
+
 > Nécessitent la permission `can_manage_own_trips`
 
 ```
@@ -184,6 +189,7 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 ```
 
 ### 🎟 Routes réservations
+
 > Nécessitent la permission `can_view_bookings`
 
 ```
@@ -192,6 +198,7 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 ```
 
 ### ⚙️ Routes compte
+
 > Nécessitent la permission `can_edit_profile`
 
 ```
@@ -199,6 +206,7 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 ```
 
 ### 🛡 Routes admin
+
 > Nécessitent le rôle admin
 
 ```
@@ -220,32 +228,32 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 
 ### Providers globaux
 
-| Provider | Responsabilité |
-|---|---|
-| `AuthProvider` | Résout `/auth/me`, réessaie avec `/auth/refresh`, expose `status`, `user`, `refreshMe`, `logoutLocal` |
-| `LoadingProvider` | Suit le nombre de requêtes actives, alimente l'overlay de chargement global |
+| Provider            | Responsabilité                                                                                                         |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `AuthProvider`      | Résout `/auth/me`, réessaie avec `/auth/refresh`, expose `status`, `user`, `refreshMe`, `logoutLocal`                  |
+| `LoadingProvider`   | Suit le nombre de requêtes actives, alimente l'overlay de chargement global                                            |
 | `ChatInboxProvider` | Charge les conversations, calcule les compteurs non lus, écoute les mises à jour temps réel, rafraîchit par intervalle |
-| `ErrorProvider` | Maintient l'état d'erreur global pour `GlobalErrorAlert` |
+| `ErrorProvider`     | Maintient l'état d'erreur global pour `GlobalErrorAlert`                                                               |
 
 ### Hooks page/domaine (`src/context/`)
 
-| Hook | Rôle |
-|---|---|
-| `useHome` | Données du tableau de bord |
-| `useTripResults` / `useTripDetails` | Flux de découverte de trajets |
-| `useMyTrips` / `usePublishTrip` / `useDriverTripDetails` | Workflows conducteur |
-| `useMyBookings` / `useBookingDetails` | Workflows réservation passager |
-| `useMyAccount` | Gestion profil + véhicule |
-| `useChatConversation` | Fils de messages |
-| `useLogin` / `useRegister` | Formulaires d'auth |
+| Hook                                                     | Rôle                           |
+| -------------------------------------------------------- | ------------------------------ |
+| `useHome`                                                | Données du tableau de bord     |
+| `useTripResults` / `useTripDetails`                      | Flux de découverte de trajets  |
+| `useMyTrips` / `usePublishTrip` / `useDriverTripDetails` | Workflows conducteur           |
+| `useMyBookings` / `useBookingDetails`                    | Workflows réservation passager |
+| `useMyAccount`                                           | Gestion profil + véhicule      |
+| `useChatConversation`                                    | Fils de messages               |
+| `useLogin` / `useRegister`                               | Formulaires d'auth             |
 
 ### Utilisation du stockage
 
-| Store | Clé | Usage |
-|---|---|---|
-| `sessionStorage` | `personId` | Stocké après connexion — utilisé par les appels API personne/compte |
-| `localStorage` | refresh token | Stocké par le flux de connexion pour la continuité de session |
-| `localStorage` | état lecture chat | Métadonnées non-lus par scope de session utilisateur |
+| Store                    | Clé                             | Usage                                                     |
+| ------------------------ | ------------------------------- | --------------------------------------------------------- |
+| Cookies httpOnly backend | `access_token`, `refresh_token` | Session d'authentification — jamais lus depuis JavaScript |
+| `localStorage`           | `covoit.language`               | Préférence de langue utilisateur                          |
+| `localStorage`           | état lecture chat               | Métadonnées non-lus par scope de session utilisateur      |
 
 ---
 
@@ -262,10 +270,10 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 
 Un second client Axios sans credentials, utilisé pour :
 
-| Service | URL |
-|---|---|
-| 🗺 Recherche de commune | `https://geo.api.gouv.fr` |
-| 📍 Géocodage d'adresse | `https://data.geopf.fr/geocodage/search` |
+| Service                 | URL                                      |
+| ----------------------- | ---------------------------------------- |
+| 🗺 Recherche de commune | `https://geo.api.gouv.fr`                |
+| 📍 Géocodage d'adresse  | `https://data.geopf.fr/geocodage/search` |
 
 ### Modules feature
 
@@ -301,8 +309,15 @@ GET    /brands
 GET    /conversations · /conversations/:id
 POST   /conversations/:id/messages
 
+POST   /support-chat/sessions
+GET    /support-chat/sessions/:id/messages
+POST   /support-chat/sessions/:id/messages
+POST   /support-chat/sessions/:id/close
+
 POST   /broadcasting/auth · /broadcasting/auth-proxy
 ```
+
+> Les endpoints d'auth ouvrent et renouvellent désormais la session via cookies httpOnly. Le frontend ne consomme plus de jetons dans les réponses JSON.
 
 ---
 
@@ -312,26 +327,28 @@ Le chat utilise une stratégie **hybride temps réel + polling** pour la résili
 
 ### Stack
 
-| Composant | Technologie |
-|---|---|
+| Composant   | Technologie                     |
+| ----------- | ------------------------------- |
 | Client Echo | `src/features/chat/chatEcho.ts` |
-| Transport | `pusher-js` (compatible Reverb) |
-| Auth | Auth canal privé via le backend |
+| Transport   | `pusher-js` (compatible Reverb) |
+| Auth        | Auth canal privé via le backend |
 
 ### Canaux
 
 ```
 chat.user.{personId}          ← mises à jour niveau inbox
 chat.conversation.{id}        ← messages niveau conversation
+support.session.{id}          ← chat support côté utilisateur
+support.admins                ← inbox support côté admin
 ```
 
-Écoute les événements `.chat.message.sent`.
+Écoute notamment `.chat.message.sent`, `.support.message.sent` et `.support.session.created` selon le canal.
 
 ### Fallback polling
 
-| Périmètre | Intervalle |
-|---|---|
-| Inbox | toutes les **8 secondes** |
+| Périmètre           | Intervalle                |
+| ------------------- | ------------------------- |
+| Inbox               | toutes les **8 secondes** |
 | Conversation active | toutes les **5 secondes** |
 
 ### État non-lu
@@ -353,15 +370,15 @@ Copier depuis `.env.example` et adapter à votre environnement :
 cp .env.example .env.local
 ```
 
-| Variable | Requise | Description |
-|---|---|---|
-| `VITE_API_BASE_URL` | ✅ Oui | URL de base de l'API backend |
-| `VITE_REVERB_APP_KEY` | ⚡ Temps réel | Clé publique Reverb pour Laravel Echo |
-| `VITE_REVERB_HOST` | ⚡ Temps réel | Hostname WebSocket (côté navigateur) |
-| `VITE_REVERB_PORT` | Optionnel | Fallback port HTTP/WS partagé |
-| `VITE_REVERB_WS_PORT` | Optionnel | Port WebSocket non-TLS explicite |
-| `VITE_REVERB_WSS_PORT` | Optionnel | Port WebSocket TLS explicite |
-| `VITE_REVERB_SCHEME` | Optionnel | `http` ou `https` |
+| Variable               | Requise       | Description                           |
+| ---------------------- | ------------- | ------------------------------------- |
+| `VITE_API_BASE_URL`    | ✅ Oui        | URL de base de l'API backend          |
+| `VITE_REVERB_APP_KEY`  | ⚡ Temps réel | Clé publique Reverb pour Laravel Echo |
+| `VITE_REVERB_HOST`     | ⚡ Temps réel | Hostname WebSocket (côté navigateur)  |
+| `VITE_REVERB_PORT`     | Optionnel     | Fallback port HTTP/WS partagé         |
+| `VITE_REVERB_WS_PORT`  | Optionnel     | Port WebSocket non-TLS explicite      |
+| `VITE_REVERB_WSS_PORT` | Optionnel     | Port WebSocket TLS explicite          |
+| `VITE_REVERB_SCHEME`   | Optionnel     | `http` ou `https`                     |
 
 **Config locale exemple :**
 
@@ -408,10 +425,10 @@ npm run dev
 
 Config du serveur dev Vite (`vite.config.ts`) :
 
-| Paramètre | Valeur |
-|---|---|
-| Host | `127.0.0.1` |
-| Port | `5173` |
+| Paramètre     | Valeur         |
+| ------------- | -------------- |
+| Host          | `127.0.0.1`    |
+| Port          | `5173`         |
 | Host autorisé | `covoit.local` |
 
 > Si vous utilisez le hostname `covoit.local`, configurez votre `/etc/hosts` et votre proxy local en conséquence.
@@ -442,12 +459,12 @@ npm run build
 
 ## 📜 Scripts disponibles
 
-| Commande | Description |
-|---|---|
-| `npm run dev` | Démarre le serveur de développement Vite |
-| `npm run build` | Exécute `tsc -b && vite build` — vérification TypeScript + bundle |
-| `npm run lint` | Exécute `eslint .` |
-| `npm run preview` | Sert le build de production localement |
+| Commande          | Description                                                       |
+| ----------------- | ----------------------------------------------------------------- |
+| `npm run dev`     | Démarre le serveur de développement Vite                          |
+| `npm run build`   | Exécute `tsc -b && vite build` — vérification TypeScript + bundle |
+| `npm run lint`    | Exécute `eslint .`                                                |
+| `npm run preview` | Sert le build de production localement                            |
 
 ---
 
@@ -496,13 +513,13 @@ Le style combine des **classes utilitaires Tailwind** avec un système de tokens
 
 ### Ce qui est en place
 
-| Élément | Description |
-|---|---|
-| 🎨 Variables CSS | Tokens de design globaux dans `src/index.css` |
-| 🧱 Layers Tailwind | `base` / `components` / `utilities` via directives `@tailwind` |
-| 🧩 Classes sémantiques | `serene-page-shell`, `serene-card`, `serene-button-primary`, `serene-nav-link` |
-| 🔤 Primitives partagées | `src/components/common/SerenePrimitives.tsx` |
-| 🔡 Polices | `Inter` + `Manrope` via Google Fonts |
+| Élément                 | Description                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| 🎨 Variables CSS        | Tokens de design globaux dans `src/index.css`                                  |
+| 🧱 Layers Tailwind      | `base` / `components` / `utilities` via directives `@tailwind`                 |
+| 🧩 Classes sémantiques  | `serene-page-shell`, `serene-card`, `serene-button-primary`, `serene-nav-link` |
+| 🔤 Primitives partagées | `src/components/common/SerenePrimitives.tsx`                                   |
+| 🔡 Polices              | `Inter` + `Manrope` via Google Fonts                                           |
 
 La plupart des pages composent directement des utilitaires Tailwind. Le système visuel global est ancré par des propriétés CSS personnalisées et un petit ensemble de classes de composants partagées — un langage de design cohérent sans bibliothèque de composants séparée.
 
@@ -517,13 +534,13 @@ npm run build
 
 ### Notes de déploiement
 
-| Point | Détail |
-|---|---|
-| 📦 Répertoire de sortie | `dist/` |
-| 🌐 Routage SPA | `nginx.conf` utilise `try_files ... /index.html` pour le fallback |
-| 🔐 Auth | Dépend des cookies backend, de la politique CORS et de la config de session |
-| 📡 Temps réel | Le broadcasting nécessite une config correcte host/port/scheme de Reverb |
-| 🏠 Domaine | L'exemple local utilise `covoit.local` avec un reverse proxy pour API + Reverb |
+| Point                   | Détail                                                                                             |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| 📦 Répertoire de sortie | `dist/`                                                                                            |
+| 🌐 Routage SPA          | `nginx.conf` utilise `try_files ... /index.html` pour le fallback                                  |
+| 🔐 Auth                 | Dépend exclusivement des cookies backend httpOnly, de la politique CORS et de la config de session |
+| 📡 Temps réel           | Le broadcasting nécessite une config correcte host/port/scheme de Reverb                           |
+| 🏠 Domaine              | L'exemple local utilise `covoit.local` avec un reverse proxy pour API + Reverb                     |
 
 ---
 
@@ -539,7 +556,11 @@ Le `AuthProvider` appelle `/auth/me` et réessaie via `/auth/refresh`. Si la ses
 
 ### 👤 Les appels profil/compte échouent silencieusement
 
-Plusieurs APIs personne/compte lisent `personId` depuis `sessionStorage`. Si la valeur est absente, les fonctionnalités de profil et de compte échouent. Faire se reconnecter l'utilisateur pour restaurer la valeur.
+Les workflows profil/compte dépendent d'un utilisateur correctement restauré via `/auth/me`. Si ces écrans échouent :
+
+- Vérifier que les cookies de session sont bien renvoyés au backend
+- Vérifier que `/auth/me` retourne bien `user.person.id`
+- Après une inscription, vérifier que le refresh de session réussit avant la redirection vers `/complete-profile`
 
 ### 💬 Le chat ne se met pas à jour en temps réel
 
@@ -547,10 +568,18 @@ Vérifier dans l'ordre :
 
 1. Les valeurs `VITE_REVERB_*` correspondent au setup WebSocket backend
 2. Le backend expose `/broadcasting/auth` ou `/broadcasting/auth-proxy`
-3. La session navigateur authentifiée est valide pour l'autorisation des canaux privés
+3. La session navigateur authentifiée est valide pour l'autorisation des canaux privés `chat.*` et `support.*`
 4. Le host et le scheme WebSocket sont accessibles depuis le navigateur
 
 > L'inbox et le polling des conversations fonctionnent toujours si Reverb n'est pas disponible.
+
+### 🚗 Les détails véhicule n'apparaissent pas dans un trajet ou une réservation
+
+Le frontend affiche la marque, le modèle, la plaque et la couleur du véhicule uniquement si l'API retourne `trip.driver.car` avec `model.brand` et `color.hex_code`.
+
+- Vérifier la réponse backend de `GET /trips/:id`
+- Vérifier que `TripResource` retourne bien `driver.car`
+- Si la couleur apparaît sans pastille, vérifier la présence de `color.hex_code`
 
 ### 🏠 Problèmes de host dev avec `covoit.local`
 
