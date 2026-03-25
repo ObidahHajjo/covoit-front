@@ -59,6 +59,8 @@ Le frontend Covoit est une SPA React + TypeScript propulsée par Vite, centrée 
 | 🚗 **Conduire** | Publier des trajets, gérer les passagers, annuler des trajets |
 | 🏠 **Compte** | Mettre à jour son profil personnel et les informations du véhicule |
 | 💬 **Chat** | Échanger des messages avec conducteurs ou passagers en temps réel |
+| 🆘 **Support** | Chat en direct avec un administrateur et formulaire e-mail avec pièces jointes |
+| 🛡 **Admin** | Tableau de bord d'administration, gestion des utilisateurs, trajets, véhicules et support |
 
 > L'application suppose qu'un backend Laravel compatible est en cours d'exécution. Plusieurs comportements dépendent des cookies de session, des flags de permission, du broadcasting de chat et des contrats d'API.
 
@@ -97,6 +99,8 @@ Le frontend Covoit est une SPA React + TypeScript propulsée par Vite, centrée 
 🚗  Outils conducteur ...... publier · gérer · annuler · contacter un passager
 👤  Compte ................. gestion du profil · gestion du véhicule
 💬  Chat ................... boîte de réception · fil de conversation · mises à jour temps réel
+🆘  Support ................ chat en direct avec admin · formulaire e-mail · FAQ intégrée
+🛡  Admin .................. dashboard · utilisateurs · trajets · marques · modèles · véhicules · support
 ⚠️  Feedback global ........ overlay chargement · alerte d'erreur
 ```
 
@@ -162,8 +166,10 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 /find-trip/results
 /trips/:tripId
 /trips/:tripId/contact-driver
+/trips/:tripId/contact-driver-email
 /chat
 /chat/:conversationId
+/support
 ```
 
 ### 🚗 Routes conducteur
@@ -174,6 +180,7 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 /my-trips/new
 /my-trips/:tripId
 /my-trips/:tripId/contact-passenger/:passengerId
+/my-trips/:tripId/contact-passenger/:passengerId/email
 ```
 
 ### 🎟 Routes réservations
@@ -189,6 +196,20 @@ Le routage est défini dans `src/router/AppRouter.tsx` avec `BrowserRouter` et d
 
 ```
 /my-account
+```
+
+### 🛡 Routes admin
+> Nécessitent le rôle admin
+
+```
+/admin
+/admin/users
+/admin/trips
+/admin/brands
+/admin/models
+/admin/cars
+/admin/support
+/admin/support/:sessionId
 ```
 
 > La barre de navigation inférieure est consciente des permissions et n'affiche que les sections disponibles pour l'utilisateur courant.
