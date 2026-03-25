@@ -146,6 +146,7 @@ export const dictionaries = {
 
     "error.title": "Error",
     "auth.signInRequired": "Sign in required",
+    "auth.forbidden": "You are not authorized",
     "auth.authentication": "Authentication",
     "auth.liveAccess": "Live access",
     "auth.editorialSerenity": "Editorial serenity",
@@ -809,6 +810,7 @@ export const dictionaries = {
     "error.title": "Erreur",
 
     "auth.signInRequired": "Connexion requise",
+    "auth.forbidden": "Vous n'êtes pas autorisé",
     "auth.authentication": "Authentification",
     "auth.liveAccess": "Acces direct",
     "auth.editorialSerenity": "Serenite editoriale",
@@ -1456,6 +1458,7 @@ export const dictionaries = {
 
     "error.title": "خطأ",
     "auth.signInRequired": "تسجيل الدخول مطلوب",
+    "auth.forbidden": "غير مصرح لك",
     "auth.authentication": "المصادقة",
     "auth.liveAccess": "وصول مباشر",
     "auth.editorialSerenity": "هدوء تحريري",

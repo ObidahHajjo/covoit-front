@@ -1,8 +1,11 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/Auth/useAuth";
+import { useI18n } from "../i18n/I18nProvider";
 
 export default function AdminRoute() {
     const { status, user } = useAuth();
+    const { t } = useI18n();
+    const location = useLocation();
 
     if (status === "loading") {
         return (
@@ -13,7 +16,7 @@ export default function AdminRoute() {
     }
 
     if (status === "guest") {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/login" replace state={{from: location, flash: t("auth.forbidden")}} />;
     }
 
     // Assuming the user object has a role or is_admin flag. 
@@ -21,7 +24,7 @@ export default function AdminRoute() {
     const isAdmin = user?.role?.name === 'admin' || user?.permissions?.can_manage_all_users;
 
     if (!isAdmin) {
-        return <Navigate to="/home" replace />;
+        return <Navigate to="/home" replace state={{from: location, flash: t("auth.forbidden")}} />;
     }
 
     return <Outlet />;
