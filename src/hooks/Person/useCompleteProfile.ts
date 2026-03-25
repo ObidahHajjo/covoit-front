@@ -7,6 +7,7 @@ import { translate } from "../../i18n/config.ts";
 
 type LocationState = {
   email?: string;
+  personId?: number;
 };
 
 /**
@@ -20,7 +21,8 @@ export function useCompleteProfile() {
   const { user, refreshMe } = useAuth();
   const state = (location.state ?? {}) as LocationState;
 
-  const email = user?.email ?? state.email ?? sessionStorage.getItem("pending_profile_email") ?? "";
+  const email = user?.email ?? state.email ?? "";
+  const personId = state.personId ?? user?.person?.id ?? null;
 
   const [firstName, setFirstName] = useState(user?.person?.first_name ?? "");
   const [lastName, setLastName] = useState(user?.person?.last_name ?? "");
@@ -32,25 +34,25 @@ export function useCompleteProfile() {
   const canSubmit = useMemo(() => {
     if (isSubmitting) return false;
     if (!email) return false;
+    if (!personId) return false;
     if (firstName.trim().length < 2) return false;
     if (lastName.trim().length < 2) return false;
     if (pseudo.trim().length < 3) return false;
     return true;
-  }, [email, firstName, lastName, pseudo, isSubmitting]);
+  }, [email, personId, firstName, lastName, pseudo, isSubmitting]);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setError(null);
     try {
       setIsSubmitting(true);
-      await updateMe({
+      await updateMe(personId!, {
         first_name: firstName.trim(),
         last_name: lastName.trim(),
         pseudo: pseudo.trim(),
         phone: phone.trim().length ? phone.trim() : null,
       });
       await refreshMe();
-      sessionStorage.removeItem("pending_profile_email");
       navigate("/home", { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : translate("profile.updateFailed"));

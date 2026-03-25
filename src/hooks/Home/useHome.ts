@@ -54,10 +54,12 @@ export function useHome() {
         async function load() {
             try {
                 setLoading(true);
+                const personId = user?.person?.id;
+                if (!personId) return;
                 const [me, myDriverTrips, myBookings] = await Promise.all([
-                    getPerson(),
-                    getMyDriverTrips(),
-                    getMyPassengerTrips(),
+                    getPerson(personId),
+                    getMyDriverTrips(personId),
+                    getMyPassengerTrips(personId),
                 ]);
                 setPerson(me);
                 setDriverTrips(myDriverTrips);

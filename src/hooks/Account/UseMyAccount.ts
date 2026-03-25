@@ -136,7 +136,7 @@ function mapPersonToCarForm(person: Person | null): CarFormState {
  */
 export function useMyAccount() {
   const navigate = useNavigate();
-  const { refreshMe } = useAuth();
+  const { refreshMe, user } = useAuth();
 
   const [activeSection, setActiveSection] = useState<AccountSection>("profile");
   const [person, setPerson] = useState<Person | null>(null);
@@ -213,9 +213,11 @@ export function useMyAccount() {
      * @returns A promise that resolves once the initial account state is hydrated.
      */
     async function load() {
+      const personId = user?.person?.id;
+      if (!personId) return;
       try {
         setLoading(true);
-        const [me, brandList] = await Promise.all([getPerson(), getBrands()]);
+        const [me, brandList] = await Promise.all([getPerson(personId), getBrands()]);
         setPerson(me);
         setBrands(brandList);
         setProfileForm(mapPersonToProfileForm(me));
@@ -231,7 +233,7 @@ export function useMyAccount() {
       }
     }
     void load();
-  }, []);
+  }, [user]);
 
   // ── Car search debounce ───────────────────────────────────────────────────
   useEffect(() => {
@@ -449,7 +451,9 @@ export function useMyAccount() {
    * @returns A promise that resolves once account data is refreshed.
    */
   async function refreshPersonState() {
-    const me = await getPerson();
+    const personId = user?.person?.id;
+    if (!personId) return;
+    const me = await getPerson(personId);
     setPerson(me);
     setProfileForm(mapPersonToProfileForm(me));
     setCarForm(mapPersonToCarForm(me));
@@ -473,7 +477,7 @@ export function useMyAccount() {
       setProfileError(null);
       setProfileSuccess(null);
       setFieldErrors({});
-      await updateMe({
+      await updateMe(user!.person!.id!, {
         pseudo: profileForm.pseudo.trim() || undefined,
         first_name: profileForm.first_name.trim() || undefined,
         last_name: profileForm.last_name.trim() || undefined,
@@ -581,7 +585,7 @@ export function useMyAccount() {
     try {
       setAccountDeleting(true);
       setDeleteAccountError(null);
-      await deleteMyAccount();
+      await deleteMyAccount(user!.person!.id!);
       navigate("/login", { replace: true });
     } catch (err) {
       setDeleteAccountError(extractApiErrorMessage(err));

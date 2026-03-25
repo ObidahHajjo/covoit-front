@@ -37,9 +37,7 @@ export function useLogin() {
     setError(null);
     try {
       setIsSubmitting(true);
-      const data = await login({ email: email.trim(), password, password_confirmation: null });
-      if (data.refresh_token) localStorage.setItem("refresh_token", data.refresh_token);
-      if (data.person_id) sessionStorage.setItem("personId", String(data.person_id));
+      await login({ email: email.trim(), password, password_confirmation: null });
       const authenticated = await refreshMe();
       if (!authenticated) {
         throw new Error(translate("auth.loginRestoreFailed"));

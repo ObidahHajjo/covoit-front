@@ -61,9 +61,7 @@ export function useRegister() {
         password_confirmation: passwordConfirm,
       });
 
-      sessionStorage.setItem("personId", String(data.person_id));
-      sessionStorage.setItem("pending_profile_email", email.trim());
-      navigate("/complete-profile", { state: { email: email.trim() } });
+      navigate("/complete-profile", { state: { email: email.trim(), personId: data.person_id } });
     } catch (err) {
       setError(err instanceof Error ? err.message : translate("auth.registerFailed"));
     } finally {

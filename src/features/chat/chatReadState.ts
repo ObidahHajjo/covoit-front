@@ -3,18 +3,10 @@
  */
 export const CHAT_READ_EVENT = "covoit:chat-read-changed";
 
-/**
- * Builds the storage key used to persist chat read state for the active session.
- *
- * @returns A user-scoped local-storage key when a person id is available, otherwise the shared fallback key.
- */
-function getStorageKey() {
-  if (typeof window === "undefined") {
-    return "covoit.chat.read-state";
-  }
+const CHAT_READ_STATE_KEY = "covoit.chat.read-state";
 
-  const personId = window.sessionStorage.getItem("personId");
-  return personId ? `covoit.chat.read-state.${personId}` : "covoit.chat.read-state";
+function getStorageKey() {
+  return CHAT_READ_STATE_KEY;
 }
 
 /**

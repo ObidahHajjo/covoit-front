@@ -1,5 +1,7 @@
+import { useLocation } from "react-router-dom";
 import { useLogin } from "../../hooks/Auth/useLogin";
 import { LoginSection } from "../../components/ui/Auth/LoginSection.tsx";
+import FloatingToast from "../../components/common/FloatingToast";
 
 /**
  * Render the sign-in page with credential fields, validation state, and navigation to account creation.
@@ -7,6 +9,9 @@ import { LoginSection } from "../../components/ui/Auth/LoginSection.tsx";
  * @returns The login form section wired to the authentication workflow.
  */
 export default function LoginPage() {
+  const location = useLocation();
+  const flash = (location.state as { flash?: string } | null)?.flash ?? null;
+
   const {
     email,
     setEmail,
@@ -25,7 +30,9 @@ export default function LoginPage() {
   } = useLogin();
 
   return (
-    <LoginSection
+    <>
+      <FloatingToast message={flash} tone="error" durationMs={5000} />
+      <LoginSection
       email={email}
       onEmailChange={setEmail}
       password={password}
@@ -41,5 +48,6 @@ export default function LoginPage() {
       onNavigateToForgotPassword={onNavigateToForgotPassword}
       onNavigateToLanding={onNavigateToLanding}
     />
+    </>
   );
 }

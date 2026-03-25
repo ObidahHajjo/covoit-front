@@ -63,8 +63,6 @@ export default function AppLayout() {
       await logout();
     } finally {
       logoutLocal();
-      localStorage.removeItem("refresh_token");
-      sessionStorage.removeItem("personId");
       navigate("/login", { replace: true });
     }
   }

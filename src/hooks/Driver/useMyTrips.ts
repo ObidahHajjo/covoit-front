@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getMyDriverTrips } from "../../features/person/personApi.ts";
+import { useAuth } from "../Auth/useAuth.ts";
 import type { Trip } from "../../types/Trip.ts";
 import { translate } from "../../i18n/config.ts";
 
@@ -42,6 +43,7 @@ export function getTripStatus(trip: Trip): TripStatus {
  * @returns Driver trip collections grouped into current, incoming, and past buckets.
  */
 export function useMyTrips() {
+    const { user } = useAuth();
     const [trips, setTrips] = useState<Trip[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -53,10 +55,12 @@ export function useMyTrips() {
          * @returns A promise that resolves once trip data has been loaded.
          */
         async function load() {
+            const personId = user?.person?.id;
+            if (!personId) return;
             try {
                 setLoading(true);
                 setError(null);
-                const data = await getMyDriverTrips();
+                const data = await getMyDriverTrips(personId);
                 setTrips(data);
             } catch (err) {
                 setError(err instanceof Error ? err.message : translate("driverTrips.loadFailed"));
@@ -65,7 +69,7 @@ export function useMyTrips() {
             }
         }
         void load();
-    }, []);
+    }, [user]);
 
     const currentTrips = useMemo(() => trips.filter((t) => getTripStatus(t) === "current"), [trips]);
     const incomingTrips = useMemo(() => trips.filter((t) => getTripStatus(t) === "incoming"), [trips]);
