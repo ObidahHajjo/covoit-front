@@ -71,31 +71,31 @@ export const DEFAULT_CAR_COLORS = [
   { name: "Brown", hex: "#78350F" },
 ];
 
-const LICENSE_PLATE_PATTERN = /^\d{2}-[A-Z]{3}-\d{2}$/;
+const LICENSE_PLATE_PATTERN = /^[A-Z]{2}-\d{3}-[A-Z]{2}$/;
 
 function formatLicensePlateInput(value: string): string {
   const cleaned = value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-  let digitsPrefix = "";
-  let letters = "";
-  let digitsSuffix = "";
+  let lettersPrefix = "";
+  let digits = "";
+  let lettersSuffix = "";
 
   for (const char of cleaned) {
-    if (digitsPrefix.length < 2) {
-      if (/\d/.test(char)) digitsPrefix += char;
+    if (lettersPrefix.length < 2) {
+      if (/[A-Z]/.test(char)) lettersPrefix += char;
       continue;
     }
 
-    if (letters.length < 3) {
-      if (/[A-Z]/.test(char)) letters += char;
+    if (digits.length < 3) {
+      if (/\d/.test(char)) digits += char;
       continue;
     }
 
-    if (digitsSuffix.length < 2 && /\d/.test(char)) {
-      digitsSuffix += char;
+    if (lettersSuffix.length < 2 && /[A-Z]/.test(char)) {
+      lettersSuffix += char;
     }
   }
 
-  return [digitsPrefix, letters, digitsSuffix].filter(Boolean).join("-");
+  return [lettersPrefix, digits, lettersSuffix].filter(Boolean).join("-");
 }
 
 const EMPTY_PROFILE_FORM: ProfileFormState = {

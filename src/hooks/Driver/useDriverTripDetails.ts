@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { contactPassenger } from "../../features/chat/chatApi.ts";
 import { cancelTripAsDriver, getTripById, getTripPassengers } from "../../features/trips/tripApi.ts";
 import type { Person } from "../../types/Person.ts";
 import type { Trip } from "../../types/Trip.ts";
@@ -74,24 +73,15 @@ export function useDriverTripDetails() {
     }
 
     /**
-     * Opens or creates the chat thread for a passenger on this trip.
+     * Opens the dedicated contact form for a passenger on this trip.
      *
-     * @param passenger - Passenger whose conversation should be opened.
-     * @returns A promise that resolves once navigation to the chat screen is triggered.
+     * @param passenger - Passenger whose conversation form should be opened.
      */
-    async function openPassengerChat(passenger: Person) {
+    function openPassengerChat(passenger: Person) {
         if (!trip) return;
 
-        try {
-            setError(null);
-            const conversation = await contactPassenger(trip.id, passenger.id, {
-                subject: translate("trip.chatOpened"),
-                message: "",
-            });
-            navigate(`/chat/${conversation.id}`);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : translate("driverTrips.openPassengerChatFailed"));
-        }
+        setError(null);
+        navigate(`/my-trips/${trip.id}/contact-passenger/${passenger.id}`);
     }
 
     function openPassengerEmail(passenger: Person) {

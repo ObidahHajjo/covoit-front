@@ -182,7 +182,7 @@ export function CarSection({
 
           <Field label={t("car.licensePlate")} error={getFieldError("carregistration", "license_plate")}>
             <div className="space-y-2">
-              <input value={form.license_plate} onChange={(e) => onFieldChange("license_plate", e.target.value)} placeholder="00-XXX-00" maxLength={9} disabled={form.delete_car} className={`${inputClass} uppercase`} />
+              <input value={form.license_plate} onChange={(e) => onFieldChange("license_plate", e.target.value)} placeholder="XX-000-XX" maxLength={9} disabled={form.delete_car} className={`${inputClass} uppercase`} />
               <p className="text-xs text-[var(--theme-muted)]">{t("car.licensePlateHint")}</p>
             </div>
           </Field>

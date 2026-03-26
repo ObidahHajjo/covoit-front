@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { contactDriver } from "../../features/chat/chatApi.ts";
 import { cancelReservation, getTripById, getTripPassengers } from "../../features/trips/tripApi.ts";
 import type { Person } from "../../types/Person.ts";
 import type { Trip } from "../../types/Trip.ts";
@@ -79,23 +78,13 @@ export function useBookingDetails() {
     }
 
     /**
-     * Opens or creates the chat thread associated with the trip driver.
-     *
-     * @returns A promise that resolves once navigation to the chat screen is triggered.
+     * Opens the dedicated contact form for the trip driver.
      */
-    async function navigateToContactDriver() {
+    function navigateToContactDriver() {
         if (!trip) return;
 
-        try {
-            setError(null);
-            const conversation = await contactDriver(trip.id, {
-                subject: translate("trip.chatOpened"),
-                message: "",
-            });
-            navigate(`/chat/${conversation.id}`);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : translate("trip.openDriverChatFailed"));
-        }
+        setError(null);
+        navigate(`/trips/${trip.id}/contact-driver`);
     }
 
     return {
