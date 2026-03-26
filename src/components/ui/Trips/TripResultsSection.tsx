@@ -22,25 +22,35 @@ function TripCard({ trip }: { trip: Trip }) {
   const to = trip.arrival_address?.city?.name ?? t("common.unknown");
 
   return (
-    <Link to={`/trips/${trip.id}`} className="serene-card serene-card-hover group block p-5 text-[var(--theme-ink)]">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <p className="serene-kicker">{t("search.routePreview")}</p>
-          <h2 className="mt-2 font-heading text-3xl font-bold leading-tight text-[var(--theme-ink)]">
-            {from} - {to}
-          </h2>
-          <p className="mt-2 text-sm text-[var(--theme-muted-strong)]">{formatDateTimeRaw(trip.departure_time)}</p>
-        </div>
-        <span className="serene-chip">
-          <span className="h-2 w-2 rounded-full bg-[var(--theme-primary)]" />
-          {t("search.seatCount", { count: trip.available_seats, suffix: trip.available_seats !== 1 ? "s" : "" })}
-        </span>
+    <Link to={`/trips/${trip.id}`} className="serene-card serene-card-hover group flex gap-3 p-5 text-[var(--theme-ink)] sm:gap-4">
+      {/* Timeline left rail */}
+      <div className="flex flex-col items-center pt-1">
+        <span className="h-3 w-3 shrink-0 rounded-full border-2 border-[var(--theme-primary)] bg-[var(--theme-surface)]" />
+        <span className="min-h-4 w-px flex-1 bg-[var(--theme-line-strong)]" />
+        <span className="h-3 w-3 shrink-0 rounded-full bg-[var(--theme-primary)]" />
       </div>
 
-      <div className="mt-4 grid gap-3 text-sm text-[var(--theme-muted-strong)] sm:grid-cols-3">
-        <div className="serene-soft px-4 py-3">{t("search.tripNumber", { id: trip.id })}</div>
-        <div className="serene-soft px-4 py-3">{trip.distance_km} km</div>
-        <div className="serene-soft px-4 py-3">{t("search.pickupDetails")}</div>
+      {/* Content right of timeline */}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <p className="serene-kicker">{t("search.routePreview")}</p>
+            <p className="mt-1 text-lg font-bold leading-tight text-[var(--theme-ink)] sm:text-xl">{from}</p>
+          </div>
+          <span className="serene-chip shrink-0">
+            <span className="h-2 w-2 rounded-full bg-[var(--theme-primary)]" />
+            {t("search.seatCount", { count: trip.available_seats, suffix: trip.available_seats !== 1 ? "s" : "" })}
+          </span>
+        </div>
+
+        <div className="mt-2 flex flex-wrap gap-2 text-xs text-[var(--theme-muted-strong)] sm:text-sm">
+          <span className="serene-soft rounded-md px-3 py-2">📅 {formatDateTimeRaw(trip.departure_time)}</span>
+          <span className="serene-soft rounded-md px-3 py-2">📍 {trip.distance_km} km</span>
+          <span className="serene-soft rounded-md px-3 py-2">{t("search.tripNumber", { id: trip.id })}</span>
+          <span className="serene-soft rounded-md px-3 py-2">{t("search.pickupDetails")}</span>
+        </div>
+
+        <p className="mt-2 text-lg font-bold leading-tight text-[var(--theme-ink)] sm:text-xl">{to}</p>
       </div>
     </Link>
   );

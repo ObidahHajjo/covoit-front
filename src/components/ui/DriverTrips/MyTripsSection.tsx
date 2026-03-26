@@ -36,26 +36,32 @@ function TripCard({ trip, status }: { trip: Trip; status: TripStatus }) {
   return (
     <Link
       to={`/my-trips/${trip.id}`}
-      className="group flex min-w-0 flex-col gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] sm:flex-row sm:items-start sm:p-5"
+      className="group flex min-w-0 gap-3 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] sm:gap-4 sm:p-5"
     >
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-lg text-[var(--theme-ink)]">
-        🚗
+      {/* Timeline left rail */}
+      <div className="flex flex-col items-center pt-0.5">
+        <span className="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-[var(--theme-primary)] bg-[var(--theme-surface)]" />
+        <span className="min-h-4 w-px flex-1 bg-[var(--theme-line-strong)]" />
+        <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--theme-primary)]" />
       </div>
 
-      <div className="min-w-0 flex-1 space-y-3">
-        <div className="flex flex-col items-start justify-between gap-2 sm:flex-row">
-          <p className="min-w-0 text-lg font-medium text-[var(--theme-ink)] sm:truncate">{from} - {to}</p>
-          <span className={`rounded-full px-3 py-1 text-xs font-medium ${config.badge}`}>
+      {/* Content right of timeline */}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-start justify-between gap-2">
+          <p className="text-sm font-semibold leading-tight text-[var(--theme-ink)]">{from}</p>
+          <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium ${config.badge}`}>
             {t(config.labelKey)}
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-2 text-xs text-[var(--theme-muted)]">
-          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{t("driverTrips.departureTag", { value: formatDateTimeRaw(trip.departure_time) })}</span>
-          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{t("driverTrips.arrivalTag", { value: formatDateTimeRaw(trip.arrival_time) })}</span>
-          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{t("driverTrips.seatsTag", { count: trip.available_seats })}</span>
-          <span className="rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1">{trip.distance_km} km</span>
+        <div className="mt-2 flex flex-wrap gap-2 text-xs text-[var(--theme-muted)]">
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">📅 {t("driverTrips.departureTag", { value: formatDateTimeRaw(trip.departure_time) })}</span>
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">🏁 {t("driverTrips.arrivalTag", { value: formatDateTimeRaw(trip.arrival_time) })}</span>
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">💺 {t("driverTrips.seatsTag", { count: trip.available_seats })}</span>
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">📍 {trip.distance_km} km</span>
         </div>
+
+        <p className="mt-2 text-sm font-semibold leading-tight text-[var(--theme-ink)]">{to}</p>
       </div>
     </Link>
   );

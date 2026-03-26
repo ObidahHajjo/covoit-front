@@ -31,41 +31,42 @@ function TripCard({ trip, now }: { trip: Trip; now: number }) {
   return (
     <Link
       to={`/bookings/${trip.id}`}
-      className="group flex flex-col gap-3 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] sm:flex-row sm:items-center sm:gap-4 sm:p-5"
+      className="group flex gap-3 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] sm:gap-4 sm:p-5"
     >
-      <div className="flex items-center gap-3 sm:gap-4">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-lg text-[var(--theme-muted)] sm:h-12 sm:w-12">
-          🚗
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <p className="text-base font-medium leading-tight text-[var(--theme-ink)] sm:text-lg">{from} → {to}</p>
-          {date ? <p className="mt-1 text-sm text-[var(--theme-muted)]">{date}</p> : null}
-        </div>
-
-        <span className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium sm:hidden ${isPast ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
-          {isPast ? t("bookings.completed") : t("bookings.booked")}
-        </span>
+      {/* Timeline left rail */}
+      <div className="flex flex-col items-center pt-0.5">
+        <span className="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-[var(--theme-primary)] bg-[var(--theme-surface)]" />
+        <span className="min-h-4 w-px flex-1 bg-[var(--theme-line-strong)]" />
+        <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--theme-primary)]" />
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--theme-muted)] sm:ms-auto sm:gap-3 sm:text-sm">
-        {driverName ? (
-          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">
-            {t("bookings.driver", { name: driverName })}
+      {/* Content right of timeline */}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-start justify-between gap-2">
+          <p className="text-sm font-semibold leading-tight text-[var(--theme-ink)]">{from}</p>
+          <span className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium ${isPast ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
+            {isPast ? t("bookings.completed") : t("bookings.booked")}
           </span>
-        ) : null}
-        <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">
-          {t("bookings.seats", { count: seats, suffix: seats !== 1 ? "s" : "" })}
-        </span>
-        {distance ? (
-          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">
-            {t("bookings.distance", { km: distance })}
-          </span>
-        ) : null}
+        </div>
 
-        <span className={`hidden shrink-0 rounded-full border px-3 py-1 text-xs font-medium sm:inline-block ${isPast ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
-          {isPast ? t("bookings.completed") : t("bookings.booked")}
-        </span>
+        <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[var(--theme-muted)]">
+          {date ? (
+            <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">📅 {date}</span>
+          ) : null}
+          {driverName ? (
+            <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">👤 {driverName}</span>
+          ) : null}
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">
+            💺 {t("bookings.seats", { count: seats, suffix: seats !== 1 ? "s" : "" })}
+          </span>
+          {distance ? (
+            <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">
+              📍 {t("bookings.distance", { km: distance })}
+            </span>
+          ) : null}
+        </div>
+
+        <p className="mt-2 text-sm font-semibold leading-tight text-[var(--theme-ink)]">{to}</p>
       </div>
     </Link>
   );

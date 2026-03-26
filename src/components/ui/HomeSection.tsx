@@ -21,26 +21,32 @@ function TripPreviewCard({ trip, detailsPath }: { trip: Trip; detailsPath: strin
   return (
     <Link
       to={detailsPath}
-      className="group flex flex-col gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 transition hover:border-[var(--theme-line-strong)] sm:flex-row sm:items-center sm:p-5"
+      className="group flex gap-3 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 transition hover:border-[var(--theme-line-strong)] sm:gap-4 sm:p-5"
     >
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-lg">
-        🚗
+      {/* Timeline left rail */}
+      <div className="flex flex-col items-center pt-0.5">
+        <span className="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-[var(--theme-primary)] bg-[var(--theme-surface)]" />
+        <span className="min-h-4 w-px flex-1 bg-[var(--theme-line-strong)]" />
+        <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--theme-primary)]" />
       </div>
 
+      {/* Content right of timeline */}
       <div className="min-w-0 flex-1">
-        <p className="truncate font-medium leading-none text-[var(--theme-ink)]">
-          {from} - {to}
-        </p>
-        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-[var(--theme-muted)]">
-          <span>{formatDateTimeRaw(trip.departure_time)}</span>
-          <span>{t("home.seatsOpen", { count: trip.available_seats })}</span>
-          <span>{trip.distance_km} km</span>
+        <div className="flex items-start justify-between gap-2">
+          <p className="text-sm font-semibold leading-tight text-[var(--theme-ink)]">{from}</p>
+          <span className="inline-flex shrink-0 rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1 text-xs font-medium text-[var(--theme-muted-strong)]">
+            {t("common.open")}
+          </span>
         </div>
-      </div>
 
-      <span className="inline-flex w-fit shrink-0 rounded-full border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-3 py-1 text-xs font-medium text-[var(--theme-muted-strong)] sm:self-center">
-        {t("common.open")}
-      </span>
+        <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[var(--theme-muted)]">
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">📅 {formatDateTimeRaw(trip.departure_time)}</span>
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">💺 {t("home.seatsOpen", { count: trip.available_seats })}</span>
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">📍 {trip.distance_km} km</span>
+        </div>
+
+        <p className="mt-2 text-sm font-semibold leading-tight text-[var(--theme-ink)]">{to}</p>
+      </div>
     </Link>
   );
 }
