@@ -82,7 +82,7 @@ export function RegisterSection({
             {[
               [t("auth.quickSetup"), t("auth.quickSetupBody")],
               [t("auth.secureAccess"), t("auth.secureAccessBody")],
-              [t("auth.activeCommunity"), t("auth.activeCommunity")],
+              [t("auth.activeCommunity"), t("auth.activeCommunityBody")],
               [t("auth.profileReady"), t("auth.profileReadyBody")],
             ].map(([title, copy]) => (
               <article key={title} className="border-b border-[var(--theme-line)] p-4">
