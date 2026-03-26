@@ -24,6 +24,7 @@ import MyAccountPage from "../pages/Account/MyAccountPage";
 import ChatInboxPage from "../pages/Chat/ChatInboxPage";
 import ChatConversationPage from "../pages/Chat/ChatConversationPage";
 import LandingPage from "../pages/LandingPage";
+import Landing3DPage from "../pages/Landing3DPage";
 import SupportPage from "../pages/SupportPage";
 import AdminRoute from "./AdminRoute";
 import AdminLayout from "../components/layout/AdminLayout";
@@ -46,6 +47,7 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/3d" element={<Landing3DPage />} />
 
         <Route element={<GuestRoute />}>
           <Route path="/login" element={<LoginPage />} />
