@@ -2,6 +2,11 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/Auth/useAuth";
 import { useI18n } from "../i18n/I18nProvider";
 
+/**
+ * Guards routes that require administrative privileges or specific admin permissions.
+ *
+ * @returns The nested admin route outlet or a redirect/loading state.
+ */
 export default function AdminRoute() {
     const { status, user } = useAuth();
     const { t } = useI18n();

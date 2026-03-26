@@ -11,6 +11,11 @@ export interface DashboardStats {
   unreadMessages: number;
 }
 
+/**
+ * Retrieves global administration statistics from the backend.
+ *
+ * @returns A promise resolving to the dashboard stats.
+ */
 export async function fetchDashboardStats(): Promise<DashboardStats> {
   const res = await apiClient.get("/admin/stats");
   return res.data;

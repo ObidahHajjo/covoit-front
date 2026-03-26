@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { fetchDashboardStats, type DashboardStats } from "../../features/admin/useAdminDashboard";
 
+/**
+ * Hook to fetch and expose global administration statistics.
+ *
+ * @returns Current dashboard statistics and loading state.
+ */
 export function useAdminDashboard() {
   const [stats, setStats] = useState<DashboardStats>({
     total_users: 0,

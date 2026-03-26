@@ -21,6 +21,13 @@ export interface PaginatedCars {
   last_page: number;
 }
 
+/**
+ * Fetches a paginated list of vehicle records.
+ *
+ * @param page - The page number to retrieve.
+ * @param perPage - Number of vehicles per page.
+ * @returns A paginated car response.
+ */
 export async function fetchCars(page: number, perPage: number): Promise<PaginatedCars> {
   const res = await apiClient.get(`/admin/cars?page=${page}&per_page=${perPage}`);
   return {
@@ -30,6 +37,11 @@ export async function fetchCars(page: number, perPage: number): Promise<Paginate
   };
 }
 
+/**
+ * Deletes a vehicle record by its ID.
+ *
+ * @param id - The ID of the car to delete.
+ */
 export async function deleteCar(id: number): Promise<void> {
   await apiClient.delete(`/admin/cars/${id}`);
 }

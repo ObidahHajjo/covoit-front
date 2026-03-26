@@ -2,6 +2,12 @@ import { useEffect, useState, useCallback } from "react";
 import { fetchUsers, deleteUser, type User } from "../../features/admin/useAdminUsers";
 import { useI18n } from "../../i18n/I18nProvider";
 
+/**
+ * Hook to manage application users from the admin interface.
+ * Handles fetching and deleting user accounts with pagination.
+ *
+ * @returns State and handlers for user management.
+ */
 export function useAdminUsers() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -12,6 +18,9 @@ export function useAdminUsers() {
   const [total, setTotal] = useState(0);
   const perPage = 15;
 
+  /**
+   * Loads the list of users for the current page.
+   */
   const loadUsers = useCallback(async () => {
     setLoading(true);
     try {
@@ -30,6 +39,11 @@ export function useAdminUsers() {
     void loadUsers();
   }, [loadUsers]);
 
+  /**
+   * Deletes a user account after user confirmation.
+   *
+   * @param id - The ID of the user to delete.
+   */
   const handleDeleteUser = async (id: number) => {
     if (!window.confirm(t("admin.confirmDelete"))) return;
     try {

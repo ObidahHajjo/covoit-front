@@ -25,6 +25,13 @@ export interface PaginatedTrips {
   last_page: number;
 }
 
+/**
+ * Fetches a paginated list of all platform trips.
+ *
+ * @param page - The page number to retrieve.
+ * @param perPage - Number of trips per page.
+ * @returns A paginated trip response.
+ */
 export async function fetchTrips(page: number, perPage: number): Promise<PaginatedTrips> {
   const res = await apiClient.get(`/admin/trips?page=${page}&per_page=${perPage}`);
   return {
@@ -34,6 +41,11 @@ export async function fetchTrips(page: number, perPage: number): Promise<Paginat
   };
 }
 
+/**
+ * Deletes a trip record and its associated data.
+ *
+ * @param id - The ID of the trip to delete.
+ */
 export async function deleteTrip(id: number): Promise<void> {
   await apiClient.delete(`/admin/trips/${id}`);
 }

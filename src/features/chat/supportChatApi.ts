@@ -72,6 +72,11 @@ export type SupportConversation = {
   messages: ChatMessage[];
 };
 
+/**
+ * Retrieves the existing support conversation for the current user or creates a new one.
+ *
+ * @returns A promise resolving to the support conversation details.
+ */
 export async function getOrCreateSupportConversation(): Promise<SupportConversation> {
   try {
     const { data } = await apiClient.post<ApiResponse<SupportChatSessionApi>>("/support-chat/sessions", {}, { showGlobalLoader: false });
@@ -86,6 +91,12 @@ export async function getOrCreateSupportConversation(): Promise<SupportConversat
   }
 }
 
+/**
+ * Fetches the message history for a specific support session.
+ *
+ * @param sessionId - The ID of the support session.
+ * @returns A promise resolving to an array of chat messages.
+ */
 export async function getMessages(sessionId: number): Promise<ChatMessage[]> {
   try {
     const { data } = await apiClient.get<{ data: SupportChatMessageApi[] }>(
@@ -98,6 +109,14 @@ export async function getMessages(sessionId: number): Promise<ChatMessage[]> {
   }
 }
 
+/**
+ * Sends a message to a support session. Supports optional file attachments.
+ *
+ * @param sessionId - The ID of the support session.
+ * @param message - The text body of the message.
+ * @param attachments - Optional array of files to attach.
+ * @returns A promise resolving to the created chat message.
+ */
 export async function sendSupportMessage(sessionId: number, message: string, attachments: File[] = []): Promise<ChatMessage> {
   try {
     const payload = new FormData();
@@ -115,6 +134,11 @@ export async function sendSupportMessage(sessionId: number, message: string, att
   }
 }
 
+/**
+ * Closes an active support conversation.
+ *
+ * @param sessionId - The ID of the support session to close.
+ */
 export async function closeSupportConversation(sessionId: number): Promise<void> {
   try {
     await apiClient.post(`/support-chat/sessions/${sessionId}/close`, {}, { showGlobalLoader: false });

@@ -8,6 +8,12 @@ import {
 } from "../../features/admin/useAdminBrands";
 import { useI18n } from "../../i18n/I18nProvider";
 
+/**
+ * Hook to manage vehicle brands from the admin interface.
+ * Handles fetching, creating, updating, and deleting brands with pagination.
+ *
+ * @returns State and handlers for brand management.
+ */
 export function useAdminBrands() {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,6 +25,9 @@ export function useAdminBrands() {
   const [total, setTotal] = useState(0);
   const perPage = 15;
 
+  /**
+   * Loads the list of brands for the current page.
+   */
   const loadBrands = useCallback(async () => {
     setLoading(true);
     try {
@@ -35,6 +44,11 @@ export function useAdminBrands() {
     void loadBrands();
   }, [loadBrands]);
 
+  /**
+   * Handles the submission of the brand creation or update form.
+   *
+   * @param e - The React form event.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -54,6 +68,11 @@ export function useAdminBrands() {
     }
   };
 
+  /**
+   * Deletes a brand after user confirmation.
+   *
+   * @param id - The ID of the brand to delete.
+   */
   const handleDelete = async (id: number) => {
     if (!window.confirm(t("admin.confirmDeleteBrand"))) return;
     try {

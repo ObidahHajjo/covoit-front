@@ -2,6 +2,12 @@ import { useEffect, useState, useCallback } from "react";
 import { fetchTrips, deleteTrip, type Trip } from "../../features/admin/useAdminTrips";
 import { useI18n } from "../../i18n/I18nProvider";
 
+/**
+ * Hook to manage all platform trips from the admin interface.
+ * Handles fetching and deleting trips with pagination.
+ *
+ * @returns State and handlers for trip management.
+ */
 export function useAdminTrips() {
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
@@ -11,6 +17,9 @@ export function useAdminTrips() {
   const [total, setTotal] = useState(0);
   const perPage = 15;
 
+  /**
+   * Loads the list of trips for the current page.
+   */
   const loadTrips = useCallback(async () => {
     setLoading(true);
     try {
@@ -27,6 +36,11 @@ export function useAdminTrips() {
     void loadTrips();
   }, [loadTrips]);
 
+  /**
+   * Deletes a trip after user confirmation.
+   *
+   * @param id - The ID of the trip to delete.
+   */
   const handleDelete = async (id: number) => {
     if (!window.confirm(t("admin.confirmDeleteTrip"))) return;
     try {

@@ -2,6 +2,12 @@ import { useEffect, useState, useCallback } from "react";
 import { fetchCars, deleteCar, type Car } from "../../features/admin/useAdminCars";
 import { useI18n } from "../../i18n/I18nProvider";
 
+/**
+ * Hook to manage vehicle inventory from the admin interface.
+ * Handles fetching and deleting cars with pagination.
+ *
+ * @returns State and handlers for car management.
+ */
 export function useAdminCars() {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
@@ -11,6 +17,9 @@ export function useAdminCars() {
   const [total, setTotal] = useState(0);
   const perPage = 15;
 
+  /**
+   * Loads the list of cars for the current page.
+   */
   const loadCars = useCallback(async () => {
     setLoading(true);
     try {
@@ -27,6 +36,11 @@ export function useAdminCars() {
     void loadCars();
   }, [loadCars]);
 
+  /**
+   * Deletes a car after user confirmation.
+   *
+   * @param id - The ID of the car to delete.
+   */
   const handleDelete = async (id: number) => {
     if (!window.confirm(t("admin.confirmDeleteCar"))) return;
     try {

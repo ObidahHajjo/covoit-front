@@ -41,6 +41,11 @@ export function useCompleteProfile() {
     return true;
   }, [email, personId, firstName, lastName, pseudo, isSubmitting]);
 
+  /**
+   * Handles the form submission to update the user's profile and proceed to home.
+   *
+   * @param e - The React form event.
+   */
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setError(null);

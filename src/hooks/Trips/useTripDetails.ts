@@ -99,6 +99,9 @@ export function useTripDetails() {
     }
   }
 
+  /**
+   * Navigates to the email contact form for the trip driver.
+   */
   function navigateToContactDriverEmail() {
     if (!trip) return;
     navigate(`/trips/${trip.id}/contact-driver-email`);

@@ -14,6 +14,13 @@ import type { ChatMessage } from "../../types/Chat";
 
 export type ConnectionStatus = "connecting" | "connected" | "disconnected";
 
+/**
+ * Hook to manage an individual admin support chat session.
+ * Handles message loading, realtime updates, message sending, and session closing.
+ *
+ * @param sessionId - The ID of the support session to manage, or null if none selected.
+ * @returns State and handlers for the admin support chat interface.
+ */
 export function useAdminSupportChat(sessionId: number | null) {
   const [session, setSession] = useState<AdminSupportSession | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -28,6 +35,11 @@ export function useAdminSupportChat(sessionId: number | null) {
   const typingTimeoutRef = useRef<number | null>(null);
   const typingDebounceRef = useRef<number | null>(null);
 
+  /**
+   * Loads the session details and message history from the API.
+   *
+   * @param silent - If true, prevents the loading spinner from showing.
+   */
   const load = useCallback(async (silent = false) => {
     if (!sessionId) return;
     try {
@@ -82,6 +94,11 @@ export function useAdminSupportChat(sessionId: number | null) {
     void load();
   }, [load]);
 
+  /**
+   * Handles the submission of the message form.
+   *
+   * @param event - The React form event.
+   */
   const handleSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -106,6 +123,9 @@ export function useAdminSupportChat(sessionId: number | null) {
     [sessionId, draft, selectedFiles]
   );
 
+  /**
+   * Closes the current support session.
+   */
   const handleCloseSession = useCallback(async () => {
     if (!sessionId) return;
     try {
@@ -120,6 +140,9 @@ export function useAdminSupportChat(sessionId: number | null) {
     }
   }, [sessionId]);
 
+  /**
+   * Notifies the user that the admin is typing.
+   */
   const handleTyping = useCallback(() => {
     if (!sessionId) return;
     if (typingDebounceRef.current !== null) {

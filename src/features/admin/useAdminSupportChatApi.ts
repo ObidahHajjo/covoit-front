@@ -92,6 +92,11 @@ function mapMessage(message: SupportChatMessageApi): ChatMessage {
   };
 }
 
+/**
+ * Fetches the list of support sessions currently waiting for an admin to join.
+ *
+ * @returns A promise resolving to an array of waiting support sessions.
+ */
 export async function fetchWaitingSessions(): Promise<AdminSupportSession[]> {
   try {
     const { data } = await apiClient.get<{ data: SupportChatSessionApi[] }>(
@@ -104,6 +109,11 @@ export async function fetchWaitingSessions(): Promise<AdminSupportSession[]> {
   }
 }
 
+/**
+ * Fetches the list of support sessions currently being handled by admins.
+ *
+ * @returns A promise resolving to an array of active support sessions.
+ */
 export async function fetchActiveAdminSessions(): Promise<AdminSupportSession[]> {
   try {
     const { data } = await apiClient.get<{ data: SupportChatSessionApi[] }>(
@@ -116,6 +126,12 @@ export async function fetchActiveAdminSessions(): Promise<AdminSupportSession[]>
   }
 }
 
+/**
+ * Fetches the full details of a specific support session.
+ *
+ * @param sessionId - The ID of the session to retrieve.
+ * @returns A promise resolving to the session details.
+ */
 export async function fetchAdminSession(sessionId: number): Promise<AdminSupportSession> {
   try {
     const { data } = await apiClient.get<{ data: SupportChatSessionApi }>(
@@ -128,6 +144,12 @@ export async function fetchAdminSession(sessionId: number): Promise<AdminSupport
   }
 }
 
+/**
+ * Retrieves the message history for a specific support session.
+ *
+ * @param sessionId - The ID of the session.
+ * @returns A promise resolving to an array of chat messages.
+ */
 export async function getAdminMessages(sessionId: number): Promise<ChatMessage[]> {
   try {
     const { data } = await apiClient.get<{ data: SupportChatMessageApi[] }>(
@@ -140,6 +162,15 @@ export async function getAdminMessages(sessionId: number): Promise<ChatMessage[]
   }
 }
 
+/**
+ * Sends a message from the admin to a support session.
+ * Supports optional file attachments.
+ *
+ * @param sessionId - The ID of the session.
+ * @param message - The text body of the message.
+ * @param attachments - Optional array of files to attach.
+ * @returns A promise resolving to the created chat message.
+ */
 export async function adminSendMessage(
   sessionId: number,
   message: string,
@@ -161,6 +192,12 @@ export async function adminSendMessage(
   }
 }
 
+/**
+ * Joins a waiting support session as an admin.
+ *
+ * @param sessionId - The ID of the session to join.
+ * @returns A promise resolving to the updated session details.
+ */
 export async function adminJoinSession(sessionId: number): Promise<AdminSupportSession> {
   try {
     const { data } = await apiClient.post<{ data: SupportChatSessionApi }>(
@@ -174,6 +211,11 @@ export async function adminJoinSession(sessionId: number): Promise<AdminSupportS
   }
 }
 
+/**
+ * Closes an active support session.
+ *
+ * @param sessionId - The ID of the session to close.
+ */
 export async function adminCloseSession(sessionId: number): Promise<void> {
   try {
     await apiClient.post(
@@ -186,6 +228,11 @@ export async function adminCloseSession(sessionId: number): Promise<void> {
   }
 }
 
+/**
+ * Marks all messages in a session as read by the admin.
+ *
+ * @param sessionId - The ID of the session.
+ */
 export async function adminMarkAsRead(sessionId: number): Promise<void> {
   try {
     await apiClient.post(
@@ -198,6 +245,12 @@ export async function adminMarkAsRead(sessionId: number): Promise<void> {
   }
 }
 
+/**
+ * Updates the typing status of the admin in a session.
+ *
+ * @param sessionId - The ID of the session.
+ * @param isTyping - Whether the admin is currently typing.
+ */
 export async function adminSetTyping(sessionId: number, isTyping: boolean): Promise<void> {
   try {
     await apiClient.post(

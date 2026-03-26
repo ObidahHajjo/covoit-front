@@ -9,6 +9,14 @@ function buildEmailPayload(subject: string, message: string, attachments: File[]
   return payload;
 }
 
+/**
+ * Sends a contact email to the support team.
+ *
+ * @param subject - The email subject.
+ * @param message - The email body content.
+ * @param attachments - Optional files to attach to the email.
+ * @returns A promise resolving to the success message from the API.
+ */
 export async function sendSupportEmail(subject: string, message: string, attachments: File[] = []): Promise<string> {
   try {
     const { data } = await apiClient.post<{ message: string }>(
@@ -23,6 +31,15 @@ export async function sendSupportEmail(subject: string, message: string, attachm
   }
 }
 
+/**
+ * Sends a contact email to a trip driver.
+ *
+ * @param tripId - The ID of the trip.
+ * @param subject - The email subject.
+ * @param message - The email body content.
+ * @param attachments - Optional files to attach.
+ * @returns A promise resolving to the API success message.
+ */
 export async function contactDriverByEmail(
   tripId: number,
   subject: string,
@@ -42,6 +59,16 @@ export async function contactDriverByEmail(
   }
 }
 
+/**
+ * Sends a contact email to a passenger of a trip.
+ *
+ * @param tripId - The ID of the trip.
+ * @param passengerId - The ID of the passenger (person).
+ * @param subject - The email subject.
+ * @param message - The email body content.
+ * @param attachments - Optional files to attach.
+ * @returns A promise resolving to the API success message.
+ */
 export async function contactPassengerByEmail(
   tripId: number,
   passengerId: number,
