@@ -10,7 +10,7 @@ import { useI18n } from "../../i18n/I18nProvider";
  */
 export default function BookingDetailsPage() {
   const { t } = useI18n();
-  const { trip, passengers, loading, error, cancelling, isTripEnded, handleCancel, navigateToContactDriver } =
+  const { trip, passengers, loading, error, cancelling, isTripEnded, handleCancel, navigateToContactDriver, navigateToContactDriverEmail } =
     useBookingDetails();
 
   if (loading) {
@@ -39,6 +39,7 @@ export default function BookingDetailsPage() {
       error={error}
       onCancel={handleCancel}
       onContactDriver={navigateToContactDriver}
+      onContactDriverEmail={navigateToContactDriverEmail}
     />
   );
 }

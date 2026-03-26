@@ -12,6 +12,7 @@ type Props = {
   error: string | null;
   onCancel: () => void;
   onContactDriver: () => void;
+  onContactDriverEmail: () => void;
 };
 
 /**
@@ -91,6 +92,7 @@ function VehicleDetails({ trip }: { trip: Trip }) {
  * @param props.error - Optional error message shown in a toast.
  * @param props.onCancel - Callback fired when the rider cancels the reservation.
  * @param props.onContactDriver - Callback fired when the rider wants to message the driver.
+ * @param props.onContactDriverEmail - Callback fired when the rider wants to email the driver.
  * @returns The rendered booking-details section.
  */
 export function BookingDetailsSection({
@@ -101,6 +103,7 @@ export function BookingDetailsSection({
   error,
   onCancel,
   onContactDriver,
+  onContactDriverEmail,
 }: Props) {
   const { t } = useI18n();
   const from = trip.departure_address?.city?.name ?? "-";
@@ -181,12 +184,19 @@ export function BookingDetailsSection({
             </span>
           </div>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
             <button
               onClick={onContactDriver}
               className="rounded-lg border border-[var(--theme-line)] bg-[var(--theme-bg-soft)] px-4 py-3.5 text-sm font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] hover:bg-[var(--theme-surface)]"
             >
               {t("trip.contactDriver")}
+            </button>
+
+            <button
+              onClick={onContactDriverEmail}
+              className="rounded-lg border border-[var(--theme-line)] bg-[rgba(212,229,239,0.22)] px-4 py-3.5 text-sm font-medium text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)]"
+            >
+              {t("trip.contactDriverEmail")}
             </button>
 
             {!isTripEnded ? (

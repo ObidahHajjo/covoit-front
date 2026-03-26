@@ -87,6 +87,16 @@ export function useBookingDetails() {
         navigate(`/trips/${trip.id}/contact-driver`);
     }
 
+    /**
+     * Opens the email contact form for the trip driver.
+     */
+    function navigateToContactDriverEmail() {
+        if (!trip) return;
+
+        setError(null);
+        navigate(`/trips/${trip.id}/contact-driver-email`);
+    }
+
     return {
         trip,
         passengers,
@@ -96,5 +106,6 @@ export function useBookingDetails() {
         isTripEnded,
         handleCancel,
         navigateToContactDriver,
+        navigateToContactDriverEmail,
     };
 }
