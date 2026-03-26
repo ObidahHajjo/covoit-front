@@ -19,6 +19,7 @@ export function useTripResults() {
     startingcity: searchParams.get("startingcity") ?? undefined,
     arrivalcity: searchParams.get("arrivalcity") ?? undefined,
     tripdate: searchParams.get("tripdate") ?? undefined,
+    triptime: searchParams.get("triptime") ?? undefined,
   }), [searchParams]);
 
   useEffect(() => {

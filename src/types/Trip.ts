@@ -26,6 +26,7 @@ export interface TripSearchParams  {
     startingcity?: string;
     arrivalcity?: string;
     tripdate?: string;
+    triptime?: string;
 }
 
 /** Payload used to create a new trip. */

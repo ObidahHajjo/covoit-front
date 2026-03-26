@@ -7,10 +7,10 @@ import { useI18n } from "../../../i18n/I18nProvider.tsx";
 type Props = {
     startingCity: CityPostalOption | null;
     arrivalCity: CityPostalOption | null;
-    tripDate: string;
+    tripDateTime: string;
     onStartingCityChange: (city: CityPostalOption | null) => void;
     onArrivalCityChange: (city: CityPostalOption | null) => void;
-    onTripDateChange: (date: string) => void;
+    onTripDateTimeChange: (dateTime: string) => void;
     onSubmit: (e: FormEvent<HTMLFormElement>) => void;
     onShowAll: () => void;
 };
@@ -21,10 +21,10 @@ type Props = {
  * @param props - Component props for the trip-search form.
  * @param props.startingCity - Selected departure city option.
  * @param props.arrivalCity - Selected arrival city option.
- * @param props.tripDate - Selected departure date.
+ * @param props.tripDateTime - Selected departure date and time.
  * @param props.onStartingCityChange - Callback fired when the departure city changes.
  * @param props.onArrivalCityChange - Callback fired when the arrival city changes.
- * @param props.onTripDateChange - Callback fired when the departure date changes.
+ * @param props.onTripDateTimeChange - Callback fired when the departure date and time changes.
  * @param props.onSubmit - Form submit handler for running the search.
  * @param props.onShowAll - Callback fired when the user wants to browse all trips.
  * @returns The rendered trip-search form.
@@ -32,10 +32,10 @@ type Props = {
 export function FindTripForm({
     startingCity,
     arrivalCity,
-    tripDate,
+    tripDateTime,
     onStartingCityChange,
     onArrivalCityChange,
-    onTripDateChange,
+    onTripDateTimeChange,
     onSubmit,
     onShowAll,
 }: Props) {
@@ -66,11 +66,11 @@ export function FindTripForm({
           </div>
 
           <div className="serene-soft p-4 xl:col-span-2">
-            <FormField label={t("search.departureDay")}>
+            <FormField label={t("search.departureDateTime")}>
               <input
-                type="date"
-                value={tripDate}
-                onChange={(e) => onTripDateChange(e.target.value)}
+                type="datetime-local"
+                value={tripDateTime}
+                onChange={(e) => onTripDateTimeChange(e.target.value)}
                 className="serene-input"
               />
             </FormField>
@@ -78,7 +78,7 @@ export function FindTripForm({
         </div>
 
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <SereneButton type="submit" disabled={!startingCity || !arrivalCity} className="w-full">
+          <SereneButton type="submit" disabled={!startingCity && !arrivalCity && !tripDateTime} className="w-full">
             {t("search.searchRides")}
           </SereneButton>
 

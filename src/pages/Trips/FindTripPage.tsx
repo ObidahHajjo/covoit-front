@@ -15,7 +15,7 @@ export default function FindTripPage() {
 
     const [startingCity, setStartingCity] = useState<CityPostalOption | null>(null);
     const [arrivalCity, setArrivalCity] = useState<CityPostalOption | null>(null);
-    const [tripDate, setTripDate] = useState("");
+    const [tripDateTime, setTripDateTime] = useState("");
 
     /**
      * Serializes the selected search filters and navigates to the results page.
@@ -41,8 +41,16 @@ export default function FindTripPage() {
             params.set("arrivalcitycode", arrivalCity.cityCode);
         }
 
-        if (tripDate) {
-            params.set("tripdate", tripDate);
+        if (tripDateTime) {
+            const [tripDate, tripTime] = tripDateTime.split("T");
+
+            if (tripDate) {
+                params.set("tripdate", tripDate);
+            }
+
+            if (tripTime) {
+                params.set("triptime", tripTime);
+            }
         }
 
         navigate(`/find-trip/results?${params.toString()}`);
@@ -60,10 +68,10 @@ export default function FindTripPage() {
                 <FindTripForm
                     startingCity={startingCity}
                     arrivalCity={arrivalCity}
-                    tripDate={tripDate}
+                    tripDateTime={tripDateTime}
                     onStartingCityChange={setStartingCity}
                     onArrivalCityChange={setArrivalCity}
-                    onTripDateChange={setTripDate}
+                    onTripDateTimeChange={setTripDateTime}
                     onSubmit={handleSubmit}
                     onShowAll={() => navigate("/find-trip/results")}
                 />

@@ -345,7 +345,7 @@ export const dictionaries = {
     "search.title": "Find a trip",
     "search.heading": "Search available trips across the network.",
     "search.body":
-      "Pick a departure, an arrival, and an optional date to find the ride that fits best.",
+      "Pick a departure, an arrival, and an optional departure date and time to find the ride that fits best.",
     "search.from": "From",
     "search.to": "To",
     "search.departureCity": "Departure city",
@@ -353,6 +353,7 @@ export const dictionaries = {
     "search.searchDepartureCity": "Search departure city",
     "search.searchArrivalCity": "Search arrival city",
     "search.departureDay": "Departure day",
+    "search.departureDateTime": "Departure date and time",
     "search.searchRides": "Search rides",
     "search.browseEverything": "Browse everything",
     "search.tripSearch": "Trip search",
@@ -1038,7 +1039,7 @@ export const dictionaries = {
     "search.title": "Trouver un trajet",
     "search.heading": "Recherchez les trajets disponibles sur le reseau.",
     "search.body":
-      "Choisissez un depart, une arrivee et une date optionnelle pour trouver le trajet ideal.",
+      "Choisissez un depart, une arrivee, ainsi qu'une date et une heure de depart optionnelles pour trouver le trajet ideal.",
     "search.from": "Depart",
     "search.to": "Arrivee",
     "search.departureCity": "Ville de depart",
@@ -1046,6 +1047,7 @@ export const dictionaries = {
     "search.searchDepartureCity": "Rechercher une ville de depart",
     "search.searchArrivalCity": "Rechercher une ville d'arrivee",
     "search.departureDay": "Jour de depart",
+    "search.departureDateTime": "Date et heure de depart",
     "search.searchRides": "Rechercher des trajets",
     "search.browseEverything": "Tout parcourir",
     "search.tripSearch": "Recherche de trajet",
