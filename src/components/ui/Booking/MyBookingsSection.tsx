@@ -22,23 +22,48 @@ function TripCard({ trip, now }: { trip: Trip; now: number }) {
   const to = trip.arrival_address?.city?.name ?? "-";
   const date = trip.departure_time ? formatLocaleDateTime(trip.departure_time) : null;
   const isPast = trip.departure_time ? new Date(trip.departure_time).getTime() <= now : false;
+  const seats = trip.available_seats;
+  const distance = trip.distance_km;
+  const driverName = trip.driver
+    ? `${trip.driver.first_name ?? ""} ${trip.driver.last_name ?? ""}`.trim()
+    : null;
 
   return (
     <Link
       to={`/bookings/${trip.id}`}
-      className="group flex items-center gap-4 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] sm:p-5"
+      className="group flex flex-col gap-3 rounded-xl border border-[var(--theme-line)] bg-[var(--theme-surface)] p-4 text-[var(--theme-ink)] transition hover:border-[var(--theme-line-strong)] sm:flex-row sm:items-center sm:gap-4 sm:p-5"
     >
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-lg text-[var(--theme-muted)]">
-        🚗
+      <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--theme-bg-soft)] text-lg text-[var(--theme-muted)] sm:h-12 sm:w-12">
+          🚗
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p className="text-base font-medium leading-tight text-[var(--theme-ink)] sm:text-lg">{from} → {to}</p>
+          {date ? <p className="mt-1 text-sm text-[var(--theme-muted)]">{date}</p> : null}
+        </div>
+
+        <span className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium sm:hidden ${isPast ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
+          {isPast ? t("bookings.completed") : t("bookings.booked")}
+        </span>
       </div>
 
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-lg font-medium leading-tight text-[var(--theme-ink)]">{from} - {to}</p>
-        {date ? <p className="mt-2 text-sm text-[var(--theme-muted)]">{date}</p> : null}
-      </div>
+      <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--theme-muted)] sm:ms-auto sm:gap-3 sm:text-sm">
+        {driverName ? (
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">
+            {t("bookings.driver", { name: driverName })}
+          </span>
+        ) : null}
+        <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">
+          {t("bookings.seats", { count: seats, suffix: seats !== 1 ? "s" : "" })}
+        </span>
+        {distance ? (
+          <span className="rounded-md bg-[var(--theme-bg-soft)] px-2 py-1">
+            {t("bookings.distance", { km: distance })}
+          </span>
+        ) : null}
 
-      <div className="flex shrink-0 items-center gap-2">
-        <span className={`rounded-full border px-3 py-1 text-xs font-medium ${isPast ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
+        <span className={`hidden shrink-0 rounded-full border px-3 py-1 text-xs font-medium sm:inline-block ${isPast ? "border-[var(--theme-line)] bg-[var(--theme-bg-soft)] text-[var(--theme-muted)]" : "border-[var(--theme-line-strong)] bg-[var(--theme-surface)] text-[var(--theme-muted-strong)]"}`}>
           {isPast ? t("bookings.completed") : t("bookings.booked")}
         </span>
       </div>
