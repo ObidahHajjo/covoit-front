@@ -1,0 +1,64 @@
+@startuml diagramme-sequence-chat
+title Chat temps reel - version simplifiee
+
+skinparam sequenceMessageAlign left
+skinparam responseMessageBelowArrow true
+skinparam maxMessageSize 180
+
+actor "Passager" as P
+boundary "IHM Passager" as BP
+control "ChatController" as API
+entity "Conversation / Message" as CHAT
+database "BDD" as DB
+control "Reverb" as WS
+boundary "IHM Conducteur" as BD
+actor "Conducteur" as D
+
+== 1. Connexion ==
+BP -> WS : se connecter
+BD -> WS : se connecter
+
+== 2. Creation de conversation ==
+P -> BP : Contacter le conducteur
+BP -> API : POST /trips/{id}/contact-driver
+API -> CHAT : creer conversation + 1er message
+CHAT -> DB : INSERT conversation, message
+DB --> CHAT : ok
+CHAT --> API : conversation creee
+API -> WS : broadcast nouveau message
+API --> BP : 200 { conversation, message }
+
+== 3. Echange de messages ==
+P -> BP : Envoyer message
+BP -> API : POST /conversations/{id}/messages
+API -> CHAT : enregistrer message
+CHAT -> DB : INSERT message
+DB --> CHAT : ok
+CHAT --> API : message cree
+API -> WS : diffuser message
+WS -> BD : nouveau message
+BD -> API : GET /conversations/{id}
+API -> CHAT : charger messages
+CHAT -> DB : SELECT conversation + messages
+DB --> CHAT : donnees a jour
+CHAT --> API : conversation hydratee
+API --> BD : messages a jour
+BD -> D : afficher message
+
+D -> BD : Repondre
+BD -> API : POST /conversations/{id}/messages
+API -> CHAT : enregistrer reponse
+CHAT -> DB : INSERT message
+DB --> CHAT : ok
+CHAT --> API : reponse creee
+API -> WS : diffuser reponse
+WS -> BP : nouvelle reponse
+BP -> API : GET /conversations/{id}
+API -> CHAT : charger messages
+CHAT -> DB : SELECT conversation + messages
+DB --> CHAT : donnees a jour
+CHAT --> API : conversation hydratee
+API --> BP : messages a jour
+BP -> P : afficher reponse
+
+@enduml

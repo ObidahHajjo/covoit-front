@@ -1,0 +1,202 @@
+@startuml diagramme-classe
+title Diagramme de classes — Covoit
+
+skinparam classAttributeIconSize 0
+skinparam roundcorner 6
+skinparam classBorderColor #B0C4A8
+skinparam classBackgroundColor #FFFFFF
+skinparam stereotypeCBackgroundColor #EEF6EA
+skinparam stereotypeCBorderColor #8EAA83
+
+legend right
+  <<repo>>     Type ou relation verifiee dans le front
+  <<inferred>> Concept de domaine deduit des endpoints et usages
+endlegend
+
+' ─── Auth ───────────────────────────────────────────────────
+class AuthUser <<repo>> {
+  id : number
+  email : string
+  is_active : boolean
+}
+
+class Role <<repo>> {
+  id : number
+  name : "admin" | "driver" | "passenger"
+}
+
+class AuthPermissions <<repo>> {
+  can_view_bookings : boolean
+  can_book_trip : boolean
+  can_cancel_booking : boolean
+  can_edit_profile : boolean
+  can_publish_trip : boolean
+  can_manage_own_trips : boolean
+  can_manage_all_trips : boolean
+  can_manage_all_users : boolean
+  can_manage_all_bookings : boolean
+}
+
+class AuthPerson <<repo>> {
+  id : number | null
+  pseudo : string | null
+  first_name : string | null
+  last_name : string | null
+  phone : string | null
+  car_id : number | null
+}
+
+' ─── Person & Vehicle ───────────────────────────────────────
+class Person <<repo>> {
+  id : number
+  pseudo : string
+  first_name : string
+  last_name : string
+  email : string
+  phone : string
+  role_id : number
+  is_active : boolean
+  car_id : number | null
+}
+
+class Car <<repo>> {
+  id : number
+  license_plate : string
+  seats : number | null
+}
+
+class CarModel <<repo>> {
+  id : number
+  name : string
+  brand_id : number
+  type_id : number
+}
+
+class Brand <<repo>> {
+  id : number
+  name : string
+}
+
+class CarType <<repo>> {
+  id : number
+  name : string
+}
+
+class Color <<repo>> {
+  name : string
+  hex_code : string
+}
+
+' ─── Trip & Address ─────────────────────────────────────────
+class Trip <<repo>> {
+  id : number
+  departure_time : string
+  arrival_time : string | null
+  distance_km : number | string
+  available_seats : number
+  smoking_allowed : boolean
+  departure_address_id : number
+  arrival_address_id : number
+  person_id : number
+}
+
+class Address <<repo>> {
+  id : number
+  street_number : string
+  street : string
+  city_id : number
+}
+
+class City <<repo>> {
+  id : number
+  name : string
+  postal_code : string
+}
+
+class Booking <<inferred>> {
+  reservation_date : datetime
+  status : active | cancelled
+}
+
+' ─── Chat ───────────────────────────────────────────────────
+class ChatConversation <<repo>> {
+  id : number
+  participantId : number
+  participantName : string
+  participantSubtitle : string
+  tripId : number
+  tripLabel : string
+  updatedAt : string
+  clearedAt : string | null
+}
+
+class ChatMessage <<repo>> {
+  id : number
+  body : string
+  sender : "me" | "other" | "system"
+  senderPersonId : number
+  createdAt : string
+}
+
+class ChatAttachment <<repo>> {
+  id : number
+  name : string
+  mimeType : string
+  sizeBytes : number
+  url : string
+}
+
+class SupportConversation <<inferred>> {
+  id : number
+  status : string
+  subject : string | null
+  createdAt : string
+  closedAt : string | null
+}
+
+' ─── Relations verifiees dans le front ──────────────────────
+AuthUser "0..*" --> "1" Role
+AuthUser "1" *-- "1" AuthPermissions
+AuthUser "1" *-- "0..1" AuthPerson
+
+Person "0..*" --> "0..1" Car
+Car "0..*" --> "1" CarModel
+Car "0..*" --> "0..1" Color
+CarModel "0..*" --> "1" Brand
+CarModel "0..*" --> "1" CarType
+
+Trip "0..*" --> "1" Person : driver
+Trip "0..*" --> "1" Address : departure_address
+Trip "0..*" --> "1" Address : arrival_address
+Address "0..*" --> "1" City
+
+ChatConversation "0..*" --> "1" Person : participant
+ChatConversation "0..*" --> "0..1" Trip
+ChatConversation "1" *-- "0..*" ChatMessage
+ChatMessage "0..*" --> "0..1" Person : sender
+ChatMessage "1" *-- "0..*" ChatAttachment
+
+' ─── Relations de domaine deduites des endpoints ────────────
+Trip "1" -- "0..*" Booking
+Person "1" -- "0..*" Booking : passenger
+
+SupportConversation "0..*" --> "1" AuthUser : user
+SupportConversation "0..*" --> "0..1" AuthUser : admin
+SupportConversation "1" *-- "0..*" ChatMessage
+
+note bottom of Booking
+  Deductions basees sur :
+  - POST /trips/{tripId}/person
+  - GET /trips/{tripId}/person
+  - DELETE /trips/{tripId}/reservations
+  - GET /persons/{personId}/trips-passenger
+end note
+
+note bottom of SupportConversation
+  Le front expose surtout un SupportConversation cote UI
+  et reutilise ChatMessage / ChatAttachment.
+  Cette classe represente la session support des endpoints
+  /support-chat/sessions.
+end note
+
+@enduml
