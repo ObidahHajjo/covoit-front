@@ -22,6 +22,7 @@ export default function PublishTripPage() {
 
         <PublishTripForm
           tripDateTime={trip.tripDateTime}
+          minTripDateTime={trip.minTripDateTime}
           availableSeats={trip.availableSeats}
           smokingAllowed={trip.smokingAllowed}
           error={trip.error}

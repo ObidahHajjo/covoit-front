@@ -71,6 +71,33 @@ export const DEFAULT_CAR_COLORS = [
   { name: "Brown", hex: "#78350F" },
 ];
 
+const LICENSE_PLATE_PATTERN = /^\d{2}-[A-Z]{3}-\d{2}$/;
+
+function formatLicensePlateInput(value: string): string {
+  const cleaned = value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  let digitsPrefix = "";
+  let letters = "";
+  let digitsSuffix = "";
+
+  for (const char of cleaned) {
+    if (digitsPrefix.length < 2) {
+      if (/\d/.test(char)) digitsPrefix += char;
+      continue;
+    }
+
+    if (letters.length < 3) {
+      if (/[A-Z]/.test(char)) letters += char;
+      continue;
+    }
+
+    if (digitsSuffix.length < 2 && /\d/.test(char)) {
+      digitsSuffix += char;
+    }
+  }
+
+  return [digitsPrefix, letters, digitsSuffix].filter(Boolean).join("-");
+}
+
 const EMPTY_PROFILE_FORM: ProfileFormState = {
   pseudo: "",
   first_name: "",
@@ -369,7 +396,10 @@ export function useMyAccount() {
    * @returns Does not return a value.
    */
   function updateCarField<K extends keyof CarFormState>(key: K, value: CarFormState[K]) {
-    setCarForm((prev) => ({ ...prev, [key]: value }));
+    const nextValue = key === "license_plate" && typeof value === "string"
+      ? formatLicensePlateInput(value)
+      : value;
+    setCarForm((prev) => ({ ...prev, [key]: nextValue }));
     setCarError(null);
     setCarSuccess(null);
     clearFieldError(carFieldErrorMap[key] ?? []);
@@ -542,6 +572,14 @@ export function useMyAccount() {
         await deleteCar(carId);
         carId = null;
       } else if (!carForm.delete_car && carForm.model_name.trim() && carForm.license_plate.trim()) {
+        const formattedLicensePlate = formatLicensePlateInput(carForm.license_plate);
+
+        if (!LICENSE_PLATE_PATTERN.test(formattedLicensePlate)) {
+          setCarForm((prev) => ({ ...prev, license_plate: formattedLicensePlate }));
+          setFieldErrors({ carregistration: [translate("car.licensePlateInvalid")] });
+          return;
+        }
+
         const payload = {
           brand: { name: carForm.brand_name.trim() },
           type: { name: "Sedan" },
@@ -550,7 +588,7 @@ export function useMyAccount() {
           },
           seats: carForm.seats ? Number(carForm.seats) : undefined,
           color: { name: carForm.color_name, hex_code: carForm.hex },
-          carregistration: carForm.license_plate.trim(),
+          carregistration: formattedLicensePlate,
         };
         if (carId) {
           const updated = await updateCar(carId, payload as never);

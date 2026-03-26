@@ -4,6 +4,7 @@ import { searchAddress } from "../../features/geo/geoApi.ts";
 import { publishTrip } from "../../features/trips/tripApi.ts";
 import type { GeoPfFeature } from "../../types/GeoPfSearchResponse.ts";
 import { translate } from "../../i18n/config.ts";
+import { getCurrentParisDateTimeInput, parisInputToIsoString } from "../../utils/parisDateTime.ts";
 
 /**
  * Describes the normalized address fields used by the trip publishing form.
@@ -186,7 +187,7 @@ export function usePublishTrip() {
             setError(null);
 
             await publishTrip({
-                trip_datetime: tripDateTime,
+                trip_datetime: parisInputToIsoString(tripDateTime),
                 available_seats: Number(availableSeats),
                 smoking_allowed: smokingAllowed,
                 starting_address: {
@@ -223,6 +224,7 @@ export function usePublishTrip() {
 
     return {
         tripDateTime, setTripDateTime,
+        minTripDateTime: getCurrentParisDateTimeInput(),
         availableSeats, setAvailableSeats,
         smokingAllowed, setSmokingAllowed,
         error,

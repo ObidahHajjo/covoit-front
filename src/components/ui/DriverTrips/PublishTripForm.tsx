@@ -155,6 +155,7 @@ function FormSection({ icon, title, children }: { icon: string; title: string; c
 type Props = {
   tripDateTime: string;
   availableSeats: string;
+  minTripDateTime: string;
   smokingAllowed: boolean;
   error: string | null;
   submitting: boolean;
@@ -181,6 +182,7 @@ type Props = {
  * @param props - Component props for the publish-trip form.
  * @param props.tripDateTime - Current departure date-time value.
  * @param props.availableSeats - Current available-seat value.
+ * @param props.minTripDateTime - Earliest allowed date-time in Paris time.
  * @param props.smokingAllowed - Whether smoking is allowed on the trip.
  * @param props.error - Optional error message shown in a toast.
  * @param props.submitting - Whether the publish request is in progress.
@@ -204,6 +206,7 @@ type Props = {
 export function PublishTripForm({
   tripDateTime,
   availableSeats,
+  minTripDateTime,
   smokingAllowed,
   error,
   submitting,
@@ -234,6 +237,7 @@ export function PublishTripForm({
           <input
             type="datetime-local"
             value={tripDateTime}
+            min={minTripDateTime}
             onChange={(e) => onTripDateTimeChange(e.target.value)}
             className={inputClass}
           />

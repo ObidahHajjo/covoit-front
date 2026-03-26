@@ -1,4 +1,5 @@
 import { dictionaries } from "./dictionaries";
+import { PARIS_TIME_ZONE } from "../utils/parisDateTime";
 
 /**
  * Local-storage key used to persist the selected locale.
@@ -220,7 +221,7 @@ export function formatLocaleDateTime(
     return fallback;
   }
 
-  return new Intl.DateTimeFormat(getIntlLocale(locale), options).format(date);
+  return new Intl.DateTimeFormat(getIntlLocale(locale), { timeZone: PARIS_TIME_ZONE, ...options }).format(date);
 }
 
 /**
@@ -244,5 +245,5 @@ export function formatLocaleTime(
     return fallback ?? translate("common.now", undefined, locale);
   }
 
-  return new Intl.DateTimeFormat(getIntlLocale(locale), options).format(date);
+  return new Intl.DateTimeFormat(getIntlLocale(locale), { timeZone: PARIS_TIME_ZONE, ...options }).format(date);
 }

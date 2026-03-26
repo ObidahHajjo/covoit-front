@@ -119,6 +119,7 @@ export function DriverTripDetailsSection({
   const { t } = useI18n();
   const from = trip.departure_address?.city?.name ?? "-";
   const to = trip.arrival_address?.city?.name ?? "-";
+  const hasStarted = trip.departure_time ? new Date(trip.departure_time).getTime() <= Date.now() : false;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-0">
@@ -208,7 +209,7 @@ export function DriverTripDetailsSection({
 
         <button
           onClick={onCancelTrip}
-          disabled={cancelling}
+          disabled={cancelling || hasStarted}
           className="mt-8 w-full rounded-lg border border-[var(--theme-primary)] bg-[var(--theme-primary)] px-4 py-3.5 text-sm font-medium text-white transition hover:bg-[#444] disabled:opacity-40"
         >
           {cancelling ? t("driverTrips.cancelling") : t("driverTrips.cancelTrip")}
