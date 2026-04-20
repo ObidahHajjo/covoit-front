@@ -25,6 +25,17 @@
 
 ---
 
+## 🔗 Dépôts du projet
+
+| Partie | Dépôt |
+| --- | --- |
+| 🖥 **Frontend** (ce dépôt) | vous êtes ici |
+| ⚙️ **Backend API** | [ObidahHajjo/covoit-api](https://github.com/ObidahHajjo/covoit-api) |
+
+> L'application suppose qu'un backend Laravel compatible est en cours d'exécution. Consultez le [dépôt backend](https://github.com/ObidahHajjo/covoit-api) pour les instructions d'installation et la documentation de l'API.
+
+---
+
 ## 📚 Sommaire
 
 - [✨ Vue d'ensemble](#-vue-densemble)
@@ -62,7 +73,7 @@ Le frontend Covoit est une SPA React + TypeScript propulsée par Vite, centrée 
 | 🆘 **Support**               | Chat en direct avec un administrateur et formulaire e-mail avec pièces jointes validées côté frontend |
 | 🛡 **Admin**                 | Tableau de bord d'administration, gestion des utilisateurs, trajets, véhicules et support             |
 
-> L'application suppose qu'un backend Laravel compatible est en cours d'exécution. Plusieurs comportements dépendent des cookies de session, des flags de permission, du broadcasting de chat et des contrats d'API.
+> L'application suppose qu'un backend Laravel compatible est en cours d'exécution. Plusieurs comportements dépendent des cookies de session, des flags de permission, du broadcasting de chat et des contrats d'API. Voir [covoit-api](https://github.com/ObidahHajjo/covoit-api).
 
 ---
 
@@ -291,6 +302,8 @@ src/features/
 
 ### Endpoints backend attendus
 
+> Ces endpoints sont implémentés dans le [dépôt backend covoit-api](https://github.com/ObidahHajjo/covoit-api).
+
 ```
 POST   /auth/login · /auth/register · /auth/refresh · /auth/logout
 GET    /auth/me
@@ -402,7 +415,7 @@ VITE_REVERB_SCHEME=http
 
 - **Node.js** 18+
 - **npm** (le dépôt inclut `package-lock.json`)
-- Un backend compatible avec les contrats d'API et de broadcasting attendus
+- Le backend **[covoit-api](https://github.com/ObidahHajjo/covoit-api)** en cours d'exécution avec les contrats d'API et de broadcasting attendus
 
 ### Installer les dépendances
 
@@ -438,7 +451,8 @@ Config du serveur dev Vite (`vite.config.ts`) :
 ## 🛠 Workflow de développement
 
 ```bash
-# 1. Démarrer le backend/API + services de broadcasting
+# 1. Démarrer le backend covoit-api + services de broadcasting
+#    → https://github.com/ObidahHajjo/covoit-api
 # 2. Créer/mettre à jour .env.local
 # 3. Installer les dépendances
 npm install
@@ -541,6 +555,7 @@ npm run build
 | 🔐 Auth                 | Dépend exclusivement des cookies backend httpOnly, de la politique CORS et de la config de session |
 | 📡 Temps réel           | Le broadcasting nécessite une config correcte host/port/scheme de Reverb                           |
 | 🏠 Domaine              | L'exemple local utilise `covoit.local` avec un reverse proxy pour API + Reverb                     |
+| ⚙️ Backend              | Voir [covoit-api](https://github.com/ObidahHajjo/covoit-api) pour le déploiement du backend        |
 
 ---
 
